@@ -1,4 +1,4 @@
-<?php header('Content-Type: application/json+ld'); ?>
+<?php header('Content-Type: application/ld+json'); ?>
 <?php header('Access-Control-Allow-Origin: *'); ?>
 {
     "@context": "http://owl.openinitiative.com/oicontext.jsonld",
