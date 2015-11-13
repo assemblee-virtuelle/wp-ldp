@@ -11,7 +11,7 @@
  */
 
 // If the file is accessed outside of index.php (ie. directly), we just deny the access
-defined('ABSPATH') or die("No script kiddies please!"); 
+defined('ABSPATH') or die("No script kiddies please!");
 
 // Entry point of the plugin
 add_action('init', 'create_ldp_type');
@@ -66,7 +66,7 @@ function include_template_function( $template_path ) {
                 $template_path = plugin_dir_path( __FILE__ ) . 'single-ldp_resource.php';
             }
         }
-        
+
         else {
             // checks if the file exists in the theme first,
             // otherwise serve the file from the plugin
@@ -76,7 +76,7 @@ function include_template_function( $template_path ) {
                 $template_path = plugin_dir_path( __FILE__ ) . 'archive-ldp_resource.php';
             }
         }
-    } 
+    }
     if ( is_taxonomy('ldp_container') ) {
         // checks if the file exists in the theme first,
         // otherwise serve the file from the plugin
@@ -193,7 +193,7 @@ function create_container_taxo() {
 		'show_tagcloud'              => true,
 		'rewrite'                    => $rewrite,
 	);
-	register_taxonomy( 'ldp_container', array( 'ldp_resource' ), $args );
+	// register_taxonomy( 'ldp_container', array( 'ldp_resource' ), $args );
 
 }
 add_action( 'init', 'create_container_taxo', 0 );
@@ -206,11 +206,11 @@ add_action( 'admin_footer', 'my_action_javascript' ); // Write our JS below here
 function my_action_javascript() { ?>
 	<script type="text/javascript" >
 	jQuery(document).ready(function($) {
-alert('hello');
+
 	});
 	</script> <?php
 	}
-	
+
 
 ################################
 # Taxonomies
