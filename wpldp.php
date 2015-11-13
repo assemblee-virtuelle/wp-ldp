@@ -44,12 +44,10 @@ function create_ldp_type() {
             'show_in_nav_menu'      => true,
             'show_in_menu'          => true,
             'show_in_admin_bar'     => true,
-            'rewrite' => yes,
     #            'menu_icon'             => 'dashicons-admin-home',
             'supports'              => array('title'),
-                'has_archive'           => true,
+            'has_archive'           => true,
     ));
-    flush_rewrite_rules();
 }
 
 ################################
@@ -77,7 +75,7 @@ function include_template_function( $template_path ) {
             }
         }
     }
-    if ( is_taxonomy('ldp_container') ) {
+    elseif ( is_tax('ldp_container') ) {
         // checks if the file exists in the theme first,
         // otherwise serve the file from the plugin
         if ( $file_theme = locate_template( array ( 'taxonomy-ldp_resource.php' ) ) ) {
@@ -96,7 +94,21 @@ function include_template_function( $template_path ) {
 function myprefix_edit_form_after_title($post) {
     if ($post->post_type == 'ldp_resource') {
         $container = get_permalink();
-        $models = get_option('ldp_models', '{"people": {"fields": [{"title": "What\'s your name?", name: "ldp_name"}, {"title": "Who are you?", "name": "ldp_description"}]}}');
+        $models = get_option(
+          'ldp_models',
+          '{"people":
+              {"fields":
+                [{
+                  "title": "What\'s your name?",
+                  "name": "ldp_name"
+                },
+                {
+                  "title": "Who are you?",
+                  "name": "ldp_description"
+                }]
+              }
+          }'
+        );
         echo '<div id="ldpform"></div>';
         echo '<script>';
         echo "var store = new MyStore({container: '$container', context: 'http://owl.openinitiative.com/oicontext.jsonld', template:\"{{{form 'people'}}}\", models: $models});";
@@ -148,7 +160,23 @@ function wpldp_options_page() {
 }
 
 function ldp_models_field() {
-    $setting = esc_attr(get_option('ldp_models', '{"people": {"fields": [{"title": "What\'s your name?", name: "ldp_name"}, {"title": "Who are you?", "name": "ldp_description"}]}}'));
+    $setting = esc_attr(get_option(
+        'ldp_models',
+        '{"people":
+          {"fields":
+            [
+              {
+                "title": "What\'s your name?",
+                "name": "ldp_name"
+              },
+              {
+                "title": "Who are you?",
+                "name": "ldp_description"
+              }
+            ]
+          }
+        }'
+      ));
     echo "<textarea type='text' name='ldp_models'>$setting</textarea>";
 }
 
@@ -179,8 +207,8 @@ function create_container_taxo() {
 		'not_found'                  => __( 'Not Found', 'text_domain' ),
 	);
 	$rewrite = array(
-		'slug'                       => 'ldp_resource',
-		'with_front'                 => true,
+		'slug'                       => '',
+		'with_front'                 => false,
 		'hierarchical'               => false,
 	);
 	$args = array(
@@ -191,9 +219,9 @@ function create_container_taxo() {
 		'show_admin_column'          => true,
 		'show_in_nav_menus'          => true,
 		'show_tagcloud'              => true,
-		'rewrite'                    => $rewrite,
+		// 'rewrite'                    => $rewrite,
 	);
-	// register_taxonomy( 'ldp_container', array( 'ldp_resource' ), $args );
+	register_taxonomy( 'ldp_container', 'ldp_resource', $args );
 
 }
 add_action( 'init', 'create_container_taxo', 0 );
@@ -210,58 +238,3 @@ function my_action_javascript() { ?>
 	});
 	</script> <?php
 	}
-
-
-################################
-# Taxonomies
-################################
-#add_filter('post_link', 'get_post_iri', 1, 3);
-#add_filter('post_type_link', 'get_post_iri', 1, 3);
-
-#function get_post_iri($url, $post, $leavename) {
-##    if ( $post->post_type == 'ldp_resource' ) ;
-#    echo($url);
-#    die();
-#}
-#    if (strpos($permalink, '%brand%') === FALSE) return $permalink;
-#        // Get post
-#        $post = get_post($post_id);
-#        if (!$post) return $permalink;
-
-#        // Get taxonomy terms
-#        $terms = wp_get_object_terms($post->ID, 'brand');
-#        if (!is_wp_error($terms) && !empty($terms) && is_object($terms[0]))
-#            $taxonomy_slug = $terms[0]->slug;
-#        else $taxonomy_slug = 'no-brand';
-
-#    return str_replace('%brand%', $taxonomy_slug, $permalink);
-#}
-
-#add_action('init', 'my_rewrite');
-#function my_rewrite() {
-#    global $wp_rewrite;
-#    $wp_rewrite->add_permastruct('typename', 'typename/%year%/%postname%/', true, 1);
-#    add_rewrite_rule('typename/([0-9]{4})/(.+)/?$', 'index.php?typename=$matches[2]', 'top');
-#    $wp_rewrite->flush_rules(); // !!!
-#}
-
-#$wp_rewrite->flush_rules(); // !!!
-
-#register_taxonomy( 'container', 'ldp_resource', array( 'hierarchical' => true, 'label' => 'Container', 'query_var' => true, 'rewrite' => array( 'slug' => 'container' ) ) );
-
-#add_action( 'init', 'register_my_taxonomies', 0 );
-
-#function register_my_taxonomies() {
-#    register_taxonomy(
-#        'containers',
-#        array( 'people', 'todos' ),
-#        array(
-#            'public' => true,
-#            'labels' => array(
-#                'name' => __( 'Containers' ),
-#                'singular_name' => __( 'Container' )
-#            ),
-#        )
-#    );
-#    register_taxonomy_for_object_type( 'containers', 'ldp_resource' );
-#}
