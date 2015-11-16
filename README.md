@@ -1,6 +1,4 @@
-# WP LDP
-LDP Plugin for wordpress - Still under heavy construction
-
+# LDP Plugin for wordpress
 The goal of this project is to be able to manage (create, list, display) LDP resources directly from a Wordpress site backend.
 
 # Architecture
@@ -13,4 +11,4 @@ Wordpress is a widely used CMS, especially in the non-profits world because it i
 
 For more information about installation, use, and features to come, please either see the Wiki or the issues list located:
 - https://github.com/assemblee-virtuelle/wpldp/wiki for the wiki
-- Where are the issues ?
+- https://github.com/assemblee-virtuelle/wpldp/issues for the issues
