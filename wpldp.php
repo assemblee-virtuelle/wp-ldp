@@ -15,7 +15,7 @@ defined('ABSPATH') or die("No script kiddies please!");
 
 // Entry point of the plugin
 add_action('init', 'create_ldp_type');
-// add_action('edit_form_after_title', 'myprefix_edit_form_after_title');
+add_action('edit_form_after_title', 'myprefix_edit_form_after_title');
 add_action('save_post', 'test_save');
 add_action('admin_init', 'backend_hooking');
 // add_action('admin_menu', 'ldp_menu');
@@ -93,9 +93,12 @@ function include_template_function( $template_path ) {
 function myprefix_edit_form_after_title($post) {
     if ($post->post_type == 'ldp_resource') {
         $container = get_permalink();
-        $models = get_option(
-          'ldp_models',
-          '{"people":
+        $term = get_the_terms($post->post_id, 'ldp_container');
+        $termId = $term[0]->term_id;
+        $termMeta = get_option("ldp_container_$termId");
+
+        if (empty($termMeta) || !isset($termMeta['ldp_model'])) {
+          $ldpModel = '{"people":
               {"fields":
                 [{
                   "title": "What\'s your name?",
@@ -106,11 +109,15 @@ function myprefix_edit_form_after_title($post) {
                   "name": "ldp_description"
                 }]
               }
-          }'
-        );
+            }';
+        } else {
+          $ldpModel = $termMeta['ldp_model'];
+        }
+
+        echo('<br>');
         echo '<div id="ldpform"></div>';
         echo '<script>';
-        echo "var store = new MyStore({container: '$container', context: 'http://owl.openinitiative.com/oicontext.jsonld', template:\"{{{form 'people'}}}\", models: $models});";
+        echo "var store = new MyStore({container: '$container', context: 'http://owl.openinitiative.com/oicontext.jsonld', template:\"{{{form 'people'}}}\", models: $ldpModel});";
         echo "store.render('#ldpform');";
         echo '</script>';
     }
