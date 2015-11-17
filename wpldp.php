@@ -15,10 +15,10 @@ defined('ABSPATH') or die("No script kiddies please!");
 
 // Entry point of the plugin
 add_action('init', 'create_ldp_type');
-add_action('edit_form_after_title', 'myprefix_edit_form_after_title');
+// add_action('edit_form_after_title', 'myprefix_edit_form_after_title');
 add_action('save_post', 'test_save');
 add_action('admin_init', 'backend_hooking');
-add_action('admin_menu', 'ldp_menu');
+// add_action('admin_menu', 'ldp_menu');
 
 add_filter( 'template_include', 'include_template_function');
 
@@ -44,7 +44,6 @@ function create_ldp_type() {
             'show_in_nav_menu'      => true,
             'show_in_menu'          => true,
             'show_in_admin_bar'     => true,
-    #            'menu_icon'             => 'dashicons-admin-home',
             'supports'              => array('title'),
             'has_archive'           => true,
     ));
@@ -130,62 +129,17 @@ function ldp_enqueue_script() {
 
 function backend_hooking() {
     add_action('admin_enqueue_scripts', 'ldp_enqueue_script');
-    add_settings_section('ldp_section', 'LDP Models settings', function() {echo '';}, 'wpldp');
-    add_settings_field('ldp_models', 'LDP Models', 'ldp_models_field', 'wpldp', 'ldp_section');
-    register_setting( 'wpldp', 'ldp_models' );
+    // add_settings_section('ldp_section', 'LDP Models settings', function() {echo '';}, 'wpldp');
+    // add_settings_field('ldp_models', 'LDP Models', 'ldp_models_field', 'wpldp', 'ldp_section');
+    // register_setting( 'wpldp', 'ldp_models' );
 }
 
 ################################
-# Settings
+# Taxonomy
 ################################
-function ldp_menu() {
-    add_options_page(
-        'LDP Models',
-        'LDP Models',
-        'edit_posts',
-        'wpldp',
-        'wpldp_options_page'
-    );
-}
-
-function wpldp_options_page() {
-    echo '<div class="wrap">';
-    echo '<h2>LDP Models</h2>';
-    echo '<form method="post" action="options.php">';
-    settings_fields('wpldp');
-    do_settings_sections('wpldp');
-    submit_button();
-    echo '</form>';
-    echo '</div>';
-}
-
-function ldp_models_field() {
-    $setting = esc_attr(get_option(
-        'ldp_models',
-        '{"people":
-          {"fields":
-            [
-              {
-                "title": "What\'s your name?",
-                "name": "ldp_name"
-              },
-              {
-                "title": "Who are you?",
-                "name": "ldp_description"
-              }
-            ]
-          }
-        }'
-      ));
-    echo "<textarea type='text' name='ldp_models'>$setting</textarea>";
-}
-
-
-
-
-
+$taxonomyName = 'ldp_container';
 // Register Custom Taxonomy
-function create_container_taxo() {
+function register_container_taxonomy() {
 
 	$labels = array(
 		'name'                       => _x( 'Containers', 'Taxonomy General Name', 'text_domain' ),
@@ -224,9 +178,110 @@ function create_container_taxo() {
 	register_taxonomy( 'ldp_container', 'ldp_resource', $args );
 
 }
-add_action( 'init', 'create_container_taxo', 0 );
+add_action( 'init', 'register_container_taxonomy', 0 );
+
+/**
+ 	 * Adds a LDP Model field to our custom LDP containers taxonomy
+   * in creation mode
+   *
+ 	 * @param int $term the concrete term
+ 	 * @return void
+	 */
+function add_custom_tax_fields_oncreate($term) {
+  echo "<tr class='form-field form-required term-model-wrap'>";
+  echo "<th scope='row'><label for='ldp_model'>Model</label></th>";
+  echo "<td><textarea id='ldp_model' type='text' name='ldp_model' cols='100' rows='100'></textarea>";
+  echo "<p class='description'>The LDP-compatible JSON Model for this container</p></td>";
+  echo "</tr>";
+}
+add_action('ldp_container_add_form_fields', 'add_custom_tax_fields_oncreate');
+
+/**
+   * Adds a LDP Model field to our custom LDP containers taxonomy
+   * in edition mode
+   *
+ 	 * @param int $term the concrete term
+ 	 * @return void
+	 */
+function add_custom_tax_fields_onedit($term) {
+  $termId = $term->term_id;
+  $termMeta = get_option("ldp_container_$termId");
+  $ldpModel = $termMeta['ldp_model'];
+
+  echo "<tr class='form-field form-required term-model-wrap'>";
+  echo "<th scope='row'><label for='ldp_model'>Model</label></th>";
+  echo "<td><textarea id='ldp_model' type='text' name='ldp_model' cols='100' rows='100'>$ldpModel</textarea>";
+  echo "<p class='description'>The LDP-compatible JSON Model for this container</p></td>";
+  echo "</tr>";
+}
+add_action('ldp_container_edit_form_fields', 'add_custom_tax_fields_onedit');
+
+/**
+ 	 * Save the value of the posted custom field for the custom taxonomy
+   * in the options WP table
+ 	 *
+ 	 * @param type
+ 	 * @return void
+	 */
+function save_custom_tax_field($termID) {
+  if (isset($_POST['ldp_model'])) {
+    $termMeta = get_option("ldp_container_$termID");
+    if (!is_array($termMeta)) {
+      $termMeta = array();
+    }
+
+    $termMeta['ldp_model'] = $_POST['ldp_model'];
+    update_option("ldp_container_$termID", $termMeta);
+  }
+}
+add_action('create_ldp_container', 'save_custom_tax_field');
+add_action('edited_ldp_container', 'save_custom_tax_field');
 
 
+// ################################
+// # Settings
+// ################################
+// function ldp_menu() {
+//     add_options_page(
+//         'LDP Models',
+//         'LDP Models',
+//         'edit_posts',
+//         'wpldp',
+//         'wpldp_options_page'
+//     );
+// }
+//
+// function wpldp_options_page() {
+//     echo '<div class="wrap">';
+//     echo '<h2>LDP Models</h2>';
+//     echo '<form method="post" action="options.php">';
+//     settings_fields('wpldp');
+//     do_settings_sections('wpldp');
+//     submit_button();
+//     echo '</form>';
+//     echo '</div>';
+// }
+//
+// function ldp_models_field() {
+//     $setting = esc_attr(get_option(
+//         'ldp_models',
+//         '{"people":
+//           {"fields":
+//             [
+//               {
+//                 "title": "What\'s your name?",
+//                 "name": "ldp_name"
+//               },
+//               {
+//                 "title": "Who are you?",
+//                 "name": "ldp_description"
+//               }
+//             ]
+//           }
+//         }'
+//       ));
+//     echo "<textarea type='text' name='ldp_models'>$setting</textarea>";
+// }
 
 
 add_action( 'admin_footer', 'my_action_javascript' ); // Write our JS below here
