@@ -160,13 +160,13 @@ function myprefix_edit_form_after_title($post) {
               }
             }';
         } else {
-          $ldpModel = json_encode($termMeta['ldp_model']);
+          $ldpModel = $termMeta['ldp_model'];
         }
 
         echo('<br>');
         echo '<div id="ldpform"></div>';
         echo '<script>';
-        echo "var store = new MyStore({container: '$container', context: 'http://owl.openinitiative.com/oicontext.jsonld', template:\"{{{form 'people'}}}\", models: '$ldpModel'});";
+        echo "var store = new MyStore({container: '$container', context: 'http://owl.openinitiative.com/oicontext.jsonld', template:\"{{{form 'people'}}}\", models: $ldpModel});";
         echo "store.render('#ldpform');";
         echo '</script>';
     }
