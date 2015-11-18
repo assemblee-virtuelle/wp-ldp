@@ -241,11 +241,11 @@ add_action( 'init', 'register_container_taxonomy', 0 );
  	 * @return void
 	 */
 function add_custom_tax_fields_oncreate($term) {
-  echo "<tr class='form-field form-required term-model-wrap'>";
-  echo "<th scope='row'><label for='ldp_model'>Model</label></th>";
-  echo "<td><textarea id='ldp_model' type='text' name='ldp_model' cols='40' rows='20'></textarea>";
-  echo "<p class='description'>The LDP-compatible JSON Model for this container</p></td>";
-  echo "</tr>";
+  echo "<div class='form-field form-required term-model-wrap'>";
+  echo "<label for='ldp_model'>Model</label>";
+  echo "<textarea id='ldp_model' type='text' name='ldp_model' cols='40' rows='20'></textarea>";
+  echo "<p class='description'>The LDP-compatible JSON Model for this container</p>";
+  echo "</div>";
 }
 add_action('ldp_container_add_form_fields', 'add_custom_tax_fields_oncreate');
 
