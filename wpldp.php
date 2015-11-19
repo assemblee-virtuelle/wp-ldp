@@ -54,9 +54,35 @@ function create_ldp_type() {
             'show_in_admin_bar'     => true,
             'supports'              => array('title'),
             'has_archive'           => true,
+            'rewrite'               => array('slug' => '%ldp_container%'),
     ));
 }
 
+/**
+ 	 * Add custom filter for handling the custom permalink
+ 	 *
+ 	 * @param type
+ 	 * @return void
+	 */
+function ldp_resource_post_link( $post_link, $id = 0 ){
+    $post = get_post($id);
+    if (is_object($post)){
+        $terms = wp_get_object_terms( $post->ID, 'ldp_container' );
+        if (!empty($terms)) {
+            return str_replace('%ldp_container%', $terms[0]->slug, $post_link);
+        }
+    }
+    return $post_link;
+}
+add_filter( 'post_type_link', 'ldp_resource_post_link', 1, 3 );
+
+/**
+ 	 * Remove the original meta box on the ldp_resource edition page and
+   * replace it with radio buttons selectors to avoid multiple selection
+ 	 *
+ 	 * @param type
+ 	 * @return void
+	 */
 function display_container_meta_box( $post_type ) {
   remove_meta_box( 'ldp_containerdiv', $post_type, 'side' );
 
@@ -73,6 +99,12 @@ function display_container_meta_box( $post_type ) {
 }
 add_action( 'add_meta_boxes', 'display_container_meta_box' );
 
+/**
+ 	 * Generate the HTML for the radio button based meta box
+ 	 *
+ 	 * @param type
+ 	 * @return void
+	 */
 function container_meta_box_callback($post) {
   wp_nonce_field(
     'wpldp_save_container_box_data',
@@ -143,32 +175,34 @@ function myprefix_edit_form_after_title($post) {
     if ($post->post_type == 'ldp_resource') {
         $container = get_permalink();
         $term = get_the_terms($post->post_id, 'ldp_container');
-        $termId = $term[0]->term_id;
-        $termMeta = get_option("ldp_container_$termId");
+        if (!empty($term)) {
+          $termId = $term[0]->term_id;
+          $termMeta = get_option("ldp_container_$termId");
 
-        if (empty($termMeta) || !isset($termMeta['ldp_model'])) {
-          $ldpModel = '{"people":
-              {"fields":
-                [{
-                  "title": "What\'s your name?",
-                  "name": "ldp_name"
-                },
-                {
-                  "title": "Who are you?",
-                  "name": "ldp_description"
-                }]
-              }
-            }';
-        } else {
-          $ldpModel = json_encode(json_decode($termMeta['ldp_model']));
+          if (empty($termMeta) || !isset($termMeta['ldp_model'])) {
+            $ldpModel = '{"people":
+                {"fields":
+                  [{
+                    "title": "What\'s your name?",
+                    "name": "ldp_name"
+                  },
+                  {
+                    "title": "Who are you?",
+                    "name": "ldp_description"
+                  }]
+                }
+              }';
+          } else {
+            $ldpModel = json_encode(json_decode($termMeta['ldp_model']));
+          }
+
+          echo('<br>');
+          echo '<div id="ldpform"></div>';
+          echo '<script>';
+          echo "var store = new MyStore({container: '$container', context: 'http://owl.openinitiative.com/oicontext.jsonld', template:\"{{{form '{$term[0]->slug}'}}}\", models: $ldpModel});";
+          echo "store.render('#ldpform');";
+          echo '</script>';
         }
-
-        echo('<br>');
-        echo '<div id="ldpform"></div>';
-        echo '<script>';
-        echo "var store = new MyStore({container: '$container', context: 'http://owl.openinitiative.com/oicontext.jsonld', template:\"{{{form '{$term[0]->slug}'}}}\", models: $ldpModel});";
-        echo "store.render('#ldpform');";
-        echo '</script>';
     }
 }
 function test_save($resource_id) {
@@ -180,7 +214,8 @@ function test_save($resource_id) {
 }
 function ldp_enqueue_script() {
     wp_enqueue_script('', 'https://code.jquery.com/jquery-2.1.4.min.js');
-    wp_enqueue_script('ldpjs', 'https://raw.githubusercontent.com/Open-Initiative/LDP-framework/master/mystore.js', array('jquery'));
+    wp_register_script('ldpjs', plugins_url('library/js/LDP-framework/mystore.js', __FILE__), array('jquery'));
+    wp_enqueue_script('ldpjs');
 }
 
 function backend_hooking() {
