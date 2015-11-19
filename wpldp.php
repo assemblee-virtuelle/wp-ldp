@@ -85,7 +85,7 @@ function container_meta_box_callback($post) {
   foreach($terms as $term) {
     echo '<li id="ldp_container-' . $term->term_id . '" class="category">';
     echo '<label class="selectit">';
-    if ($term->term_id == $value->term_id) {
+    if (!empty($value) && $term->term_id == $value->term_id) {
       echo '<input id="in-ldp_container-' . $term->term_id . '" type="radio" name="tax_input[ldp_container][]" value="' . $term->term_id . '" checked>';
     } else {
       echo '<input id="in-ldp_container-' . $term->term_id . '" type="radio" name="tax_input[ldp_container][]" value="' . $term->term_id . '">';
@@ -160,13 +160,13 @@ function myprefix_edit_form_after_title($post) {
               }
             }';
         } else {
-          $ldpModel = $termMeta['ldp_model'];
+          $ldpModel = json_encode(json_decode($termMeta['ldp_model']));
         }
 
         echo('<br>');
         echo '<div id="ldpform"></div>';
         echo '<script>';
-        echo "var store = new MyStore({container: '$container', context: 'http://owl.openinitiative.com/oicontext.jsonld', template:\"{{{form 'people'}}}\", models: $ldpModel});";
+        echo "var store = new MyStore({container: '$container', context: 'http://owl.openinitiative.com/oicontext.jsonld', template:\"{{{form '{$term[0]->slug}'}}}\", models: $ldpModel});";
         echo "store.render('#ldpform');";
         echo '</script>';
     }
@@ -283,7 +283,7 @@ function save_custom_tax_field($termID) {
       $termMeta = array();
     }
 
-    $termMeta['ldp_model'] = json_encode(stripslashes_deep($_POST['ldp_model']));
+    $termMeta['ldp_model'] = stripslashes_deep($_POST['ldp_model']);
     update_option("ldp_container_$termID", $termMeta);
   }
 }
