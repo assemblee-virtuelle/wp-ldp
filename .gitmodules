@@ -1,0 +1,3 @@
+[submodule "library/js/LDP-framework"]
+	path = library/js/LDP-framework
+	url = https://github.com/Open-Initiative/LDP-framework.git
