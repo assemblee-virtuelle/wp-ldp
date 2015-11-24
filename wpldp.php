@@ -199,8 +199,34 @@ function myprefix_edit_form_after_title($post) {
           echo('<br>');
           echo '<div id="ldpform"></div>';
           echo '<script>';
-          echo "var store = new MyStore({container: '$container', context: 'http://owl.openinitiative.com/oicontext.jsonld', template:\"{{{form '{$term[0]->slug}'}}}\", models: $ldpModel});";
-          echo "store.render('#ldpform');";
+          echo "var store = new MyStore({
+                                  container: '$container',
+                                  context: 'http://owl.openinitiative.com/oicontext.jsonld',
+                                  template:\"{{{form '{$term[0]->slug}'}}}\",
+                                  models: $ldpModel
+                });";
+          echo "store.render('#ldpform', '$container', undefined, undefined, '{$term[0]->slug}', 'ldp_');";
+          //
+          // echo "Promise.resolve(form).then(function(value) { ";
+          // foreach($fields as $field) {
+          //   echo "var " . $field->name . "Value='" . get_post_custom_values($field->name)[0] . "';";
+          //   echo "var field = document.getElementById('$field->name');";
+          //   echo "field.value = " . $field->name . "Value;";
+          //   echo "console.log(field.value);";
+          // }
+          // echo "});";
+          //       //  Promise.resolve(resource).then(function(value) {
+          //       //   for (var property in value) {
+          //       //     if (value.hasOwnProperty(property) && property.charAt(0) != '@') {
+          //       //       var fieldName = 'ldp_' + property;
+          //       //       var field = document.getElementById(fieldName);
+          //       //       if (field) {
+          //       //         field.value = value[property];
+          //       //       }
+          //       //     }
+          //       //   }
+          //       // });
+
           echo '</script>';
         }
     }
