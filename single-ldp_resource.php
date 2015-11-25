@@ -1,7 +1,7 @@
 <?php header('Content-Type: application/ld+json'); ?>
 <?php header('Access-Control-Allow-Origin: *'); ?>
 {
-    "@context": "http://owl.openinitiative.com/oicontext.jsonld",
+    "@context": "<?php echo get_option('ldp_context', 'http://owl.openinitiative.com/oicontext.jsonld'); ?>",
     "@graph": [
 <?php while (have_posts()) : the_post(); ?>
         {

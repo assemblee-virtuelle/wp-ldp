@@ -24,6 +24,7 @@ if ( get_magic_quotes_gpc() ) {
 add_action('init', 'create_ldp_type');
 add_action('edit_form_after_title', 'myprefix_edit_form_after_title');
 add_action('save_post', 'test_save');
+add_action('admin_menu', 'ldp_menu');
 add_action('admin_init', 'backend_hooking');
 
 add_filter( 'template_include', 'include_template_function');
@@ -201,32 +202,11 @@ function myprefix_edit_form_after_title($post) {
           echo '<script>';
           echo "var store = new MyStore({
                                   container: '$container',
-                                  context: 'http://owl.openinitiative.com/oicontext.jsonld',
+                                  context: '" . get_option('ldp_context', 'http://owl.openinitiative.com/oicontext.jsonld') ."',
                                   template:\"{{{form '{$term[0]->slug}'}}}\",
                                   models: $ldpModel
                 });";
           echo "store.render('#ldpform', '$container', undefined, undefined, '{$term[0]->slug}', 'ldp_');";
-          //
-          // echo "Promise.resolve(form).then(function(value) { ";
-          // foreach($fields as $field) {
-          //   echo "var " . $field->name . "Value='" . get_post_custom_values($field->name)[0] . "';";
-          //   echo "var field = document.getElementById('$field->name');";
-          //   echo "field.value = " . $field->name . "Value;";
-          //   echo "console.log(field.value);";
-          // }
-          // echo "});";
-          //       //  Promise.resolve(resource).then(function(value) {
-          //       //   for (var property in value) {
-          //       //     if (value.hasOwnProperty(property) && property.charAt(0) != '@') {
-          //       //       var fieldName = 'ldp_' + property;
-          //       //       var field = document.getElementById(fieldName);
-          //       //       if (field) {
-          //       //         field.value = value[property];
-          //       //       }
-          //       //     }
-          //       //   }
-          //       // });
-
           echo '</script>';
         }
     }
@@ -240,12 +220,35 @@ function test_save($resource_id) {
 }
 function ldp_enqueue_script() {
     wp_enqueue_script('', 'https://code.jquery.com/jquery-2.1.4.min.js');
-    wp_register_script('ldpjs', plugins_url('library/js/LDP-framework/mystore.js', __FILE__), array('jquery'));
+    wp_register_script(
+      'ldpjs',
+      plugins_url('library/js/LDP-framework/mystore.js', __FILE__),
+      array('jquery')
+    );
+
     wp_enqueue_script('ldpjs');
 }
 
 function backend_hooking() {
     add_action('admin_enqueue_scripts', 'ldp_enqueue_script');
+    add_settings_section(
+      'ldp_context',
+      'WP-LDP Settings',
+      function() {
+        echo _e('The generals settings of the WP-LDP plugin.');
+      },
+      'wpldp'
+    );
+
+    add_settings_field(
+      'ldp_context',
+      'WP-LDP Context',
+      'ldp_context_field',
+      'wpldp',
+      'ldp_context'
+    );
+
+    register_setting( 'ldp_context', 'ldp_context' );
 }
 
 ################################
@@ -350,6 +353,33 @@ function save_custom_tax_field($termID) {
 }
 add_action('create_ldp_container', 'save_custom_tax_field');
 add_action('edited_ldp_container', 'save_custom_tax_field');
+
+################################
+# Settings
+################################
+function ldp_menu() {
+    add_options_page(
+        'WP-LDP Settings',
+        'WP-LDP Settings',
+        'edit_posts',
+        'wpldp',
+        'wpldp_options_page'
+    );
+}
+function wpldp_options_page() {
+    echo '<div class="wrap">';
+    echo '<h2>' . __('WP-LDP Settings') . '</h2>';
+    echo '<form method="post" action="options.php">';
+      settings_fields('ldp_context');
+      do_settings_sections('wpldp');
+      submit_button();
+    echo '</form>';
+    echo '</div>';
+}
+
+function ldp_context_field() {
+    echo "<input type='text' size='150' name='ldp_context' value='" . get_option('ldp_context', 'http://owl.openinitiative.com/oicontext.jsonld') . "' />";
+}
 
 #############################
 #       FOOTER SCRIPT
