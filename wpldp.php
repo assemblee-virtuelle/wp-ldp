@@ -211,6 +211,7 @@ function myprefix_edit_form_after_title($post) {
         }
     }
 }
+
 function test_save($resource_id) {
     foreach($_POST as $key => $value) {
         if(substr($key, 0, 4) == "ldp_") {
@@ -218,19 +219,38 @@ function test_save($resource_id) {
         }
     }
 }
+
 function ldp_enqueue_script() {
     wp_enqueue_script('', 'https://code.jquery.com/jquery-2.1.4.min.js');
+
+    // Loading the LDP-framework library
     wp_register_script(
       'ldpjs',
       plugins_url('library/js/LDP-framework/mystore.js', __FILE__),
       array('jquery')
     );
-
     wp_enqueue_script('ldpjs');
+
+    // Loading the JSONEditor library
+    wp_register_script(
+      'jsoneditorjs',
+      plugins_url('library/js/node_modules/jsoneditor/dist/jsoneditor.min.js', __FILE__)
+    );
+    wp_enqueue_script('jsoneditorjs');
+}
+
+function ldp_enqueue_stylesheet() {
+    // Loading the JSONEditor stylesheet
+    wp_register_style(
+      'jsoneditorcss',
+      plugins_url('library/js/node_modules/jsoneditor/dist/jsoneditor.min.css', __FILE__)
+    );
+    wp_enqueue_style('jsoneditorcss');
 }
 
 function backend_hooking() {
     add_action('admin_enqueue_scripts', 'ldp_enqueue_script');
+    add_action('admin_enqueue_scripts', 'ldp_enqueue_stylesheet');
     add_settings_section(
       'ldp_context',
       'WP-LDP Settings',
