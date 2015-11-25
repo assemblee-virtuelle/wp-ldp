@@ -346,10 +346,35 @@ function add_custom_tax_fields_onedit($term) {
   $ldpModel = stripslashes_deep($termMeta['ldp_model']);
 
   echo "<tr class='form-field form-required term-model-wrap'>";
-  echo "<th scope='row'><label for='ldp_model'>Model</label></th>";
-  echo "<td><textarea id='ldp_model' type='text' name='ldp_model' cols='40' rows='20'>$ldpModel</textarea>";
+  echo "<th scope='row'><label for='ldp_model_editor'>Model editor mode</label></th>";
+  echo "<td><div id='ldp_model_editor' style='width: 1000px; height: 400px;'></div></td>";
   echo "<p class='description'>The LDP-compatible JSON Model for this container</p></td>";
   echo "</tr>";
+  echo "<input type='hidden' id='ldp_model' name='ldp_model' value='$ldpModel'/>";
+
+  echo "</tr>";
+
+  echo '<script>
+          var container = document.getElementById("ldp_model_editor");
+          var options = {
+            mode:"tree",
+            modes: ["code", "form", "text", "tree", "view"],
+            change: function () {
+              var input = document.getElementById("ldp_model");
+              if (input) {
+                if (editor) {
+                  var json = editor.get();
+                  input.value = JSON.stringify(json);
+                }
+              }
+            }
+          };
+          window.editor = new JSONEditor(container, options);
+
+          var json = ' . json_encode(json_decode($ldpModel)) . ';
+          editor.set(json);
+          editor.expandAll();
+        </script>';
 }
 add_action('ldp_container_edit_form_fields', 'add_custom_tax_fields_onedit');
 
