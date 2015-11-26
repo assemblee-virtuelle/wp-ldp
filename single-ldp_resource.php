@@ -14,7 +14,7 @@
             foreach($fields as $field) {
               if(substr($field->name, 0, 4) == "ldp_") {
                   echo('"'.substr($field->name, 4).'": ');
-                  echo('"'.get_post_custom_values($field->name)[0].'",');
+                  echo('' . json_encode(get_post_custom_values($field->name)[0]) . ',');
                   echo "\n        ";
               }
             }
