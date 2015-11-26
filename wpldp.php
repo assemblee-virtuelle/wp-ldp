@@ -240,6 +240,13 @@ function ldp_enqueue_script() {
 }
 
 function ldp_enqueue_stylesheet() {
+  // Loading the WP-LDP stylesheet
+  wp_register_style(
+    'wpldpcss',
+    plugins_url('resources/css/wpldp.css', __FILE__)
+  );
+  wp_enqueue_style('wpldpcss');
+
     // Loading the JSONEditor stylesheet
     wp_register_style(
       'jsoneditorcss',
