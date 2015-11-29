@@ -1,3 +1,6 @@
 [submodule "library/js/LDP-framework"]
 	path = library/js/LDP-framework
 	url = https://github.com/Open-Initiative/LDP-framework.git
+[submodule "library/js/AV-POC"]
+	path = library/js/AV-POC
+	url = git@github.com:assemblee-virtuelle/AV-POC.git
