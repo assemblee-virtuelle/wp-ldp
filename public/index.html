@@ -3,15 +3,15 @@
     <head>
         <title>Virtual-assembly proof of concept</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <link href="./library/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-        <link href="./resources/css/sidebar.css" rel="stylesheet">
-        <link href="./library/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-        <link href="./resources/css/av.css" type="text/css" rel="stylesheet" />
+        <link href="./wp-content/plugins/wpldp/public/library/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <link href="./wp-content/plugins/wpldp/public/resources/css/sidebar.css" rel="stylesheet">
+        <link href="./wp-content/plugins/wpldp/public/library/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+        <link href="./wp-content/plugins/wpldp/public/resources/css/av.css" type="text/css" rel="stylesheet" />
         <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
-        <script type="text/javascript" src="./library/LDP-framework/mystore.js"></script>
-        <script type="text/javascript" src="./config/config.js"></script>
-        <script src="./library/bootstrap/js/bootstrap.min.js"></script>
-        <script src="./resources/js/sidebar.js"></script>
+        <script type="text/javascript" src="./wp-content/plugins/wpldp/library/js/LDP-framework/mystore.js"></script>
+        <script type="text/javascript" src="./wp-content/plugins/wpldp/public/config/config.js"></script>
+        <script src="./wp-content/plugins/wpldp/public/library/bootstrap/js/bootstrap.min.js"></script>
+        <script src="./wp-content/plugins/wpldp/public/resources/js/sidebar.js"></script>
 
         <!--  ACTORS RELATED TEMPLATES -->
         <script id="actor-item-template" type="text/x-handlebars-template">
@@ -95,6 +95,12 @@
           </div>
         </script>
         <script>
+            var config = {
+              'containerUrl': 'http://localhost/balessan/ldp_container/',
+              'resourceBaseUrl' : 'http://localhost/balessan/',
+              'contextUrl': 'http://owl.openinitiative.com/oicontext.jsonld'
+            }
+            
             function displayProject(divName, itemId, innerHtml) {
               projectStore.render(divName, itemId, innerHtml);
             }

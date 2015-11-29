@@ -37,7 +37,7 @@ add_filter( 'template_include', 'include_template_function');
 function add_poc_rewrite_rule()
 {
     global $wp_rewrite;
-    $poc_url = plugins_url('library/js/AV-POC/index.html', __FILE__);
+    $poc_url = plugins_url('public/index.html', __FILE__);
     $poc_url = substr($poc_url, strlen( home_url() ) + 1);
     // The pattern is prefixed with '^'
     // The substitution is prefixed with the "home root", at least a '/'
@@ -49,9 +49,7 @@ function my_page_template_redirect()
 {
     if( is_page( 'av-poc' ) )
     {
-        var_dump('Using redirect');
-        die();
-        wp_redirect(plugins_url('library/js/AV-POC/index.html', __FILE__));
+        wp_redirect(plugins_url('public/index.html', __FILE__));
         exit();
     }
 }
