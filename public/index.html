@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Virtual-assembly proof of concept</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <link href="./library/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <link href="./resources/css/sidebar.css" rel="stylesheet">
+        <link href="./library/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+        <link href="./resources/css/av.css" type="text/css" rel="stylesheet" />
+        <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
+        <script type="text/javascript" src="./library/LDP-framework/mystore.js"></script>
+        <script type="text/javascript" src="./config/config.js"></script>
+        <script src="./library/bootstrap/js/bootstrap.min.js"></script>
+        <script src="./resources/js/sidebar.js"></script>
+
+        <!--  ACTORS RELATED TEMPLATES -->
+        <script id="actor-item-template" type="text/x-handlebars-template">
+          <li>
+            <a onclick="displayActor('#detail', '{{"@id"}}', $('#actor-detail-template').html());">
+              {{name}}
+            </a>
+          </li>
+        </script>
+
+        <script id="actor-detail-template" type="text/x-handlebars-template">
+            <div class="actor-detail-active">
+              <h1 class="text-center text-uppercase">{{object.name}}</h1>
+              <div class="detail-content">
+                <h2>Description</h2>
+                <p>{{object.description}}</p>
+                {{#if object.contributes_to}}
+                <h2>Projets portés</h2>
+                  <p>
+                    {{#ldpeach object.contributes_to "ul"}}
+                      <li>
+                        <a onclick="displayProject('#detail', '{{"@id"}}', $('#project-detail-template').html())">
+                          {{project_title}}
+                        </a>
+                      </li>
+                    {{/ldpeach}}
+                  </p>
+                {{/if}}
+              </div>
+          </div>
+        </script>
+
+        <script id="actor-template" type="text/x-handlebars-template">
+            <h2 class="text-uppercase">People</h2>
+            <div id="actor">
+                {{#ldpeach object.ldp:contains "ul"}}{{> actorItem }}{{/ldpeach}}
+            </div>
+        </script>
+
+        <!--  PROJECTS RELATED TEMPLATES -->
+        <script id="project-template" type="text/x-handlebars-template">
+            <h2 class="text-uppercase">projects</h2>
+            <div id="projects">
+              {{#ldpeach object.ldp:contains "ul"}}{{> projectItem }}{{/ldpeach}}
+            </div>
+        </script>
+
+        <script id="project-item-template" type="text/x-handlebars-template">
+          <li>
+            <a onclick="displayProject('#detail', '{{"@id"}}', $('#project-detail-template').html())">
+              {{project_title}}
+            </a>
+          </li>
+        </script>
+
+        <script id="project-detail-template" type="text/x-handlebars-template">
+            <div class="project-detail-active">
+              <h1 class="text-center text-uppercase">
+                Le projet {{object.project_title}}
+              </h1>
+              <div class="detail-content">
+                <h2>
+                  Description
+                </h2>
+                <p>
+                  {{object.project_description}}
+                </p>
+                {{#if object.project_contributes}}
+                <h2>Projet de l'initiative de :</h2>
+                  <p>
+                    {{#ldpeach object.project_contributes "ul"}}
+                      <li>
+                        <a onclick="displayActor('#detail', '{{"@id"}}', $('#actor-detail-template').html())">
+                          {{name}}
+                        </a>
+                      </li>
+                    {{/ldpeach}}
+                  </p>
+                {{/if}}
+              </div>
+          </div>
+        </script>
+        <script>
+            function displayProject(divName, itemId, innerHtml) {
+              projectStore.render(divName, itemId, innerHtml);
+            }
+
+            function displayActor(divName, itemId, innerHtml) {
+              actorStore.render(divName, itemId, innerHtml);
+            }
+
+            $(function(){
+                window.actorStore = new MyStore({
+                    container: config.containerUrl + 'actor/',
+                    context: config.contextUrl,
+                    template: $("#actor-template").html(),
+                    partials: {
+                      'actorItem': $("#actor-item-template").html(),
+                      'actorDetail': $("#actor-detail-template").html()
+                    }
+                });
+                actorStore.render("#actor-browser");
+
+                window.projectStore = new MyStore({
+                  container: config.containerUrl + 'project/',
+                  context: config.contextUrl,
+                  template: $("#project-template").html(),
+                  partials: {
+                    'projectItem': $("#project-item-template").html(),
+                    'projectDetail': $("#project-detail-template").html()
+                  }
+                });
+                projectStore.render("#project-browser");
+
+                var cartopairId = config.resourceBaseUrl + 'project/cartopair/';
+                displayProject('#detail', cartopairId, $('#project-detail-template').html());
+            });
+        </script>
+    </head>
+    <body>
+      <div id="wrapper">
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper">
+          <ul class="sidebar-nav nav-pills nav-stacked" id="menu">
+            <li class="active">
+                <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-bars fa-stack-1x "></i></span></a>
+            </li>
+            <li>
+                <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-search fa-stack-1x "></i></span></a>
+            </li>
+            <li>
+                <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-map-o fa-stack-1x "></i></span></a>
+            </li>
+            <li>
+                <a href="#"> <span class="fa-stack fa-lg pull-left"><i class="fa fa-info-circle fa-stack-1x "></i></span></a>
+            </li>
+            <li>
+                <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-reply fa-stack-1x "></i></span></a>
+            </li>
+          </ul>
+        </div>
+        <div id="content-wrapper">
+          <div id="main-container" class="container-fluid">
+            <div id="detail-wrapper" class="col-md-9">
+                <div id="detail"></div>
+            </div>
+            <div id="browser" class="col-md-3">
+              <div id="project-browser" class="row"></div>
+              <div id="actor-browser" class="row"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </body>
+</html>

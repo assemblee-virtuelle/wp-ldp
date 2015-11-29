@@ -22,12 +22,40 @@ if ( get_magic_quotes_gpc() ) {
 
 // Entry point of the plugin
 add_action('init', 'create_ldp_type');
+add_action('init', 'add_poc_rewrite_rule');
 add_action('edit_form_after_title', 'myprefix_edit_form_after_title');
 add_action('save_post', 'test_save');
 add_action('admin_menu', 'ldp_menu');
 add_action('admin_init', 'backend_hooking');
 
 add_filter( 'template_include', 'include_template_function');
+
+
+#####################################
+# Rewriting function to access the POC from Wordpress
+#####################################
+function add_poc_rewrite_rule()
+{
+    global $wp_rewrite;
+    $poc_url = plugins_url('library/js/AV-POC/index.html', __FILE__);
+    $poc_url = substr($poc_url, strlen( home_url() ) + 1);
+    // The pattern is prefixed with '^'
+    // The substitution is prefixed with the "home root", at least a '/'
+    // This is equivalent to appending it to `non_wp_rules`
+    $wp_rewrite->add_external_rule('av-poc.php', $poc_url);
+}
+
+function my_page_template_redirect()
+{
+    if( is_page( 'av-poc' ) )
+    {
+        var_dump('Using redirect');
+        die();
+        wp_redirect(plugins_url('library/js/AV-POC/index.html', __FILE__));
+        exit();
+    }
+}
+add_action( 'template_redirect', 'my_page_template_redirect' );
 
 ##########################################
 # LDP Resource content type definition
