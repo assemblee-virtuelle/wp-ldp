@@ -17,7 +17,7 @@
         <script id="actor-item-template" type="text/x-handlebars-template">
           <li>
             <a onclick="displayActor('#detail', '{{"@id"}}', $('#actor-detail-template').html());">
-              {{name}}
+              {{firstname}} {{name}}
             </a>
           </li>
         </script>
@@ -28,6 +28,7 @@
               <div class="detail-content">
                 <h2>Description</h2>
                 <p>{{object.description}}</p>
+
                 {{#if object.contributes_to}}
                 <h2>Projets portés</h2>
                   <p>
@@ -79,6 +80,19 @@
                 <p>
                   {{object.project_description}}
                 </p>
+
+                <h2>Objectifs</h2>
+                <p>{{object.project_goal}}</p>
+
+                <h2>Vision</h2>
+                <p>{{object.project_vision}}</p>
+
+                <h2>Contexte</h2>
+                <p>{{object.project_context}}</p>
+
+                <h2>Missions</h2>
+                <p>{{object.project_missions}}</p>
+
                 {{#if object.project_contributes}}
                 <h2>Projet de l'initiative de :</h2>
                   <p>
@@ -100,7 +114,7 @@
               'resourceBaseUrl' : 'http://localhost/balessan/',
               'contextUrl': 'http://owl.openinitiative.com/oicontext.jsonld'
             }
-            
+
             function displayProject(divName, itemId, innerHtml) {
               projectStore.render(divName, itemId, innerHtml);
             }
@@ -132,7 +146,7 @@
                 });
                 projectStore.render("#project-browser");
 
-                var cartopairId = config.resourceBaseUrl + 'project/cartopair/';
+                var cartopairId = config.resourceBaseUrl + 'project/assemblee-virtuelle/';
                 displayProject('#detail', cartopairId, $('#project-detail-template').html());
             });
         </script>

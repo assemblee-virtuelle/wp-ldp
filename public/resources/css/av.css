@@ -13,7 +13,6 @@ html, body, #main-container, #main-row {
 }
 
 #detail {
-  border: solid 1px;
   height: 100%;
   padding: 0;
 }
@@ -28,6 +27,7 @@ html, body, #main-container, #main-row {
 }
 
 #detail .detail-content {
+  border: solid 1px;
   padding-left: 15px;
 }
 
