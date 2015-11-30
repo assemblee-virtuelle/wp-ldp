@@ -24,22 +24,48 @@
 
         <script id="actor-detail-template" type="text/x-handlebars-template">
             <div class="actor-detail-active">
-              <h1 class="text-center text-uppercase">{{object.name}}</h1>
+              <h1 class="text-center text-uppercase">{{object.firstname}} {{object.name}}</h1>
               <div class="detail-content">
-                <h2>Description</h2>
+                <div class="row personal-information">
+                  <h2>Informations personnelles</h2>
+                  <div class="col-md-3 equal profile-picture">
+                    <img height="200" width="200" src="{{object.profile_picture_url}}" alt="Photo de profil" />
+                  </div>
+                  <div class="col-md-9 equal information-content">
+                    <p>Date de naissance: {{object.birthdate}}</p>
+                    <p>Adresse: {{object.address}}, {{object.zipcode}} {{object.city}}</p>
+
+                    <p>Personal Website: <a href="{{object.website}}">{{object.website}}</a></p>
+                    <p>Contact: <a href="mail:{{object.email_address}}">{{object.email_address}}</a></p>
+
+                    <p>
+                      Reseaux sociaux:
+                      <ul>
+                        {{#if object.linkedin }}<li>Linkedin: <a href="{{object.linkedin}}">{{object.linkedin}}</a></li>{{/if}}
+                        {{#if object.twitter }}<li>Twitter:  <a href="{{object.twitter}}">{{object.twitter}}</a></li>{{/if}}
+                        {{#if object.github }}<li>Github:   <a href="{{object.github}}">{{object.github}}</a></li>{{/if}}
+                        {{#if object.facebook }}<li>Facebook: <a href="{{object.facebook}}">{{object.facebook}}</a></li>{{/if}}
+                      </ul>
+                    </p>
+                  </div>
+                </div>
+                
+                <h2>Biographie</h2>
                 <p>{{object.description}}</p>
 
                 {{#if object.contributes_to}}
-                <h2>Projets portés</h2>
-                  <p>
-                    {{#ldpeach object.contributes_to "ul"}}
-                      <li>
-                        <a onclick="displayProject('#detail', '{{"@id"}}', $('#project-detail-template').html())">
-                          {{project_title}}
-                        </a>
-                      </li>
-                    {{/ldpeach}}
-                  </p>
+                  <div class="row projects-listing">
+                    <h2>Projets portés</h2>
+                    <p>
+                      {{#ldpeach object.contributes_to "ul"}}
+                        <li>
+                          <a onclick="displayProject('#detail', '{{"@id"}}', $('#project-detail-template').html())">
+                            {{project_title}}
+                          </a>
+                        </li>
+                      {{/ldpeach}}
+                    </p>
+                  </div>
                 {{/if}}
               </div>
           </div>
@@ -99,7 +125,7 @@
                     {{#ldpeach object.project_contributes "ul"}}
                       <li>
                         <a onclick="displayActor('#detail', '{{"@id"}}', $('#actor-detail-template').html())">
-                          {{name}}
+                          {{firstname}} {{name}}
                         </a>
                       </li>
                     {{/ldpeach}}
