@@ -1,0 +1,77 @@
+{
+  "actor": {
+    "fields": [
+      {
+        "title": "What is your name ?",
+        "name": "ldp_name"
+      },
+      {
+        "title": "What is your firstname ?",
+        "name": "ldp_firstname"
+      },
+      {
+        "title": "Who are you (in a few words) ?",
+        "name": "ldp_description_excerpt",
+        "type": "textarea"
+      },
+      {
+        "title": "Who are you (longer version)?",
+        "name": "ldp_description",
+        "type": "textarea"
+      },
+      {
+        "title": "Profile Picture URL",
+        "name": "ldp_profile_picture_url"
+      },
+      {
+        "title": "Projet (URL)",
+        "name": "ldp_contributes_to",
+        "toto": "tata"
+      },
+      {
+        "title": "What is your pseudo ?",
+        "name": "ldp_pseudo"
+      },
+      {
+        "title": "What is your birthdate ?",
+        "name": "ldp_birthdate"
+      },
+      {
+        "title": "What is your address ?",
+        "name": "ldp_address"
+      },
+      {
+        "title": "What is your zipcode ?",
+        "name": "ldp_zipcode"
+      },
+      {
+        "title": "What city do you live in ?",
+        "name": "ldp_city"
+      },
+      {
+        "title": "Personal Website URL ?",
+        "name": "ldp_website"
+      },
+      {
+        "title": "Personal Email address ?",
+        "name": "ldp_email_address"
+      },
+      {
+        "title": "Linkedin profile url ?",
+        "name": "ldp_linkedin"
+      },
+      {
+        "title": "Twitter profile url ?",
+        "name": "ldp_twitter"
+      },
+      {
+        "title": "Github profile url ?",
+        "name": "ldp_github"
+      },
+      {
+        "title": "Facebook profile url ?",
+        "name": "ldp_facebook"
+      }
+    ]
+  }
+}

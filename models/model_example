@@ -1,0 +1,12 @@
+{"people":
+              {"fields":
+                [{
+                  "title": "Project title",
+                  "name": "ldp_project_title"
+                },
+                {
+                  "title": "Project description",
+                  "name": "ldp_project_description"
+                }]
+              }
+            }

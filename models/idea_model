@@ -1,0 +1,27 @@
+{
+  "idea": {
+    "fields": [
+      {
+        "title": "Idea Title",
+        "name": "ldp_title"
+      },
+      {
+        "title": "Idea description",
+        "name": "ldp_description",
+        "type": "textarea"
+      },
+      {
+        "title": "Website/URL (if any)",
+        "name": "ldp_website_url"
+      },
+      {
+        "title": "Wikipedia link (if any)",
+        "name": "ldp_wikipedia_url"
+      },
+      {
+        "title": "Description Excerpt (in a few words)",
+        "name": "ldp_description_excerpt"
+      }
+    ]
+  }
+}

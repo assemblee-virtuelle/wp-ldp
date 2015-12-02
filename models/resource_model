@@ -1,0 +1,18 @@
+{
+  "resource": {
+    "fields": [
+      {
+        "title": "Resource title",
+        "name": "ldp_title"
+      },
+      {
+        "title": "Resource URL, if any",
+        "name": "ldp_resource_url"
+      },
+      {
+        "title": "Resource type",
+        "name": "ldp_resource_type"
+      }
+    ]
+  }
+}
