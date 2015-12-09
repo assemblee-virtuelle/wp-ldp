@@ -27,9 +27,16 @@ add_action('edit_form_after_title', 'myprefix_edit_form_after_title');
 add_action('save_post', 'test_save');
 add_action('admin_menu', 'ldp_menu');
 add_action('admin_init', 'backend_hooking');
+add_action('update_option', 'initialize_container');
 
 add_filter( 'template_include', 'include_template_function');
 
+function initialize_container($option, $oldValue, $_newValue) {
+  if ($option === 'ldp_container_init') {
+    var_dump("This is the good option update");
+    die();
+  }
+}
 
 #####################################
 # Rewriting function to access the POC from Wordpress
@@ -301,7 +308,16 @@ function backend_hooking() {
       'ldp_context'
     );
 
+    add_settings_field(
+      'ldp_container_init',
+      'Do you want to initialize PAIR containers ?',
+      'ldp_container_init_field',
+      'wpldp',
+      'ldp_context'
+    );
+
     register_setting( 'ldp_context', 'ldp_context' );
+    register_setting( 'ldp_container_init', 'ldp_context' );
 }
 
 ################################
@@ -457,6 +473,13 @@ function wpldp_options_page() {
 
 function ldp_context_field() {
     echo "<input type='text' size='150' name='ldp_context' value='" . get_option('ldp_context', 'http://owl.openinitiative.com/oicontext.jsonld') . "' />";
+}
+
+function ldp_container_init_field() {
+    $optionValue = !empty(get_option('ldp_container_init', false)) ? true : false;
+    // var_dump($optionValue);
+    // die();
+    echo "<input type='checkbox' name='ldp_container_init' value='ldp_container_init' " . checked(1, get_option('ldp_container_init'), false) . " />";
 }
 
 #############################
