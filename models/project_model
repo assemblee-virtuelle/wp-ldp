@@ -62,8 +62,24 @@
         "type": "textarea"
       },
       {
-        "title": "Contributeur (URL)",
+        "title": "Contributeur 1 (URL)",
         "name": "ldp_project_contributes"
+      },
+      {
+        "title": "Contributeur 2 (URL)",
+        "name": "ldp_project_contributes2"
+      },
+      {
+        "title": "Contributeur 3 (URL)",
+        "name": "ldp_project_contributes3"
+      },
+      {
+        "title": "Contributeur 4 (URL)",
+        "name": "ldp_project_contributes4"
+      },
+      {
+        "title": "Contributeur 5 (URL)",
+        "name": "ldp_project_contributes5"
       }
     ]
   }

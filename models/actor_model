@@ -25,8 +25,19 @@
       },
       {
         "title": "Projet (URL)",
-        "name": "ldp_contributes_to",
-        "toto": "tata"
+        "name": "ldp_contributes_to"
+      },
+      {
+        "title": "Projet 2 (URL)",
+        "name": "ldp_contributes_to2"
+      },
+      {
+        "title": "Projet 3 (URL)",
+        "name": "ldp_contributes_to3"
+      },
+      {
+        "title": "Projet 4 (URL)",
+        "name": "ldp_contributes_to4"
       },
       {
         "title": "What is your pseudo ?",
@@ -71,7 +82,23 @@
       {
         "title": "Facebook profile url ?",
         "name": "ldp_facebook"
-      }
+      },
+      {
+        "title": "Vous connaissez : (URL)",
+        "name": "ldp_knows"
+      },
+      {
+        "title": "Vous connaissez : (URL)",
+        "name": "ldp_knows2"
+      },
+      {
+        "title": "Vous connaissez : (URL)",
+        "name": "ldp_knows3"
+      },
+      {
+        "title": "Vous connaissez : (URL)",
+        "name": "ldp_knows4"
+      },
     ]
   }
 }
