@@ -8,7 +8,8 @@
   margin-bottom: 10px;
 }
 
-#ldpform input[type='text'] {
+#ldpform input[type='text'], #ldpform input[type='url'],
+#ldpform input[type='email'], #ldpform input[type='date'] {
   margin: 0;
   margin-bottom:10px;
   padding: 3px 8px;
