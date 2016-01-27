@@ -12,6 +12,10 @@
       {
         "title": "Resource type",
         "name": "ldp_resource_type"
+      },
+      {
+        "title": "Description",
+        "name": "ldp_description"
       }
     ]
   }
