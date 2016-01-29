@@ -108,16 +108,17 @@ function create_ldp_type() {
  	 * @return void
 	 */
 function ldp_resource_post_link( $post_link, $id = 0 ){
-    global $post;
+    $post = get_post($id);
+
     if ( 'ldp_resource' == get_post_type( $post ) ) {
-      $post = get_post($id);
       if (is_object($post)){
-          $terms = wp_get_object_terms( $post->ID, 'ldp_container' );
-          if (!empty($terms)) {
-              return str_replace('%ldp_container%', $terms[0]->slug, $post_link);
-          }
+        $terms = wp_get_object_terms( $post->ID, 'ldp_container' );
+        if (!empty($terms)) {
+            return str_replace('%ldp_container%', $terms[0]->slug, $post_link);
+        }
       }
     }
+
     return $post_link;
 }
 add_filter( 'post_type_link', 'ldp_resource_post_link', 10, 3 );
