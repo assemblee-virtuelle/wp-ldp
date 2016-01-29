@@ -1,0 +1,94 @@
+{
+  "project": {
+    "fields": [
+      {
+        "title": "Project title",
+        "name": "ldp_project_title",
+        "type": "text"
+      },
+      {
+        "title": "Project description",
+        "name": "ldp_project_description",
+        "type": "textarea"
+      },
+      {
+        "title": "Project context",
+        "name": "ldp_project_context",
+        "type": "textarea"
+      },
+      {
+        "title": "Project vision",
+        "name": "ldp_project_vision",
+        "type": "textarea"
+      },
+      {
+        "title": "Project goal",
+        "name": "ldp_project_goal",
+        "type": "textarea"
+      },
+      {
+        "title": "Project missions",
+        "name": "ldp_project_missions",
+        "type": "textarea"
+      },
+      {
+        "title": "Project inspiration sources",
+        "name": "ldp_project_inspiration_sources",
+        "type": "textarea"
+      },
+      {
+        "title": "Project organization model",
+        "name": "ldp_project_organization_model",
+        "type": "textarea"
+      },
+      {
+        "title": "Project economical model",
+        "name": "ldp_project_economical_model",
+        "type": "textarea"
+      },
+      {
+        "title": "Project ecological model",
+        "name": "ldp_project_ecological_model",
+        "type": "textarea"
+      },
+      {
+        "title": "Project technological model",
+        "name": "ldp_project_technological_model",
+        "type": "textarea"
+      },
+      {
+        "title": "Project legal framework",
+        "name": "ldp_project_legal_framework",
+        "type": "textarea"
+      },
+      {
+        "title": "Contributeur 1 (URL)",
+        "name": "ldp_project_contributes"
+      },
+      {
+        "title": "Contributeur 2 (URL)",
+        "name": "ldp_project_contributes2"
+      },
+      {
+        "title": "Contributeur 3 (URL)",
+        "name": "ldp_project_contributes3"
+      },
+      {
+        "title": "Contributeur 4 (URL)",
+        "name": "ldp_project_contributes4"
+      },
+      {
+        "title": "Contributeur 5 (URL)",
+        "name": "ldp_project_contributes5"
+      },
+      {
+        "title": "Projet associé : (URL)",
+        "name": "ldp_related_to"
+      },
+      {
+        "title": "Projet associé : (URL)",
+        "name": "ldp_related_to2"
+      }
+    ]
+  }
+}

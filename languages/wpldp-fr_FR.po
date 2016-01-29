@@ -1,0 +1,158 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: wpldp\n"
+"POT-Creation-Date: 2016-01-04 17:51+0100\n"
+"PO-Revision-Date: 2016-01-04 17:51+0100\n"
+"Last-Translator: Benoît Alessandroni <benoit.alessandroni@gmail.com>\n"
+"Language-Team: Virtual Assembly <contact@assemblee-virtuelle.org>\n"
+"Language: fr_FR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.4\n"
+"X-Poedit-KeywordsList: _;gettext;gettext_noop;__;_x\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SearchPath-0: /var/www/wordpress/wp-content/plugins/wpldp\n"
+
+#: /var/www/wordpress/wp-content/plugins/wpldp/wpldp.php:80
+msgid "Resources"
+msgstr "Ressources"
+
+#: /var/www/wordpress/wp-content/plugins/wpldp/wpldp.php:81
+msgid "Resource"
+msgstr "Ressource"
+
+#: /var/www/wordpress/wp-content/plugins/wpldp/wpldp.php:82
+msgid "All resources"
+msgstr "Toutes les ressources"
+
+#: /var/www/wordpress/wp-content/plugins/wpldp/wpldp.php:83
+#: /var/www/wordpress/wp-content/plugins/wpldp/wpldp.php:90
+msgid "Add a resource"
+msgstr "Ajouter une ressource"
+
+#: /var/www/wordpress/wp-content/plugins/wpldp/wpldp.php:84
+msgid "Edit a resource"
+msgstr "Édition d'une ressource"
+
+#: /var/www/wordpress/wp-content/plugins/wpldp/wpldp.php:85
+msgid "New resource"
+msgstr "Nouvelle ressource"
+
+#: /var/www/wordpress/wp-content/plugins/wpldp/wpldp.php:86
+msgid "See the resource"
+msgstr "Voir la ressource"
+
+#: /var/www/wordpress/wp-content/plugins/wpldp/wpldp.php:87
+msgid "Search for a resource"
+msgstr "Rechercher une ressource"
+
+#: /var/www/wordpress/wp-content/plugins/wpldp/wpldp.php:88
+msgid "No corresponding resource"
+msgstr "Aucun ressource correspondante"
+
+#: /var/www/wordpress/wp-content/plugins/wpldp/wpldp.php:89
+msgid "No corresponding resource in the trash"
+msgstr "Aucun ressource correspondante dans la corbeille"
+
+#: /var/www/wordpress/wp-content/plugins/wpldp/wpldp.php:92
+msgid "LDP Resource"
+msgstr "Ressource LDP"
+
+#: /var/www/wordpress/wp-content/plugins/wpldp/wpldp.php:134
+#: /var/www/wordpress/wp-content/plugins/wpldp/wpldp.php:339
+#: /var/www/wordpress/wp-content/plugins/wpldp/wpldp.php:341
+msgid "Containers"
+msgstr "Containers"
+
+#: /var/www/wordpress/wp-content/plugins/wpldp/wpldp.php:304
+#: /var/www/wordpress/wp-content/plugins/wpldp/wpldp.php:464
+#: /var/www/wordpress/wp-content/plugins/wpldp/wpldp.php:465
+#: /var/www/wordpress/wp-content/plugins/wpldp/wpldp.php:473
+msgid "WP-LDP Settings"
+msgstr "Options WP-LDP"
+
+#: /var/www/wordpress/wp-content/plugins/wpldp/wpldp.php:306
+msgid "The generals settings of the WP-LDP plugin."
+msgstr "Les paramètres généraux du plugin WP-LDP"
+
+#: /var/www/wordpress/wp-content/plugins/wpldp/wpldp.php:313
+msgid "WP-LDP Context"
+msgstr "WP-LDP Context"
+
+#: /var/www/wordpress/wp-content/plugins/wpldp/wpldp.php:321
+msgid "Do you want to initialize PAIR containers ?"
+msgstr "Voulez-vous initialiser les containers PAIR ?"
+
+#: /var/www/wordpress/wp-content/plugins/wpldp/wpldp.php:340
+msgid "Container"
+msgstr "Container"
+
+#: /var/www/wordpress/wp-content/plugins/wpldp/wpldp.php:342
+msgid "All Items"
+msgstr "Voir tous"
+
+#: /var/www/wordpress/wp-content/plugins/wpldp/wpldp.php:343
+msgid "Parent Item"
+msgstr "Parent"
+
+#: /var/www/wordpress/wp-content/plugins/wpldp/wpldp.php:344
+msgid "Parent Item:"
+msgstr "Parent:"
+
+#: /var/www/wordpress/wp-content/plugins/wpldp/wpldp.php:345
+msgid "New Item Name"
+msgstr "Nouveau nom de l'item"
+
+#: /var/www/wordpress/wp-content/plugins/wpldp/wpldp.php:346
+msgid "Add New Item"
+msgstr "Ajouter un item"
+
+#: /var/www/wordpress/wp-content/plugins/wpldp/wpldp.php:347
+msgid "Edit Item"
+msgstr "Éditer un item"
+
+#: /var/www/wordpress/wp-content/plugins/wpldp/wpldp.php:348
+msgid "Update Item"
+msgstr "Mettre à jour l'item"
+
+#: /var/www/wordpress/wp-content/plugins/wpldp/wpldp.php:349
+msgid "View Item"
+msgstr "Voir l'item"
+
+#: /var/www/wordpress/wp-content/plugins/wpldp/wpldp.php:350
+msgid "Separate items with commas"
+msgstr "Séparer les items avec des virgules"
+
+#: /var/www/wordpress/wp-content/plugins/wpldp/wpldp.php:351
+msgid "Add or remove items"
+msgstr "Ajouter ou supprimer un item"
+
+#: /var/www/wordpress/wp-content/plugins/wpldp/wpldp.php:352
+msgid "Choose from the most used"
+msgstr "Choisir parmi les plus utilisés"
+
+#: /var/www/wordpress/wp-content/plugins/wpldp/wpldp.php:353
+msgid "Popular Items"
+msgstr "Objets populaires"
+
+#: /var/www/wordpress/wp-content/plugins/wpldp/wpldp.php:354
+msgid "Search Items"
+msgstr "Chercher des objets"
+
+#: /var/www/wordpress/wp-content/plugins/wpldp/wpldp.php:355
+msgid "Not Found"
+msgstr "Non trouvé"
+
+#: /var/www/wordpress/wp-content/plugins/wpldp/wpldp.php:386
+msgid "Model"
+msgstr "Modèle"
+
+#: /var/www/wordpress/wp-content/plugins/wpldp/wpldp.php:388
+#: /var/www/wordpress/wp-content/plugins/wpldp/wpldp.php:408
+msgid "The LDP-compatible JSON Model for this container"
+msgstr "Le modèle en format JSON compatible LDP pour ce container"
+
+#: /var/www/wordpress/wp-content/plugins/wpldp/wpldp.php:406
+msgid "Model editor mode"
+msgstr "Éditeur de modèle"

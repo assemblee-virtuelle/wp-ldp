@@ -3,7 +3,7 @@
  * Plugin Name: WP LDP
  * Plugin URI: http://www.happy-dev.fr
  * Description: This is a test for LDP
- * Text Domain: ??
+ * Text Domain: wpldp
  * Version: 0.1
  * Author: Sylvain LE BON
  * Author URI: http://www.happy-dev.fr/team/sylvain
@@ -21,12 +21,54 @@ if ( get_magic_quotes_gpc() ) {
 }
 
 // Entry point of the plugin
+add_action('init', 'load_translations_file');
 add_action('init', 'create_ldp_type');
+add_action('init', 'add_poc_rewrite_rule');
 add_action('edit_form_after_title', 'myprefix_edit_form_after_title');
 add_action('save_post', 'test_save');
+add_action('admin_menu', 'ldp_menu');
 add_action('admin_init', 'backend_hooking');
+add_action('update_option', 'initialize_container');
 
 add_filter( 'template_include', 'include_template_function');
+
+function initialize_container($option, $oldValue, $_newValue) {
+  if ($option === 'ldp_container_init') {
+    var_dump("This is the good option update");
+    die();
+  }
+}
+
+#####################################
+# Loading translations file
+#####################################
+function load_translations_file() {
+    $path        = dirname( plugin_basename( __FILE__ ) ) . '/languages';
+    load_plugin_textdomain('wpldp', FALSE, $path);
+    load_theme_textdomain('wpldp', $path);
+}
+
+#####################################
+# Rewriting function to access the POC from Wordpress
+#####################################
+function add_poc_rewrite_rule() {
+    global $wp_rewrite;
+    $poc_url = plugins_url('public/index.html', __FILE__);
+    $poc_url = substr($poc_url, strlen( home_url() ) + 1);
+    // The pattern is prefixed with '^'
+    // The substitution is prefixed with the "home root", at least a '/'
+    // This is equivalent to appending it to `non_wp_rules`
+    $wp_rewrite->add_external_rule('av-poc.php', $poc_url);
+}
+
+function my_page_template_redirect() {
+    if( is_page( 'av-poc' ) )
+    {
+        wp_redirect(plugins_url('public/index.html', __FILE__));
+        exit();
+    }
+}
+add_action( 'template_redirect', 'my_page_template_redirect' );
 
 ##########################################
 # LDP Resource content type definition
@@ -35,27 +77,28 @@ function create_ldp_type() {
     register_post_type('ldp_resource',
         array(
             'labels'  => array(
-                'name'              => 'Resources',
-                'singular_name'     => 'Resource',
-                'all_items'         => 'All resources',
-                'add_new_item'      => 'Ajouter une ressource',
-                'edit_item'         => 'Édition d\'une ressource',
-                'new_item'          => 'Nouvelle ressource',
-                'view_item'         => 'Voir la ressource',
-                'search_items'      => 'Rechercher une ressource',
-                'not_found'         => 'Aucun ressource correspondante',
-                'not_found_in_trash'=> 'Aucun ressource correspondante dans la corbeille',
-                'add_new'           => 'Ajouter une ressource',
+                'name'              => __('Resources', 'wpldp'),
+                'singular_name'     => __('Resource', 'wpldp'),
+                'all_items'         => __('All resources', 'wpldp'),
+                'add_new_item'      => __('Add a resource', 'wpldp'),
+                'edit_item'         => __('Edit a resource', 'wpldp'),
+                'new_item'          => __('New resource', 'wpldp'),
+                'view_item'         => __('See the resource', 'wpldp'),
+                'search_items'      => __('Search for a resource', 'wpldp'),
+                'not_found'         => __('No corresponding resource', 'wpldp'),
+                'not_found_in_trash'=> __('No corresponding resource in the trash', 'wpldp'),
+                'add_new'           => __('Add a resource', 'wpldp'),
             ),
-            'description'           => 'LDP Resource',
+            'description'           => __('LDP Resource', 'wpldp'),
             'public'                => true,
             'show_in_nav_menu'      => true,
             'show_in_menu'          => true,
             'show_in_admin_bar'     => true,
             'supports'              => array('title'),
             'has_archive'           => true,
-            'rewrite'               => array('slug' => '%ldp_container%'),
+            'rewrite'               => array('slug' => 'ldp/%ldp_container%'),
     ));
+    flush_rewrite_rules();
 }
 
 /**
@@ -66,15 +109,19 @@ function create_ldp_type() {
 	 */
 function ldp_resource_post_link( $post_link, $id = 0 ){
     $post = get_post($id);
-    if (is_object($post)){
+
+    if ( 'ldp_resource' == get_post_type( $post ) ) {
+      if (is_object($post)){
         $terms = wp_get_object_terms( $post->ID, 'ldp_container' );
         if (!empty($terms)) {
             return str_replace('%ldp_container%', $terms[0]->slug, $post_link);
         }
+      }
     }
+
     return $post_link;
 }
-add_filter( 'post_type_link', 'ldp_resource_post_link', 1, 3 );
+add_filter( 'post_type_link', 'ldp_resource_post_link', 10, 3 );
 
 /**
  	 * Remove the original meta box on the ldp_resource edition page and
@@ -89,7 +136,7 @@ function display_container_meta_box( $post_type ) {
   if( $post_type == 'ldp_resource' ) :
     add_meta_box(
       'ldp_containerdiv',
-      'Containers',
+      __('Containers', 'wpldp'),
       'container_meta_box_callback',
       $post_type,
       'side'
@@ -199,12 +246,20 @@ function myprefix_edit_form_after_title($post) {
           echo('<br>');
           echo '<div id="ldpform"></div>';
           echo '<script>';
-          echo "var store = new MyStore({container: '$container', context: 'http://owl.openinitiative.com/oicontext.jsonld', template:\"{{{form '{$term[0]->slug}'}}}\", models: $ldpModel});";
-          echo "store.render('#ldpform');";
+          echo "var store = new MyStore({
+                      container: '$container',
+                      context: '" . get_option('ldp_context', 'http://owl.openinitiative.com/oicontext.jsonld') ."',
+                      template:\"{{{form '{$term[0]->slug}'}}}\",
+                      models: $ldpModel
+                });";
+          echo "store.render('#ldpform', '$container', undefined, undefined, '{$term[0]->slug}', 'ldp_');";
+          // echo "var actorsList = store.list('/ldp_container/actor/');";
+          // echo "console.log(actorsList);";
           echo '</script>';
         }
     }
 }
+
 function test_save($resource_id) {
     foreach($_POST as $key => $value) {
         if(substr($key, 0, 4) == "ldp_") {
@@ -212,14 +267,72 @@ function test_save($resource_id) {
         }
     }
 }
+
 function ldp_enqueue_script() {
     wp_enqueue_script('', 'https://code.jquery.com/jquery-2.1.4.min.js');
-    wp_register_script('ldpjs', plugins_url('library/js/LDP-framework/mystore.js', __FILE__), array('jquery'));
+
+    // Loading the LDP-framework library
+    wp_register_script(
+      'ldpjs',
+      plugins_url('library/js/LDP-framework/mystore.js', __FILE__),
+      array('jquery')
+    );
     wp_enqueue_script('ldpjs');
+
+    // Loading the JSONEditor library
+    wp_register_script(
+      'jsoneditorjs',
+      plugins_url('library/js/node_modules/jsoneditor/dist/jsoneditor.min.js', __FILE__)
+    );
+    wp_enqueue_script('jsoneditorjs');
+}
+
+function ldp_enqueue_stylesheet() {
+  // Loading the WP-LDP stylesheet
+  wp_register_style(
+    'wpldpcss',
+    plugins_url('resources/css/wpldp.css', __FILE__)
+  );
+  wp_enqueue_style('wpldpcss');
+
+    // Loading the JSONEditor stylesheet
+    wp_register_style(
+      'jsoneditorcss',
+      plugins_url('library/js/node_modules/jsoneditor/dist/jsoneditor.min.css', __FILE__)
+    );
+    wp_enqueue_style('jsoneditorcss');
 }
 
 function backend_hooking() {
     add_action('admin_enqueue_scripts', 'ldp_enqueue_script');
+    add_action('admin_enqueue_scripts', 'ldp_enqueue_stylesheet');
+    add_settings_section(
+      'ldp_context',
+      __('WP-LDP Settings', 'wpldp'),
+      function() {
+        echo __('The generals settings of the WP-LDP plugin.', 'wpldp');
+      },
+      'wpldp'
+    );
+
+    add_settings_field(
+      'ldp_context',
+      __('WP-LDP Context', 'wpldp'),
+      'ldp_context_field',
+      'wpldp',
+      'ldp_context'
+    );
+
+    add_settings_field(
+      'ldp_container_init',
+      __('Do you want to initialize PAIR containers ?', 'wpldp'),
+      'ldp_container_init_field',
+      'wpldp',
+      'ldp_context'
+    );
+
+    register_setting( 'ldp_context', 'ldp_context' );
+    register_setting( 'ldp_container_init', 'ldp_context' );
 }
 
 ################################
@@ -230,23 +343,23 @@ $taxonomyName = 'ldp_container';
 function register_container_taxonomy() {
 
 	$labels = array(
-		'name'                       => _x( 'Containers', 'Taxonomy General Name', 'text_domain' ),
-		'singular_name'              => _x( 'Container', 'Taxonomy Singular Name', 'text_domain' ),
-		'menu_name'                  => __( 'Containers', 'text_domain' ),
-		'all_items'                  => __( 'All Items', 'text_domain' ),
-		'parent_item'                => __( 'Parent Item', 'text_domain' ),
-		'parent_item_colon'          => __( 'Parent Item:', 'text_domain' ),
-		'new_item_name'              => __( 'New Item Name', 'text_domain' ),
-		'add_new_item'               => __( 'Add New Item', 'text_domain' ),
-		'edit_item'                  => __( 'Edit Item', 'text_domain' ),
-		'update_item'                => __( 'Update Item', 'text_domain' ),
-		'view_item'                  => __( 'View Item', 'text_domain' ),
-		'separate_items_with_commas' => __( 'Separate items with commas', 'text_domain' ),
-		'add_or_remove_items'        => __( 'Add or remove items', 'text_domain' ),
-		'choose_from_most_used'      => __( 'Choose from the most used', 'text_domain' ),
-		'popular_items'              => __( 'Popular Items', 'text_domain' ),
-		'search_items'               => __( 'Search Items', 'text_domain' ),
-		'not_found'                  => __( 'Not Found', 'text_domain' ),
+		'name'                       => __( 'Containers', 'wpldp' ),
+		'singular_name'              => __( 'Container', 'wpldp' ),
+		'menu_name'                  => __( 'Containers', 'wpldp' ),
+		'all_items'                  => __( 'All Items', 'wpldp' ),
+		'parent_item'                => __( 'Parent Item', 'wpldp' ),
+		'parent_item_colon'          => __( 'Parent Item:', 'wpldp' ),
+		'new_item_name'              => __( 'New Item Name', 'wpldp' ),
+		'add_new_item'               => __( 'Add New Item', 'wpldp' ),
+		'edit_item'                  => __( 'Edit Item', 'wpldp' ),
+		'update_item'                => __( 'Update Item', 'wpldp' ),
+		'view_item'                  => __( 'View Item', 'wpldp' ),
+		'separate_items_with_commas' => __( 'Separate items with commas', 'wpldp' ),
+		'add_or_remove_items'        => __( 'Add or remove items', 'wpldp' ),
+		'choose_from_most_used'      => __( 'Choose from the most used', 'wpldp' ),
+		'popular_items'              => __( 'Popular Items', 'wpldp' ),
+		'search_items'               => __( 'Search Items', 'wpldp' ),
+		'not_found'                  => __( 'Not Found', 'wpldp' ),
 	);
 	$rewrite = array(
 		'slug'                       => '',
@@ -277,9 +390,9 @@ add_action( 'init', 'register_container_taxonomy', 0 );
 	 */
 function add_custom_tax_fields_oncreate($term) {
   echo "<div class='form-field form-required term-model-wrap'>";
-  echo "<label for='ldp_model'>Model</label>";
+  echo "<label for='ldp_model'>" . __('Model', 'wpldp'). "</label>";
   echo "<textarea id='ldp_model' type='text' name='ldp_model' cols='40' rows='20'></textarea>";
-  echo "<p class='description'>The LDP-compatible JSON Model for this container</p>";
+  echo "<p class='description'>" . __('The LDP-compatible JSON Model for this container', 'wpldp'). "</p>";
   echo "</div>";
 }
 add_action('ldp_container_add_form_fields', 'add_custom_tax_fields_oncreate');
@@ -297,10 +410,35 @@ function add_custom_tax_fields_onedit($term) {
   $ldpModel = stripslashes_deep($termMeta['ldp_model']);
 
   echo "<tr class='form-field form-required term-model-wrap'>";
-  echo "<th scope='row'><label for='ldp_model'>Model</label></th>";
-  echo "<td><textarea id='ldp_model' type='text' name='ldp_model' cols='40' rows='20'>$ldpModel</textarea>";
-  echo "<p class='description'>The LDP-compatible JSON Model for this container</p></td>";
+  echo "<th scope='row'><label for='ldp_model_editor'>" . __('Model editor mode', 'wpldp'). "</label></th>";
+  echo "<td><div id='ldp_model_editor' style='width: 1000px; height: 400px;'></div></td>";
+  echo "<p class='description'>" . __('The LDP-compatible JSON Model for this container', 'wpldp'). "</p></td>";
   echo "</tr>";
+  echo "<input type='hidden' id='ldp_model' name='ldp_model' value='$ldpModel'/>";
+
+  echo "</tr>";
+
+  echo '<script>
+          var container = document.getElementById("ldp_model_editor");
+          var options = {
+            mode:"tree",
+            modes: ["code", "form", "text", "tree", "view"],
+            change: function () {
+              var input = document.getElementById("ldp_model");
+              if (input) {
+                if (editor) {
+                  var json = editor.get();
+                  input.value = JSON.stringify(json);
+                }
+              }
+            }
+          };
+          window.editor = new JSONEditor(container, options);
+
+          var json = ' . json_encode(json_decode($ldpModel)) . ';
+          editor.set(json);
+          editor.expandAll();
+        </script>';
 }
 add_action('ldp_container_edit_form_fields', 'add_custom_tax_fields_onedit');
 
@@ -324,6 +462,40 @@ function save_custom_tax_field($termID) {
 }
 add_action('create_ldp_container', 'save_custom_tax_field');
 add_action('edited_ldp_container', 'save_custom_tax_field');
+
+################################
+# Settings
+################################
+function ldp_menu() {
+    add_options_page(
+        __('WP-LDP Settings', 'wpldp'),
+        __('WP-LDP Settings', 'wpldp'),
+        'edit_posts',
+        'wpldp',
+        'wpldp_options_page'
+    );
+}
+function wpldp_options_page() {
+    echo '<div class="wrap">';
+    echo '<h2>' . __('WP-LDP Settings', 'wpldp') . '</h2>';
+    echo '<form method="post" action="options.php">';
+      settings_fields('ldp_context');
+      do_settings_sections('wpldp');
+      submit_button();
+    echo '</form>';
+    echo '</div>';
+}
+
+function ldp_context_field() {
+    echo "<input type='text' size='150' name='ldp_context' value='" . get_option('ldp_context', 'http://owl.openinitiative.com/oicontext.jsonld') . "' />";
+}
+
+function ldp_container_init_field() {
+    $optionValue = !empty(get_option('ldp_container_init', false)) ? true : false;
+    // var_dump($optionValue);
+    // die();
+    echo "<input type='checkbox' name='ldp_container_init' value='ldp_container_init' " . checked(1, get_option('ldp_container_init'), false) . " />";
+}
 
 #############################
 #       FOOTER SCRIPT
