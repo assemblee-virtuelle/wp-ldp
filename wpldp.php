@@ -96,8 +96,9 @@ function create_ldp_type() {
             'show_in_admin_bar'     => true,
             'supports'              => array('title'),
             'has_archive'           => true,
-            'rewrite'               => array('slug' => '%ldp_container%'),
+            'rewrite'               => array('slug' => 'ldp_resource/%ldp_container%'),
     ));
+    flush_rewrite_rules();
 }
 
 /**
