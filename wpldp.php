@@ -108,6 +108,7 @@ function create_ldp_type() {
  	 * @return void
 	 */
 function ldp_resource_post_link( $post_link, $id = 0 ){
+    global $post;
     if ( 'ldp_resource' == get_post_type( $post ) ) {
       $post = get_post($id);
       if (is_object($post)){
