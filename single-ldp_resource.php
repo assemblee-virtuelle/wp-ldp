@@ -47,7 +47,10 @@
               foreach($fields as $field) {
                 if ( strstr($field->name, $arrayField) ||
                     $field->name === $arrayField ) {
-                  $valuesArray[$arrayField][] = json_encode(get_post_custom_values($field->name)[0]);
+                  $value = get_post_custom_values($field->name)[0];
+                  if (!empty($value) && $value != '""') {
+                    $valuesArray[$arrayField][] = json_encode(get_post_custom_values($field->name)[0]);
+                  }
                 }
               }
             }
@@ -62,16 +65,25 @@
               }
             }
 
-            foreach ($valuesArray as $fieldName => $values) {
-              echo("          \"" . substr($fieldName, 4) . "\": [\n");
-              foreach($values as $value) {
-                if (!empty($value) && $value != '""') {
-                  echo "               {\n";
-                  echo("                    \"@id\": " . $value . "\n");
-                  echo "               },\n";
+            if (!empty($valuesArray)) {
+              foreach ($valuesArray as $fieldName => $values) {
+                echo("          \"" . substr($fieldName, 4) . "\": [\n");
+                $count = 0;
+                foreach($values as $value) {
+                  if (!empty($value) && $value != '""') {
+                    $count++;
+                    echo "               {\n";
+                    echo("                    \"@id\": " . $value . "\n");
+
+                    if ($count < count($values)) {
+                      echo "               },\n";
+                    } else {
+                      echo "               }\n";
+                    }
+                  }
                 }
+                echo "          ],\n";
               }
-              echo "          ],\n";
             }
           ?>
           "@id": "<?php the_permalink(); ?>"
