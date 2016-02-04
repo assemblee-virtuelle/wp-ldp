@@ -5,17 +5,34 @@
 if (!class_exists('WpLdpSettings')) {
     class WpLdpSettings {
       /**
-       * Default Constructor
-       **/
-       public function __construct() {
+       * __construct - Class default constructor
+       *
+       * @return {WpLdpSettings}  Instance of the WpLdpSettings Class
+       */
+      public function __construct() {
+        add_action( 'admin_menu', array($this, 'ldp_menu'));
+        add_action( 'admin_init', array($this, 'backend_hooking'));
 
-         add_action( 'admin_menu', array($this, 'ldp_menu'));
-         add_action( 'admin_init', array($this, 'backend_hooking'));
+        //add_action('update_option', 'initialize_container');
+      }
+
+
+       /**
+        * initialize_container - Initialiaze the PAIR containers if the associated
+        * option is checked
+        *
+        * @param  {type} $option    the checkbox to evaluate
+        * @param  {type} $oldValue  the oldvalue (should be false)
+        * @param  {type} $_newValue the new checkbox value (should be true)
+        * @return {type}            description
+        */
+       function initialize_container($option, $oldValue, $_newValue) {
+         if ($option === 'ldp_container_init') {
+           var_dump("This is the good option update");
+           die();
+         }
        }
 
-       ################################
-       # Settings
-       ################################
        function ldp_menu() {
            add_options_page(
                __('WP-LDP Settings', 'wpldp'),
