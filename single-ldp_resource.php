@@ -85,6 +85,49 @@
                 echo "          ],\n";
               }
             }
+
+            // Get user to retrieve associated posts !
+            $user_login;
+            foreach($fields as $field) {
+              if ($field->name == 'ldp_foaf:nick') {
+                $user_login = get_post_custom_values($field->name)[0];
+              }
+            }
+
+            if ($user_login) {
+              $user = get_user_by ( 'login', $user_login);
+              if ($user) {
+                $loop = new WP_Query( array(
+                    'post_type' => 'post',
+                    'posts_per_page' => 12,
+                    'orderby'=> 'menu_order',
+                    'author' => $user->data->ID,
+                    'post_status' => 'any',
+                    'paged'=>$paged
+                ));
+
+                if ($loop->have_posts ()) {
+                  echo "          \"posts\": [\n";
+                  $count = 1;
+                  while ($loop->have_posts ()) :
+                      $loop->next_post ();
+                      $post = $loop->post;
+                      echo "               {\n";
+                      echo "                    \"url\": \"" . get_permalink ($post->ID) . "\",\n";
+                      echo '                    "dc:title":' . json_encode($post->post_title) . ",\n";
+                      echo '                    "sioc:blogPost":' . json_encode($post->post_content) . "\n";
+                      if ($count < $loop->post_count) {
+                        echo "               },\n";
+                      } else {
+                        echo "               }\n";
+                      }
+                      $count++;
+                  endwhile;
+                  echo "          ],\n";
+                  wp_reset_postdata();
+                }
+              }
+            }
           ?>
           "@id": "<?php the_permalink(); ?>"
         }
