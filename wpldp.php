@@ -13,6 +13,8 @@
 // If the file is accessed outside of index.php (ie. directly), we just deny the access
 defined('ABSPATH') or die("No script kiddies please!");
 
+require_once('wpldp-settings.php');
+
 if (!class_exists('WpLdp')) {
     class WpLdp {
       /**
@@ -33,8 +35,6 @@ if (!class_exists('WpLdp')) {
         add_action( 'init', array($this, 'register_connection_types'));
         add_action( 'edit_form_after_title', array($this, 'myprefix_edit_form_after_title'));
         add_action( 'save_post', array($this, 'test_save'));
-        add_action( 'admin_menu', array($this, 'ldp_menu'));
-        add_action( 'admin_init', array($this, 'backend_hooking'));
         //add_action('update_option', 'initialize_container');
 
         add_filter( 'template_include', array($this, 'include_template_function'));
@@ -43,7 +43,6 @@ if (!class_exists('WpLdp')) {
         add_action( 'init', array($this, 'register_container_taxonomy'), 0 );
 
         add_action( 'ldp_container_add_form_fields', array($this, 'add_custom_tax_fields_oncreate'));
-
         add_action( 'ldp_container_edit_form_fields', array($this, 'add_custom_tax_fields_onedit'));
         add_action( 'create_ldp_container', array($this, 'save_custom_tax_field'));
         add_action( 'edited_ldp_container', array($this, 'save_custom_tax_field'));
@@ -51,6 +50,8 @@ if (!class_exists('WpLdp')) {
 
         add_filter( 'post_type_link', array($this, 'ldp_resource_post_link'), 10, 3 );
 
+        add_action('admin_enqueue_scripts', array($this, 'ldp_enqueue_script'));
+        add_action('admin_enqueue_scripts', array($this, 'ldp_enqueue_stylesheet'));
       }
 
 
@@ -293,8 +294,8 @@ if (!class_exists('WpLdp')) {
                             models: $ldpModel
                       });";
                 echo "store.render('#ldpform', '$container', undefined, undefined, '{$term[0]->slug}', 'ldp_');";
-                echo "var actorsList = store.list('/ldp_container/actor/');";
-                echo "console.log(actorsList);";
+                // echo "var actorsList = store.list('/ldp_container/actor/');";
+                // echo "console.log(actorsList);";
                 echo '</script>';
               }
           }
@@ -341,38 +342,6 @@ if (!class_exists('WpLdp')) {
             plugins_url('library/js/node_modules/jsoneditor/dist/jsoneditor.min.css', __FILE__)
           );
           wp_enqueue_style('jsoneditorcss');
-      }
-
-      function backend_hooking() {
-          add_action('admin_enqueue_scripts', array($this, 'ldp_enqueue_script'));
-          add_action('admin_enqueue_scripts', array($this, 'ldp_enqueue_stylesheet'));
-          add_settings_section(
-            'ldp_context',
-            __('WP-LDP Settings', 'wpldp'),
-            function() {
-              echo __('The generals settings of the WP-LDP plugin.', 'wpldp');
-            },
-            'wpldp'
-          );
-
-          add_settings_field(
-            'ldp_context',
-            __('WP-LDP Context', 'wpldp'),
-            array($this, 'ldp_context_field'),
-            'wpldp',
-            'ldp_context'
-          );
-
-          add_settings_field(
-            'ldp_container_init',
-            __('Do you want to initialize PAIR containers ?', 'wpldp'),
-            array($this, 'ldp_container_init_field'),
-            'wpldp',
-            'ldp_context'
-          );
-
-          register_setting( 'ldp_context', 'ldp_context' );
-          register_setting( 'ldp_container_init', 'ldp_context' );
       }
 
       ################################
@@ -495,40 +464,6 @@ if (!class_exists('WpLdp')) {
           $termMeta['ldp_model'] = stripslashes_deep($_POST['ldp_model']);
           update_option("ldp_container_$termID", $termMeta);
         }
-      }
-
-      ################################
-      # Settings
-      ################################
-      function ldp_menu() {
-          add_options_page(
-              __('WP-LDP Settings', 'wpldp'),
-              __('WP-LDP Settings', 'wpldp'),
-              'edit_posts',
-              'wpldp',
-              array($this, 'wpldp_options_page')
-          );
-      }
-      function wpldp_options_page() {
-          echo '<div class="wrap">';
-          echo '<h2>' . __('WP-LDP Settings', 'wpldp') . '</h2>';
-          echo '<form method="post" action="options.php">';
-            settings_fields('ldp_context');
-            do_settings_sections('wpldp');
-            submit_button();
-          echo '</form>';
-          echo '</div>';
-      }
-
-      function ldp_context_field() {
-          echo "<input type='text' size='150' name='ldp_context' value='" . get_option('ldp_context', 'http://owl.openinitiative.com/oicontext.jsonld') . "' />";
-      }
-
-      function ldp_container_init_field() {
-          $optionValue = !empty(get_option('ldp_container_init', false)) ? true : false;
-          // var_dump($optionValue);
-          // die();
-          echo "<input type='checkbox' name='ldp_container_init' value='ldp_container_init' " . checked(1, get_option('ldp_container_init'), false) . " />";
       }
 
       #############################
