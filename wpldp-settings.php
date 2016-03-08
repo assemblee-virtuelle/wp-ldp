@@ -12,8 +12,6 @@ if (!class_exists('WpLdpSettings')) {
       public function __construct() {
         add_action( 'admin_menu', array($this, 'ldp_menu'));
         add_action( 'admin_init', array($this, 'backend_hooking'));
-
-        //add_action('update_option', 'initialize_container');
       }
 
 
@@ -26,28 +24,85 @@ if (!class_exists('WpLdpSettings')) {
         * @param  {type} $_newValue the new checkbox value (should be true)
         * @return {type}            description
         */
-       function initialize_container($option, $oldValue, $_newValue) {
-         if ($option === 'ldp_container_init') {
-           var_dump("This is the good option update");
-           die();
+       function initialize_container() {
+         if (isset($_GET['settings-updated'])) {
+           $ldp_container_init = get_option('ldp_container_init', false);
+
+           if ($ldp_container_init) {
+             //TODO: Initialize the PAIR containers
+             $pair_terms = array('project', 'actor', 'idea', 'resource');
+             foreach ($pair_terms as $term) {
+               // 1 - Check if they do not exists
+               if (!term_exists($term, 'ldp_container')) {
+                 //   - Else, loop on the models files (or hardcoded array) and push them each as taxonomy term in the database
+                 $model = file_get_contents(__DIR__  . '/models/' . $term . '_model.json');
+                 $new_term = wp_insert_term(
+                    ucfirst($term),
+                    'ldp_container',
+                    array(
+                      'slug' => $term,
+                      'description' => 'The ' . $term . ' object model'
+                    )
+                  );
+
+                  $term_id = $new_term['term_id'];
+                  $term_meta = get_option("ldp_container_$term_id");
+                  if (!is_array($term_meta)) {
+                    $term_meta = array();
+                  }
+
+                  $term_meta['ldp_model'] = stripslashes_deep($model);
+                  update_option("ldp_container_$term_id", $term_meta);
+               }
+             }
+           }
          }
        }
 
+
+       /**
+        * wpldp_validation_notice - Override the default update message or/and add a new one.
+        *
+        * @return {type}  current workflow
+        */
+       function wpldp_validation_notice() {
+         global $pagenow;
+         if ($pagenow == 'options-general.php' && $_GET['page'] == 'wpldp') { // change my-plugin to your plugin page
+           if ( (isset($_GET['settings-updated']) && $_GET['settings-updated'] == 'true') ) {
+
+            $ldp_container_init = get_option('ldp_container_init', false);
+             if ($ldp_container_init) {
+               $update_message = __('The PAIR containers have been initialized, enjoy ;-)', 'wpldp');
+               add_settings_error('general', 'settings_updated', $update_message, 'updated');
+             }
+           }
+         }
+       }
+
+
+       /**
+        * ldp_menu - Generate the plugin settings menu and associated page
+        *
+        * @return {type}  current workflow
+        */
        function ldp_menu() {
-           add_options_page(
+           $hook = add_options_page(
                __('WP-LDP Settings', 'wpldp'),
                __('WP-LDP Settings', 'wpldp'),
                'edit_posts',
                'wpldp',
                array($this, 'wpldp_options_page')
            );
+
+           add_action( 'load-'.$hook, array($this, 'initialize_container') );
+           add_action( 'admin_notices', array($this, 'wpldp_validation_notice'));
        }
 
        function wpldp_options_page() {
            echo '<div class="wrap">';
            echo '<h2>' . __('WP-LDP Settings', 'wpldp') . '</h2>';
            echo '<form method="post" action="options.php">';
-             settings_fields('ldp_context');
+             settings_fields('ldp_settings');
              do_settings_sections('wpldp');
              submit_button();
            echo '</form>';
@@ -59,15 +114,13 @@ if (!class_exists('WpLdpSettings')) {
        }
 
        function ldp_container_init_field() {
-           $optionValue = !empty(get_option('ldp_container_init', false)) ? true : false;
-           // var_dump($optionValue);
-           // die();
-           echo "<input type='checkbox' name='ldp_container_init' value='ldp_container_init' " . checked(1, get_option('ldp_container_init'), false) . " />";
+           $optionValue = !empty(get_option('ldp_container_init', false)) ? 1 : 0;
+           echo "<input type='checkbox' name='ldp_container_init' value='1' " . checked($optionValue, 1, false) . " />";
        }
 
        function backend_hooking() {
            add_settings_section(
-             'ldp_context',
+             'ldp_settings',
              __('WP-LDP Settings', 'wpldp'),
              function() {
                echo __('The generals settings of the WP-LDP plugin.', 'wpldp');
@@ -80,7 +133,7 @@ if (!class_exists('WpLdpSettings')) {
              __('WP-LDP Context', 'wpldp'),
              array($this, 'ldp_context_field'),
              'wpldp',
-             'ldp_context'
+             'ldp_settings'
            );
 
            add_settings_field(
@@ -88,11 +141,11 @@ if (!class_exists('WpLdpSettings')) {
              __('Do you want to initialize PAIR containers ?', 'wpldp'),
              array($this, 'ldp_container_init_field'),
              'wpldp',
-             'ldp_context'
+             'ldp_settings'
            );
 
-           register_setting( 'ldp_context', 'ldp_context' );
-           register_setting( 'ldp_container_init', 'ldp_context' );
+           register_setting( 'ldp_settings', 'ldp_context' );
+           register_setting( 'ldp_settings', 'ldp_container_init' );
        }
     }
 } else {

@@ -18,6 +18,9 @@ require_once('wpldp-settings.php');
 
 if (!class_exists('WpLdp')) {
     class WpLdp {
+
+      protected static $version_number = '1.0.0';
+
       /**
        * Default Constructor
        **/
@@ -30,12 +33,13 @@ if (!class_exists('WpLdp')) {
         }
 
         // Entry point of the plugin
+        add_action('init', array($this, 'wpldp_plugin_update'));
         add_action( 'init', array($this, 'load_translations_file'));
         add_action( 'init', array($this, 'create_ldp_type'));
         add_action( 'init', array($this, 'add_poc_rewrite_rule'));
         add_action( 'init', array($this, 'register_connection_types'));
         add_action( 'edit_form_after_title', array($this, 'myprefix_edit_form_after_title'));
-        add_action( 'save_post', array($this, 'test_save'));
+        add_action( 'save_post', array($this, 'save_ldp_meta_for_post'));
 
         add_filter( 'template_include', array($this, 'include_template_function'));
         add_action( 'template_redirect', array($this, 'my_page_template_redirect' ));
@@ -47,6 +51,33 @@ if (!class_exists('WpLdp')) {
 
         add_action('admin_enqueue_scripts', array($this, 'ldp_enqueue_script'));
         add_action('admin_enqueue_scripts', array($this, 'ldp_enqueue_stylesheet'));
+
+
+      }
+
+
+      /**
+       * wpldp_plugin_update - Automatic database upgrade mechanism, planned for the future
+       *
+       * @return {boolean}  Update validation
+       */
+      function wpldp_plugin_update() {
+        $plugin_version = get_option('wpldp_version');
+        $update_option = null;
+
+        if (self::$version_number !== $plugin_version) {
+          if (self::$version_number > $plugin_version) {
+            $update_option = $this->wpldp_db_upgrade();
+
+            if ($update_option) {
+              update_option('wpldp_version', self::$version_number);
+            }
+          }
+        }
+      }
+
+      private function wpldp_db_upgrade() {
+        return true;
       }
 
       #####################################
@@ -279,7 +310,7 @@ if (!class_exists('WpLdp')) {
           }
       }
 
-      function test_save($resource_id) {
+      function save_ldp_meta_for_post($resource_id) {
           foreach($_POST as $key => $value) {
               if(substr($key, 0, 4) == "ldp_") {
                   update_post_meta($resource_id, $key, $value);
