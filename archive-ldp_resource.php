@@ -23,8 +23,8 @@
                     if (($field->name == "ldp_foaf:firstName"
                           || $field->name == "ldp_foaf:name")
                           && !empty(get_post_custom_values($field->name)[0])) {
-                      echo('    "'.substr($field->name, 4).'": ');
-                      echo('' . json_encode(get_post_custom_values($field->name)[0]) . ',');
+                      echo(',    "'.substr($field->name, 4).'": ');
+                      echo('' . json_encode(get_post_custom_values($field->name)[0]) . ' ');
                       echo "\n";
                     }
                   }
