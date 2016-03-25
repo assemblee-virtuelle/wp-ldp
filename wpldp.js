@@ -13,4 +13,11 @@ $( document ).ready(function() {
       var form = $('#post');
       form.submit();
   });
+
+  $('input').keypress(function(event) {
+      if (event.which == 13) {
+          event.preventDefault();
+          $('#form').submit();
+      }
+  });
 });
