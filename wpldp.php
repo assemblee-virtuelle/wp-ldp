@@ -322,6 +322,14 @@ if (!class_exists('WpLdp')) {
       function ldp_enqueue_script() {
           wp_enqueue_script('', 'https://code.jquery.com/jquery-2.1.4.min.js');
 
+          // Loading the Plugin-javascript file
+          wp_register_script(
+            'wpldpjs',
+            plugins_url('wpldp.js', __FILE__),
+            array('jquery')
+          );
+          wp_enqueue_script('wpldpjs');
+
           // Loading the LDP-framework library
           wp_register_script(
             'ldpjs',

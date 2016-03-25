@@ -12,16 +12,15 @@
   $termMeta = get_option("ldp_container_$value->term_id");
   $modelsDecoded = json_decode($termMeta["ldp_model"]);
   $fields = $modelsDecoded->{$value->slug}->fields;
-  $rdfType = $termMeta["ldp_rdf_type"];
+  $rdfType = isset($termMeta["ldp_rdf_type"]) ? $termMeta["ldp_rdf_type"] : null;
 ?>
 {
     "@context": "<?php echo get_option('ldp_context', 'http://owl.openinitiative.com/oicontext.jsonld'); ?>",
-    <?php if (!empty($rdfType)) echo "\"@type\" : \"$rdfType\",\n"; ?>
     "@graph": [
 <?php while (have_posts()) : the_post(); ?>
         {
             <?php
-            $referer = $_SERVER['HTTP_REFERER'];
+            $referer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : null;
             // Handling special case of editing trhough the wordpress admin backend
             if (!empty($referer) && strstr($referer, 'wp-admin/post.php')) {
               foreach($fields as $field) {
@@ -145,6 +144,7 @@
               }
             }
           ?>
+          <?php if (!empty($rdfType)) echo "\"@type\" : \"$rdfType\",\n"; ?>
           "@id": "<?php the_permalink(); ?>"
         }
 <?php endwhile; ?>
