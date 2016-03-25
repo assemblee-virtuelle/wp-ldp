@@ -17,11 +17,13 @@
                   }
 
                   $termMeta = get_option("ldp_container_$value->term_id");
-                  $modelsDecoded = json_decode($termMeta["ldp_model"]);
+                  $ldpIncludedFieldsList = $termMeta['ldp_included_fields_list'];
+                  $modelsDecoded = json_decode($termMeta['ldp_model']);
+
+                  $includedFieldsList = array_map('trim', explode(',', $ldpIncludedFieldsList));
                   $fields = $modelsDecoded->{$value->slug}->fields;
                   foreach ($fields as $field) {
-                    if (($field->name == "ldp_foaf:firstName"
-                          || $field->name == "ldp_foaf:name")
+                    if (in_array($field->name, $includedFieldsList)
                           && !empty(get_post_custom_values($field->name)[0])) {
                       echo(',    "'.substr($field->name, 4).'": ');
                       echo('' . json_encode(get_post_custom_values($field->name)[0]) . ' ');
