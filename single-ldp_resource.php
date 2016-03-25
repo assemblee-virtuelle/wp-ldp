@@ -21,7 +21,7 @@
 <?php while (have_posts()) : the_post(); ?>
         {
             <?php
-            $referer = $_SERVER['HTTP_REFERER'];
+            $referer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : null;
             // Handling special case of editing trhough the wordpress admin backend
             if (!empty($referer) && strstr($referer, 'wp-admin/post.php')) {
               foreach($fields as $field) {
