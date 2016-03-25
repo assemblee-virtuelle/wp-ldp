@@ -72,6 +72,21 @@ if (!class_exists('WpLdpTaxonomy')) {
        * @return void
        */
     function add_custom_tax_fields_oncreate($term) {
+      // Adding rdf:type field
+      echo "<div class='form-field term-model-wrap'>";
+      echo "<label for='ldp_rdf_type'>" . __('Rdf:type, if any', 'wpldp'). "</label>";
+      echo "<input type='text' id='ldp_rdf_type' type='text' name='ldp_rdf_type' />";
+      echo "<p class='description'>" . __('Rdf:type associated with this container', 'wpldp'). "</p>";
+      echo "</div>";
+
+      // Adding container included fields field
+      echo "<div class='form-field term-model-wrap'>";
+      echo "<label for='ldp_included_fields_list'>" . __('Included fields', 'wpldp'). "</label>";
+      echo "<input type='text' id='ldp_included_fields_list' type='text' name='ldp_included_fields_list' />";
+      echo "<p class='description'>" . __('The fields from the model whose values you would like to include from the associated resources in the container, separated by commas', 'wpldp'). "</p>";
+      echo "</div>";
+
+      // Adding the JSON model field
       echo "<div class='form-field form-required term-model-wrap'>";
       echo "<label for='ldp_model'>" . __('Model', 'wpldp'). "</label>";
       echo "<textarea id='ldp_model' type='text' name='ldp_model' cols='40' rows='20'></textarea>";
@@ -90,10 +105,27 @@ if (!class_exists('WpLdpTaxonomy')) {
       $termId = $term->term_id;
       $termMeta = get_option("ldp_container_$termId");
       $ldpModel = stripslashes_deep($termMeta['ldp_model']);
+      $ldpRdfType = isset($termMeta['ldp_rdf_type']) ? $termMeta['ldp_rdf_type'] : '';
+      $ldpIncludedFieldsList = isset($termMeta['ldp_included_fields_list']) ? $termMeta['ldp_included_fields_list'] : '';
 
+      // Adding rdf:type field
+      echo "<tr class='form-field form-required term-model-wrap'>";
+      echo "<th scope='row'><label for='ldp_rdf_type'>" . __('Rdf:type, if any', 'wpldp'). "</label></th>";
+      echo "<td><input type='text' name='ldp_rdf_type' id='ldp_rdf_type' value='$ldpRdfType' />";
+      echo "<p class='description'>" . __('Rdf:type associated with this container', 'wpldp'). "</p></td>";
+      echo "</tr>";
+
+      // Adding container included fields field
+      echo "<tr class='form-field form-required term-model-wrap'>";
+      echo "<th scope='row'><label for='ldp_included_fields_list'>" . __('Included fields', 'wpldp'). "</label></th>";
+      echo "<td><input type='text' name='ldp_included_fields_list' id='ldp_included_fields_list' value='$ldpIncludedFieldsList' />";
+      echo "<p class='description'>" . __('The fields from the model whose values you would like to include from the associated resources in the container, separated by commas', 'wpldp'). "</p></td>";
+      echo "</tr>";
+
+      // Adding the JSON model field
       echo "<tr class='form-field form-required term-model-wrap'>";
       echo "<th scope='row'><label for='ldp_model_editor'>" . __('Model editor mode', 'wpldp'). "</label></th>";
-      echo "<td><div id='ldp_model_editor' style='width: 1000px; height: 400px;'></div></td>";
+      echo "<td><div id='ldp_model_editor' style='width: 1000px; height: 400px;'></div>";
       echo "<p class='description'>" . __('The LDP-compatible JSON Model for this container', 'wpldp'). "</p></td>";
       echo "</tr>";
       echo "<input type='hidden' id='ldp_model' name='ldp_model' value='$ldpModel'/>";
@@ -131,16 +163,26 @@ if (!class_exists('WpLdpTaxonomy')) {
        * @return void
        */
     function save_custom_tax_field($termID) {
-      if (isset($_POST['ldp_model'])) {
-        $termMeta = get_option("ldp_container_$termID");
-        if (!is_array($termMeta)) {
-          $termMeta = array();
-        }
-
-        $termMeta['ldp_model'] = stripslashes_deep($_POST['ldp_model']);
-        update_option("ldp_container_$termID", $termMeta);
+      $termMeta = get_option("ldp_container_$termID");
+      if (!is_array($termMeta)) {
+        $termMeta = array();
       }
+
+      if (isset($_POST['ldp_included_fields_list'])) {
+        $termMeta['ldp_included_fields_list'] = $_POST['ldp_included_fields_list'];
+      }
+
+      if (isset($_POST['ldp_rdf_type'])) {
+        $termMeta['ldp_rdf_type'] = $_POST['ldp_rdf_type'];
+      }
+
+      if (isset($_POST['ldp_model'])) {
+        $termMeta['ldp_model'] = stripslashes_deep($_POST['ldp_model']);
+      }
+
+      update_option("ldp_container_$termID", $termMeta);
     }
+
     ################################
     # Resource publication
     ################################
