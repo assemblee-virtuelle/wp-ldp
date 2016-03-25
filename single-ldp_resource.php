@@ -1,26 +1,29 @@
 <?php header('Content-Type: application/ld+json'); ?>
 <?php header('Access-Control-Allow-Origin: *'); ?>
+<?php
+  // Getting general information about the container associated with the current resource
+  $values = get_the_terms($post->ID, 'ldp_container');
+  if (empty($values[0])) {
+    $value = reset($values);
+  } else {
+    $value = $values[0];
+  }
+
+  $termMeta = get_option("ldp_container_$value->term_id");
+  $modelsDecoded = json_decode($termMeta["ldp_model"]);
+  $fields = $modelsDecoded->{$value->slug}->fields;
+  $rdfType = $termMeta["ldp_rdf_type"];
+?>
 {
     "@context": "<?php echo get_option('ldp_context', 'http://owl.openinitiative.com/oicontext.jsonld'); ?>",
+    <?php if (!empty($rdfType)) echo "\"@type\" : \"$rdfType\",\n"; ?>
     "@graph": [
 <?php while (have_posts()) : the_post(); ?>
         {
-          <?php
-            $values = get_the_terms($post->ID, 'ldp_container');
-            if (empty($values[0])) {
-              $value = reset($values);
-            } else {
-              $value = $values[0];
-            }
-
-            $termMeta = get_option("ldp_container_$value->term_id");
-            $modelsDecoded = json_decode($termMeta["ldp_model"]);
-            $fields = $modelsDecoded->{$value->slug}->fields;
-
+            <?php
             $referer = $_SERVER['HTTP_REFERER'];
-
             // Handling special case of editing trhough the wordpress admin backend
-            if (strstr($referer, 'wp-admin/post.php')) {
+            if (!empty($referer) && strstr($referer, 'wp-admin/post.php')) {
               foreach($fields as $field) {
                 if (substr($field->name, 0, 4) == "ldp_") {
                   echo('          "'.substr($field->name, 4).'": ');
