@@ -38,7 +38,7 @@ if (!class_exists('WpLdp')) {
         add_action( 'init', array($this, 'create_ldp_type'));
         add_action( 'init', array($this, 'add_poc_rewrite_rule'));
         add_action( 'init', array($this, 'register_connection_types'));
-        add_action( 'edit_form_after_title', array($this, 'myprefix_edit_form_after_title'));
+        add_action( 'edit_form_advanced', array($this, 'wpldp_edit_form_advanced'));
         add_action( 'save_post', array($this, 'save_ldp_meta_for_post'));
 
         add_filter( 'template_include', array($this, 'include_template_function'));
@@ -178,7 +178,8 @@ if (!class_exists('WpLdp')) {
             __('Containers', 'wpldp'),
             array($this, 'container_meta_box_callback'),
             $post_type,
-            'side'
+            'normal',
+            'high'
           );
 
         endif;
@@ -269,7 +270,7 @@ if (!class_exists('WpLdp')) {
       ################################
       # Admin form
       ################################
-      function myprefix_edit_form_after_title($post) {
+      function wpldp_edit_form_advanced($post) {
           if ($post->post_type == 'ldp_resource') {
               $container = get_permalink();
               $term = get_the_terms($post->post_id, 'ldp_container');
