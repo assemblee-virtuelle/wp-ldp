@@ -12,7 +12,7 @@
   $termMeta = get_option("ldp_container_$value->term_id");
   $modelsDecoded = json_decode($termMeta["ldp_model"]);
   $fields = $modelsDecoded->{$value->slug}->fields;
-  $rdfType = $termMeta["ldp_rdf_type"];
+  $rdfType = isset($termMeta["ldp_rdf_type"]) ? $termMeta["ldp_rdf_type"] : null;
 ?>
 {
     "@context": "<?php echo get_option('ldp_context', 'http://owl.openinitiative.com/oicontext.jsonld'); ?>",
