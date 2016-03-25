@@ -16,7 +16,6 @@
 ?>
 {
     "@context": "<?php echo get_option('ldp_context', 'http://owl.openinitiative.com/oicontext.jsonld'); ?>",
-    <?php if (!empty($rdfType)) echo "\"@type\" : \"$rdfType\",\n"; ?>
     "@graph": [
 <?php while (have_posts()) : the_post(); ?>
         {
@@ -145,6 +144,7 @@
               }
             }
           ?>
+          <?php if (!empty($rdfType)) echo "\"@type\" : \"$rdfType\",\n"; ?>
           "@id": "<?php the_permalink(); ?>"
         }
 <?php endwhile; ?>
