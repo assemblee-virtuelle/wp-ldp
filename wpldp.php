@@ -136,6 +136,7 @@ if (!class_exists('WpLdp')) {
                   'supports'              => array('title'),
                   'has_archive'           => true,
                   'rewrite'               => array('slug' => 'ldp/%ldp_container%'),
+                  'menu_icon'             => 'dashicons-image-filter',
           ));
           flush_rewrite_rules();
       }
