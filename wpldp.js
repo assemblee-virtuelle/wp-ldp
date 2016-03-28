@@ -1,4 +1,4 @@
-$( document ).ready(function() {
+jQuery( document ).ready(function($) {
   $('input:radio[name="tax_input[ldp_container][]"]').click(function() {
       //TODO: Switch to a smooth AJAX call for changing the container, instead of reloading the page.
       // var value = $(this).val();
