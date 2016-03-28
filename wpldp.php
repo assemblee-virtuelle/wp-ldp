@@ -236,6 +236,7 @@ if (!class_exists('WpLdp')) {
       }
 
       function media_meta_box_callback($post) {
+          echo '<p>' . __('If you need to upload a media during your editing, click here.', 'wpldp') . '</p>';
           echo '<a href="#" class="button insert-media add-media" data-editor="content" title="Add Media">';
           echo '  <span class="wp-media-buttons-icon"></span> Add Media';
           echo '</a>';
