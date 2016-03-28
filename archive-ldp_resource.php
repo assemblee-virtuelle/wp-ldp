@@ -25,11 +25,13 @@
                   foreach ($fields as $field) {
                     if (in_array($field->name, $includedFieldsList)
                           && !empty(get_post_custom_values($field->name)[0])) {
-                      echo('    "'.substr($field->name, 4).'": ');
-                      echo('' . json_encode(get_post_custom_values($field->name)[0]) . ',');
-                      echo "\n";
+                      echo('"'.substr($field->name, 4).'": ');
+                      echo(json_encode(get_post_custom_values($field->name)[0]) . ",\n");
                     }
                   }
+
+                  $rdfType = isset($termMeta["ldp_rdf_type"]) ? $termMeta["ldp_rdf_type"] : null;
+                  if (!empty($rdfType)) echo "\"@type\" : \"$rdfType\",\n";
                 ?>
             }<?php if($wp_query->current_post + 1 < $wp_query->post_count) echo(","); ?>
         <?php endwhile; ?>
