@@ -11,6 +11,7 @@ if (!class_exists('WpLdpSettings')) {
        */
       public function __construct() {
         add_action( 'admin_menu', array($this, 'ldp_menu'));
+        add_action( 'admin_menu', array($this, 'menu_setup'));
         add_action( 'admin_init', array($this, 'backend_hooking'));
       }
 
@@ -79,6 +80,40 @@ if (!class_exists('WpLdpSettings')) {
          }
        }
 
+       function menu_setup() {
+          global $submenu;
+          // Removing all resources menu
+          remove_submenu_page('edit.php?post_type=ldp_resource', 'edit.php?post_type=ldp_resource');
+          $terms = get_terms('ldp_container', array('hide_empty' => 0, 'order' => 'DESC'));
+
+          $i = 0;
+          foreach($terms as $term) {
+            $this->term_slug = $term->slug;
+            add_submenu_page(
+              'edit.php?post_type=ldp_resource',
+              __('List of all resources of type ' . $term->name, 'wpldp'),
+              $term->name,
+              'edit_posts',
+              'edit.php?post_type=ldp_resource&ldp_container=' . $term->slug,
+              false
+            );
+
+            // Reordering position of menu pages
+            $key_to_remove = null;
+            foreach($submenu['edit.php?post_type=ldp_resource'] as $submenu_item_key => $submenu_item_value) {
+              if ($submenu_item_value[0] === $term->name) {
+                $submenu['edit.php?post_type=ldp_resource'][10 - $i] = $submenu_item_value;
+                $key_to_remove = $submenu_item_key;
+              }
+            }
+
+            if (!empty($key_to_remove)) {
+                unset($submenu['edit.php?post_type=ldp_resource'][$key_to_remove]);
+            }
+            $i++;
+          }
+          ksort($submenu['edit.php?post_type=ldp_resource']);
+       }
 
        /**
         * ldp_menu - Generate the plugin settings menu and associated page
