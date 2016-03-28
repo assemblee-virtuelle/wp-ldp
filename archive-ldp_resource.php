@@ -31,7 +31,7 @@
                   }
 
                   $rdfType = isset($termMeta["ldp_rdf_type"]) ? $termMeta["ldp_rdf_type"] : null;
-                  if (!empty($rdfType)) echo "\"@type\" : \"$rdfType\",\n";
+                  if (!empty($rdfType)) echo "\"@type\" : \"$rdfType\"\n";
                 ?>
             }<?php if($wp_query->current_post + 1 < $wp_query->post_count) echo(","); ?>
         <?php endwhile; ?>
