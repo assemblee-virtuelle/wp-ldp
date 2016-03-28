@@ -1,12 +1,12 @@
 <?php
 /**
  * Plugin Name: WP LDP
- * Plugin URI: http://www.happy-dev.fr
+ * Plugin URI: https://github.com/Open-Initiative/wpldp
  * Description: This is a test for LDP
  * Text Domain: wpldp
- * Version: 0.1
- * Author: Sylvain LE BON
- * Author URI: http://www.happy-dev.fr/team/sylvain
+ * Version: 0.9
+ * Author: Sylvain LE BON, Benoit ALESSANDRONI
+ * Author URI: http://www.happy-dev.fr/team/sylvain, http://benoit-alessandroni.fr/
  * License: GPL2
  */
 
