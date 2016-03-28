@@ -7,7 +7,7 @@
         "@type" : "http://www.w3.org/ns/ldp#BasicContainer",
         "http://www.w3.org/ns/ldp#contains" : [
             <?php while (have_posts()) : the_post(); ?>{
-                "@id": "<?php the_permalink(); ?>",
+                "@id": "<?php the_permalink(); ?>"
                 <?php
                   $values = get_the_terms($post->ID, 'ldp_container');
                   if (empty($values[0])) {
