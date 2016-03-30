@@ -6,7 +6,7 @@
         "@id" : "<?php echo 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']; ?>",
         "@type" : "http://www.w3.org/ns/ldp#BasicContainer",
         "http://www.w3.org/ns/ldp#contains" : [
-            <?php while (have_posts()) : the_post(); ?>
+            <?php while (have_posts()) : the_post(); ?>{
 <?php
                   $values = get_the_terms($post->ID, 'ldp_container');
                   if (empty($values[0])) {
