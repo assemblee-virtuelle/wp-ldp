@@ -16,13 +16,13 @@
                   }
 
                   $termMeta = get_option("ldp_container_$value->term_id");
-                  $ldpIncludedFieldsList = $termMeta['ldp_included_fields_list'];
+                  $ldpIncludedFieldsList = isset($termMeta['ldp_included_fields_list']) ? $termMeta['ldp_included_fields_list'] : null;
                   $modelsDecoded = json_decode($termMeta['ldp_model']);
 
-                  $includedFieldsList = array_map('trim', explode(',', $ldpIncludedFieldsList));
+                  $includedFieldsList = !empty($ldpIncludedFieldsList) ? array_map('trim', explode(',', $ldpIncludedFieldsList)) : null;
                   $fields = $modelsDecoded->{$value->slug}->fields;
                   foreach ($fields as $field) {
-                    if (in_array($field->name, $includedFieldsList)
+                    if ((!empty($includedFieldsList) && in_array($field->name, $includedFieldsList))
                           && !empty(get_post_custom_values($field->name)[0])) {
                       echo('                "'.substr($field->name, 4).'": ');
                       echo(json_encode(get_post_custom_values($field->name)[0]) . ",\n");
