@@ -4,7 +4,7 @@
     "@context": "<?php echo get_option('ldp_context', 'http://owl.openinitiative.com/oicontext.jsonld'); ?>",
     "@graph": [ {
         "@id" : "<?php echo 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']; ?>",
-        "@type" : "http://www.w3.org/ns/ldp#BasicContainer",
+        "@type" : "http://www.w3.org/ns/ldp#BasicContainer"<?php if ( have_posts() ) : ?>,
         "http://www.w3.org/ns/ldp#contains" : [
             <?php while (have_posts()) : the_post(); ?>{
 <?php
@@ -35,6 +35,7 @@
                 "@id": "<?php the_permalink(); ?>"
             }<?php if($wp_query->current_post + 1 < $wp_query->post_count) { echo(",\n"); } else { echo("\n"); } ?>
         <?php endwhile; ?>
-]}
-    ]
+        ]
+<?php endif; ?>
+  }]
 }
