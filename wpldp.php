@@ -331,6 +331,7 @@ if (!class_exists('WpLdp')) {
                             models: $ldpModel
                       });";
                 echo "store.render('#ldpform', '$container', undefined, undefined, '{$term[0]->slug}', 'ldp_');";
+
                 // echo "var actorsList = store.list('/ldp_container/actor/');";
                 // echo "console.log(actorsList);";
                 echo '</script>';
@@ -347,31 +348,35 @@ if (!class_exists('WpLdp')) {
       }
 
       function ldp_enqueue_script() {
-          wp_enqueue_media();
-          wp_enqueue_script('', 'https://code.jquery.com/jquery-2.1.4.min.js');
+          global $pagenow, $post_type;
+          $screen = get_current_screen();
+          if ($post_type == 'ldp_resource') {
+            wp_enqueue_media();
+            wp_enqueue_script('', 'https://code.jquery.com/jquery-2.1.4.min.js');
 
-          // Loading the Plugin-javascript file
-          wp_register_script(
-            'wpldpjs',
-            plugins_url('wpldp.js', __FILE__),
-            array('jquery')
-          );
-          wp_enqueue_script('wpldpjs');
+            // Loading the LDP-framework library
+            wp_register_script(
+              'ldpjs',
+              plugins_url('library/js/LDP-framework/ldpframework.js', __FILE__),
+              array('jquery')
+            );
+            wp_enqueue_script('ldpjs');
 
-          // Loading the LDP-framework library
-          wp_register_script(
-            'ldpjs',
-            plugins_url('library/js/LDP-framework/mystore.js', __FILE__),
-            array('jquery')
-          );
-          wp_enqueue_script('ldpjs');
+            // Loading the JSONEditor library
+            wp_register_script(
+              'jsoneditorjs',
+              plugins_url('library/js/node_modules/jsoneditor/dist/jsoneditor.min.js', __FILE__)
+            );
+            wp_enqueue_script('jsoneditorjs');
 
-          // Loading the JSONEditor library
-          wp_register_script(
-            'jsoneditorjs',
-            plugins_url('library/js/node_modules/jsoneditor/dist/jsoneditor.min.js', __FILE__)
-          );
-          wp_enqueue_script('jsoneditorjs');
+            // Loading the Plugin-javascript file
+            wp_register_script(
+              'wpldpjs',
+              plugins_url('wpldp.js', __FILE__),
+              array('jquery')
+            );
+            wp_enqueue_script('wpldpjs');
+          }
       }
 
       function ldp_enqueue_stylesheet() {
@@ -382,12 +387,12 @@ if (!class_exists('WpLdp')) {
         );
         wp_enqueue_style('wpldpcss');
 
-          // Loading the JSONEditor stylesheet
-          wp_register_style(
-            'jsoneditorcss',
-            plugins_url('library/js/node_modules/jsoneditor/dist/jsoneditor.min.css', __FILE__)
-          );
-          wp_enqueue_style('jsoneditorcss');
+        // Loading the JSONEditor stylesheet
+        wp_register_style(
+          'jsoneditorcss',
+          plugins_url('library/js/node_modules/jsoneditor/dist/jsoneditor.min.css', __FILE__)
+        );
+        wp_enqueue_style('jsoneditorcss');
       }
 
       #############################
