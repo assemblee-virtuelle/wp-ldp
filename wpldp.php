@@ -330,7 +330,7 @@ if (!class_exists('WpLdp')) {
                             template:\"{{{form '{$term[0]->slug}'}}}\",
                             models: $ldpModel
                       });";
-                echo "store.render('#ldpform', '$container', undefined, undefined, '{$term[0]->slug}', 'ldp_');";
+                echo "store.render('#ldpform', '$container', undefined, undefined, '{$term[0]->slug}');";
 
                 // echo "var actorsList = store.list('/ldp_container/actor/');";
                 // echo "console.log(actorsList);";
@@ -340,11 +340,26 @@ if (!class_exists('WpLdp')) {
       }
 
       function save_ldp_meta_for_post($resource_id) {
+        $values = get_the_terms($resource_id, 'ldp_container');
+        if (empty($values[0])) {
+          $value = reset($values);
+        } else {
+          $value = $values[0];
+        }
+
+        $termMeta = get_option("ldp_container_$value->term_id");
+        $modelsDecoded = json_decode($termMeta["ldp_model"]);
+        $fields = $modelsDecoded->{$value->slug}->fields;
+
+        if (!empty($fields)) {
           foreach($_POST as $key => $value) {
-              if(substr($key, 0, 4) == "ldp_") {
+            foreach($fields as $field) {
+              if ($key === $field->name) {
                   update_post_meta($resource_id, $key, $value);
               }
+            }
           }
+        }
       }
 
       function ldp_enqueue_script() {
