@@ -2,11 +2,11 @@
               {"fields":
                 [{
                   "title": "Project title",
-                  "name": "ldp_project_title"
+                  "name": "project_title"
                 },
                 {
                   "title": "Project description",
-                  "name": "ldp_project_description"
+                  "name": "project_description"
                 }]
               }
             }

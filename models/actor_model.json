@@ -3,114 +3,114 @@
     "fields": [
       {
         "title": "What is your name ?",
-        "name": "ldp_foaf:name"
+        "name": "foaf:name"
       },
       {
         "title": "What is your firstname ?",
-        "name": "ldp_foaf:firstName"
+        "name": "foaf:firstName"
       },
       {
         "title": "What is your nickname ?",
-        "name": "ldp_foaf:nick"
+        "name": "foaf:nick"
       },
       {
         "title": "Blog homepage URL",
-        "name": "ldp_foaf:weblog",
+        "name": "foaf:weblog",
         "type": "url"
       },
       {
         "title": "Who are you (in a few words) ?",
-        "name": "ldp_av:biography",
+        "name": "av:biography",
         "type": "textarea"
       },
       {
         "title": "Profile Picture URL",
-        "name": "ldp_foaf:img",
+        "name": "foaf:img",
         "type": "url"
       },
       {
         "title": "Projet (URL)",
-        "name": "ldp_foaf:currentProject",
+        "name": "foaf:currentProject",
         "type": "url"
       },
       {
         "title": "Projet 2 (URL)",
-        "name": "ldp_foaf:currentProject2",
+        "name": "foaf:currentProject2",
         "type": "url"
       },
       {
         "title": "Projet 3 (URL)",
-        "name": "ldp_foaf:currentProject3",
+        "name": "foaf:currentProject3",
         "type": "url"
       },
       {
         "title": "Projet 4 (URL)",
-        "name": "ldp_foaf:currentProject4",
+        "name": "foaf:currentProject4",
         "type": "url"
       },
       {
         "title": "What is your pseudo ?",
-        "name": "ldp_foaf:givenName"
+        "name": "foaf:givenName"
       },
       {
         "title": "What is your birthdate ?",
-        "name": "ldp_birthdate",
+        "name": "birthdate",
         "type": "date"
       },
       {
         "title": "What is your address ?",
-        "name": "ldp_address"
+        "name": "address"
       },
       {
         "title": "What is your zipcode ?",
-        "name": "ldp_zipcode",
+        "name": "zipcode",
         "type": "zipcode"
       },
       {
         "title": "What city do you live in ?",
-        "name": "ldp_city"
+        "name": "city"
       },
       {
         "title": "Personal Website URL ?",
-        "name": "ldp_foaf:homepage",
+        "name": "foaf:homepage",
         "type": "url"
       },
       {
         "title": "Personal Email address ?",
-        "name": "ldp_foaf:mbox",
+        "name": "foaf:mbox",
         "type": "url"
       },
       {
         "title": "Linkedin profile url ?",
-        "name": "ldp_linkedin"
+        "name": "linkedin"
       },
       {
         "title": "Twitter profile url ?",
-        "name": "ldp_twitter"
+        "name": "twitter"
       },
       {
         "title": "Github profile url ?",
-        "name": "ldp_github"
+        "name": "github"
       },
       {
         "title": "Facebook profile url ?",
-        "name": "ldp_facebook"
+        "name": "facebook"
       },
       {
         "title": "Vous connaissez : (URL)",
-        "name": "ldp_foaf:knows"
+        "name": "foaf:knows"
       },
       {
         "title": "Vous connaissez : (URL)",
-        "name": "ldp_foaf:knows2"
+        "name": "foaf:knows2"
       },
       {
         "title": "Vous connaissez : (URL)",
-        "name": "ldp_foaf:knows3"
+        "name": "foaf:knows3"
       },
       {
         "title": "Vous connaissez : (URL)",
-        "name": "ldp_foaf:knows4"
+        "name": "foaf:knows4"
       }
     ]
   }

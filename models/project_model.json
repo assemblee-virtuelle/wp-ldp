@@ -3,91 +3,101 @@
     "fields": [
       {
         "title": "Project title",
-        "name": "ldp_project_title",
+        "name": "project_title",
         "type": "text"
       },
       {
         "title": "Project description",
-        "name": "ldp_project_description",
+        "name": "project_description",
         "type": "textarea"
       },
       {
+        "title": "Project description",
+        "name": "doap:github",
+        "type": "text"
+      },
+      {
+        "title": "Project description",
+        "name": "doap:github",
+        "type": "text"
+      },
+      {
         "title": "Project context",
-        "name": "ldp_project_context",
+        "name": "project_context",
         "type": "textarea"
       },
       {
         "title": "Project vision",
-        "name": "ldp_project_vision",
+        "name": "project_vision",
         "type": "textarea"
       },
       {
         "title": "Project goal",
-        "name": "ldp_project_goal",
+        "name": "project_goal",
         "type": "textarea"
       },
       {
         "title": "Project missions",
-        "name": "ldp_project_missions",
+        "name": "project_missions",
         "type": "textarea"
       },
       {
         "title": "Project inspiration sources",
-        "name": "ldp_project_inspiration_sources",
+        "name": "project_inspiration_sources",
         "type": "textarea"
       },
       {
         "title": "Project organization model",
-        "name": "ldp_project_organization_model",
+        "name": "project_organization_model",
         "type": "textarea"
       },
       {
         "title": "Project economical model",
-        "name": "ldp_project_economical_model",
+        "name": "project_economical_model",
         "type": "textarea"
       },
       {
         "title": "Project ecological model",
-        "name": "ldp_project_ecological_model",
+        "name": "project_ecological_model",
         "type": "textarea"
       },
       {
         "title": "Project technological model",
-        "name": "ldp_project_technological_model",
+        "name": "project_technological_model",
         "type": "textarea"
       },
       {
         "title": "Project legal framework",
-        "name": "ldp_project_legal_framework",
+        "name": "project_legal_framework",
         "type": "textarea"
       },
       {
         "title": "Contributeur 1 (URL)",
-        "name": "ldp_project_contributes"
+        "name": "project_contributes"
       },
       {
         "title": "Contributeur 2 (URL)",
-        "name": "ldp_project_contributes2"
+        "name": "project_contributes2"
       },
       {
         "title": "Contributeur 3 (URL)",
-        "name": "ldp_project_contributes3"
+        "name": "project_contributes3"
       },
       {
         "title": "Contributeur 4 (URL)",
-        "name": "ldp_project_contributes4"
+        "name": "project_contributes4"
       },
       {
         "title": "Contributeur 5 (URL)",
-        "name": "ldp_project_contributes5"
+        "name": "project_contributes5"
       },
       {
         "title": "Projet associé : (URL)",
-        "name": "ldp_related_to"
+        "name": "related_to"
       },
       {
         "title": "Projet associé : (URL)",
-        "name": "ldp_related_to2"
+        "name": "related_to2"
       }
     ]
   }

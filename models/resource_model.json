@@ -3,19 +3,19 @@
     "fields": [
       {
         "title": "Resource title",
-        "name": "ldp_title"
+        "name": "title"
       },
       {
         "title": "Resource URL, if any",
-        "name": "ldp_resource_url"
+        "name": "resource_url"
       },
       {
         "title": "Resource type",
-        "name": "ldp_resource_type"
+        "name": "resource_type"
       },
       {
         "title": "Description",
-        "name": "ldp_description"
+        "name": "description"
       }
     ]
   }

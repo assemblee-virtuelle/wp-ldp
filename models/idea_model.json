@@ -3,24 +3,24 @@
     "fields": [
       {
         "title": "Idea Title",
-        "name": "ldp_title"
+        "name": "title"
       },
       {
         "title": "Idea description",
-        "name": "ldp_description",
+        "name": "description",
         "type": "textarea"
       },
       {
         "title": "Website/URL (if any)",
-        "name": "ldp_website_url"
+        "name": "website_url"
       },
       {
         "title": "Wikipedia link (if any)",
-        "name": "ldp_wikipedia_url"
+        "name": "wikipedia_url"
       },
       {
         "title": "Description Excerpt (in a few words)",
-        "name": "ldp_description_excerpt"
+        "name": "description_excerpt"
       }
     ]
   }
