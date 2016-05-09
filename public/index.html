@@ -8,7 +8,7 @@
         <link href="./wp-content/plugins/wpldp/public/library/font-awesome/css/font-awesome.min.css" rel="stylesheet">
         <link href="./wp-content/plugins/wpldp/public/resources/css/av.css" type="text/css" rel="stylesheet" />
         <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
-        <script type="text/javascript" src="./wp-content/plugins/wpldp/library/js/LDP-framework/mystore.js"></script>
+        <script type="text/javascript" src="./wp-content/plugins/wpldp/library/js/LDP-framework/ldpframework.js"></script>
         <script type="text/javascript" src="./wp-content/plugins/wpldp/public/config/config.js"></script>
         <script src="./wp-content/plugins/wpldp/public/library/bootstrap/js/bootstrap.min.js"></script>
         <script src="./wp-content/plugins/wpldp/public/resources/js/sidebar.js"></script>
@@ -49,7 +49,7 @@
                     </p>
                   </div>
                 </div>
-                
+
                 <h2>Biographie</h2>
                 <p>{{object.description}}</p>
 
@@ -172,7 +172,7 @@
                 });
                 projectStore.render("#project-browser");
 
-                var cartopairId = config.resourceBaseUrl + 'project/assemblee-virtuelle/';
+                var cartopairId = config.resourceBaseUrl + '/ldp/project/assemblee-virtuelle/';
                 displayProject('#detail', cartopairId, $('#project-detail-template').html());
             });
         </script>
