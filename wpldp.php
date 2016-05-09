@@ -13,6 +13,7 @@
 // If the file is accessed outside of index.php (ie. directly), we just deny the access
 defined('ABSPATH') or die("No script kiddies please!");
 
+require_once('wpldp-utils.php');
 require_once('wpldp-taxonomy.php');
 require_once('wpldp-settings.php');
 
@@ -298,9 +299,10 @@ if (!class_exists('WpLdp')) {
       ################################
       function wpldp_edit_form_advanced($post) {
           if ($post->post_type == 'ldp_resource') {
-              $container = get_permalink();
+              $resourceUri = WpLdpUtils::getResourceUri($post);
+
               $term = get_the_terms($post->post_id, 'ldp_container');
-              if (!empty($term)) {
+              if (!empty($term) && !empty($resourceUri)) {
                 $termId = $term[0]->term_id;
                 $termMeta = get_option("ldp_container_$termId");
 
@@ -325,12 +327,12 @@ if (!class_exists('WpLdp')) {
                 echo '<div id="ldpform"></div>';
                 echo '<script>';
                 echo "var store = new MyStore({
-                            container: '$container',
+                            container: '$resourceUri',
                             context: '" . get_option('ldp_context', 'http://owl.openinitiative.com/oicontext.jsonld') ."',
                             template:\"{{{form '{$term[0]->slug}'}}}\",
                             models: $ldpModel
                       });";
-                echo "store.render('#ldpform', '$container', undefined, undefined, '{$term[0]->slug}');";
+                echo "store.render('#ldpform', '$resourceUri', undefined, undefined, '{$term[0]->slug}');";
 
                 // echo "var actorsList = store.list('/ldp_container/actor/');";
                 // echo "console.log(actorsList);";
@@ -340,16 +342,7 @@ if (!class_exists('WpLdp')) {
       }
 
       function save_ldp_meta_for_post($resource_id) {
-        $values = get_the_terms($resource_id, 'ldp_container');
-        if (empty($values[0])) {
-          $value = reset($values);
-        } else {
-          $value = $values[0];
-        }
-
-        $termMeta = get_option("ldp_container_$value->term_id");
-        $modelsDecoded = json_decode($termMeta["ldp_model"]);
-        $fields = $modelsDecoded->{$value->slug}->fields;
+        $fields = WpLdpUtils::getResourceFieldsList($resource_id);
 
         if (!empty($fields)) {
           foreach($_POST as $key => $value) {

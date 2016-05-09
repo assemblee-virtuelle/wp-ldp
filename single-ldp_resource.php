@@ -2,16 +2,7 @@
 <?php header('Access-Control-Allow-Origin: *'); ?>
 <?php
   // Getting general information about the container associated with the current resource
-  $values = get_the_terms($post->ID, 'ldp_container');
-  if (empty($values[0])) {
-    $value = reset($values);
-  } else {
-    $value = $values[0];
-  }
-
-  $termMeta = get_option("ldp_container_$value->term_id");
-  $modelsDecoded = json_decode($termMeta["ldp_model"]);
-  $fields = $modelsDecoded->{$value->slug}->fields;
+  $fields = WpLdpUtils::getResourceFieldsList($post->ID);
   $rdfType = isset($termMeta["ldp_rdf_type"]) ? $termMeta["ldp_rdf_type"] : null;
 ?>
 {
@@ -141,7 +132,11 @@
             }
           ?>
           <?php if (!empty($rdfType)) echo "\"@type\" : \"$rdfType\",\n"; ?>
-          "@id": "<?php the_permalink(); ?>"
+          <?php
+          $resourceUri = WpLdpUtils::getResourceUri($post);
+
+          ?>
+          "@id": "<?php echo $resourceUri ?>"
         }
 <?php endwhile; ?>
     ]
