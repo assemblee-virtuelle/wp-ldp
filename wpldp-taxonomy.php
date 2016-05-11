@@ -104,7 +104,7 @@ if (!class_exists('WpLdpTaxonomy')) {
     function add_custom_tax_fields_onedit($term) {
       $termId = $term->term_id;
       $termMeta = get_option("ldp_container_$termId");
-      $ldpModel = stripslashes_deep($termMeta['ldp_model']);
+      $ldpModel = !empty($termMeta['ldp_model']) ? stripslashes_deep($termMeta['ldp_model']) : "";
       $ldpRdfType = isset($termMeta['ldp_rdf_type']) ? $termMeta['ldp_rdf_type'] : '';
       $ldpIncludedFieldsList = isset($termMeta['ldp_included_fields_list']) ? $termMeta['ldp_included_fields_list'] : '';
 
