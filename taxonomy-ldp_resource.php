@@ -1,5 +1,18 @@
 <?php header('Content-Type: application/ld+json'); ?>
 <?php header('Access-Control-Allow-Origin: *'); ?>
+<?php
+    $categoryId = $wp_query->get_queried_object_id();
+    query_posts( array(
+        'tax_query' => array(
+            array(
+              'taxonomy' => 'ldp_container',
+              'terms' => $categoryId
+            )
+        ),
+       'post_type' => 'ldp_resource',
+       'posts_per_page' => -1 )
+     );
+?>
 {
     "@context": "<?php echo get_option('ldp_context', 'http://owl.openinitiative.com/oicontext.jsonld'); ?>",
     "@graph": [ {
