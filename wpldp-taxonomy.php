@@ -180,7 +180,7 @@ if (!class_exists('WpLdpTaxonomy')) {
         $termMeta['ldp_model'] = stripslashes_deep($_POST['ldp_model']);
       }
 
-      update_option("ldp_container_$termID", $termMeta);
+      update_option("ldp_container_$termID", $termMeta, false);
     }
 
     ################################

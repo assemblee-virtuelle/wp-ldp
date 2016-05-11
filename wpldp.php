@@ -20,7 +20,7 @@ require_once('wpldp-settings.php');
 if (!class_exists('WpLdp')) {
     class WpLdp {
 
-      protected static $version_number = '1.0.0';
+      protected static $version_number = '1.0.1';
 
       /**
        * Default Constructor
@@ -66,7 +66,7 @@ if (!class_exists('WpLdp')) {
       function wpldp_plugin_update() {
         $plugin_version = get_option('wpldp_version');
         $update_option = null;
-
+        
         if (self::$version_number !== $plugin_version) {
           if (self::$version_number > $plugin_version) {
             $update_option = $this->wpldp_db_upgrade();
@@ -79,6 +79,42 @@ if (!class_exists('WpLdp')) {
       }
 
       private function wpldp_db_upgrade() {
+        global $wpdb;
+        $wpdb->query(
+          "UPDATE $wpdb->postmeta
+              SET `meta_key` = replace( `meta_key` , 'ldp_', '' );"
+        );
+
+        $wpdb->query(
+          "UPDATE $wpdb->options
+              SET `option_value` = replace( `option_value` , 'ldp_', '' );"
+        );
+
+        $wpdb->query(
+          "UPDATE $wpdb->options
+              SET `option_value` = replace( `option_value` , 's:9:\"model\"', 's:9:\"ldp_model\"' ),
+                  `option_value` = replace( `option_value` , 's:12:\"rdf_type\"', 's:12:\"ldp_rdf_type\"' ),
+                  `option_value` = replace( `option_value` , 's:24:\"included_fields_list\"', 's:24:\"ldp_included_fields_list\"' )
+           WHERE `option_name` LIKE 'ldp_container%';"
+        );
+
+        $wpdb->query(
+           "DELETE FROM $wpdb->options
+            WHERE `option_name` LIKE '%transient%';"
+        );
+
+        $flush_cache = wp_cache_flush();
+
+        $result = $wpdb->get_results(
+          "SELECT 'option_name'
+           FROM $wpdb->options
+           WHERE 'option_name' LIKE '%ldp_container_%';"
+        );
+
+        foreach ( $result as $current ) {
+          wp_cache_delete($current, 'options');
+        }
+
         return true;
       }
 
