@@ -97,6 +97,22 @@
         "name": "facebook"
       },
       {
+        "title": "Competences",
+        "name": "purl:expertise"
+      },
+      {
+        "title": "Competences",
+        "name": "purl:expertise2"
+      },
+      {
+        "title": "Competences",
+        "name": "purl:expertise3"
+      },
+      {
+        "title": "Competences",
+        "name": "purl:expertise4"
+      },
+      {
         "title": "Vous connaissez : (URL)",
         "name": "foaf:knows"
       },
