@@ -37,7 +37,7 @@
                   foreach ($fields as $field) {
                     if ((!empty($includedFieldsList) && in_array($field->name, $includedFieldsList))
                           && !empty(get_post_custom_values($field->name)[0])) {
-                      echo('                "'.substr($field->name, 4).'": ');
+                      echo('                "' . $field->name . '": ');
                       echo(json_encode(get_post_custom_values($field->name)[0]) . ",\n");
                     }
                   }
