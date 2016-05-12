@@ -99,8 +99,14 @@ if (!class_exists('WpLdp')) {
 
         foreach ( $result as $current ) {
           $option = get_option($current->option_name);
-          if (!empty($option) && !empty($option['ldp_model'])) {
-            $option['ldp_model'] = str_replace('ldp_', '', $option['ldp_model']);
+          if (!empty($option)) {
+            if (!empty($option['ldp_model'])) {
+              $option['ldp_model'] = str_replace('ldp_', '', $option['ldp_model']);
+            }
+
+            if (!empty($option['ldp_included_fields_list'])) {
+              $option['ldp_included_fields_list'] = str_replace('ldp_', '', $option['ldp_included_fields_list']);
+            }
             update_option($current->option_name, $option, false);
           }
         }
