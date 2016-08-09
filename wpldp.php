@@ -2,9 +2,9 @@
 /**
  * Plugin Name: WP LDP
  * Plugin URI: https://github.com/Open-Initiative/wpldp
- * Description: This is a test for LDP
+ * Description: This is a plugin which aims to emulate the default caracteristics of a Linked Data Platform compatible server
  * Text Domain: wpldp
- * Version: 0.9
+ * Version: 1.0
  * Author: Sylvain LE BON, Benoit ALESSANDRONI
  * Author URI: http://www.happy-dev.fr/team/sylvain, http://benoit-alessandroni.fr/
  * License: GPL2
@@ -39,7 +39,6 @@ if (!class_exists('WpLdp')) {
         add_action( 'init', array($this, 'load_translations_file'));
         add_action( 'init', array($this, 'create_ldp_type'));
         add_action( 'init', array($this, 'add_poc_rewrite_rule'));
-        add_action( 'init', array($this, 'register_connection_types'));
         add_action( 'edit_form_advanced', array($this, 'wpldp_edit_form_advanced'));
         add_action( 'save_post', array($this, 'save_ldp_meta_for_post'));
 
@@ -47,8 +46,6 @@ if (!class_exists('WpLdp')) {
         add_action( 'template_redirect', array($this, 'my_page_template_redirect' ));
         add_action( 'add_meta_boxes', array($this, 'display_container_meta_box' ));
         add_action( 'add_meta_boxes', array($this, 'display_media_meta_box' ));
-
-        add_action( 'admin_footer', array($this, 'my_action_javascript' )); // Write our JS below here
 
         add_filter( 'post_type_link', array($this, 'ldp_resource_post_link'), 10, 3 );
 
@@ -116,19 +113,25 @@ if (!class_exists('WpLdp')) {
         return true;
       }
 
-      #####################################
-      # Loading translations file
-      #####################################
+
+      /**
+       * load_translations_file - Loading proper text domain
+       *
+       * @return {type}  description
+       */
       function load_translations_file() {
           $path        = dirname( plugin_basename( __FILE__ ) ) . '/languages';
           load_plugin_textdomain('wpldp', FALSE, $path);
           load_theme_textdomain('wpldp', $path);
       }
 
-      #####################################
-      # Rewriting function to access the POC from Wordpress
-      #####################################
-      function add_poc_rewrite_rule() {
+
+      /**
+       * add_poc_rewrite_rule - Special rewriting rule for accessing the Proof of concept pagt
+       *
+       * @return {type}  description
+       */
+      public function add_poc_rewrite_rule() {
           global $wp_rewrite;
           $poc_url = plugins_url('public/index.html', __FILE__);
           $poc_url = substr($poc_url, strlen( home_url() ) + 1);
@@ -138,16 +141,24 @@ if (!class_exists('WpLdp')) {
           $wp_rewrite->add_external_rule('av-poc.php', $poc_url);
       }
 
-      function my_page_template_redirect() {
+      /**
+       * my_page_template_redirect - Another try for the same feature as above
+       *
+       * @return {type}  description
+       */
+      public function my_page_template_redirect() {
           if( is_page( 'av-poc' ) )
           {
               wp_redirect(plugins_url('public/index.html', __FILE__));
               exit();
           }
       }
-      ##########################################
-      # LDP Resource content type definition
-      ##########################################
+
+      /**
+       * create_ldp_type - LDP Resource post type creation and registration
+       *
+       * @return {type}  description
+       */
       function create_ldp_type() {
           register_post_type('ldp_resource',
               array(
@@ -270,7 +281,14 @@ if (!class_exists('WpLdp')) {
         }
       }
 
-      function media_meta_box_callback($post) {
+
+      /**
+       * media_meta_box_callback - Specific metqbox for uploading a file to the media library from a resource edit
+       *
+       * @param  {type} $post description
+       * @return {type}       description
+       */
+      public function media_meta_box_callback($post) {
           echo '<p>' . __('If you need to upload a media during your editing, click here.', 'wpldp') . '</p>';
           echo '<a href="#" class="button insert-media add-media" data-editor="content" title="Add Media">';
           echo '  <span class="wp-media-buttons-icon"></span> Add Media';
@@ -278,30 +296,11 @@ if (!class_exists('WpLdp')) {
       }
 
       /**
-       	 * Register the Post 2 posts available connection between custom content types
-       	 *
-       	 * @param type
-       	 * @return void
-      	 */
-      function register_connection_types() {
-        // p2p_register_connection_type(
-        //   array(
-        //     'name' => 'resource_to_user',
-        //     'from' => 'ldp_resource',
-        //     'to' => 'user',
-        //     'admin_box' => array(
-        //       'show' => 'any',
-        //       'context' => 'side'
-        //     )
-        //   )
-        // );
-
-
-      }
-
-      ################################
-      # Resource publication
-      ################################
+       * include_template_function - Including the template for displaying a resource
+       *
+       * @param  {type} $template_path description
+       * @return {type}                description
+       */
       function include_template_function( $template_path ) {
           if ( get_post_type() == 'ldp_resource' ) {
               if ( is_single() ) {
@@ -328,10 +327,13 @@ if (!class_exists('WpLdp')) {
           return $template_path;
       }
 
-      ################################
-      # Admin form
-      ################################
-      function wpldp_edit_form_advanced($post) {
+      /**
+       * wpldp_edit_form_advanced - Rendering the form for entering the data
+       *
+       * @param  {type} $post Current post we are working on
+       * @return {type} HTML Form
+       */
+      public function wpldp_edit_form_advanced($post) {
           if ($post->post_type == 'ldp_resource') {
               $resourceUri = WpLdpUtils::getResourceUri($post);
 
@@ -375,7 +377,14 @@ if (!class_exists('WpLdp')) {
           }
       }
 
-      function save_ldp_meta_for_post($resource_id) {
+
+      /**
+       * save_ldp_meta_for_post - Save the LDP Resource Post Meta on save
+       *
+       * @param  {int} $resource_id The current resource id
+       * @return {type}
+       */
+      public function save_ldp_meta_for_post($resource_id) {
         $fields = WpLdpUtils::getResourceFieldsList($resource_id);
 
         if (!empty($fields)) {
@@ -389,7 +398,12 @@ if (!class_exists('WpLdp')) {
         }
       }
 
-      function ldp_enqueue_script() {
+      /**
+       * ldp_enqueue_script - Loading requested javascript, on the admin only
+       *
+       * @return {type}  description
+       */
+      public function ldp_enqueue_script() {
           global $pagenow, $post_type;
           $screen = get_current_screen();
           if ($post_type == 'ldp_resource') {
@@ -421,7 +435,12 @@ if (!class_exists('WpLdp')) {
           }
       }
 
-      function ldp_enqueue_stylesheet() {
+      /**
+       * ldp_enqueue_stylesheet - Loading requested stylesheet in the admin only
+       *
+       * @return {type}  description
+       */
+      public function ldp_enqueue_stylesheet() {
         // Loading the WP-LDP stylesheet
         wp_register_style(
           'wpldpcss',
@@ -436,17 +455,6 @@ if (!class_exists('WpLdp')) {
         );
         wp_enqueue_style('jsoneditorcss');
       }
-
-      #############################
-      #       FOOTER SCRIPT
-      #############################
-      function my_action_javascript() { ?>
-      	<script type="text/javascript" >
-      	jQuery(document).ready(function($) {
-
-      	});
-      	</script> <?php
-      	}
     }
 } else {
     exit ('Class WpLdp already exists');
