@@ -1,4 +1,6 @@
 <?php
+namespace WpLdp;
+
 /**
  * Class handling everything related to settings page and available options inside them
  **/

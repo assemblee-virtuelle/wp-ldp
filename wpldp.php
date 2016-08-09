@@ -9,6 +9,7 @@
  * Author URI: http://www.happy-dev.fr/team/sylvain, http://benoit-alessandroni.fr/
  * License: GPL2
  */
+namespace WpLdp;
 
 // If the file is accessed outside of index.php (ie. directly), we just deny the access
 defined('ABSPATH') or die("No script kiddies please!");

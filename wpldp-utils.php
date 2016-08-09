@@ -1,4 +1,5 @@
 <?php
+namespace WpLdp;
 
 if (!class_exists('WpLdpUtils')) {
     class WpLdpUtils {
