@@ -4,7 +4,7 @@ namespace WpLdp;
 /**
  * Class handling everything related to the plugin custom taxonomies
  **/
-if (!class_exists('WpLdpTaxonomy')) {
+if (!class_exists('\WpLdp\WpLdpTaxonomy')) {
   class WpLdpTaxonomy {
     /**
      * __construct - Default constructor
@@ -201,11 +201,11 @@ if (!class_exists('WpLdpTaxonomy')) {
         return $template_path;
     }
   }
+
+  // Instanciating the settings page object
+  $wpLdpTaxonomy = new WpLdpTaxonomy();
 } else {
     exit ('Class WpLdpTaxonomy already exists');
 }
-
-// Instanciating the settings page object
-$wpLdpTaxonomy = new WpLdpTaxonomy();
 
  ?>

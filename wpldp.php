@@ -18,7 +18,7 @@ require_once('wpldp-utils.php');
 require_once('wpldp-taxonomy.php');
 require_once('wpldp-settings.php');
 
-if (!class_exists('WpLdp')) {
+if (!class_exists('\WpLdp\WpLdp')) {
     class WpLdp {
 
       protected static $version_number = '1.0.1';
@@ -456,10 +456,11 @@ if (!class_exists('WpLdp')) {
         wp_enqueue_style('jsoneditorcss');
       }
     }
+
+    $wpLdp = new WpLdp();
 } else {
     exit ('Class WpLdp already exists');
 }
 
-$wpLdp = new WpLdp();
 
 ?>

@@ -1,7 +1,7 @@
 <?php
 namespace WpLdp;
 
-if (!class_exists('WpLdpUtils')) {
+if (!class_exists('\WpLdp\WpLdpUtils')) {
     class WpLdpUtils {
       public function __construct() {
       }
@@ -37,8 +37,9 @@ if (!class_exists('WpLdpUtils')) {
         return $fields;
       }
     }
+
+    $wpLdpUtils = new WpLdpUtils();
 }
 
-$wpLdpUtils = new WpLdpUtils();
 
 ?>

@@ -4,7 +4,7 @@ namespace WpLdp;
 /**
  * Class handling everything related to settings page and available options inside them
  **/
-if (!class_exists('WpLdpSettings')) {
+if (!class_exists('\WpLdp\WpLdpSettings')) {
     class WpLdpSettings {
       /**
        * __construct - Class default constructor
@@ -185,11 +185,11 @@ if (!class_exists('WpLdpSettings')) {
            register_setting( 'ldp_settings', 'ldp_container_init' );
        }
     }
+
+    // Instanciating the settings page object
+    $wpLdpSettings = new WpLdpSettings();
 } else {
     exit ('Class WpLdpSettings already exists');
 }
-
-// Instanciating the settings page object
-$wpLdpSettings = new WpLdpSettings();
 
  ?>
