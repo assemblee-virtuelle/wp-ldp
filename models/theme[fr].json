@@ -62,6 +62,78 @@
         "range": "foaf:Project",
         "type": "resource"
       },
+      {
+      "label": "Personne 1 s'intéressant à cette thématique",
+        "object-property": "dcterms:subject",
+        "range" : "foaf:person",
+        "type": "resource"
+      },
+      {
+      "label": "Personne 2 s'intéressant à cette thématique",
+        "object-property": "dcterms:subject",
+        "range" : "foaf:person",
+        "type": "resource"
+      },
+      {
+      "label": "Personne 3 s'intéressant à cette thématique",
+        "object-property": "dcterms:subject",
+        "range" : "foaf:person",
+        "type": "resource"
+      },
+      {
+      "label": "Personne 4 s'intéressant à cette thématique",
+        "object-property": "dcterms:subject",
+        "range" : "foaf:person",
+        "type": "resource"
+      },
+      {
+        "label": "Organisation 1 s'intéressant à cette thématique",
+        "object-property": "dcterms:subject",
+        "range": "foaf:organization",
+        "type": "resource"
+      },
+      {
+        "label": "Organisation 2 s'intéressant à cette thématique",
+        "object-property": "dcterms:subject",
+        "range": "foaf:organization",
+        "type": "resource"
+      },
+      {
+        "label": "Organisation 3 s'intéressant à cette thématique",
+        "object-property": "dcterms:subject",
+        "range": "foaf:organization",
+        "type": "resource"
+      },
+      {
+        "label": "Organisation 4 s'intéressant à cette thématique",
+        "object-property": "dcterms:subject",
+        "range": "foaf:organization",
+        "type": "resource"
+      },
+      {
+        "label": "Thème ou thèse 1 convergent(e) avec à cette thématique",
+        "object-property": "pair:convergesWith",
+        "range": "pair:idea",
+        "type": "resource"
+      },
+      {
+        "label": "Thème ou thèse 2 convergent(e) avec à cette thématique",
+        "object-property": "pair:convergesWith",
+        "range": "pair:idea",
+        "type": "resource"
+      },
+      {
+        "label": "Thème ou thèse 3 convergent(e) avec à cette thématique",
+        "object-property": "pair:convergesWith",
+        "range": "pair:idea",
+        "type": "resource"
+      },
+      {
+        "label": "Thème ou thèse 4 convergent(e) avec à cette thématique",
+        "object-property": "pair:convergesWith",
+        "range": "pair:idea",
+        "type": "resource"
+      },
     ]
   }
 }
