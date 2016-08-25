@@ -11,6 +11,11 @@
         "data-property": "foaf:name",
       },
       {
+        "label": "Description courte (140 caractères max)",
+        "data-property": "pair:shortDescription",
+        "type": "textarea"
+      },
+      {
         "label": "Prénom",
         "data-property": "foaf:firstName",
       },
@@ -26,6 +31,10 @@
       {
         "label": "Ville",
         "data-property": "pair:town",
+      },
+      {
+        "label": "Pays",
+        "data-property": "pair:country",
       },
       {
         "label": "Email",
@@ -51,11 +60,6 @@
         "label": "Réseau social 3",
         "data-property": "pair:socialNetworks",
         "type": "url"
-      },
-      {
-        "label": "Description courte (140 caractères max)",
-        "data-property": "pair:shortDescription",
-        "type": "textarea"
       },
       {
         "label": "Description (1000 caractères max)",
