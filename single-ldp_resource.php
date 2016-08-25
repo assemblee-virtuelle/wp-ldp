@@ -117,7 +117,9 @@
                       echo "               {\n";
                       echo "                    \"url\": \"" . get_permalink ($post->ID) . "\",\n";
                       echo '                    "dc:title":' . json_encode($post->post_title) . ",\n";
-                      echo '                    "sioc:blogPost":' . json_encode(substr($post->post_content, 0, 300)) . "\n";
+                      $post_content = (!empty($post->post_content) && $post->post_content !== false) ? json_encode(substr($post->post_content, 0, 150)) : "";
+                      echo '                    "sioc:blogPost":' . $post_content . "\n";
+                      json_last_error_msg();
                       if ($count < $loop->post_count) {
                         echo "               },\n";
                       } else {
