@@ -1,5 +1,5 @@
 {
-  "idée": {
+  "thème ou centre d'intérêt": {
     "fields": [
       {
         "label": "Photo, image",
@@ -21,17 +21,10 @@
         "type": "textarea"
       },
       {
-        "title": "Website/URL (if any)",
-        "name": "website_url"
+        "label": "Lien wikipedia",
+        "data-property": "pair:wikipedia"
+        "type":"url"
       },
-      {
-        "title": "Wikipedia link (if any)",
-        "name": "wikipedia_url"
-      },
-      {
-        "title": "Description Excerpt (in a few words)",
-        "name": "description_excerpt"
-      }
     ]
   }
 }
