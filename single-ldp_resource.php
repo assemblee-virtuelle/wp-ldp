@@ -2,7 +2,7 @@
 <?php header('Access-Control-Allow-Origin: *'); ?>
 <?php
   // Getting general information about the container associated with the current resource
-  $fields = WpLdpUtils::getResourceFieldsList($post->ID);
+  $fields = \WpLdp\WpLdpUtils::getResourceFieldsList($post->ID);
   $rdfType = isset($termMeta["ldp_rdf_type"]) ? $termMeta["ldp_rdf_type"] : null;
 ?>
 {
@@ -133,7 +133,7 @@
           ?>
           <?php if (!empty($rdfType)) echo "\"@type\" : \"$rdfType\",\n"; ?>
           <?php
-          $resourceUri = WpLdpUtils::getResourceUri($post);
+          $resourceUri = \WpLdp\WpLdpUtils::getResourceUri($post);
 
           ?>
           "@id": "<?php echo $resourceUri ?>"
