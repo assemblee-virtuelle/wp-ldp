@@ -1,0 +1,37 @@
+{
+  "idée": {
+    "fields": [
+      {
+        "label": "Photo, image",
+        "data-property": "foaf:img",
+        "type": "url"
+      },
+      {
+        "title": "Idea Title",
+        "name": "title"
+      },
+      {
+        "label": "Description courte (140 caractères max)",
+        "data-property": "pair:shortDescription",
+        "type": "textarea"
+      },
+      {
+        "label": "Description (1000 caractères max)",
+        "data-property": "pair:description",
+        "type": "textarea"
+      },
+      {
+        "title": "Website/URL (if any)",
+        "name": "website_url"
+      },
+      {
+        "title": "Wikipedia link (if any)",
+        "name": "wikipedia_url"
+      },
+      {
+        "title": "Description Excerpt (in a few words)",
+        "name": "description_excerpt"
+      }
+    ]
+  }
+}
