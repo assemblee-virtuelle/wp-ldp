@@ -162,6 +162,18 @@
         "type": "resource"
       },
       {
+        "label": "Organisation 1 dans laquelle vous exercez des responsabilités",
+        "object-property": "pair:employee",
+        "range": "foaf:organization",
+        "type": "resource"
+      },
+      {
+        "label": "Organisation 2 dans laquelle vous exercez des responsabilités",
+        "object-property": "pair:employee",
+        "range": "foaf:organization",
+        "type": "resource"
+      },
+      {
         "label": "Organisation 1 à laquelle vous contribuez",
         "object-property": "pair:contributesTo",
         "range": "foaf:organization",
