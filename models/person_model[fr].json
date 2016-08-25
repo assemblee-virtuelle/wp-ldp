@@ -163,13 +163,13 @@
       },
       {
         "label": "Organisation 1 dans laquelle vous exercez des responsabilités",
-        "object-property": "pair:employee",
+        "object-property": "pair:manage",
         "range": "foaf:organization",
         "type": "resource"
       },
       {
         "label": "Organisation 2 dans laquelle vous exercez des responsabilités",
-        "object-property": "pair:employee",
+        "object-property": "pair:manage",
         "range": "foaf:organization",
         "type": "resource"
       },
