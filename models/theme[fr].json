@@ -28,43 +28,37 @@
       },
       {
         "label": "Projet 1 s'inscrivant dans cette thématique ",
-        "object-property": "pair:manage",
-        "range": "foaf:Project",
-        "type": "resource"
-      },
-      {
-        "label": "Projet 1 s'inscrivant dans cette thématique ",
-        "object-property": "pair:manage",
+        "object-property": "dcterms:subject",
         "range": "foaf:Project",
         "type": "resource"
       },
       {
         "label": "Projet 2 s'inscrivant dans cette thématique ",
-        "object-property": "pair:manage",
+        "object-property": "dcterms:subject",
         "range": "foaf:Project",
         "type": "resource"
       },
       {
         "label": "Projet 3 s'inscrivant dans cette thématique ",
-        "object-property": "pair:manage",
+        "object-property": "dcterms:subject",
         "range": "foaf:Project",
         "type": "resource"
       },
       {
         "label": "Projet 4 s'inscrivant dans cette thématique ",
-        "object-property": "pair:manage",
+        "object-property": "dcterms:subject",
         "range": "foaf:Project",
         "type": "resource"
       },
       {
         "label": "Projet 5 s'inscrivant dans cette thématique ",
-        "object-property": "pair:manage",
+        "object-property": "dcterms:subject",
         "range": "foaf:Project",
         "type": "resource"
       },
       {
         "label": "Projet 6 s'inscrivant dans cette thématique ",
-        "object-property": "pair:manage",
+        "object-property": "dcterms:subject",
         "range": "foaf:Project",
         "type": "resource"
       },
