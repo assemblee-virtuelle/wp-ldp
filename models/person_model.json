@@ -8,15 +8,15 @@
       },
       {
         "label": "Nom",
-        "data-property": "foaf:name"
+        "data-property": "foaf:name",
       },
       {
         "label": "Prénom",
-        "data-property": "foaf:firstName"
+        "data-property": "foaf:firstName",
       },
       {
         "label": "Pseudonyme",
-        "data-property": "foaf:nick"
+        "data-property": "foaf:nick",
       },
       {
         "label": "Code postal",
@@ -25,7 +25,7 @@
       },
       {
         "label": "Ville",
-        "data-property": "pair:town"
+        "data-property": "pair:town",
       },
       {
         "label": "Email",
@@ -39,17 +39,17 @@
       },
       {
         "label": "Réseau social 1",
-        "data-property": "pair:socialNetworks"
+        "data-property": "pair:socialNetworks",
         "type": "url"
       },
       {
         "label": "Réseau social 2",
-        "data-property": "pair:socialNetworks"
+        "data-property": "pair:socialNetworks",
         "type": "url"
       },
       {
         "label": "Réseau social 3",
-        "data-property": "pair:socialNetworks"
+        "data-property": "pair:socialNetworks",
         "type": "url"
       },
       {
@@ -70,187 +70,187 @@
       {
         "label": "Projet 1 auxquel vous contribuez",
         "object-property": "foaf:currentProject",
-        "range" : "foaf:Project"
+        "range": "foaf:Project",
         "type": "resource"
       },
       {
         "label": "Projet 2 auxquel vous contribuez",
         "object-property": "foaf:currentProject",
-        "range" : "foaf:Project"
+        "range": "foaf:Project",
         "type": "resource"
       },
       {
         "label": "Projet 3 auxquel vous contribuez",
         "object-property": "foaf:currentProject",
-        "range" : "foaf:Project"
+        "range": "foaf:Project",
         "type": "resource"
       },
       {
         "label": "Projet 1 que vous soutenez",
         "object-property": "pair:supports",
-        "range" : "foaf:Project"
+        "range": "foaf:Project",
         "type": "resource"
       },
       {
         "label": "Projet 2 que vous soutenez",
         "object-property": "pair:supports",
-        "range" : "foaf:Project"
+        "range": "foaf:Project",
         "type": "resource"
       },
       {
         "label": "Projet 3 que vous soutenez",
         "object-property": "pair:supports",
-        "range" : "foaf:Project"
+        "range": "foaf:Project",
         "type": "resource"
       },
       {
         "label": "Ami 1",
-        "object-property": "pair:isFriendOf"
-        "range" : "foaf:person"
+        "object-property": "pair:isFriendOf",
+        "range": "foaf:person",
         "type": "resource"
       },
       {
         "label": "Ami 2",
-        "object-property": "pair:isFriendOf"
-        "range" : "foaf:person"
+        "object-property": "pair:isFriendOf",
+        "range": "foaf:person",
         "type": "resource"
       },
       {
         "label": "Ami 3",
-        "object-property": "pair:isFriendOf"
-        "range" : "foaf:person"
+        "object-property": "pair:isFriendOf",
+        "range" : "foaf:person",
         "type": "resource"
       },
       {
         "label": "Collaborateur 1",
-        "object-property": "pair:worksWith"
-        "range" : "foaf:person"
+        "object-property": "pair:worksWith",
+        "range": "foaf:person",
         "type": "resource"
       },
       {
         "label": "Collaborateur 2",
-        "object-property": "pair:worksWith"
-        "range" : "foaf:person"
+        "object-property": "pair:worksWith",
+        "range": "foaf:person",
         "type": "resource"
       },
       {
         "label": "Collaborateur 3",
-        "object-property": "pair:worksWith"
-        "range" : "foaf:person"
+        "object-property": "pair:worksWith",
+        "range": "foaf:person",
         "type": "resource"
       },
       {
         "label": "Collaborateur 4",
-        "object-property": "pair:worksWith"
-        "range" : "foaf:person"
+        "object-property": "pair:worksWith",
+        "range": "foaf:person",
         "type": "resource"
       },
       {
        "label": "Collaborateur 5",
-        "object-property": "pair:worksWith"
-        "range" : "foaf:person"
+        "object-property": "pair:worksWith",
+        "range": "foaf:person",
         "type": "resource"
       },
       {
         "label": "Organisation dans laquelle vous êtes employé(e)",
-        "object-property": "pair:employee"
-        "range" : "foaf:organization"
+        "object-property": "pair:employee",
+        "range": "foaf:organization",
         "type": "resource"
       },
       {
         "label": "Organisation 1 à laquelle vous contribuez",
-        "object-property": "pair:contributesTo"
-        "range" : "foaf:organization"
+        "object-property": "pair:contributesTo",
+        "range": "foaf:organization",
         "type": "resource"
       },
       {
         "label": "Organisation 2 à laquelle vous contribuez",
-        "object-property": "pair:contributesTo"
-        "range" : "foaf:organization"
+        "object-property": "pair:contributesTo",
+        "range": "foaf:organization",
         "type": "resource"
       },
       {
         "label": "Centre d'intérêt 1",
-        "object-property": "dcterms:subject"
-        "range" : "pair:idea"
+        "object-property": "dcterms:subject",
+        "range": "pair:idea",
         "type": "resource"
       },
       {
         "label": "Centre d'intérêt 2",
-        "object-property": "dcterms:subject"
-        "range" : "pair:idea"
+        "object-property": "dcterms:subject",
+        "range": "pair:idea",
         "type": "resource"
       },
       {
         "label": "Centre d'intérêt 3",
-        "object-property": "dcterms:subject"
-        "range" : "pair:idea"
+        "object-property": "dcterms:subject",
+        "range": "pair:idea",
         "type": "resource"
       },
       {
         "label": "Centre d'intérêt 4",
-        "object-property": "dcterms:subject"
-        "range" : "pair:idea"
+        "object-property": "dcterms:subject",
+        "range": "pair:idea",
         "type": "resource"
       },
       {
         "label": "Centre d'intérêt 5",
-        "object-property": "dcterms:subject"
-        "range" : "pair:idea"
+        "object-property": "dcterms:subject",
+        "range": "pair:idea",
         "type": "resource"
       },
       {
         "label": "Centre d'intérêt 6",
-        "object-property": "dcterms:subject"
-        "range" : "pair:idea"
+        "object-property": "dcterms:subject",
+        "range": "pair:idea",
         "type": "resource"
       },
       {
         "label": "Besoin de compétence 1",
-        "object-property": "gr:seeks"
-        "range" : "cco:skill"
+        "object-property": "gr:seeks",
+        "range": "cco:skill",
         "type": "resource"
       },
       {
         "label": "Besoin de compétence 2",
-        "object-property": "gr:seeks"
-        "range" : "cco:skill"
+        "object-property": "gr:seeks",
+        "range": "cco:skill",
         "type": "resource"
       },
       {
         "label" : "Besoin de ressource 1 (hors compétences)",
-        "object-property": "gr:seeks"
-        "range" : "pair:resource"
+        "object-property": "gr:seeks",
+        "range": "pair:resource",
         "type": "resource"
       },
       {
         "label": "Besoin de ressource 2 (hors compétences)",
-        "object-property": "gr:seeks"
-        "range" : "pair:resource"
+        "object-property": "gr:seeks",
+        "range": "pair:resource",
         "type": "resource"
       },
       {
         "label": "Offre de compétence 1",
-        "object-property": "gr:offers"
-        "range" : "cco:skill"
+        "object-property": "gr:offers",
+        "range": "cco:skill",
         "type": "resource"
       },
       {
         "label": "Offre de compétence 2",
-        "object-property": "gr:offers"
-        "range" : "cco:skill"
+        "object-property": "gr:offers",
+        "range": "cco:skill",
         "type": "resource"
       },
       {
         "label": "Offre de ressource 1 (hors compétences)",
-        "object-property": "gr:offers"
-        "range" : "pair:resource"
+        "object-property": "gr:offers",
+        "range": "pair:resource",
         "type": "resource"
       },
       {
         "label": "Offre de ressource 1 (hors compétences)",
-        "object-property": "gr:offers"
-        "range" : "pair:resource"
+        "object-property": "gr:offers",
+        "range": "pair:resource",
         "type": "resource"
       },
     ]
