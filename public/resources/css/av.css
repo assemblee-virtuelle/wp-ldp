@@ -5,10 +5,7 @@ html, body, #main-container, #main-row {
 }
 
 #content-wrapper {
-  height: 100%;
-}
-
-#detail-wrapper {
+  background-color: lightgrey;
   height: 100%;
 }
 
@@ -29,11 +26,17 @@ html, body, #main-container, #main-row {
 #detail .detail-content {
   border: solid 1px;
   padding-left: 15px;
+  background-color: white;
 }
 
-#actor-browser, #project-browser {
+#detail .detail-content .personal-information {
+  padding-left: 15px;
+}
+
+.browser-item {
   height: 80%;
-  border: solid 1px lightgrey;
+  background-color: white;
+  border: solid 1px black;
   margin-bottom: 15px;
 }
 

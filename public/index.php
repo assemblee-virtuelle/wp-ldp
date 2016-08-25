@@ -1,217 +1,160 @@
-<?php include_once('../../../../wp-load.php'); ?>
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Virtual-assembly proof of concept</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <link href="../wp-content/plugins/wp-ldp/public/library/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-        <link href="../wp-content/plugins/wp-ldp/public/resources/css/sidebar.css" rel="stylesheet">
-        <link href="../wp-content/plugins/wp-ldp/public/library/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-        <link href="../wp-content/plugins/wp-ldp/public/resources/css/av.css" type="text/css" rel="stylesheet" />
-        <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
-        <script type="text/javascript" src="../wp-content/plugins/wp-ldp/library/js/LDP-framework/ldpframework.js"></script>
-        <script type="text/javascript" src="../wp-content/plugins/wp-ldp/public/config/config.js"></script>
-        <script src="../wp-content/plugins/wp-ldp/public/library/bootstrap/js/bootstrap.min.js"></script>
-        <script src="../wp-content/plugins/wp-ldp/public/resources/js/sidebar.js"></script>
+<?php
+// Include WordPress
+define('WP_USE_THEMES', true);
+include_once('../../../../wp-load.php');
 
-        <!--  ACTORS RELATED TEMPLATES -->
-        <script id="actor-item-template" type="text/x-handlebars-template">
-          <li>
-            <a onclick="displayActor('#detail', '{{"@id"}}', $('#actor-detail-template').html());">
-              {{firstname}} {{name}}
-            </a>
-          </li>
-        </script>
+get_header();
+?>
+        <!DOCTYPE html>
+        <html>
+            <head>
+                <title>Virtual-assembly proof of concept</title>
+                <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+                <link href="../wp-content/plugins/wp-ldp/public/library/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+                <link href="../wp-content/plugins/wp-ldp/public/resources/css/sidebar.css" rel="stylesheet">
+                <link href="../wp-content/plugins/wp-ldp/public/library/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+                <link href="../wp-content/plugins/wp-ldp/public/resources/css/av.css" type="text/css" rel="stylesheet" />
 
-        <script id="actor-detail-template" type="text/x-handlebars-template">
-            <div class="actor-detail-active">
-              <h1 class="text-center text-uppercase">{{object.firstname}} {{object.name}}</h1>
-              <div class="detail-content">
-                <div class="row personal-information">
-                  <h2>Informations personnelles</h2>
-                  <div class="col-md-3 equal profile-picture">
-                    <img height="200" width="200" src="{{object.profile_picture_url}}" alt="Photo de profil" />
+                <script type="text/javascript" src="../wp-content/plugins/wp-ldp/public/library/jquery/jquery.min.js"></script>
+                <script type="text/javascript" src="../wp-content/plugins/wp-ldp/library/js/LDP-framework/ldpframework.js"></script>
+                <script type="text/javascript" src="../wp-content/plugins/wp-ldp/public/library/bootstrap/js/bootstrap.min.js"></script>
+                <script type="text/javascript" src="../wp-content/plugins/wp-ldp/public/resources/js/av.js"></script>
+
+                <!-- Project templates -->
+                <script id="project-browser-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/project/project-browser.handlebars"></script>
+                <script id="project-detail-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/project/project-detail.handlebars"></script>
+                <script id="project-item-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/project/project-item.handlebars"></script>
+
+                <!-- Actor templates -->
+                <script id="actor-browser-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/actor/actor-browser.handlebars"></script>
+                <script id="actor-detail-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/actor/actor-detail.handlebars"></script>
+                <script id="actor-posts-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/actor/actor-posts.handlebars"></script>
+                <script id="actor-item-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/actor/actor-item.handlebars"></script>
+
+                <!-- Post templates -->
+                <script id="post-item-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/post/post-item.handlebars"></script>
+
+                <script>
+                    function displayProject(divName, itemId, templateId) {
+                      store.render(divName, itemId, templateId);
+                      refreshBrowsePanel(itemId, 'actor');
+                      refreshBrowsePanel(itemId, 'project');
+                      window.location.hash = itemId;
+                    }
+
+                    function displayActor(divName, itemId, templateId) {
+                      store.render(divName, itemId, templateId);
+                      refreshBrowsePanel(itemId, 'project');
+                      refreshBrowsePanel(itemId, 'actor');
+                      // store.get(itemId).then(function(object) {
+                      //   var postsFeedUrl;
+                      //   if (typeof object['foaf:weblog'] != 'undefined') {
+                      //     postFeedUrl = object['foaf:weblog'] + '#me';
+                      //   } else if (typeof object['foaf:accountName'] != 'undefined') {
+                      //     postsFeedUrl = 'http://localhost/wordpress/author/' + object['foaf:accountName'] + '#me';
+                      //   } else if (typeof object['foaf:nick'] != 'undefined') {
+                      //     postsFeedUrl = 'http://localhost/wordpress/author/' + object['foaf:nick'] + '#me';
+                      //   }
+                      //   console.log('postsFeedUrl', postsFeedUrl);
+                      //   store.get(postsFeedUrl).then(function(postObjects) {
+                      //     console.log('postsFeed', JSON.stringify(postObjects));
+                      //   });
+                      //   // store.render('#posts', postsFeedUrl, '#actor-posts-template');
+                      // });
+
+                      window.location.hash = itemId;
+                    }
+
+                    function refreshBrowsePanel(itemId, templatePrefix) {
+                      store.render(
+                        "#" + templatePrefix + "-browser",
+                        itemId,
+                        '#' + templatePrefix + '-browser-template'
+                      );
+                    }
+
+                    function displayResource(resourceIri) {
+                      if (resourceIri.contains('/project/')) {
+                        displayProject('#detail', resourceIri, '#project-detail-template');
+                      } else if (resourceIri.contains('/actor/')) {
+                        displayActor('#detail', resourceIri, '#actor-detail-template');
+                      }
+                    }
+
+                    function refreshCardFromHash() {
+                      var hash = window.location.hash;
+                      if (hash) {
+                          displayResource(hash.substring(1, hash.length));
+                      } else {
+                        var resourceId = config.resourceBaseUrl + 'project/assemblee-virtuelle/';
+                        displayProject('#detail', resourceId, '#project-detail-template');
+                      }
+                    }
+
+                    $(function(){
+                        window.config = {
+                          'containerUrl': '<?php echo site_url(); ?>/ldp_container/',
+                          'resourceBaseUrl' : '<?php echo site_url(); ?>/',
+                          'contextUrl': 'http://owl.openinitiative.com/oicontext.jsonld'
+                        }
+
+                        window.store = new MyStore({
+                            container: config.containerUrl + 'actor/',
+                            context: config.contextUrl,
+                            template: '#actor-detail-template',
+                            partials: {
+                              'actorItem': '#actor-item-template',
+                              'actorDetail': '#actor-detail-template',
+                              'projectItem': '#project-item-template',
+                              'projectDetail': '#project-detail-template',
+                              'postItem': '#post-item-template'
+                            }
+                        });
+                        refreshCardFromHash();
+                    });
+
+                    $(window).on('hashchange', function() {
+                      refreshCardFromHash();
+                    });
+                </script>
+            </head>
+            <body>
+              <div id="wrapper">
+                <!-- Sidebar -->
+                <div id="sidebar-wrapper">
+                  <ul class="sidebar-nav nav-pills nav-stacked" id="menu">
+                    <li class="active">
+                        <a href="#" id="menu"><span class="fa-stack fa-lg pull-left"><i class="fa fa-bars fa-stack-1x "></i></span></a>
+                    </li>
+                    <li>
+                        <a href="#" id="graph"><span class="fa-stack fa-lg pull-left"><i class="fa fa-search fa-stack-1x "></i></span></a>
+                    </li>
+                    <li>
+                        <a href="#" id="map"><span class="fa-stack fa-lg pull-left"><i class="fa fa-map-o fa-stack-1x "></i></span></a>
+                    </li>
+                    <li>
+                        <a href="#" id="card"><span class="fa-stack fa-lg pull-left"><i class="fa fa-info-circle fa-stack-1x "></i></span></a>
+                    </li>
+                    <li>
+                        <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-reply fa-stack-1x "></i></span></a>
+                    </li>
+                  </ul>
+                </div>
+                <div id="content-wrapper">
+                  <div id="main-container" class="container-fluid">
+                    <div id="detail-wrapper" class="col-md-9">
+                        <div id="detail"></div>
+                    </div>
+                    <div id="browser" class="col-md-3">
+                      <div id="project-browser" class="row"></div>
+                      <div id="actor-browser" class="row"></div>
+                    </div>
                   </div>
-                  <div class="col-md-9 equal information-content">
-                    <p>Date de naissance: {{object.birthdate}}</p>
-                    <p>Adresse: {{object.address}}, {{object.zipcode}} {{object.city}}</p>
-
-                    <p>Personal Website: <a href="{{object.website}}">{{object.website}}</a></p>
-                    <p>Contact: <a href="mail:{{object.email_address}}">{{object.email_address}}</a></p>
-
-                    <p>
-                      Reseaux sociaux:
-                      <ul>
-                        {{#if object.linkedin }}<li>Linkedin: <a href="{{object.linkedin}}">{{object.linkedin}}</a></li>{{/if}}
-                        {{#if object.twitter }}<li>Twitter:  <a href="{{object.twitter}}">{{object.twitter}}</a></li>{{/if}}
-                        {{#if object.github }}<li>Github:   <a href="{{object.github}}">{{object.github}}</a></li>{{/if}}
-                        {{#if object.facebook }}<li>Facebook: <a href="{{object.facebook}}">{{object.facebook}}</a></li>{{/if}}
-                      </ul>
-                    </p>
+                  <div id="graph-container" style="display: none;" height="1000px">
+                    <svg id="chart" width="1000px" height="1000px"></svg>
                   </div>
                 </div>
-
-                <h2>Biographie</h2>
-                <p>{{object.description}}</p>
-
-                {{#if object.contributes_to}}
-                  <div class="row projects-listing">
-                    <h2>Projets portés</h2>
-                    <p>
-                      {{#ldpeach object.contributes_to "ul"}}
-                        <li>
-                          <a onclick="displayProject('#detail', '{{"@id"}}', $('#project-detail-template').html())">
-                            {{project_title}}
-                          </a>
-                        </li>
-                      {{/ldpeach}}
-                    </p>
-                  </div>
-                {{/if}}
               </div>
-          </div>
-        </script>
-
-        <script id="actor-template" type="text/x-handlebars-template">
-            <h2 class="text-uppercase">People</h2>
-            <div id="actor">
-                {{#ldpeach object.ldp:contains "ul"}}{{> actorItem }}{{/ldpeach}}
-            </div>
-        </script>
-
-        <!--  PROJECTS RELATED TEMPLATES -->
-        <script id="project-template" type="text/x-handlebars-template">
-            <h2 class="text-uppercase">projects</h2>
-            <div id="projects">
-              {{#ldpeach object.ldp:contains "ul"}}{{> projectItem }}{{/ldpeach}}
-            </div>
-        </script>
-
-        <script id="project-item-template" type="text/x-handlebars-template">
-          <li>
-            <a onclick="displayProject('#detail', '{{"@id"}}', $('#project-detail-template').html())">
-              {{project_title}}
-            </a>
-          </li>
-        </script>
-
-        <script id="project-detail-template" type="text/x-handlebars-template">
-            <div class="project-detail-active">
-              <h1 class="text-center text-uppercase">
-                Le projet {{object.project_title}}
-              </h1>
-              <div class="detail-content">
-                <h2>
-                  Description
-                </h2>
-                <p>
-                  {{object.project_description}}
-                </p>
-
-                <h2>Objectifs</h2>
-                <p>{{object.project_goal}}</p>
-
-                <h2>Vision</h2>
-                <p>{{object.project_vision}}</p>
-
-                <h2>Contexte</h2>
-                <p>{{object.project_context}}</p>
-
-                <h2>Missions</h2>
-                <p>{{object.project_missions}}</p>
-
-                {{#if object.project_contributes}}
-                <h2>Projet de l'initiative de :</h2>
-                  <p>
-                    {{#ldpeach object.project_contributes "ul"}}
-                      <li>
-                        <a onclick="displayActor('#detail', '{{"@id"}}', $('#actor-detail-template').html())">
-                          {{firstname}} {{name}}
-                        </a>
-                      </li>
-                    {{/ldpeach}}
-                  </p>
-                {{/if}}
-              </div>
-          </div>
-        </script>
-        <script>
-            var config = {
-              'containerUrl': '<?php echo site_url(); ?>/ldp/',
-              'resourceBaseUrl' : '<?php echo site_url(); ?>',
-              'contextUrl': 'http://owl.openinitiative.com/oicontext.jsonld'
-            }
-            console.log(config);
-
-            function displayProject(divName, itemId, innerHtml) {
-              projectStore.render(divName, itemId, innerHtml);
-            }
-
-            function displayActor(divName, itemId, innerHtml) {
-              actorStore.render(divName, itemId, innerHtml);
-            }
-
-            $(function(){
-                window.actorStore = new MyStore({
-                    container: config.containerUrl + 'actor/',
-                    context: config.contextUrl,
-                    template: $("#actor-template").html(),
-                    partials: {
-                      'actorItem': $("#actor-item-template").html(),
-                      'actorDetail': $("#actor-detail-template").html()
-                    }
-                });
-                actorStore.render("#actor-browser");
-
-                window.projectStore = new MyStore({
-                  container: config.containerUrl + 'project/',
-                  context: config.contextUrl,
-                  template: $("#project-template").html(),
-                  partials: {
-                    'projectItem': $("#project-item-template").html(),
-                    'projectDetail': $("#project-detail-template").html()
-                  }
-                });
-                projectStore.render("#project-browser");
-
-                var cartopairId = config.resourceBaseUrl + '/ldp/project/assemblee-virtuelle/';
-                displayProject('#detail', cartopairId, $('#project-detail-template').html());
-            });
-        </script>
-    </head>
-    <body>
-      <div id="wrapper">
-        <!-- Sidebar -->
-        <div id="sidebar-wrapper">
-          <ul class="sidebar-nav nav-pills nav-stacked" id="menu">
-            <li class="active">
-                <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-bars fa-stack-1x "></i></span></a>
-            </li>
-            <li>
-                <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-search fa-stack-1x "></i></span></a>
-            </li>
-            <li>
-                <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-map-o fa-stack-1x "></i></span></a>
-            </li>
-            <li>
-                <a href="#"> <span class="fa-stack fa-lg pull-left"><i class="fa fa-info-circle fa-stack-1x "></i></span></a>
-            </li>
-            <li>
-                <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-reply fa-stack-1x "></i></span></a>
-            </li>
-          </ul>
-        </div>
-        <div id="content-wrapper">
-          <div id="main-container" class="container-fluid">
-            <div id="detail-wrapper" class="col-md-9">
-                <div id="detail"></div>
-            </div>
-            <div id="browser" class="col-md-3">
-              <div id="project-browser" class="row"></div>
-              <div id="actor-browser" class="row"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </body>
-</html>
+<?php
+      get_footer();
+?>

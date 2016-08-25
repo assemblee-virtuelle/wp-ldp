@@ -1,0 +1,11 @@
+  <div class="browser-item">
+    <h2 class="text-uppercase">Acteurs associés</h2>
+    <div id="actor">
+    {{#if object.foaf:knows}}
+      {{#ldpeach object.foaf:knows "ul"}}{{> actorItem }}{{/ldpeach}}
+    {{/if}}
+    {{#if object.project_contributes}}
+      {{#ldpeach object.project_contributes "ul"}}{{> actorItem }}{{/ldpeach}}
+    {{/if}}
+    </div>
+  </div>
