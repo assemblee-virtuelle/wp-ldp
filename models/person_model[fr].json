@@ -72,19 +72,19 @@
         "type": "textarea"
       },
       {
-        "label": "Projet 1 auxquel vous contribuez",
+        "label": "Projet 1 auquel vous contribuez",
         "object-property": "foaf:currentProject",
         "range": "foaf:Project",
         "type": "resource"
       },
       {
-        "label": "Projet 2 auxquel vous contribuez",
+        "label": "Projet 2 auquel vous contribuez",
         "object-property": "foaf:currentProject",
         "range": "foaf:Project",
         "type": "resource"
       },
       {
-        "label": "Projet 3 auxquel vous contribuez",
+        "label": "Projet 3 auquel vous contribuez",
         "object-property": "foaf:currentProject",
         "range": "foaf:Project",
         "type": "resource"
@@ -264,7 +264,7 @@
         "type": "resource"
       },
       {
-        "label": "Offre de ressource 1 (hors compétences)",
+        "label": "Offre de ressource 2 (hors compétences)",
         "object-property": "gr:offers",
         "range": "pair:resource",
         "type": "resource"
