@@ -11,6 +11,11 @@
         "data-property": "foaf:name",
       },
       {
+        "label": "Description courte (140 caractères max)",
+        "data-property": "pair:shortDescription",
+        "type": "textarea"
+      },
+      {
         "label": "Forme juridique",
         "data-property": "pair:legalForm",
       },
@@ -57,8 +62,13 @@
         "type": "url"
       },
       {
-        "label": "Description courte (140 caractères max)",
-        "data-property": "pair:shortDescription",
+        "label": "Réseau social 3",
+        "data-property": "pair:socialNetworks",
+        "type": "url"
+      },
+      {
+        "label": "Espace de travail numérique",
+        "data-property": "pair:digitalWorkSpace",
         "type": "textarea"
       },
       {
@@ -72,104 +82,151 @@
         "type": "textarea"
       },
       {
-        "label": "Projet 1 auxquel vous contribuez",
+        "label": "Projet 1 que vous portez (en tant qu'orga)",
+        "object-property": "pair:manage",
+        "range": "foaf:Project",
+        "type": "resource"
+      },
+      {
+        "label": "Projet 2 que vous portez (en tant qu'orga)",
+        "object-property": "pair:manage",
+        "range": "foaf:Project",
+        "type": "resource"
+      },
+      {
+        "label": "Projet 3 que vous portez (en tant qu'orga)",
+        "object-property": "pair:manage",
+        "range": "foaf:Project",
+        "type": "resource"
+      },
+      {
+        "label": "Projet 1 auquel vous contribuez (en tant qu'orga)",
         "object-property": "foaf:currentProject",
         "range": "foaf:Project",
         "type": "resource"
       },
       {
-        "label": "Projet 2 auxquel vous contribuez",
+        "label": "Projet 2 auquel vous contribuez (en tant qu'orga)",
         "object-property": "foaf:currentProject",
         "range": "foaf:Project",
         "type": "resource"
       },
       {
-        "label": "Projet 3 auxquel vous contribuez",
+        "label": "Projet 3 auquel vous contribuez (en tant qu'orga)",
         "object-property": "foaf:currentProject",
         "range": "foaf:Project",
         "type": "resource"
       },
       {
-        "label": "Projet 1 que vous soutenez",
+        "label": "Projet 1 que vous soutenez (en tant qu'orga)",
         "object-property": "pair:supports",
         "range": "foaf:Project",
         "type": "resource"
       },
       {
-        "label": "Projet 2 que vous soutenez",
+        "label": "Projet 2 que vous soutenez (en tant qu'orga)",
         "object-property": "pair:supports",
         "range": "foaf:Project",
         "type": "resource"
       },
       {
-        "label": "Projet 3 que vous soutenez",
+        "label": "Projet 3 que vous soutenez (en tant qu'orga)",
         "object-property": "pair:supports",
         "range": "foaf:Project",
         "type": "resource"
       },
       {
-        "label": "Ami 1",
-        "object-property": "pair:isFriendOf",
+        "label": "Contributeur 1",
+        "object-property": "pair:contributesTo",
         "range": "foaf:person",
         "type": "resource"
       },
       {
-        "label": "Ami 2",
-        "object-property": "pair:isFriendOf",
+        "label": "Contributeur 2",
+        "object-property": "pair:contributesTo",
         "range": "foaf:person",
         "type": "resource"
       },
       {
-        "label": "Ami 3",
-        "object-property": "pair:isFriendOf",
+        "label": "Contributeur 3",
+        "object-property": "pair:contributesTo",
+        "range": "foaf:person",
+        "type": "resource"
+      },
+      {
+        "label": "Contributeur 4",
+        "object-property": "pair:contributesTo",
+        "range": "foaf:person",
+        "type": "resource"
+      },
+      {
+       "label": "Contributeur 5",
+        "object-property": "pair:contributesTo",
+        "range": "foaf:person",
+        "type": "resource"
+      },
+      {
+       "label": "Contributeur 6",
+        "object-property": "pair:contributesTo",
+        "range": "foaf:person",
+        "type": "resource"
+      },
+      {
+       "label": "Contributeur 7",
+        "object-property": "pair:contributesTo",
+        "range": "foaf:person",
+        "type": "resource"
+      },
+      {
+       "label": "Contributeur 8",
+        "object-property": "pair:contributesTo",
+        "range": "foaf:person",
+        "type": "resource"
+      },
+      {
+        "label": "sympathisant 1",
+        "object-property": "cito:likes",
+        "range": "foaf:person",
+        "type": "resource"
+      },
+      {
+        "label": "sympathisant 2",
+        "object-property": "cito:likes",
+        "range": "foaf:person",
+        "type": "resource"
+      },
+      "label": "sympathisant 3",
+        "object-property": "cito:likes",
         "range" : "foaf:person",
         "type": "resource"
       },
       {
-        "label": "Collaborateur 1",
-        "object-property": "pair:worksWith",
-        "range": "foaf:person",
-        "type": "resource"
-      },
-      {
-        "label": "Collaborateur 2",
-        "object-property": "pair:worksWith",
-        "range": "foaf:person",
-        "type": "resource"
-      },
-      {
-        "label": "Collaborateur 3",
-        "object-property": "pair:worksWith",
-        "range": "foaf:person",
-        "type": "resource"
-      },
-      {
-        "label": "Collaborateur 4",
-        "object-property": "pair:worksWith",
-        "range": "foaf:person",
-        "type": "resource"
-      },
-      {
-       "label": "Collaborateur 5",
-        "object-property": "pair:worksWith",
-        "range": "foaf:person",
-        "type": "resource"
-      },
-      {
-        "label": "Organisation dans laquelle vous êtes employé(e)",
-        "object-property": "pair:employee",
+        "label": "Organisation partenaire 1 ",
+        "object-property": "pair:hasPartner",
         "range": "foaf:organization",
         "type": "resource"
       },
       {
-        "label": "Organisation 1 à laquelle vous contribuez",
-        "object-property": "pair:contributesTo",
+        "label": "Organisation partenaire 2 ",
+        "object-property": "pair:hasPartner",
         "range": "foaf:organization",
         "type": "resource"
       },
       {
-        "label": "Organisation 2 à laquelle vous contribuez",
-        "object-property": "pair:contributesTo",
+        "label": "Organisation partenaire 3 ",
+        "object-property": "pair:hasPartner",
+        "range": "foaf:organization",
+        "type": "resource"
+      },
+      {
+        "label": "Organisation partenaire 4 ",
+        "object-property": "pair:hasPartner",
+        "range": "foaf:organization",
+        "type": "resource"
+      },
+      {
+        "label": "Organisation partenaire 5 ",
+        "object-property": "pair:hasPartner",
         "range": "foaf:organization",
         "type": "resource"
       },
@@ -252,7 +309,7 @@
         "type": "resource"
       },
       {
-        "label": "Offre de ressource 1 (hors compétences)",
+        "label": "Offre de ressource 2 (hors compétences)",
         "object-property": "gr:offers",
         "range": "pair:resource",
         "type": "resource"
