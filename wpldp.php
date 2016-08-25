@@ -43,7 +43,6 @@ if (!class_exists('\WpLdp\WpLdp')) {
         add_action( 'save_post', array($this, 'save_ldp_meta_for_post'));
 
         add_filter( 'template_include', array($this, 'include_template_function'));
-        add_action( 'template_redirect', array($this, 'my_page_template_redirect' ));
         add_action( 'add_meta_boxes', array($this, 'display_container_meta_box' ));
         add_action( 'add_meta_boxes', array($this, 'display_media_meta_box' ));
 
@@ -133,25 +132,12 @@ if (!class_exists('\WpLdp\WpLdp')) {
        */
       public function add_poc_rewrite_rule() {
           global $wp_rewrite;
-          $poc_url = plugins_url('public/index.html', __FILE__);
+          $poc_url = plugins_url('public/index.php', __FILE__);
           $poc_url = substr($poc_url, strlen( home_url() ) + 1);
           // The pattern is prefixed with '^'
           // The substitution is prefixed with the "home root", at least a '/'
           // This is equivalent to appending it to `non_wp_rules`
           $wp_rewrite->add_external_rule('av-poc.php', $poc_url);
-      }
-
-      /**
-       * my_page_template_redirect - Another try for the same feature as above
-       *
-       * @return {type}  description
-       */
-      public function my_page_template_redirect() {
-          if( is_page( 'av-poc' ) )
-          {
-              wp_redirect(plugins_url('public/index.html', __FILE__));
-              exit();
-          }
       }
 
       /**
