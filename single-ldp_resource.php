@@ -1,3 +1,4 @@
+<?php if ( isset($_SERVER['HTTP_ACCEPT']) && strstr($_SERVER['HTTP_ACCEPT'], 'application/json' ) ) { ?>
 <?php header('Content-Type: application/ld+json'); ?>
 <?php header('Access-Control-Allow-Origin: *'); ?>
 <?php
@@ -143,3 +144,7 @@
 <?php endwhile; ?>
     ]
 }
+<?php } elseif ( isset($_SERVER['HTTP_ACCEPT']) && strstr($_SERVER['HTTP_ACCEPT'], 'text/html' ) ) {
+  header("Location: " . site_url() . "/wp-ldp/front#http://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+}
+?>
