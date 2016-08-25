@@ -1,17 +1,18 @@
+<?php include_once('../../../../wp-load.php'); ?>
 <!DOCTYPE html>
 <html>
     <head>
         <title>Virtual-assembly proof of concept</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <link href="./wp-content/plugins/wpldp/public/library/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-        <link href="./wp-content/plugins/wpldp/public/resources/css/sidebar.css" rel="stylesheet">
-        <link href="./wp-content/plugins/wpldp/public/library/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-        <link href="./wp-content/plugins/wpldp/public/resources/css/av.css" type="text/css" rel="stylesheet" />
+        <link href="./wp-content/plugins/wp-ldp/public/library/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <link href="./wp-content/plugins/wp-ldp/public/resources/css/sidebar.css" rel="stylesheet">
+        <link href="./wp-content/plugins/wp-ldp/public/library/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+        <link href="./wp-content/plugins/wp-ldp/public/resources/css/av.css" type="text/css" rel="stylesheet" />
         <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
-        <script type="text/javascript" src="./wp-content/plugins/wpldp/library/js/LDP-framework/ldpframework.js"></script>
-        <script type="text/javascript" src="./wp-content/plugins/wpldp/public/config/config.js"></script>
-        <script src="./wp-content/plugins/wpldp/public/library/bootstrap/js/bootstrap.min.js"></script>
-        <script src="./wp-content/plugins/wpldp/public/resources/js/sidebar.js"></script>
+        <script type="text/javascript" src="./wp-content/plugins/wp-ldp/library/js/LDP-framework/ldpframework.js"></script>
+        <script type="text/javascript" src="./wp-content/plugins/wp-ldp/public/config/config.js"></script>
+        <script src="./wp-content/plugins/wp-ldp/public/library/bootstrap/js/bootstrap.min.js"></script>
+        <script src="./wp-content/plugins/wp-ldp/public/resources/js/sidebar.js"></script>
 
         <!--  ACTORS RELATED TEMPLATES -->
         <script id="actor-item-template" type="text/x-handlebars-template">
@@ -136,10 +137,11 @@
         </script>
         <script>
             var config = {
-              'containerUrl': 'http://localhost/balessan/ldp_container/',
-              'resourceBaseUrl' : 'http://localhost/balessan/',
+              'containerUrl': '<?php echo site_url(); ?>/ldp/',
+              'resourceBaseUrl' : '<?php echo site_url(); ?>',
               'contextUrl': 'http://owl.openinitiative.com/oicontext.jsonld'
             }
+            console.log(config);
 
             function displayProject(divName, itemId, innerHtml) {
               projectStore.render(divName, itemId, innerHtml);
