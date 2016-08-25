@@ -195,6 +195,7 @@
         "range": "foaf:person",
         "type": "resource"
       },
+      {
       "label": "sympathisant 3",
         "object-property": "cito:likes",
         "range" : "foaf:person",
