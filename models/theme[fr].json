@@ -7,8 +7,9 @@
         "type": "url"
       },
       {
-        "title": "Idea Title",
-        "name": "title"
+        "label": "Nom",
+        "data-property": "pair:name",
+        "type": "url"
       },
       {
         "label": "Description courte (140 caractères max)",
@@ -22,7 +23,7 @@
       },
       {
         "label": "Lien wikipedia",
-        "data-property": "pair:wikipedia"
+        "data-property": "pair:wikipedia",
         "type":"url"
       },
     ]
