@@ -22,7 +22,7 @@ if (!class_exists('\WpLdp\WpLdpUtils')) {
         $value = null;
         $fields = array();
         $values = get_the_terms( $resourceId, 'ldp_container' );
-        if (!empty($values)) {
+        if (!empty($values) && !is_wp_error($values) ) {
           if (empty($values[0])) {
             $value = reset($values);
           } else {

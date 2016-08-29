@@ -34,11 +34,13 @@ if (!class_exists('\WpLdp\WpLdp')) {
             $_REQUEST   = array_map( 'stripslashes_deep', $_REQUEST );
         }
 
+        register_activation_hook( __FILE__, array($this, 'add_poc_rewrite_rule') );
+        register_activation_hook( __FILE__, array($this, 'generate_menu_item') );
+
         // Entry point of the plugin
         add_action('init', array($this, 'wpldp_plugin_update'));
         add_action( 'init', array($this, 'load_translations_file'));
         add_action( 'init', array($this, 'create_ldp_type'));
-        add_action( 'init', array($this, 'add_poc_rewrite_rule'));
         add_action( 'edit_form_advanced', array($this, 'wpldp_edit_form_advanced'));
         add_action( 'save_post', array($this, 'save_ldp_meta_for_post'));
 
@@ -130,7 +132,7 @@ if (!class_exists('\WpLdp\WpLdp')) {
        *
        * @return {type}  description
        */
-      public function add_poc_rewrite_rule() {
+      public static function add_poc_rewrite_rule() {
           global $wp_rewrite;
           $poc_url = plugins_url('public/index.php', __FILE__);
           $poc_url = substr($poc_url, strlen( home_url() ) + 1);
@@ -440,6 +442,29 @@ if (!class_exists('\WpLdp\WpLdp')) {
           plugins_url('library/js/node_modules/jsoneditor/dist/jsoneditor.min.css', __FILE__)
         );
         wp_enqueue_style('jsoneditorcss');
+      }
+
+      /**
+       * generate_menu_item - Add a menu item to the primary navigation menu to access
+       * the WP-ldp front page to navigate into our pairs
+       *
+       * @return {type}  description
+       */
+      public static function generate_menu_item() {
+        $menu_name = 'primary';
+        $locations = get_nav_menu_locations();
+        $menu_id = $locations[ $menu_name ] ;
+        //var_dump($menu_id) & die();
+        wp_update_nav_menu_item(
+          $menu_id,
+          0,
+          array(
+            'menu-item-title' =>  __('Ecosystem', 'wpldp'),
+            'menu-item-classes' => 'home',
+            'menu-item-url' => home_url( 'wp-ldp/front', 'relative' ),
+            'menu-item-status' => 'publish'
+          )
+        );
       }
     }
 
