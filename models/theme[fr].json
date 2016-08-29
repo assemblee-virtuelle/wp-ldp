@@ -27,111 +27,153 @@
         "type":"url"
       },
       {
-        "label": "Projet 1 s'inscrivant dans cette thématique ",
+        "label": "Projet 1 sur cette thématique ",
         "object-property": "dcterms:subject",
         "range": "foaf:Project",
         "type": "resource"
       },
       {
-        "label": "Projet 2 s'inscrivant dans cette thématique ",
+        "label": "Projet 2 sur cette thématique ",
         "object-property": "dcterms:subject",
         "range": "foaf:Project",
         "type": "resource"
       },
       {
-        "label": "Projet 3 s'inscrivant dans cette thématique ",
+        "label": "Projet 3 sur cette thématique ",
         "object-property": "dcterms:subject",
         "range": "foaf:Project",
         "type": "resource"
       },
       {
-        "label": "Projet 4 s'inscrivant dans cette thématique ",
+        "label": "Projet 4 sur cette thématique ",
         "object-property": "dcterms:subject",
         "range": "foaf:Project",
         "type": "resource"
       },
       {
-        "label": "Projet 5 s'inscrivant dans cette thématique ",
+        "label": "Projet 5 sur cette thématique ",
         "object-property": "dcterms:subject",
         "range": "foaf:Project",
         "type": "resource"
       },
       {
-        "label": "Projet 6 s'inscrivant dans cette thématique ",
+        "label": "Projet 6 sur cette thématique ",
         "object-property": "dcterms:subject",
         "range": "foaf:Project",
         "type": "resource"
       },
       {
-      "label": "Personne 1 s'intéressant à cette thématique",
+        "label": "Evénement 1 sur cette thématique ",
         "object-property": "dcterms:subject",
+        "range": "schema:event",
+        "type": "resource"
+      },
+      {
+        "label": "Evénement 2 sur cette thématique ",
+        "object-property": "dcterms:subject",
+        "range": "schema:event",
+        "type": "resource"
+      },
+      {
+      "label": "Personne 1 travaillant sur cette thématique",
+        "object-property": "pair:hasContributor",
         "range" : "foaf:person",
         "type": "resource"
       },
       {
-      "label": "Personne 2 s'intéressant à cette thématique",
-        "object-property": "dcterms:subject",
+      "label": "Personne 2 travaillant sur cette thématique",
+        "object-property": "pair:hasContributor",
         "range" : "foaf:person",
         "type": "resource"
       },
       {
-      "label": "Personne 3 s'intéressant à cette thématique",
-        "object-property": "dcterms:subject",
+      "label": "Personne 3 travaillant sur cette thématique",
+        "object-property": "pair:hasContributor",
         "range" : "foaf:person",
         "type": "resource"
       },
       {
-      "label": "Personne 4 s'intéressant à cette thématique",
-        "object-property": "dcterms:subject",
+      "label": "Personne 4 travaillant sur cette thématique",
+        "object-property": "pair:hasContributor",
         "range" : "foaf:person",
         "type": "resource"
       },
       {
-        "label": "Organisation 1 s'intéressant à cette thématique",
-        "object-property": "dcterms:subject",
+        "label": "Organisation 1 travaillant sur cette thématique",
+        "object-property": "pair:hasContributor",
         "range": "foaf:organization",
         "type": "resource"
       },
       {
-        "label": "Organisation 2 s'intéressant à cette thématique",
-        "object-property": "dcterms:subject",
+        "label": "Organisation 2 travaillant sur cette thématique",
+        "object-property": "pair:hasContributor",
         "range": "foaf:organization",
         "type": "resource"
       },
       {
-        "label": "Organisation 3 s'intéressant à cette thématique",
-        "object-property": "dcterms:subject",
+        "label": "Organisation 3 travaillant sur cette thématique",
+        "object-property": "pair:hasContributor",
         "range": "foaf:organization",
         "type": "resource"
       },
       {
-        "label": "Organisation 4 s'intéressant à cette thématique",
-        "object-property": "dcterms:subject",
-        "range": "foaf:organization",
-        "type": "resource"
-      },
-      {
-        "label": "Thème ou thèse 1 convergent(e) avec à cette thématique",
+        "label": "Idée 1 (autre thématique, proposition ...) en lien avec cette thématique",
         "object-property": "pair:convergesWith",
         "range": "pair:idea",
         "type": "resource"
       },
       {
-        "label": "Thème ou thèse 2 convergent(e) avec à cette thématique",
+        "label": "Idée 2 (autre thématique, proposition ...) en lien avec cette thématique",
         "object-property": "pair:convergesWith",
         "range": "pair:idea",
         "type": "resource"
       },
       {
-        "label": "Thème ou thèse 3 convergent(e) avec à cette thématique",
+        "label": "Idée 3 (autre thématique, proposition ...) en lien avec cette thématique",
         "object-property": "pair:convergesWith",
         "range": "pair:idea",
         "type": "resource"
       },
       {
-        "label": "Thème ou thèse 4 convergent(e) avec à cette thématique",
+        "label": "Idée 4 (autre thématique, proposition ...) en lien avec cette thématique",
         "object-property": "pair:convergesWith",
         "range": "pair:idea",
+        "type": "resource"
+      },
+      {
+        "label": "Ressource documentaire 1 sur cette thématique",
+        "object-property": "dcterms:subject",
+        "range": "foaf:document",
+        "type": "resource"
+      },
+      {
+        "label": "Ressource documentaire 2 sur cette thématique",
+        "object-property": "dcterms:subject",
+        "range": "foaf:document",
+        "type": "resource"
+      },
+      {
+        "label": "Ressource documentaire 3 sur cette thématique",
+        "object-property": "dcterms:subject",
+        "range": "foaf:document",
+        "type": "resource"
+      },
+      {
+        "label": "Ressource documentaire 4 sur cette thématique",
+        "object-property": "dcterms:subject",
+        "range": "foaf:document",
+        "type": "resource"
+      },
+      {
+        "label": "Ressource financière 1 fléchée sur cette thématique",
+        "object-property": "gr:offers",
+        "range": "pair:money",
+        "type": "resource"
+      },
+      {
+        "label": "Ressource financière 2 fléchée sur cette thématique",
+        "object-property": "pair:convergesWith",
+        "range": "pair:money",
         "type": "resource"
       },
     ]
