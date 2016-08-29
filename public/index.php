@@ -34,61 +34,34 @@ get_header();
                 <!-- Post templates -->
                 <script id="post-item-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/post/post-item.handlebars"></script>
 
+                <!-- Project templates -->
+                <script id="project-list-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/project/project-list.handlebars"></script>
+
                 <script>
-                    function displayProject(divName, itemId, templateId) {
-                      store.render(divName, itemId, templateId);
-                      refreshBrowsePanel(itemId, 'actor');
-                      refreshBrowsePanel(itemId, 'project');
-                      window.location.hash = itemId;
-                    }
+                    function getProjectsList() {
+                      var hostNameList = getKnownHostsList();
+                      var projectsList = [];
 
-                    function displayActor(divName, itemId, templateId) {
-                      store.render(divName, itemId, templateId);
-                      refreshBrowsePanel(itemId, 'project');
-                      refreshBrowsePanel(itemId, 'actor');
-                      // store.get(itemId).then(function(object) {
-                      //   var postsFeedUrl;
-                      //   if (typeof object['foaf:weblog'] != 'undefined') {
-                      //     postFeedUrl = object['foaf:weblog'] + '#me';
-                      //   } else if (typeof object['foaf:accountName'] != 'undefined') {
-                      //     postsFeedUrl = 'http://localhost/wordpress/author/' + object['foaf:accountName'] + '#me';
-                      //   } else if (typeof object['foaf:nick'] != 'undefined') {
-                      //     postsFeedUrl = 'http://localhost/wordpress/author/' + object['foaf:nick'] + '#me';
-                      //   }
-                      //   console.log('postsFeedUrl', postsFeedUrl);
-                      //   store.get(postsFeedUrl).then(function(postObjects) {
-                      //     console.log('postsFeed', JSON.stringify(postObjects));
-                      //   });
-                      //   // store.render('#posts', postsFeedUrl, '#actor-posts-template');
-                      // });
-
-                      window.location.hash = itemId;
-                    }
-
-                    function refreshBrowsePanel(itemId, templatePrefix) {
-                      store.render(
-                        "#" + templatePrefix + "-browser",
-                        itemId,
-                        '#' + templatePrefix + '-browser-template'
-                      );
-                    }
-
-                    function displayResource(resourceIri) {
-                      if (resourceIri.contains('/project/')) {
-                        displayProject('#detail', resourceIri, '#project-detail-template');
-                      } else if (resourceIri.contains('/actor/')) {
-                        displayActor('#detail', resourceIri, '#actor-detail-template');
-                      }
-                    }
-
-                    function refreshCardFromHash() {
-                      var hash = window.location.hash;
-                      if (hash) {
-                          displayResource(hash.substring(1, hash.length));
-                      } else {
-                        var resourceId = config.resourceBaseUrl + 'project/assemblee-virtuelle/';
-                        displayProject('#detail', resourceId, '#project-detail-template');
-                      }
+                      var url = config.resourceBaseUrl + 'ldp/project/';
+                      store.get(url).then(function(object) {
+                        if (object['ldp:contains']) {
+                          $.each(object['ldp:contains'], function(index, project) {
+                            store.get(project).then(function(data) {
+                              if (data.project_title && data.project_description) {
+                                var currentProject = {
+                                  'id' : data['@id'],
+                                  'title' : data.project_title,
+                                  'description' : data.project_description.substring(0, 147) + '...'
+                                };
+                                projectsList.push(currentProject);
+                                displayTemplate('#project-list-template', '#detail', projectsList);
+                              }
+                            });
+                          });
+                        } else {
+                          displayTemplate('#project-list-template', '#detail', undefined);
+                        }
+                      });
                     }
 
                     $(function(){
@@ -110,7 +83,9 @@ get_header();
                               'postItem': '#post-item-template'
                             }
                         });
-                        refreshCardFromHash();
+
+                        getProjectsList();
+                        // refreshCardFromHash();
                     });
 
                     $(window).on('hashchange', function() {

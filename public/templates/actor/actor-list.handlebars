@@ -1,0 +1,23 @@
+<div class="resources-list actor-detail-active">
+  <h1 class="text-uppercase">
+    Liste des acteurs
+  </h1>
+  <div id="actors" class="detail-content">
+    {{#if this}}
+      {{#each this}}
+        <a onclick="displayActor('#detail', &quot;{{id}}&quot;,  '#actor-detail-template')">
+          <div class="actor-item">
+            <h2>
+              {{name}}
+            </h2>
+            <p>
+              {{description}}
+            </p>
+          </div>
+        </a>
+      {{/each}}
+    {{else}}
+      <h4>Aucun acteur référencé</h4>
+    {{/if}}
+  </div>
+</div>

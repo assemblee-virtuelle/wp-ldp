@@ -1,0 +1,20 @@
+<div class="resources-list project-detail-active">
+  <div id="projects" class="detail-content">
+    {{#if this}}
+      {{#each this}}
+        <a onclick="displayProject('#detail', &quot;{{id}}&quot;,  '#project-detail-template')">
+          <div class="project-item">
+            <h2>
+              {{title}}
+            </h2>
+            <p>
+              {{description}}
+            </p>
+          </div>
+        </a>
+      {{/each}}
+    {{else}}
+      <h4>Aucun projet référencé</h4>
+    {{/if}}
+  </div>
+</div>
