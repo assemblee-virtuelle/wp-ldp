@@ -17,6 +17,7 @@ get_header();
 
                 <script type="text/javascript" src="../wp-content/plugins/wp-ldp/public/library/jquery/jquery.min.js"></script>
                 <script type="text/javascript" src="../wp-content/plugins/wp-ldp/library/js/LDP-framework/ldpframework.js"></script>
+                <script type="text/javascript" src="../wp-content/plugins/wp-ldp/library/js/handlebars/handlebars.js"></script>
                 <script type="text/javascript" src="../wp-content/plugins/wp-ldp/public/library/bootstrap/js/bootstrap.min.js"></script>
                 <script type="text/javascript" src="../wp-content/plugins/wp-ldp/public/resources/js/av.js"></script>
 
@@ -39,7 +40,6 @@ get_header();
 
                 <script>
                     function getProjectsList() {
-                      var hostNameList = getKnownHostsList();
                       var projectsList = [];
 
                       var url = config.resourceBaseUrl + 'ldp/project/';
