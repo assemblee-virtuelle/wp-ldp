@@ -1,4 +1,6 @@
-<?php if ( isset($_SERVER['HTTP_ACCEPT']) && strstr($_SERVER['HTTP_ACCEPT'], 'application/json' ) ) { ?>
+<?php if ( isset($_SERVER['HTTP_ACCEPT'])
+        && ( strstr($_SERVER['HTTP_ACCEPT'], 'application/json' )
+            || strstr($_SERVER['HTTP_ACCEPT'], "application/ld+json" ) ) ) { ?>
 <?php header('Content-Type: application/ld+json'); ?>
 <?php header('Access-Control-Allow-Origin: *'); ?>
 <?php
