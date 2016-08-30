@@ -27,6 +27,11 @@
         "type":"url"
       },
       {
+        "label": "Site ou page web",
+        "data-property": "foaf:weblog",
+        "type": "url"
+      },
+      {
         "label": "Projet 1 visant la mise en oeuvre de cette idée",
         "object-property": "pair:actualizes",
         "range": "foaf:Project",
@@ -129,7 +134,7 @@
         "type": "resource"
       },
       {
-        "label": "Ressource financière recherchée pour le développement de cette idée",
+        "label": "Ressource financière recherchée pour le développement de cette idée ?",
         "object-property": "gr:seeks",
         "range": "pair:money",
         "type": "resource"
@@ -150,6 +155,18 @@
         "label": "Compétence 3 recherchée pour le développement de cette idée",
         "object-property": "gr:seeks",
         "range": "cco:skill",
+        "type": "resource"
+      },
+      {
+        "label": "Offre de ressource 1 liée à cette idée",
+        "object-property": "gr:offers",
+        "range": "pair:resource",
+        "type": "resource"
+      },
+      {
+        "label": "Offre de ressource 2 liée à cette idée",
+        "object-property": "gr:offers",
+        "range": "pair:resource",
         "type": "resource"
       },
     ]
