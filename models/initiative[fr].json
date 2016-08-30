@@ -82,6 +82,11 @@
         "type": "textarea"
       },
       {
+        "label": "Statut du projet (actif, inactif, R&D etc.)",
+        "data-property": "pair:status",
+        "type": "textarea"
+      },
+      {
         "label": "Acteur 1 responsable du projet ",
         "object-property": "pair:hasDirector",
         "range": "foaf:agent",
