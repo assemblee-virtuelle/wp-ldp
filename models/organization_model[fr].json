@@ -62,12 +62,12 @@
         "type": "url"
       },
       {
-        "label": "Réseau social 3",
-        "data-property": "pair:socialNetworks",
-        "type": "url"
+        "label": "Espace(s) de travail physique",
+        "data-property": "pair:physicalWorkSpace",
+        "type": "textarea"
       },
       {
-        "label": "Espace de travail numérique",
+        "label": "Espace(s) de travail numérique",
         "data-property": "pair:digitalWorkSpace",
         "type": "textarea"
       },
@@ -201,34 +201,34 @@
         "range" : "foaf:person",
         "type": "resource"
       },
-      {
-        "label": "Organisation partenaire 1 ",
+       {
+        "label": "Acteur partenaire 1 ",
         "object-property": "pair:hasPartner",
-        "range": "foaf:organization",
+        "range": "foaf:agent",
         "type": "resource"
       },
       {
-        "label": "Organisation partenaire 2 ",
+        "label": "Acteur partenaire 2 ",
         "object-property": "pair:hasPartner",
-        "range": "foaf:organization",
+        "range": "foaf:agent",
         "type": "resource"
       },
       {
-        "label": "Organisation partenaire 3 ",
+        "label": "Acteur partenaire 3 ",
         "object-property": "pair:hasPartner",
-        "range": "foaf:organization",
+        "range": "foaf:agent",
         "type": "resource"
       },
       {
-        "label": "Organisation partenaire 4 ",
+        "label": "Acteur partenaire 4 ",
         "object-property": "pair:hasPartner",
-        "range": "foaf:organization",
+        "range": "foaf:agent",
         "type": "resource"
       },
       {
-        "label": "Organisation partenaire 5 ",
+        "label": "Acteur partenaire 5 ",
         "object-property": "pair:hasPartner",
-        "range": "foaf:organization",
+        "range": "foaf:agent",
         "type": "resource"
       },
       {
