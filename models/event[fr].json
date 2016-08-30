@@ -1,0 +1,372 @@
+{
+  "event": {
+    "fields": [
+      {
+        "label": "Photo, image",
+        "data-property": "foaf:img",
+        "type": "url"
+      },
+      {
+        "label": "Nom",
+        "data-property": "foaf:name",
+      },
+      {
+        "label": "Description courte (140 caractères max)",
+        "data-property": "pair:shortDescription",
+        "type": "textarea"
+      },
+      {
+        "label": "Licence des contenus produits ou diffusés",
+        "data-property": "pair:licence",
+      },
+      {
+        "label": "Adresse",
+        "data-property": "pair:adress",
+      },
+      {
+        "label": "Code postal",
+        "data-property": "pair:zipCode",
+        "type": "zipcode"
+      },
+      {
+        "label": "Ville",
+        "data-property": "pair:town",
+      },
+      {
+        "label": "Country",
+        "data-property": "pair:country",
+      },
+      {
+        "label": "Date de début",
+        "data-property": "pair:from",
+      },
+      {
+        "label": "Date de fin",
+        "data-property": "pair:to",
+      },
+      {
+        "label": "Heure de début",
+        "data-property": "pair:at",
+      },
+      {
+        "label": "Heure de fin",
+        "data-property": "pair:until",
+      },
+      {
+        "label": "Email",
+        "data-property": "foaf:mbox",
+        "type": "url"
+      },
+      {
+        "label": "Site ou page web",
+        "data-property": "foaf:weblog",
+        "type": "url"
+      },
+      {
+        "label": "Réservations",
+        "data-property": "pair:tickets",
+        "type": "url"
+      },
+      {
+        "label": "Réseau social 1",
+        "data-property": "pair:socialNetworks",
+        "type": "url"
+      },
+      {
+        "label": "Réseau social 2",
+        "data-property": "pair:socialNetworks",
+        "type": "url"
+      },
+      {
+        "label": "Réseau social 3",
+        "data-property": "pair:socialNetworks",
+        "type": "url"
+      },
+      {
+        "label": "Espace(s) d'échange numérique",
+        "data-property": "pair:digitalWorkSpace",
+        "type": "textarea"
+      },
+      {
+        "label": "Description (1000 caractères max)",
+        "data-property": "pair:description",
+        "type": "textarea"
+      },
+      {
+        "label": "Description longue (illimité)",
+        "data-property": "pair:longDescription",
+        "type": "textarea"
+      },
+      {
+        "label": "Projet 1 que vous soutenez (en tant porteur de projet)",
+        "object-property": "pair:supports",
+        "range": "foaf:Project",
+        "type": "resource"
+      },
+      {
+        "label": "Projet 2 que vous soutenez (en tant porteur de projet)",
+        "object-property": "pair:supports",
+        "range": "foaf:Project",
+        "type": "resource"
+      },
+      {
+        "label": "Projet 3 que vous soutenez (en tant porteur de projet)",
+        "object-property": "pair:supports",
+        "range": "foaf:Project",
+        "type": "resource"
+      },
+      {
+        "label": "Contributeur 1",
+        "object-property": "pair:contributesTo",
+        "range": "foaf:person",
+        "type": "resource"
+      },
+      {
+        "label": "Contributeur 2",
+        "object-property": "pair:contributesTo",
+        "range": "foaf:person",
+        "type": "resource"
+      },
+      {
+        "label": "Contributeur 3",
+        "object-property": "pair:contributesTo",
+        "range": "foaf:person",
+        "type": "resource"
+      },
+      {
+        "label": "Contributeur 4",
+        "object-property": "pair:contributesTo",
+        "range": "foaf:person",
+        "type": "resource"
+      },
+      {
+       "label": "Contributeur 5",
+        "object-property": "pair:contributesTo",
+        "range": "foaf:person",
+        "type": "resource"
+      },
+      {
+       "label": "Contributeur 6",
+        "object-property": "pair:contributesTo",
+        "range": "foaf:person",
+        "type": "resource"
+      },
+      {
+       "label": "Contributeur 7",
+        "object-property": "pair:contributesTo",
+        "range": "foaf:person",
+        "type": "resource"
+      },
+      {
+       "label": "Contributeur 8",
+        "object-property": "pair:contributesTo",
+        "range": "foaf:person",
+        "type": "resource"
+      },
+      {
+       "label": "Participant 1",
+        "object-property": "schema:attendee",
+        "range": "foaf:agent",
+        "type": "resource"
+      },
+      {
+       "label": "Participant 2",
+        "object-property": "schema:attendee",
+        "range": "foaf:agent",
+        "type": "resource"
+      },
+      {
+       "label": "Participant 3",
+        "object-property": "schema:attendee",
+        "range": "foaf:agent",
+        "type": "resource"
+      },
+      {
+       "label": "Participant 4",
+        "object-property": "schema:attendee",
+        "range": "foaf:agent",
+        "type": "resource"
+      },
+      {
+       "label": "Participant 5",
+        "object-property": "schema:attendee",
+        "range": "foaf:agent",
+        "type": "resource"
+      },
+      {
+       "label": "Participant 6",
+        "object-property": "schema:attendee",
+        "range": "foaf:agent",
+        "type": "resource"
+      },
+      {
+       "label": "Participant 7",
+        "object-property": "schema:attendee",
+        "range": "foaf:agent",
+        "type": "resource"
+      },
+      {
+       "label": "Participant 8",
+        "object-property": "schema:attendee",
+        "range": "foaf:agent",
+        "type": "resource"
+      },
+      {
+       "label": "Participant 9",
+        "object-property": "schema:attendee",
+        "range": "foaf:agent",
+        "type": "resource"
+      },
+      {
+       "label": "Participant 10",
+        "object-property": "schema:attendee",
+        "range": "foaf:agent",
+        "type": "resource"
+      },
+      {
+       "label": "Participant 11",
+        "object-property": "schema:attendee",
+        "range": "foaf:agent",
+        "type": "resource"
+      },
+      {
+       "label": "Participant 12",
+        "object-property": "schema:attendee",
+        "range": "foaf:agent",
+        "type": "resource"
+      },
+      {
+        "label": "Acteur 1 responsable de l'événement",
+        "object-property": "pair:hasDirector",
+        "range": "foaf:agent",
+        "type": "resource"
+      },
+      {
+        "label": "Acteur 2 responsable de l'événement",
+        "object-property": "pair:hasDirector",
+        "range": "foaf:agent",
+        "type": "resource"
+      },
+      {
+        "label": "Acteur 3 responsable de l'événement",
+        "object-property": "pair:hasDirector",
+        "range": "foaf:agent",
+        "type": "resource"
+      },
+       {
+        "label": "Acteur partenaire 1 ",
+        "object-property": "pair:hasPartner",
+        "range": "foaf:agent",
+        "type": "resource"
+      },
+      {
+        "label": "Acteur partenaire 2 ",
+        "object-property": "pair:hasPartner",
+        "range": "foaf:agent",
+        "type": "resource"
+      },
+      {
+        "label": "Acteur partenaire 3 ",
+        "object-property": "pair:hasPartner",
+        "range": "foaf:agent",
+        "type": "resource"
+      },
+      {
+        "label": "Acteur partenaire 4 ",
+        "object-property": "pair:hasPartner",
+        "range": "foaf:agent",
+        "type": "resource"
+      },
+      {
+        "label": "Acteur partenaire 5 ",
+        "object-property": "pair:hasPartner",
+        "range": "foaf:agent",
+        "type": "resource"
+      },
+      {
+        "label": "Centre d'intérêt 1",
+        "object-property": "dcterms:subject",
+        "range": "pair:idea",
+        "type": "resource"
+      },
+      {
+        "label": "Centre d'intérêt 2",
+        "object-property": "dcterms:subject",
+        "range": "pair:idea",
+        "type": "resource"
+      },
+      {
+        "label": "Centre d'intérêt 3",
+        "object-property": "dcterms:subject",
+        "range": "pair:idea",
+        "type": "resource"
+      },
+      {
+        "label": "Centre d'intérêt 4",
+        "object-property": "dcterms:subject",
+        "range": "pair:idea",
+        "type": "resource"
+      },
+      {
+        "label": "Centre d'intérêt 5",
+        "object-property": "dcterms:subject",
+        "range": "pair:idea",
+        "type": "resource"
+      },
+      {
+        "label": "Centre d'intérêt 6",
+        "object-property": "dcterms:subject",
+        "range": "pair:idea",
+        "type": "resource"
+      },
+      {
+        "label": "Besoin de compétence 1",
+        "object-property": "gr:seeks",
+        "range": "cco:skill",
+        "type": "resource"
+      },
+      {
+        "label": "Besoin de compétence 2",
+        "object-property": "gr:seeks",
+        "range": "cco:skill",
+        "type": "resource"
+      },
+      {
+        "label" : "Besoin de ressource 1 (hors compétences)",
+        "object-property": "gr:seeks",
+        "range": "pair:resource",
+        "type": "resource"
+      },
+      {
+        "label": "Besoin de ressource 2 (hors compétences)",
+        "object-property": "gr:seeks",
+        "range": "pair:resource",
+        "type": "resource"
+      },
+      {
+        "label": "Offre de compétence 1",
+        "object-property": "gr:offers",
+        "range": "cco:skill",
+        "type": "resource"
+      },
+      {
+        "label": "Offre de compétence 2",
+        "object-property": "gr:offers",
+        "range": "cco:skill",
+        "type": "resource"
+      },
+      {
+        "label": "Offre de ressource 1 (hors compétences)",
+        "object-property": "gr:offers",
+        "range": "pair:resource",
+        "type": "resource"
+      },
+      {
+        "label": "Offre de ressource 2 (hors compétences)",
+        "object-property": "gr:offers",
+        "range": "pair:resource",
+        "type": "resource"
+      },
+    ]
+  }
+}
