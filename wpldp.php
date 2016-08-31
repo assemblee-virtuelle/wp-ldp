@@ -42,8 +42,11 @@ if (!class_exists('\WpLdp\WpLdp')) {
             $_REQUEST   = array_map( 'stripslashes_deep', $_REQUEST );
         }
 
+        register_activation_hook( __FILE__, array($this, 'wpldp_rewrite_flush' ) );
         register_activation_hook( __FILE__, array($this, 'add_poc_rewrite_rule') );
+
         register_activation_hook( __FILE__, array($this, 'generate_menu_item') );
+        register_deactivation_hook( __FILE__, array($this, 'remove_menu_item' ) );
 
         // Entry point of the plugin
         add_action('init', array($this, 'wpldp_plugin_update'));
@@ -151,6 +154,7 @@ if (!class_exists('\WpLdp\WpLdp')) {
           // The substitution is prefixed with the "home root", at least a '/'
           // This is equivalent to appending it to `non_wp_rules`
           $wp_rewrite->add_external_rule(self::$front_page_url, $poc_url);
+          flush_rewrite_rules();
       }
 
       /**
@@ -158,7 +162,7 @@ if (!class_exists('\WpLdp\WpLdp')) {
        *
        * @return {type}  description
        */
-      function create_ldp_type() {
+      public function create_ldp_type() {
           register_post_type('ldp_resource',
               array(
                   'labels'  => array(
@@ -184,7 +188,6 @@ if (!class_exists('\WpLdp\WpLdp')) {
                   'rewrite'               => array('slug' => 'ldp/%ldp_container%'),
                   'menu_icon'             => 'dashicons-image-filter',
           ));
-          flush_rewrite_rules();
       }
 
       /**
@@ -553,6 +556,39 @@ if (!class_exists('\WpLdp\WpLdp')) {
             'menu-item-status' => 'publish'
           )
         );
+      }
+
+      /**
+       * remove_menu_item - Removing the additional menu item on plugin deactivation
+       *
+       * @return {type}  description
+       */
+      public static function remove_menu_item() {
+        $menu_name = 'primary';
+        $locations = get_nav_menu_locations();
+        $menu_id = $locations[ $menu_name ] ;
+        $items = wp_get_nav_menu_items( $menu_id );
+        $menu_object = wp_get_nav_menu_object( $menu_id );
+        foreach ( $items as $key => $item ) {
+          if ( strstr( $item->url, self::$front_page_url ) ) {
+            wp_delete_post( $item->ID, true );
+            unset( $items[$key] );
+          }
+        }
+      }
+
+      /**
+       * wpldp_rewrite_flush - Forcing the flush of rewrite rules on plugin activation
+       * to prevent impossibility to access the LDP resources
+       *
+       * @return {type}  description
+       */
+      public function wpldp_rewrite_flush() {
+        // Register post type to activate associated rewrite rules
+        $this->create_ldp_type();
+
+        // Flush rules to be certain of the possibility to access the new CPT
+        flush_rewrite_rules();
       }
     }
 
