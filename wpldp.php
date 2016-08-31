@@ -53,6 +53,9 @@ if (!class_exists('\WpLdp\WpLdp')) {
         add_action('admin_enqueue_scripts', array($this, 'ldp_enqueue_script'));
         add_action('admin_enqueue_scripts', array($this, 'ldp_enqueue_stylesheet'));
 
+        add_action('wp_enqueue_scripts', array($this, 'wpldpfront_enqueue_script'));
+        add_action('wp_enqueue_scripts', array($this, 'wpldpfront_enqueue_stylesheet'));
+
 
       }
 
@@ -424,6 +427,58 @@ if (!class_exists('\WpLdp\WpLdp')) {
       }
 
       /**
+       * wpldpfront_enqueue_script - Method used to load all proper javascript resource on the frontend
+       *
+       * @return {type}  description
+       */
+      public function wpldpfront_enqueue_script() {
+        $current_url = $_SERVER["REQUEST_URI"];
+        if ( strstr( $current_url, 'wp-ldp/front' ) ) {
+          wp_enqueue_script('', 'https://code.jquery.com/jquery-2.1.4.min.js');
+
+          // Loading the LDP-framework library
+          wp_register_script(
+            'ldpjs',
+            plugins_url('library/js/LDP-framework/ldpframework.js', __FILE__),
+            array('jquery')
+          );
+          wp_enqueue_script('ldpjs');
+
+          // Loading the Plugin-javascript file
+          wp_register_script(
+            'wpldpjs',
+            plugins_url('wpldp.js', __FILE__),
+            array('jquery')
+          );
+          wp_enqueue_script('wpldpjs');
+
+          // Loading the Handlebars library
+          wp_register_script(
+            'bootstrapjs',
+            plugins_url('public/library/bootstrap/js/bootstrap.min.js', __FILE__),
+            array('ldpjs')
+          );
+          wp_enqueue_script('bootstrapjs');
+
+          // Loading the Handlebars library
+          wp_register_script(
+            'handlebarsjs',
+            plugins_url('library/js/handlebars/handlebars.js', __FILE__),
+            array('ldpjs')
+          );
+          wp_enqueue_script('handlebarsjs');
+
+          // Loading the Handlebars library
+          wp_register_script(
+            'avpocjs',
+            plugins_url('public/resources/js/av.js', __FILE__),
+            array('ldpjs')
+          );
+          wp_enqueue_script('avpocjs');
+        }
+      }
+
+      /**
        * ldp_enqueue_stylesheet - Loading requested stylesheet in the admin only
        *
        * @return {type}  description
@@ -442,6 +497,31 @@ if (!class_exists('\WpLdp\WpLdp')) {
           plugins_url('library/js/node_modules/jsoneditor/dist/jsoneditor.min.css', __FILE__)
         );
         wp_enqueue_style('jsoneditorcss');
+      }
+
+
+      /**
+       * wpldpfront_enqueue_stylesheet - Method used to properly load specific stylesheets for the plugin frontend
+       *
+       * @return {type}  description
+       */
+      public function wpldpfront_enqueue_stylesheet() {
+        $current_url = $_SERVER["REQUEST_URI"];
+        if ( strstr( $current_url, 'wp-ldp/front' ) ) {
+          // Loading the WP-LDP stylesheet
+          wp_register_style(
+            'bootstrapcss',
+            plugins_url('public/library/bootstrap/css/bootstrap.min.css', __FILE__)
+          );
+          wp_enqueue_style('bootstrapcss');
+
+          // Loading the WP-LDP stylesheet
+          wp_register_style(
+            'font-asewomecss',
+            plugins_url('public/library/font-awesome/css/font-awesome.min.css', __FILE__)
+          );
+          wp_enqueue_style('font-asewomecss');
+        }
       }
 
       /**

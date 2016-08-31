@@ -10,29 +10,29 @@ if (!String.prototype.contains) {
 /********************************************
 ************ NAVIGATION MENU HANDLING *******
 *********************************************/
-$("#menu-toggle").click(function(e) {
+jQuery("#menu-toggle").click(function(e) {
     e.preventDefault();
-    $("#wrapper").toggleClass("toggled");
+    jQuery("#wrapper").toggleClass("toggled");
 });
 
-$("#menu-toggle-2").click(function(e) {
+jQuery("#menu-toggle-2").click(function(e) {
     e.preventDefault();
-    $("#wrapper").toggleClass("toggled-2");
-    $('#menu ul').hide();
+    jQuery("#wrapper").toggleClass("toggled-2");
+    jQuery('#menu ul').hide();
 });
 
 function initMenu() {
-$('#menu ul').hide();
-$('#menu ul').children('.current').parent().show();
-//$('#menu ul:first').show();
-$('#menu li a').click(
+jQuery('#menu ul').hide();
+jQuery('#menu ul').children('.current').parent().show();
+//jQuery('#menu ul:first').show();
+jQuery('#menu li a').click(
   function() {
-    var checkElement = $(this).next();
+    var checkElement = jQuery(this).next();
     if((checkElement.is('ul')) && (checkElement.is(':visible'))) {
       return false;
       }
     if((checkElement.is('ul')) && (!checkElement.is(':visible'))) {
-      $('#menu ul:visible').slideUp('normal');
+      jQuery('#menu ul:visible').slideUp('normal');
       checkElement.slideDown('normal');
       return false;
       }
@@ -144,7 +144,7 @@ function refreshCardFromHash() {
 
 function getTemplateAjax(path, callback) {
   var source, template;
-  $.ajax({
+  jQuery.ajax({
       url: path,
       success: function (data) {
           source = data;
@@ -156,18 +156,18 @@ function getTemplateAjax(path, callback) {
 
 function displayTemplate(template, div, data) {
   if (typeof(template) == 'string' && template.substring(0, 1) == '#') {
-    var element = $(template);
+    var element = jQuery(template);
     if (element && typeof element.attr('src') !== 'undefined') {
       getTemplateAjax(element.attr('src'), function(template) {
-        $(div).html(template(data));
+        jQuery(div).html(template(data));
       });
     } else {
       template = Handlebars.compile(element.html());
-      $(div).html(template(data));
+      jQuery(div).html(template(data));
     }
   } else {
     template = Handlebars.compile(template);
-    $(div).html(template({object: data}));
+    jQuery(div).html(template({object: data}));
   }
 }
 
@@ -184,26 +184,26 @@ function loadGraphFromRdfViewer(){
 }
 
 function loadOnClickEvent() {
-  $('#card').click(function() {
-    $('#graph-container').hide("slow");
-    $('#main-container').show("slow");
-    $('#main-container').width("100%");
-    $('#main-container').height("100%");
+  jQuery('#card').click(function() {
+    jQuery('#graph-container').hide("slow");
+    jQuery('#main-container').show("slow");
+    jQuery('#main-container').width("100%");
+    jQuery('#main-container').height("100%");
 
     refreshCardFromHash();
 
   });
 
-  $('#graph').click(function() {
-    $('#main-container').hide("slow");
-    $('#graph-container').show("slow");
-    $('#graph-container').width("100%");
-    $('#graph-container').height("100%");
+  jQuery('#graph').click(function() {
+    jQuery('#main-container').hide("slow");
+    jQuery('#graph-container').show("slow");
+    jQuery('#graph-container').width("100%");
+    jQuery('#graph-container').height("100%");
     loadGraphFromRdfViewer();
   });
 }
 
-$(document).ready(function() {
+jQuery(document).ready(function() {
   initMenu();
   loadOnClickEvent();
 });
