@@ -84,8 +84,11 @@ get_header();
                             }
                         });
 
-                        getProjectsList();
-                        // refreshCardFromHash();
+                        if ( window.location.hash ) {
+                          refreshCardFromHash();
+                        } else {
+                          getProjectsList();
+                        }
                     });
 
                     $(window).on('hashchange', function() {
