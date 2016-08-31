@@ -21,8 +21,14 @@ require_once('wpldp-settings.php');
 if (!class_exists('\WpLdp\WpLdp')) {
     class WpLdp {
 
+      /**
+       * The front page url, defaulted as 'wp-ldp/front'
+       */
       protected static $front_page_url = 'wp-ldp/front';
 
+      /**
+       * The current plugin version number
+       */
       protected static $version_number = '1.0.3';
 
       /**
