@@ -21,6 +21,8 @@ require_once('wpldp-settings.php');
 if (!class_exists('\WpLdp\WpLdp')) {
     class WpLdp {
 
+      protected static $front_page_url = 'wp-ldp/front';
+
       protected static $version_number = '1.0.3';
 
       /**
@@ -142,7 +144,7 @@ if (!class_exists('\WpLdp\WpLdp')) {
           // The pattern is prefixed with '^'
           // The substitution is prefixed with the "home root", at least a '/'
           // This is equivalent to appending it to `non_wp_rules`
-          $wp_rewrite->add_external_rule('wp-ldp/front', $poc_url);
+          $wp_rewrite->add_external_rule(self::$front_page_url, $poc_url);
       }
 
       /**
@@ -433,7 +435,7 @@ if (!class_exists('\WpLdp\WpLdp')) {
        */
       public function wpldpfront_enqueue_script() {
         $current_url = $_SERVER["REQUEST_URI"];
-        if ( strstr( $current_url, 'wp-ldp/front' ) ) {
+        if ( strstr( $current_url, self::$front_page_url ) ) {
           wp_enqueue_script('', 'https://code.jquery.com/jquery-2.1.4.min.js');
 
           // Loading the LDP-framework library
@@ -507,7 +509,7 @@ if (!class_exists('\WpLdp\WpLdp')) {
        */
       public function wpldpfront_enqueue_stylesheet() {
         $current_url = $_SERVER["REQUEST_URI"];
-        if ( strstr( $current_url, 'wp-ldp/front' ) ) {
+        if ( strstr( $current_url, self::$front_page_url ) ) {
           // Loading the WP-LDP stylesheet
           wp_register_style(
             'bootstrapcss',
@@ -541,7 +543,7 @@ if (!class_exists('\WpLdp\WpLdp')) {
           array(
             'menu-item-title' =>  __('Ecosystem', 'wpldp'),
             'menu-item-classes' => 'home',
-            'menu-item-url' => home_url( 'wp-ldp/front', 'relative' ),
+            'menu-item-url' => home_url( self::$front_page_url, 'relative' ),
             'menu-item-status' => 'publish'
           )
         );
