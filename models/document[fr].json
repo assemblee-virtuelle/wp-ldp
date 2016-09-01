@@ -1,0 +1,163 @@
+{
+  "document": {
+    "fields": [
+      {
+        "label": "Photo, image",
+        "data-property": "foaf:img",
+        "type": "url"
+      },
+      {
+        "label": "Fichier",
+        "data-property": "pair:file",
+        "type": "url"
+      },
+      {
+        "label": "Titre du document",
+        "data-property": "pair:name",
+        "type": "url"
+      },
+      {
+        "label": "Description courte (140 caractères max)",
+        "data-property": "pair:shortDescription",
+        "type": "textarea"
+      },
+      {
+        "label": "Description (1000 caractères max)",
+        "data-property": "pair:description",
+        "type": "textarea"
+      },
+      {
+        "label": "Projet 1 dont parle ce document",
+        "object-property": "dcterms:subject",
+        "range": "foaf:Project",
+        "type": "resource"
+      },
+      {
+        "label": "Projet 2 dont parle ce document",
+        "object-property": "dcterms:subject",
+        "range": "foaf:Project",
+        "type": "resource"
+      },
+      {
+        "label": "Projet 3 dont parle ce document",
+        "object-property": "dcterms:subject",
+        "range": "foaf:Project",
+        "type": "resource"
+      },
+      {
+        "label": "Thématique 1 de ce document",
+        "object-property": "dcterms:subject",
+        "range": "pair:theme",
+        "type": "resource"
+      },
+      {
+        "label": "Thématique 2 de ce document",
+        "object-property": "dcterms:subject",
+        "range": "pair:theme",
+        "type": "resource"
+      },
+      {
+        "label": "Thématique 3 de ce document",
+        "object-property": "dcterms:subject",
+        "range": "pair:theme",
+        "type": "resource"
+      },
+      {
+        "label": "Thématique 4 de ce document",
+        "object-property": "dcterms:subject",
+        "range": "pair:theme",
+        "type": "resource"
+      },
+      {
+        "label": "Thématique 5 de ce document",
+        "object-property": "dcterms:subject",
+        "range": "pair:theme",
+        "type": "resource"
+      },
+      {
+        "label": "Thèse 1 défendue dans ce document",
+        "object-property": "dcterms:subject",
+        "range": "pair:tesis",
+        "type": "resource"
+      },
+      {
+        "label": "Thèse 2 défendue dans ce document",
+        "object-property": "dcterms:subject",
+        "range": "pair:tesis",
+        "type": "resource"
+      },
+      {
+        "label": "Thèse 3 défendue dans ce document",
+        "object-property": "dcterms:subject",
+        "range": "pair:tesis",
+        "type": "resource"
+      },
+      {
+      "label": "Auteur 1 de ce document",
+        "object-property": "pair:hasAuthor",
+        "range" : "foaf:person",
+        "type": "resource"
+      },
+      {
+      "label": "Auteur 2 de ce document",
+        "object-property": "pair:hasAuthor",
+        "range" : "foaf:person",
+        "type": "resource"
+      },
+      {
+      "label": "Auteur 3 de ce document",
+        "object-property": "pair:hasAuthor"",
+        "range" : "foaf:person",
+        "type": "resource"
+      },
+      {
+      "label": "Personne 1 ayant contribué à ce document",
+        "object-property": "pair:hasContributor",
+        "range" : "foaf:person",
+        "type": "resource"
+      },
+      {
+      "label": "Personne 1 ayant contribué à ce document",
+        "object-property": "pair:hasContributor",
+        "range" : "foaf:person",
+        "type": "resource"
+      },
+      {
+        "label": "Organisation 2 auteur de ce document",
+        "object-property": "pair:hasAuthor",
+        "range": "foaf:organization",
+        "type": "resource"
+      },
+      {
+        "label": "Organisation 3 auteur de ce document",
+        "object-property": "pair:hasAuthor",
+        "range": "foaf:organization",
+        "type": "resource"
+      },
+      {
+        "label": "Elément bibliographique 1",
+        "object-property": "dcterms:subject",
+        "range": "foaf:document",
+        "type": "resource"
+      },
+      {
+        "label": "Elément bibliographique 2",
+        "object-property": "dcterms:subject",
+        "range": "foaf:document",
+        "type": "resource"
+      },
+      {
+        "label": "Elément bibliographique 3",
+        "object-property": "dcterms:subject",
+        "range": "foaf:document",
+        "type": "resource"
+      },
+      {
+        "label": "Elément bibliographique 4",
+        "object-property": "dcterms:subject",
+        "range": "foaf:document",
+        "type": "resource"
+      },
+    ]
+  }
+}
