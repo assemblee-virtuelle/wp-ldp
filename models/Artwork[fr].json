@@ -65,12 +65,12 @@
       {
         "label": "Devise",
         "data-property": "pair:currency",
-        "type": "textarea"
+        "type": "text"
       },
       {
         "label": "Prix",
         "data-property": "pair:price",
-        "type": "textarea"
+        "type": "number"
       },
       {
         "label": "Créateur",
