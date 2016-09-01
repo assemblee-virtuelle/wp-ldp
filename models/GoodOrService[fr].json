@@ -85,25 +85,25 @@
         "type": "resource"
       },
       {
-        "label": "Tag 1"
+        "label": "Tag 1",
         "object-property": "dc:subject",
         "range": "pair:theme",
         "type": "resource"
       },
       {
-        "label": "Tag 2"
+        "label": "Tag 2",
         "object-property": "dc:subject",
         "range": "pair:theme",
         "type": "resource"
       },
       {
-        "label": "Tag 3"
+        "label": "Tag 3",
         "object-property": "dc:subject",
         "range": "pair:theme",
         "type": "resource"
       },
       {
-        "label": "Tag 4"
+        "label": "Tag 4",
         "object-property": "dc:subject",
         "range": "pair:theme",
         "type": "resource"
