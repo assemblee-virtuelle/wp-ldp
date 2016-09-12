@@ -142,67 +142,67 @@
       },
       {
         "label": "Contributeur 1",
-        "object-property": "pair:contributesTo",
+        "object-property": "pair:hasContributor",
         "range": "foaf:person",
         "type": "resource"
       },
       {
         "label": "Contributeur 2",
-        "object-property": "pair:contributesTo",
+        "object-property": "pair:hasContributor",
         "range": "foaf:person",
         "type": "resource"
       },
       {
         "label": "Contributeur 3",
-        "object-property": "pair:contributesTo",
+        "object-property": "pair:hasContributor",
         "range": "foaf:person",
         "type": "resource"
       },
       {
         "label": "Contributeur 4",
-        "object-property": "pair:contributesTo",
+        "object-property": "pair:hasContributor",
         "range": "foaf:person",
         "type": "resource"
       },
       {
        "label": "Contributeur 5",
-        "object-property": "pair:contributesTo",
+        "object-property": "pair:hasContributor",
         "range": "foaf:person",
         "type": "resource"
       },
       {
        "label": "Contributeur 6",
-        "object-property": "pair:contributesTo",
+        "object-property": "pair:hasContributor",
         "range": "foaf:person",
         "type": "resource"
       },
       {
        "label": "Contributeur 7",
-        "object-property": "pair:contributesTo",
+        "object-property": "pair:hasContributor",
         "range": "foaf:person",
         "type": "resource"
       },
       {
        "label": "Contributeur 8",
-        "object-property": "pair:contributesTo",
+        "object-property": "pair:hasContributor",
         "range": "foaf:person",
         "type": "resource"
       },
       {
         "label": "sympathisant 1",
-        "object-property": "cito:likes",
+        "object-property": "pair:hasFollower",
         "range": "foaf:person",
         "type": "resource"
       },
       {
         "label": "sympathisant 2",
-        "object-property": "cito:likes",
+        "object-property": "pair:hasFollower",
         "range": "foaf:person",
         "type": "resource"
       },
       {
       "label": "sympathisant 3",
-        "object-property": "cito:likes",
+        "object-property": "pair:hasFollower",
         "range" : "foaf:person",
         "type": "resource"
       },
