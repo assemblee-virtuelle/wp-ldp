@@ -1,5 +1,5 @@
 {
-  "thème ou centre d'intérêt": {
+  "thèse": {
     "fields": [
       {
         "label": "Photo, image",
@@ -10,6 +10,10 @@
         "label": "Nom",
         "data-property": "pair:name",
         "type": "url"
+      },
+      {
+        "label": "Licence",
+        "data-property": "pair:licence",
       },
       {
         "label": "Description courte (140 caractères max)",
