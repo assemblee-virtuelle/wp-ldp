@@ -11,7 +11,7 @@
         "data-property": "foaf:name",
       },
       {
-        "label": "Description courte (140 caractères max)",
+        "label": "Description courte (- de 140 caractères)",
         "data-property": "pair:shortDescription",
         "type": "textarea"
       },
@@ -105,24 +105,6 @@
         "label": "Projet 3 que vous soutenez",
         "object-property": "pair:supports",
         "range": "foaf:Project",
-        "type": "resource"
-      },
-      {
-        "label": "Ami 1",
-        "object-property": "pair:isFriendOf",
-        "range": "foaf:person",
-        "type": "resource"
-      },
-      {
-        "label": "Ami 2",
-        "object-property": "pair:isFriendOf",
-        "range": "foaf:person",
-        "type": "resource"
-      },
-      {
-        "label": "Ami 3",
-        "object-property": "pair:isFriendOf",
-        "range" : "foaf:person",
         "type": "resource"
       },
       {
