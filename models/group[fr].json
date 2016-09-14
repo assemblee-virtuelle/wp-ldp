@@ -11,6 +11,11 @@
         "data-property": "foaf:name",
       },
       {
+        "label": "Date de créattion,
+        "data-property": "pair:creationDate",
+        "type": "date"
+      },
+      {
         "label": "Description courte (140 caractères max)",
         "data-property": "pair:shortDescription",
         "type": "textarea"
