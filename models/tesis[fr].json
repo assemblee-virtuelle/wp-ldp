@@ -37,13 +37,13 @@
       },
       {
         "label": "Projet 1 visant la mise en oeuvre de cette idée",
-        "object-property": "pair:actualizes",
+        "object-property": "dcterms:subject",
         "range": "foaf:Project",
         "type": "resource"
       },
       {
         "label": "Projet 2 visant la mise en oeuvre de cette idée",
-        "object-property": "pair:actualizes",
+        "object-property": "dcterms:subject",
         "range": "foaf:Project",
         "type": "resource"
       },
@@ -67,110 +67,110 @@
       },
       {
       "label": "Personne 1 soutenant cette idée",
-        "object-property": "pair:supports",
+        "object-property": "pair:hasFollower",
         "range" : "foaf:person",
         "type": "resource"
       },
       {
       "label": "Personne 2 soutenant cette idée",
-        "object-property": "pair:supports",
-        "range" : "foaf:person",
+        "object-property": "pair:hasFollower",
+        "range" : "foaf:Person",
         "type": "resource"
       },
       {
       "label": "Personne 3 soutenant cette idée",
-        "object-property": "pair:supports",
-        "range" : "foaf:person",
+        "object-property": "pair:hasFollower",
+        "range" : "foaf:Person",
         "type": "resource"
       },
       {
       "label": "Organisation 1 soutenant cette idée",
-        "object-property": "pair:supports",
-        "range" : "foaf:organization",
+        "object-property": "pair:hasFollower",
+        "range" : "foaf:Organization",
         "type": "resource"
       },
       {
       "label": "Organisation 2 soutenant cette idée",
-        "object-property": "pair:supports",
-        "range" : "foaf:organization",
+        "object-property": "pair:hasFollower",
+        "range" : "foaf:Organization",
         "type": "resource"
       },
       {
       "label": "Organisation 3 soutenant cette idée",
-        "object-property": "pair:supports",
-        "range" : "foaf:organization",
+        "object-property": "pair:hasFollower",
+        "range" : "foaf:Organization",
         "type": "resource"
       },
       {
         "label": "Thématique 1 en lien avec cette idée",
         "object-property": "dcterms:subject",
-        "range": "pair:theme",
+        "range": "pair:Theme",
         "type": "resource"
       },
       {
         "label": "Thématique 2 en lien avec cette idée",
         "object-property": "dcterms:subject",
-        "range": "pair:theme",
+        "range": "pair:Theme",
         "type": "resource"
       },
       {
         "label": "Thématique 3 en lien avec cette idée",
         "object-property": "dcterms:subject",
-        "range": "pair:theme",
+        "range": "pair:Theme",
         "type": "resource"
       },
       {
         "label": "Idée (Proposition) 1 convergente avec cette idée",
         "object-property": "pair:convergesWith",
-        "range": "pair:thesis",
+        "range": "pair:Thesis",
         "type": "resource"
       },
       {
         "label": "Ressource documentaire 1 portant sur cette idée",
         "object-property": "dcterms:subject",
-        "range": "foaf:document",
+        "range": "foaf:Document",
         "type": "resource"
       },
       {
         "label": "Ressource documentaire 2 sur cette idée",
         "object-property": "dcterms:subject",
-        "range": "foaf:document",
+        "range": "foaf:Document",
         "type": "resource"
       },
       {
         "label": "Ressource financière recherchée pour le développement de cette idée ?",
         "object-property": "gr:seeks",
-        "range": "pair:money",
+        "range": "pair:FinancialResource",
         "type": "resource"
       },
       {
         "label": "Compétence 1 recherchée pour le développement de cette idée",
         "object-property": "gr:seeks",
-        "range": "cco:skill",
+        "range": "cco:Skill",
         "type": "resource"
       },
       {
         "label": "Compétence 2 recherchée pour le développement de cette idée",
         "object-property": "gr:seeks",
-        "range": "cco:skill",
+        "range": "cco:Skill",
         "type": "resource"
       },
       {
         "label": "Compétence 3 recherchée pour le développement de cette idée",
         "object-property": "gr:seeks",
-        "range": "cco:skill",
+        "range": "cco:Skill",
         "type": "resource"
       },
       {
         "label": "Offre de ressource 1 liée à cette idée",
         "object-property": "gr:offers",
-        "range": "pair:resource",
+        "range": "pair:Resource",
         "type": "resource"
       },
       {
         "label": "Offre de ressource 2 liée à cette idée",
         "object-property": "gr:offers",
-        "range": "pair:resource",
+        "range": "pair:Resource",
         "type": "resource"
       },
     ]
