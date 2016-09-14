@@ -50,25 +50,25 @@
       {
         "label": "Evénement 1 portant sur cette idée",
         "object-property": "dcterms:subject",
-        "range": "schema:event",
+        "range": "schema:Event",
         "type": "resource"
       },
       {
       "label": "Personne 1 ayant imaginé cette idée",
         "object-property": "pair:hasCreator",
-        "range" : "foaf:person",
+        "range" : "foaf:Person",
         "type": "resource"
       },
       {
       "label": "Personne 2 ayant imaginé cette idée",
         "object-property": "pair:hasCreator",
-        "range" : "foaf:person",
+        "range" : "foaf:Person",
         "type": "resource"
       },
       {
       "label": "Personne 1 soutenant cette idée",
         "object-property": "pair:hasFollower",
-        "range" : "foaf:person",
+        "range" : "foaf:Person",
         "type": "resource"
       },
       {
