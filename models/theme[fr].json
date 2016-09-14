@@ -77,13 +77,13 @@
       {
         "label": "Ressource financière 1 fléchée sur cette thématique",
         "object-property": "gr:offers",
-        "range": "pair:money",
+        "range": "pair:FinancialResource",
         "type": "resource"
       },
       {
         "label": "Ressource financière 2 fléchée sur cette thématique",
         "object-property": "pair:convergesWith",
-        "range": "pair:money",
+        "range": "pair:FinancialResource",
         "type": "resource"
       }
     ]
