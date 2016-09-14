@@ -75,25 +75,25 @@
       {
         "label": "Créateur",
         "object-property": "pair:creatorof",
-        "range": "foaf:agent",
+        "range": "foaf:Agent",
         "type": "resource"
       },
       {
         "label": "Vendeur",
         "object-property": "gr:offers",
-        "range": "foaf:agent",
+        "range": "foaf:Agent",
         "type": "resource"
       },
       {
         "label": "Tag 1",
         "object-property": "dc:subject",
-        "range": "pair:theme",
+        "range": "pair:Theme",
         "type": "resource"
       },
       {
         "label": "Tag 2",
         "object-property": "dc:subject",
-        "range": "pair:theme",
+        "range": "pair:Theme",
         "type": "resource"
       },
       {
@@ -105,7 +105,7 @@
       {
         "label": "Tag 4",
         "object-property": "dc:subject",
-        "range": "pair:theme",
+        "range": "pair:Theme",
         "type": "resource"
       },
     ]
