@@ -11,7 +11,7 @@
         "data-property": "foaf:name",
       },
       {
-        "label": "Date de créattion,
+        "label": "Date de création",
         "data-property": "pair:creationDate",
         "type": "date"
       },
