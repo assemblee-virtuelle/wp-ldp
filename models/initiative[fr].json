@@ -87,24 +87,6 @@
         "type": "textarea"
       },
       {
-        "label": "Acteur 1 responsable du projet ",
-        "object-property": "pair:hasDirector",
-        "range": "foaf:agent",
-        "type": "resource"
-      },
-      {
-        "label": "Acteur 2 responsable du projet ",
-        "object-property": "pair:hasDirector",
-        "range": "foaf:agent",
-        "type": "resource"
-      },
-      {
-        "label": "Acteur 3 responsable du projet ",
-        "object-property": "pair:hasDirector",
-        "range": "foaf:agent",
-        "type": "resource"
-      },
-      {
         "label": "Projet 1 auquel ce projet contribue",
         "object-property": "pair:hasUseCase",
         "range": "pair:project",
@@ -144,6 +126,24 @@
         "label": "Contributeur 1",
         "object-property": "pair:hasContributor",
         "range": "foaf:person",
+        "type": "resource"
+      },
+      {
+        "label": "Acteur 1 responsable du projet ",
+        "object-property": "pair:hasDirector",
+        "range": "foaf:agent",
+        "type": "resource"
+      },
+      {
+        "label": "Acteur 2 responsable du projet ",
+        "object-property": "pair:hasDirector",
+        "range": "foaf:agent",
+        "type": "resource"
+      },
+      {
+        "label": "Acteur 3 responsable du projet ",
+        "object-property": "pair:hasDirector",
+        "range": "foaf:agent",
         "type": "resource"
       },
       {
@@ -189,24 +189,6 @@
         "type": "resource"
       },
       {
-        "label": "sympathisant 1",
-        "object-property": "pair:hasFollower",
-        "range": "foaf:person",
-        "type": "resource"
-      },
-      {
-        "label": "sympathisant 2",
-        "object-property": "pair:hasFollower",
-        "range": "foaf:person",
-        "type": "resource"
-      },
-      {
-      "label": "sympathisant 3",
-        "object-property": "pair:hasFollower",
-        "range" : "foaf:person",
-        "type": "resource"
-      },
-       {
         "label": "Acteur partenaire 1 ",
         "object-property": "pair:hasPartner",
         "range": "foaf:agent",
