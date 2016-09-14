@@ -20,7 +20,7 @@
         "data-property": "pair:legalForm",
       },
       {
-        "label": "Date de créattion,
+        "label": "Date de création",
         "data-property": "pair:creationDate",
         "type": "date"
       },
@@ -143,31 +143,31 @@
       {
         "label": "Contributeur 1",
         "object-property": "pair:hascontributor",
-        "range": "foaf:person",
+        "range": "foaf:Person",
         "type": "resource"
       },
       {
         "label": "Contributeur 2",
         "object-property": "pair:hascontributor",
-        "range": "foaf:person",
+        "range": "foaf:Person",
         "type": "resource"
       },
       {
         "label": "Contributeur 3",
         "object-property": "pair:hascontributor",
-        "range": "foaf:person",
+        "range": "foaf:Person",
         "type": "resource"
       },
       {
         "label": "Contributeur 4",
         "object-property": "pair:hascontributor",
-        "range": "foaf:person",
+        "range": "foaf:Person",
         "type": "resource"
       },
       {
        "label": "Contributeur 5",
         "object-property": "pair:contributesTo",
-        "range": "foaf:person",
+        "range": "foaf:Person",
         "type": "resource"
       },
       {
@@ -179,31 +179,31 @@
       {
        "label": "Contributeur 7",
         "object-property": "pair:hascontributor",
-        "range": "foaf:person",
+        "range": "foaf:Person",
         "type": "resource"
       },
       {
        "label": "Contributeur 8",
         "object-property": "pair:hascontributor",
-        "range": "foaf:person",
+        "range": "foaf:Person",
         "type": "resource"
       },
       {
         "label": "sympathisant 1",
         "object-property": "pair:hasFollower",
-        "range": "foaf:person",
+        "range": "foaf:Person",
         "type": "resource"
       },
       {
         "label": "sympathisant 2",
         "object-property": "pair:hasFollower",
-        "range": "foaf:person",
+        "range": "foaf:Person",
         "type": "resource"
       },
       {
       "label": "sympathisant 3",
         "object-property": "pair:hasFollower",
-        "range" : "foaf:person",
+        "range" : "foaf:Person",
         "type": "resource"
       },
        {
@@ -215,61 +215,61 @@
       {
         "label": "Acteur partenaire 2 ",
         "object-property": "pair:hasPartner",
-        "range": "foaf:agent",
+        "range": "foaf:Agent",
         "type": "resource"
       },
       {
         "label": "Acteur partenaire 3 ",
         "object-property": "pair:hasPartner",
-        "range": "foaf:agent",
+        "range": "foaf:Agent",
         "type": "resource"
       },
       {
         "label": "Acteur partenaire 4 ",
         "object-property": "pair:hasPartner",
-        "range": "foaf:agent",
+        "range": "foaf:Agent",
         "type": "resource"
       },
       {
         "label": "Acteur partenaire 5 ",
         "object-property": "pair:hasPartner",
-        "range": "foaf:agent",
+        "range": "foaf:Agent",
         "type": "resource"
       },
       {
         "label": "Centre d'intérêt 1",
         "object-property": "dcterms:subject",
-        "range": "pair:idea",
+        "range": "pair:Idea",
         "type": "resource"
       },
       {
         "label": "Centre d'intérêt 2",
         "object-property": "dcterms:subject",
-        "range": "pair:idea",
+        "range": "pair:Idea",
         "type": "resource"
       },
       {
         "label": "Centre d'intérêt 3",
         "object-property": "dcterms:subject",
-        "range": "pair:idea",
+        "range": "pair:Idea",
         "type": "resource"
       },
       {
         "label": "Centre d'intérêt 4",
         "object-property": "dcterms:subject",
-        "range": "pair:idea",
+        "range": "pair:Idea",
         "type": "resource"
       },
       {
         "label": "Centre d'intérêt 5",
         "object-property": "dcterms:subject",
-        "range": "pair:idea",
+        "range": "pair:Idea",
         "type": "resource"
       },
       {
         "label": "Centre d'intérêt 6",
         "object-property": "dcterms:subject",
-        "range": "pair:idea",
+        "range": "pair:Idea",
         "type": "resource"
       },
       {
@@ -281,45 +281,45 @@
       {
         "label": "Besoin de compétence 2",
         "object-property": "gr:seeks",
-        "range": "cco:skill",
+        "range": "cco:Skill",
         "type": "resource"
       },
       {
         "label" : "Besoin de ressource 1 (hors compétences)",
         "object-property": "gr:seeks",
-        "range": "pair:resource",
+        "range": "pair:Resource",
         "type": "resource"
       },
       {
         "label": "Besoin de ressource 2 (hors compétences)",
         "object-property": "gr:seeks",
-        "range": "pair:resource",
+        "range": "pair:Resource",
         "type": "resource"
       },
       {
         "label": "Offre de compétence 1",
         "object-property": "gr:offers",
-        "range": "cco:skill",
+        "range": "cco:Skill",
         "type": "resource"
       },
       {
         "label": "Offre de compétence 2",
         "object-property": "gr:offers",
-        "range": "cco:skill",
+        "range": "cco:Skill",
         "type": "resource"
       },
       {
         "label": "Offre de ressource 1 (hors compétences)",
         "object-property": "gr:offers",
-        "range": "pair:resource",
+        "range": "pair:Resource",
         "type": "resource"
       },
       {
         "label": "Offre de ressource 2 (hors compétences)",
         "object-property": "gr:offers",
-        "range": "pair:resource",
+        "range": "pair:Resource",
         "type": "resource"
-      },
+      }
     ]
   }
 }
