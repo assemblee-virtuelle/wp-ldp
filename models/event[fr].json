@@ -63,7 +63,7 @@
         "type": "url"
       },
       {
-        "label": "Réservations",
+        "label": "Lien vers billetterie",
         "data-property": "pair:tickets",
         "type": "url"
       },
@@ -113,6 +113,54 @@
         "label": "Projet 3 que vous soutenez (en tant porteur de projet)",
         "object-property": "pair:supports",
         "range": "foaf:Project",
+        "type": "resource"
+      },
+      {
+        "label": "Acteur 1 responsable de l'événement",
+        "object-property": "pair:hasDirector",
+        "range": "foaf:agent",
+        "type": "resource"
+      },
+      {
+        "label": "Acteur 2 responsable de l'événement",
+        "object-property": "pair:hasDirector",
+        "range": "foaf:agent",
+        "type": "resource"
+      },
+      {
+        "label": "Acteur 3 responsable de l'événement",
+        "object-property": "pair:hasDirector",
+        "range": "foaf:agent",
+        "type": "resource"
+      },
+       {
+        "label": "Acteur partenaire 1 ",
+        "object-property": "pair:hasPartner",
+        "range": "foaf:agent",
+        "type": "resource"
+      },
+      {
+        "label": "Acteur partenaire 2 ",
+        "object-property": "pair:hasPartner",
+        "range": "foaf:agent",
+        "type": "resource"
+      },
+      {
+        "label": "Acteur partenaire 3 ",
+        "object-property": "pair:hasPartner",
+        "range": "foaf:agent",
+        "type": "resource"
+      },
+      {
+        "label": "Acteur partenaire 4 ",
+        "object-property": "pair:hasPartner",
+        "range": "foaf:agent",
+        "type": "resource"
+      },
+      {
+        "label": "Acteur partenaire 5 ",
+        "object-property": "pair:hasPartner",
+        "range": "foaf:agent",
         "type": "resource"
       },
       {
@@ -232,54 +280,6 @@
       {
        "label": "Participant 12",
         "object-property": "schema:attendee",
-        "range": "foaf:agent",
-        "type": "resource"
-      },
-      {
-        "label": "Acteur 1 responsable de l'événement",
-        "object-property": "pair:hasDirector",
-        "range": "foaf:agent",
-        "type": "resource"
-      },
-      {
-        "label": "Acteur 2 responsable de l'événement",
-        "object-property": "pair:hasDirector",
-        "range": "foaf:agent",
-        "type": "resource"
-      },
-      {
-        "label": "Acteur 3 responsable de l'événement",
-        "object-property": "pair:hasDirector",
-        "range": "foaf:agent",
-        "type": "resource"
-      },
-       {
-        "label": "Acteur partenaire 1 ",
-        "object-property": "pair:hasPartner",
-        "range": "foaf:agent",
-        "type": "resource"
-      },
-      {
-        "label": "Acteur partenaire 2 ",
-        "object-property": "pair:hasPartner",
-        "range": "foaf:agent",
-        "type": "resource"
-      },
-      {
-        "label": "Acteur partenaire 3 ",
-        "object-property": "pair:hasPartner",
-        "range": "foaf:agent",
-        "type": "resource"
-      },
-      {
-        "label": "Acteur partenaire 4 ",
-        "object-property": "pair:hasPartner",
-        "range": "foaf:agent",
-        "type": "resource"
-      },
-      {
-        "label": "Acteur partenaire 5 ",
-        "object-property": "pair:hasPartner",
         "range": "foaf:agent",
         "type": "resource"
       },
