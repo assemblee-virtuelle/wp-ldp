@@ -47,115 +47,115 @@
       {
         "label": "Thématique 1 de ce document",
         "object-property": "dcterms:subject",
-        "range": "pair:theme",
+        "range": "pair:Theme",
         "type": "resource"
       },
       {
         "label": "Thématique 2 de ce document",
         "object-property": "dcterms:subject",
-        "range": "pair:theme",
+        "range": "pair:Theme",
         "type": "resource"
       },
       {
         "label": "Thématique 3 de ce document",
         "object-property": "dcterms:subject",
-        "range": "pair:theme",
+        "range": "pair:Theme",
         "type": "resource"
       },
       {
         "label": "Thématique 4 de ce document",
         "object-property": "dcterms:subject",
-        "range": "pair:theme",
+        "range": "pair:Theme",
         "type": "resource"
       },
       {
         "label": "Thématique 5 de ce document",
         "object-property": "dcterms:subject",
-        "range": "pair:theme",
+        "range": "pair:Theme",
         "type": "resource"
       },
       {
         "label": "Thèse 1 défendue dans ce document",
         "object-property": "dcterms:subject",
-        "range": "pair:tesis",
+        "range": "pair:Thesis",
         "type": "resource"
       },
       {
         "label": "Thèse 2 défendue dans ce document",
         "object-property": "dcterms:subject",
-        "range": "pair:tesis",
+        "range": "pair:Thesis",
         "type": "resource"
       },
       {
         "label": "Thèse 3 défendue dans ce document",
         "object-property": "dcterms:subject",
-        "range": "pair:tesis",
+        "range": "pair:Thesis",
         "type": "resource"
       },
       {
       "label": "Auteur 1 de ce document",
         "object-property": "pair:hasAuthor",
-        "range" : "foaf:person",
+        "range" : "foaf:Person",
         "type": "resource"
       },
       {
       "label": "Auteur 2 de ce document",
         "object-property": "pair:hasAuthor",
-        "range" : "foaf:person",
+        "range" : "foaf:Person",
         "type": "resource"
       },
       {
       "label": "Auteur 3 de ce document",
-        "object-property": "pair:hasAuthor"",
-        "range" : "foaf:person",
+        "object-property": "pair:hasAuthor",
+        "range" : "foaf:Person",
         "type": "resource"
       },
       {
       "label": "Personne 1 ayant contribué à ce document",
         "object-property": "pair:hasContributor",
-        "range" : "foaf:person",
+        "range" : "foaf:Person",
         "type": "resource"
       },
       {
       "label": "Personne 1 ayant contribué à ce document",
         "object-property": "pair:hasContributor",
-        "range" : "foaf:person",
+        "range" : "foaf:Person",
         "type": "resource"
       },
       {
         "label": "Organisation 2 auteur de ce document",
         "object-property": "pair:hasAuthor",
-        "range": "foaf:organization",
+        "range": "foaf:Organization",
         "type": "resource"
       },
       {
         "label": "Organisation 3 auteur de ce document",
         "object-property": "pair:hasAuthor",
-        "range": "foaf:organization",
+        "range": "foaf:Organization",
         "type": "resource"
       },
       {
         "label": "Elément bibliographique 1",
         "object-property": "dcterms:subject",
-        "range": "foaf:document",
+        "range": "foaf:Document",
         "type": "resource"
       },
       {
         "label": "Elément bibliographique 2",
         "object-property": "dcterms:subject",
-        "range": "foaf:document",
+        "range": "foaf:Document",
         "type": "resource"
       },
       {
         "label": "Elément bibliographique 3",
         "object-property": "dcterms:subject",
-        "range": "foaf:document",
+        "range": "foaf:Document",
         "type": "resource"
       },
       {
         "label": "Elément bibliographique 4",
         "object-property": "dcterms:subject",
-        "range": "foaf:document",
+        "range": "foaf:Document",
         "type": "resource"
       },
     ]
