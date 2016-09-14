@@ -20,6 +20,11 @@
         "data-property": "pair:legalForm",
       },
       {
+        "label": "Date de créattion,
+        "data-property": "pair:creationDate",
+        "type": "date"
+      },
+      {
         "label": "Adresse",
         "data-property": "pair:adress",
       },
