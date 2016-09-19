@@ -392,8 +392,14 @@ if (!class_exists('\WpLdp\WpLdp')) {
         if (!empty($fields)) {
           foreach($_POST as $key => $value) {
             foreach($fields as $field) {
-              if ($key === $field->name) {
-                  update_post_meta($resource_id, $key, $value);
+              if ( isset( $field->name ) ) {
+                if ($key === $field->name) {
+                    update_post_meta($resource_id, $key, $value);
+                }
+              } elseif (isset( $field->{'data-property'} ) ) {
+                if ( $key === $field->{'data-property'} ) {
+                    update_post_meta($resource_id, $key, $value);
+                }
               }
             }
           }

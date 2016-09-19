@@ -6,6 +6,9 @@
 <?php
   // Getting general information about the container associated with the current resource
   $fields = \WpLdp\WpLdpUtils::getResourceFieldsList($post->ID);
+  $terms =  wp_get_post_terms( $post->ID, 'ldp_container' );
+  $termId = $terms[0]->term_id;
+  $termMeta = get_option("ldp_container_$termId");
   $rdfType = isset($termMeta["ldp_rdf_type"]) ? $termMeta["ldp_rdf_type"] : null;
 ?>
 {
@@ -18,9 +21,15 @@
             // Handling special case of editing trhough the wordpress admin backend
             if (!empty($referer) && strstr($referer, 'wp-admin/post.php')) {
               foreach($fields as $field) {
-                echo('          "'. $field->name .'": ');
-                echo('' . json_encode(get_post_custom_values($field->name)[0]) . ',');
-                echo "\n";
+                if ( isset( $field->name ) ) {
+                  echo('          "'. $field->name .'": ');
+                  echo('' . json_encode(get_post_custom_values($field->name)[0]) . ',');
+                  echo "\n";
+                } elseif ( isset( $field->{'data-property'} ) ) {
+                  echo('          "'. $field->{'data-property'} .'": ');
+                  echo('' . json_encode(get_post_custom_values($field->{'data-property'})[0]) . ',');
+                  echo "\n";
+                }
               }
             } else {
               $arrayToProcess = [];
@@ -51,11 +60,19 @@
 
               foreach($arrayToProcess as $arrayField) {
                 foreach($fields as $field) {
-                  if ( strstr($field->name, $arrayField) ||
+                  if ( isset($field->name) &&
+                      strstr($field->name, $arrayField) ||
                       $field->name === $arrayField ) {
                     $value = get_post_custom_values($field->name)[0];
                     if (!empty($value) && $value != '""') {
                       $valuesArray[$arrayField][] = json_encode(get_post_custom_values($field->name)[0]);
+                    }
+                  } elseif (isset($field->{'data-property'}) &&
+                      strstr($field->{'data-property'}, $arrayField) ||
+                      $field->{'data-property'} === $arrayField ) {
+                    $value = get_post_custom_values($field->{'data-property'})[0];
+                    if (!empty($value) && $value != '""') {
+                      $valuesArray[$arrayField][] = json_encode(get_post_custom_values($field->{'data-property'})[0]);
                     }
                   }
                 }
@@ -87,6 +104,10 @@
                   echo('          "'. $field->name .'": ');
                   echo('' . json_encode(get_post_custom_values($field->name)[0]) . ',');
                   echo "\n";
+                } elseif (!in_array($field->{'data-property'}, $fieldNotToRender)) {
+                  echo('          "'. $field->{'data-property'} .'": ');
+                  echo('' . json_encode(get_post_custom_values($field->{'data-property'})[0]) . ',');
+                  echo "\n";
                 }
               }
             }
@@ -94,8 +115,10 @@
             // Get user to retrieve associated posts !
             $user_login;
             foreach($fields as $field) {
-              if ($field->name == 'foaf:nick') {
+              if (isset($field->name) && $field->name == 'foaf:nick') {
                 $user_login = get_post_custom_values($field->name)[0];
+              } elseif (isset( $field->{'data-property'} ) && $field->{'data-property'} == 'foaf:nick' ) {
+                $user_login = get_post_custom_values($field->{'data-property'})[0];
               }
             }
 

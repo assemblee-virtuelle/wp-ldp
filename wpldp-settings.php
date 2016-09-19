@@ -33,18 +33,76 @@ if (!class_exists('\WpLdp\WpLdpSettings')) {
 
            if ($ldp_container_init) {
              //TODO: Initialize the PAIR containers
-             $pair_terms = array('project', 'actor', 'idea', 'resource');
-             foreach ($pair_terms as $term) {
+             $pair_terms = array(
+               'project' => array(
+                  'label' => __('Project', 'wpldp'),
+                  'rdftype' => 'foaf:project'
+                ),
+               'initiative' => array(
+                  'label' => __('Initiative', 'wpldp'),
+                  'rdftype' => 'pair:initiative'
+                ),
+               'organization' => array(
+                  'label' => __('Organization', 'wpldp'),
+                  'rdftype' => 'foaf:organization'
+                ),
+               'group' => array(
+                  'label' => __('Group', 'wpldp'),
+                  'rdftype' => 'foaf:group'
+                ),
+               'document' => array(
+                  'label' => __('Document', 'wpldp'),
+                  'rdftype' => 'foaf:document'
+                ),
+               'goodorservice' => array(
+                  'label' => __('Good or Service', 'wpldp'),
+                  'rdftype' => 'goodRelation:goodOrService'
+                ),
+               'artwork' => array(
+                  'label' => __('Artwork', 'wpldp'),
+                  'rdftype' => 'schema:artwork'
+                ),
+               'event' => array(
+                  'label' => __('Event', 'wpldp'),
+                  'rdftype' => 'schema:event'
+                ),
+               'place' => array(
+                  'label' => __('Place', 'wpldp'),
+                  'rdftype' => 'schema:place'
+                ),
+               'theme' => array(
+                  'label' => __('Theme', 'wpldp'),
+                  'rdftype' => 'pair:theme'
+                ),
+               'thesis' => array(
+                  'label' => __('Thesis', 'wpldp'),
+                  'rdftype' => 'pair:thesis'
+                ),
+               'actor' => array(
+                  'label' => __('Actor', 'wpldp'),
+                  'rdftype' => 'pair:actor'
+                ),
+               'idea' => array(
+                  'label' => __('Idea', 'wpldp'),
+                  'rdftype' => 'pair:label'
+                ),
+               'resource' => array(
+                  'label' => __('Resource', 'wpldp'),
+                  'rdftype' => 'pair:resource'
+                )
+             );
+
+             foreach ($pair_terms as $term => $properties) {
                // 1 - Check if they do not exists
                if (!term_exists($term, 'ldp_container')) {
                  //   - Else, loop on the models files (or hardcoded array) and push them each as taxonomy term in the database
-                 $model = file_get_contents(__DIR__  . '/models/' . $term . '_model.json');
+                 $model = file_get_contents(__DIR__  . '/models/' . $term . '.json');
                  $new_term = wp_insert_term(
-                    ucfirst($term),
+                    $properties['label'],
                     'ldp_container',
                     array(
                       'slug' => $term,
-                      'description' => 'The ' . $term . ' object model'
+                      'description' => sprintf( __('The %1$s object model', 'wpldp'), $term )
                     )
                   );
 
@@ -54,6 +112,7 @@ if (!class_exists('\WpLdp\WpLdpSettings')) {
                     $term_meta = array();
                   }
 
+                  $term_meta['ldp_rdf_type'] = $properties['rdftype'];
                   $term_meta['ldp_model'] = stripslashes_deep($model);
                   update_option("ldp_container_$term_id", $term_meta);
                }
