@@ -1,5 +1,5 @@
 {
-  "Oeuvre": {
+  "goodorservice": {
     "fields": [
       {
         "label": "Photo, image 1",
@@ -99,7 +99,7 @@
       {
         "label": "Tag 3",
         "object-property": "dc:subject",
-        "range": "pair:theme",
+        "range": "pair:Theme",
         "type": "resource"
       },
       {

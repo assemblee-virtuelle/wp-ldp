@@ -1,5 +1,5 @@
 {
-  "Bien ou service": {
+  "artwork": {
     "fields": [
       {
         "label": "Photo, image 1",
@@ -18,7 +18,7 @@
       },
       {
         "label": "Nom",
-        "data-property": "foaf:name",
+        "data-property": "foaf:name"
       },
       {
         "label": "Description courte (140 caractères max)",
@@ -27,7 +27,7 @@
       },
       {
         "label": "Adresse",
-        "data-property": "pair:adress",
+        "data-property": "pair:adress"
       },
       {
         "label": "Code postal",
@@ -36,11 +36,11 @@
       },
       {
         "label": "Ville",
-        "data-property": "pair:town",
+        "data-property": "pair:town"
       },
       {
         "label": "Country",
-        "data-property": "pair:country",
+        "data-property": "pair:country"
       },
       {
         "label": "Email",
@@ -99,7 +99,7 @@
       {
         "label": "Tag 3",
         "object-property": "dc:subject",
-        "range": "pair:Theme",
+        "range": "pair:theme",
         "type": "resource"
       },
       {
