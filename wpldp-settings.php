@@ -151,8 +151,9 @@ if (!class_exists('\WpLdp\WpLdpSettings')) {
        }
 
        function ldp_container_init_field() {
-           $optionValue = !empty(get_option('ldp_container_init', false)) ? 1 : 0;
-           echo "<input type='checkbox' name='ldp_container_init' value='1' " . checked($optionValue, 1, false) . " />";
+         $optionValue = get_option('ldp_container_init', false);
+         $optionValue = !empty($optionValue) ? 1 : 0;
+         echo "<input type='checkbox' name='ldp_container_init' value='1' " . checked($optionValue, 1, false) . " />";
        }
 
        function backend_hooking() {
