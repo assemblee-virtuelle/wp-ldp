@@ -12,6 +12,7 @@ if (!class_exists('\WpLdp\WpLdpTaxonomy')) {
      * @return {WpLdpTaxonomy}  instance of the object
      */
     public function __construct() {
+      register_activation_hook( __FILE__, array($this, 'wpldp_rewrite_flush' ) );
       add_action( 'init', array($this, 'register_container_taxonomy'), 0 );
 
       add_filter( 'template_include', array($this, 'include_template_function'));
@@ -19,6 +20,18 @@ if (!class_exists('\WpLdp\WpLdpTaxonomy')) {
       add_action( 'ldp_container_edit_form_fields', array($this, 'add_custom_tax_fields_onedit'));
       add_action( 'create_ldp_container', array($this, 'save_custom_tax_field'));
       add_action( 'edited_ldp_container', array($this, 'save_custom_tax_field'));
+    }
+
+
+    /**
+     * wpldp_rewrite_flush - Force flushing the rewrite rules on plugin activation
+     *
+     * @return {type}  description
+     */
+    public function wpldp_rewrite_flush() {
+      delete_option('rewrite_rules');
+      $this->register_container_taxonomy();
+      flush_rewrite_rules( true );
     }
 
     /**
@@ -48,8 +61,8 @@ if (!class_exists('\WpLdp\WpLdpTaxonomy')) {
         'not_found'                  => __( 'Not Found', 'wpldp' ),
       );
       $rewrite = array(
-        'slug'                       => '',
-        'with_front'                 => false,
+        'slug'                       => 'ldp',
+        'with_front'                 => true,
         'hierarchical'               => false,
       );
       $args = array(
@@ -60,7 +73,7 @@ if (!class_exists('\WpLdp\WpLdpTaxonomy')) {
         'show_admin_column'          => true,
         'show_in_nav_menus'          => true,
         'show_tagcloud'              => true,
-        // 'rewrite'                    => $rewrite,
+        'rewrite'                    => $rewrite,
       );
       register_taxonomy( 'ldp_container', 'ldp_resource', $args );
 

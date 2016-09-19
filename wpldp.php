@@ -43,7 +43,7 @@ if (!class_exists('\WpLdp\WpLdp')) {
         }
 
         register_activation_hook( __FILE__, array($this, 'wpldp_rewrite_flush' ) );
-        register_activation_hook( __FILE__, array($this, 'add_poc_rewrite_rule') );
+        register_deactivation_hook( __FILE__, array($this, 'wpldp_flush_rewrite_rules_on_deactivation' ) );
 
         register_activation_hook( __FILE__, array($this, 'generate_menu_item') );
         register_deactivation_hook( __FILE__, array($this, 'remove_menu_item' ) );
@@ -52,6 +52,8 @@ if (!class_exists('\WpLdp\WpLdp')) {
         add_action('init', array($this, 'wpldp_plugin_update'));
         add_action( 'init', array($this, 'load_translations_file'));
         add_action( 'init', array($this, 'create_ldp_type'));
+        add_action( 'init', array($this, 'add_poc_rewrite_rule'));
+
         add_action( 'edit_form_advanced', array($this, 'wpldp_edit_form_advanced'));
         add_action( 'save_post', array($this, 'save_ldp_meta_for_post'));
 
@@ -66,8 +68,6 @@ if (!class_exists('\WpLdp\WpLdp')) {
 
         add_action('wp_enqueue_scripts', array($this, 'wpldpfront_enqueue_script'));
         add_action('wp_enqueue_scripts', array($this, 'wpldpfront_enqueue_stylesheet'));
-
-
       }
 
 
@@ -146,7 +146,7 @@ if (!class_exists('\WpLdp\WpLdp')) {
        *
        * @return {type}  description
        */
-      public static function add_poc_rewrite_rule() {
+      public function add_poc_rewrite_rule() {
           global $wp_rewrite;
           $poc_url = plugins_url('public/index.php', __FILE__);
           $poc_url = substr($poc_url, strlen( home_url() ) + 1);
@@ -154,7 +154,7 @@ if (!class_exists('\WpLdp\WpLdp')) {
           // The substitution is prefixed with the "home root", at least a '/'
           // This is equivalent to appending it to `non_wp_rules`
           $wp_rewrite->add_external_rule(self::$front_page_url, $poc_url);
-          flush_rewrite_rules();
+          //flush_rewrite_rules( true );
       }
 
       /**
@@ -544,18 +544,23 @@ if (!class_exists('\WpLdp\WpLdp')) {
       public static function generate_menu_item() {
         $menu_name = 'primary';
         $locations = get_nav_menu_locations();
-        $menu_id = $locations[ $menu_name ] ;
-        //var_dump($menu_id) & die();
-        wp_update_nav_menu_item(
-          $menu_id,
-          0,
-          array(
-            'menu-item-title' =>  __('Ecosystem', 'wpldp'),
-            'menu-item-classes' => 'home',
-            'menu-item-url' => home_url( self::$front_page_url, 'relative' ),
-            'menu-item-status' => 'publish'
-          )
-        );
+
+        if ( !empty( $locations ) && isset( $locations[ $menu_name ] ) ) {
+          $menu_id = $locations[ $menu_name ] ;
+
+          if ( !empty( $menu_id ) ) {
+            wp_update_nav_menu_item(
+              $menu_id,
+              0,
+              array(
+                'menu-item-title' =>  __('Ecosystem', 'wpldp'),
+                'menu-item-classes' => 'home',
+                'menu-item-url' => home_url( self::$front_page_url, 'relative' ),
+                'menu-item-status' => 'publish'
+              )
+            );
+          }
+        }
       }
 
       /**
@@ -585,10 +590,21 @@ if (!class_exists('\WpLdp\WpLdp')) {
        */
       public function wpldp_rewrite_flush() {
         // Register post type to activate associated rewrite rules
+        delete_option('rewrite_rules');
         $this->create_ldp_type();
-
+        $this->add_poc_rewrite_rule();
         // Flush rules to be certain of the possibility to access the new CPT
-        flush_rewrite_rules();
+        flush_rewrite_rules( true );
+      }
+
+      /**
+       * wpldp_flush_rewrite_rules_on_deactivation - Same thing - for deactivation only
+       *
+       * @return {type}  description
+       */
+      public function wpldp_flush_rewrite_rules_on_deactivation() {
+        flush_rewrite_rules( true );
+        delete_option('rewrite_rules');
       }
     }
 
