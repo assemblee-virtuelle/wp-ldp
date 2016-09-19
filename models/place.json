@@ -8,7 +8,7 @@
       },
       {
         "label": "Nom",
-        "data-property": "foaf:name",
+        "data-property": "foaf:name"
       },
       {
         "label": "Description courte (140 caractères max)",
@@ -17,11 +17,11 @@
       },
       {
         "label": "Forme juridique",
-        "data-property": "pair:legalForm",
+        "data-property": "pair:legalForm"
       },
       {
         "label": "Adresse",
-        "data-property": "pair:adress",
+        "data-property": "pair:address"
       },
       {
         "label": "Code postal",
@@ -30,11 +30,11 @@
       },
       {
         "label": "Ville",
-        "data-property": "pair:town",
+        "data-property": "pair:town"
       },
       {
         "label": "Country",
-        "data-property": "pair:country",
+        "data-property": "pair:country"
       },
       {
         "label": "Email",
@@ -296,7 +296,7 @@
         "object-property": "gr:offers",
         "range": "pair:resource",
         "type": "resource"
-      },
+      }
     ]
   }
 }

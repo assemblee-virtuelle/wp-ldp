@@ -8,8 +8,7 @@
       },
       {
         "label": "Nom",
-        "data-property": "pair:name",
-        "type": "url"
+        "data-property": "pair:name"
       },
       {
         "label": "Description courte (140 caractères max)",

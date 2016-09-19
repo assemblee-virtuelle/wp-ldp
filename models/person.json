@@ -8,7 +8,7 @@
       },
       {
         "label": "Nom",
-        "data-property": "foaf:name",
+        "data-property": "foaf:name"
       },
       {
         "label": "Description courte (- de 140 caractères)",
@@ -17,11 +17,11 @@
       },
       {
         "label": "Prénom",
-        "data-property": "foaf:firstName",
+        "data-property": "foaf:firstName"
       },
       {
         "label": "Pseudonyme",
-        "data-property": "foaf:nick",
+        "data-property": "foaf:nick"
       },
       {
         "label": "Code postal",
@@ -30,11 +30,11 @@
       },
       {
         "label": "Ville",
-        "data-property": "pair:town",
+        "data-property": "pair:town"
       },
       {
         "label": "Pays",
-        "data-property": "pair:country",
+        "data-property": "pair:country"
       },
       {
         "label": "Email",

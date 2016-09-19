@@ -157,7 +157,7 @@
         "object-property": "dcterms:subject",
         "range": "foaf:Document",
         "type": "resource"
-      },
+      }
     ]
   }
 }

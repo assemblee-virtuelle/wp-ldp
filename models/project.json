@@ -17,11 +17,6 @@
         "type": "text"
       },
       {
-        "title": "Project description",
-        "name": "doap:github",
-        "type": "text"
-      },
-      {
         "title": "Project context",
         "name": "project_context",
         "type": "textarea"
