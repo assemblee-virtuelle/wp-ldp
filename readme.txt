@@ -1,4 +1,4 @@
-=== Plugin Name ===
+=== WP-LDP ===
 Contributors: balessan
 Donate link: http://www.virtual-assembly.org/contribuez-financierement/
 Tags: decentralization, federation, linked-data, LDP, RDF, JSON-LD
@@ -11,7 +11,6 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 This plugin aims to emulate the default caracteristics of a Linked Data Platform compatible server.
 
 == Description ==
-
 # LDP Plugin for wordpress
 The goal of this project is to be able to manage (create, list, display) LDP resources directly from a Wordpress site backend.
 The definition we apply for [LDP resource](https://www.w3.org/TR/ldp/#ldpr-resource), [LDP containers](https://www.w3.org/TR/ldp/#dfn-linked-data-platform-basic-container) and LDP are based on the [W3C specification released](https://www.w3.org/TR/ldp/ "the LDP specification") in january 2015.
@@ -57,6 +56,15 @@ Outside of the context of willing to share some resources between different webs
 9. The created resource generated JSON raw view
 
 == Changelog ==
+
+= 1.0.5 =
+* Force refreshing the container models when initializing
+* Fix the major bug with the form templating
+
+= 1.0.4 =
+* Updating the models to converge with the PAIR ontology
+* Fix a bug with use of empty on a function return value
+* Adding basic WordPress integrated frontend display of the resources and containers, using content negotiation
 
 = 1.0 =
 * Publishing the plugin to the wordpress repository

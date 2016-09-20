@@ -93,10 +93,11 @@ if (!class_exists('\WpLdp\WpLdpSettings')) {
              );
 
              foreach ($pair_terms as $term => $properties) {
-               // 1 - Check if they do not exists
+               // Loop on the models files (or hardcoded array) and push them each as taxonomy term in the database
+               $model = file_get_contents(__DIR__  . '/models/' . $term . '.json');
+               $term_id = null;
+
                if (!term_exists($term, 'ldp_container')) {
-                 //   - Else, loop on the models files (or hardcoded array) and push them each as taxonomy term in the database
-                 $model = file_get_contents(__DIR__  . '/models/' . $term . '.json');
                  $new_term = wp_insert_term(
                     $properties['label'],
                     'ldp_container',
@@ -107,14 +108,35 @@ if (!class_exists('\WpLdp\WpLdpSettings')) {
                   );
 
                   $term_id = $new_term['term_id'];
-                  $term_meta = get_option("ldp_container_$term_id");
-                  if (!is_array($term_meta)) {
-                    $term_meta = array();
-                  }
+               } else {
+                  $existing_term = get_term_by( 'slug', $term, 'ldp_container' );
+                    if ( $term == 'actor' ) {
+                      var_dump( $existing_term );
+                    }
+                  $updated_term = wp_update_term(
+                    $existing_term->term_id,
+                    'ldp_container',
+                    array(
+                      'slug' => $term,
+                      'description' => sprintf( __('The %1$s object model', 'wpldp'), $term )
+                    )
+                  );
 
-                  $term_meta['ldp_rdf_type'] = $properties['rdftype'];
-                  $term_meta['ldp_model'] = stripslashes_deep($model);
-                  update_option("ldp_container_$term_id", $term_meta);
+                  $term_id = $existing_term->term_id;
+               }
+
+               if ( !empty( $term_id ) ) {
+                 if ( $term == 'actor' ) {
+                   var_dump( 'Actor term ID:' . $term_id );
+                 }
+                 $term_meta = get_option("ldp_container_$term_id");
+                 if (!is_array($term_meta)) {
+                   $term_meta = array();
+                 }
+
+                 $term_meta['ldp_rdf_type'] = $properties['rdftype'];
+                 $term_meta['ldp_model'] = stripslashes_deep($model);
+                 update_option("ldp_container_$term_id", $term_meta);
                }
              }
            }
