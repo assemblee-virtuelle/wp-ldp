@@ -7,9 +7,11 @@
   // Getting general information about the container associated with the current resource
   $fields = \WpLdp\WpLdpUtils::getResourceFieldsList($post->ID);
   $terms =  wp_get_post_terms( $post->ID, 'ldp_container' );
-  $termId = $terms[0]->term_id;
-  $termMeta = get_option("ldp_container_$termId");
-  $rdfType = isset($termMeta["ldp_rdf_type"]) ? $termMeta["ldp_rdf_type"] : null;
+  if ( !empty( $terms ) && is_array( $terms ) ) {
+    $termId = $terms[0]->term_id;
+    $termMeta = get_option("ldp_container_$termId");
+    $rdfType = isset($termMeta["ldp_rdf_type"]) ? $termMeta["ldp_rdf_type"] : null;
+  }
 ?>
 {
     "@context": "<?php echo get_option('ldp_context', 'http://owl.openinitiative.com/oicontext.jsonld'); ?>",
