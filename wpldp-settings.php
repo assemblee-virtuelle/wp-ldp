@@ -110,9 +110,6 @@ if (!class_exists('\WpLdp\WpLdpSettings')) {
                   $term_id = $new_term['term_id'];
                } else {
                   $existing_term = get_term_by( 'slug', $term, 'ldp_container' );
-                    if ( $term == 'actor' ) {
-                      var_dump( $existing_term );
-                    }
                   $updated_term = wp_update_term(
                     $existing_term->term_id,
                     'ldp_container',
@@ -126,9 +123,6 @@ if (!class_exists('\WpLdp\WpLdpSettings')) {
                }
 
                if ( !empty( $term_id ) ) {
-                 if ( $term == 'actor' ) {
-                   var_dump( 'Actor term ID:' . $term_id );
-                 }
                  $term_meta = get_option("ldp_container_$term_id");
                  if (!is_array($term_meta)) {
                    $term_meta = array();
