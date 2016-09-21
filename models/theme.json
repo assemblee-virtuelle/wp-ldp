@@ -34,19 +34,19 @@
       {
         "label": "Idée 2 (autre thématique, proposition ...) en lien avec cette thématique",
         "object-property": "pair:convergesWith",
-        "range": "pair:Theme",
+        "range": "pair:Theme2",
         "type": "resource"
       },
       {
         "label": "Idée 3 (autre thématique, proposition ...) en lien avec cette thématique",
         "object-property": "pair:convergesWith",
-        "range": "pair:Theme",
+        "range": "pair:Theme3",
         "type": "resource"
       },
       {
         "label": "Idée 4 (autre thématique, proposition ...) en lien avec cette thématique",
         "object-property": "pair:convergesWith",
-        "range": "pair:Theme",
+        "range": "pair:Theme4",
         "type": "resource"
       },
       {
@@ -58,19 +58,19 @@
       {
         "label": "Ressource documentaire 2 sur cette thématique",
         "object-property": "dcterms:subject",
-        "range": "foaf:Document",
+        "range": "foaf:Document2",
         "type": "resource"
       },
       {
         "label": "Ressource documentaire 3 sur cette thématique",
         "object-property": "dcterms:subject",
-        "range": "foaf:Document",
+        "range": "foaf:Document3",
         "type": "resource"
       },
       {
         "label": "Ressource documentaire 4 sur cette thématique",
         "object-property": "dcterms:subject",
-        "range": "foaf:Document",
+        "range": "foaf:Document4",
         "type": "resource"
       },
       {
@@ -82,7 +82,7 @@
       {
         "label": "Ressource financière 2 fléchée sur cette thématique",
         "object-property": "pair:convergesWith",
-        "range": "pair:FinancialResource",
+        "range": "pair:FinancialResource2",
         "type": "resource"
       }
     ]

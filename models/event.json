@@ -74,12 +74,12 @@
       },
       {
         "label": "Réseau social 2",
-        "data-property": "pair:socialNetworks",
+        "data-property": "pair:socialNetworks2",
         "type": "url"
       },
       {
         "label": "Réseau social 3",
-        "data-property": "pair:socialNetworks",
+        "data-property": "pair:socialNetworks3",
         "type": "url"
       },
       {
@@ -105,13 +105,13 @@
       },
       {
         "label": "Projet 2 que vous soutenez (en tant porteur de projet)",
-        "object-property": "pair:supports",
+        "object-property": "pair:supports2",
         "range": "foaf:Project",
         "type": "resource"
       },
       {
         "label": "Projet 3 que vous soutenez (en tant porteur de projet)",
-        "object-property": "pair:supports",
+        "object-property": "pair:supports3",
         "range": "foaf:Project",
         "type": "resource"
       },
@@ -123,13 +123,13 @@
       },
       {
         "label": "Acteur 2 responsable de l'événement",
-        "object-property": "pair:hasDirector",
+        "object-property": "pair:hasDirector2",
         "range": "foaf:Agent",
         "type": "resource"
       },
       {
         "label": "Acteur 3 responsable de l'événement",
-        "object-property": "pair:hasDirector",
+        "object-property": "pair:hasDirector3",
         "range": "foaf:Agent",
         "type": "resource"
       },
@@ -141,25 +141,25 @@
       },
       {
         "label": "Acteur partenaire 2 ",
-        "object-property": "pair:hasPartner",
+        "object-property": "pair:hasPartner2",
         "range": "foaf:Agent",
         "type": "resource"
       },
       {
         "label": "Acteur partenaire 3 ",
-        "object-property": "pair:hasPartner",
+        "object-property": "pair:hasPartner3",
         "range": "foaf:Agent",
         "type": "resource"
       },
       {
         "label": "Acteur partenaire 4 ",
-        "object-property": "pair:hasPartner",
+        "object-property": "pair:hasPartner4",
         "range": "foaf:Agent",
         "type": "resource"
       },
       {
         "label": "Acteur partenaire 5 ",
-        "object-property": "pair:hasPartner",
+        "object-property": "pair:hasPartner5",
         "range": "foaf:Agent",
         "type": "resource"
       },
@@ -171,43 +171,43 @@
       },
       {
         "label": "Contributeur 2",
-        "object-property": "pair:contributesTo",
+        "object-property": "pair:contributesTo2",
         "range": "foaf:Person",
         "type": "resource"
       },
       {
         "label": "Contributeur 3",
-        "object-property": "pair:contributesTo",
+        "object-property": "pair:contributesTo3",
         "range": "foaf:Person",
         "type": "resource"
       },
       {
         "label": "Contributeur 4",
-        "object-property": "pair:contributesTo",
+        "object-property": "pair:contributesTo4",
         "range": "foaf:Person",
         "type": "resource"
       },
       {
        "label": "Contributeur 5",
-        "object-property": "pair:contributesTo",
+        "object-property": "pair:contributesTo5",
         "range": "foaf:Person",
         "type": "resource"
       },
       {
        "label": "Contributeur 6",
-        "object-property": "pair:contributesTo",
+        "object-property": "pair:contributesTo6",
         "range": "foaf:Person",
         "type": "resource"
       },
       {
        "label": "Contributeur 7",
-        "object-property": "pair:contributesTo",
+        "object-property": "pair:contributesTo7",
         "range": "foaf:Person",
         "type": "resource"
       },
       {
        "label": "Contributeur 8",
-        "object-property": "pair:contributesTo",
+        "object-property": "pair:contributesTo8",
         "range": "foaf:Person",
         "type": "resource"
       },
@@ -219,67 +219,67 @@
       },
       {
        "label": "Participant 2",
-        "object-property": "schema:attendee",
+        "object-property": "schema:attendee2",
         "range": "foaf:Agent",
         "type": "resource"
       },
       {
        "label": "Participant 3",
-        "object-property": "schema:attendee",
+        "object-property": "schema:attendee3",
         "range": "foaf:Agent",
         "type": "resource"
       },
       {
        "label": "Participant 4",
-        "object-property": "schema:attendee",
+        "object-property": "schema:attendee4",
         "range": "foaf:Agent",
         "type": "resource"
       },
       {
        "label": "Participant 5",
-        "object-property": "schema:attendee",
+        "object-property": "schema:attendee5",
         "range": "foaf:Agent",
         "type": "resource"
       },
       {
        "label": "Participant 6",
-        "object-property": "schema:attendee",
+        "object-property": "schema:attendee6",
         "range": "foaf:Agent",
         "type": "resource"
       },
       {
        "label": "Participant 7",
-        "object-property": "schema:attendee",
+        "object-property": "schema:attendee7",
         "range": "foaf:Agent",
         "type": "resource"
       },
       {
        "label": "Participant 8",
-        "object-property": "schema:attendee",
+        "object-property": "schema:attendee8",
         "range": "foaf:Agent",
         "type": "resource"
       },
       {
        "label": "Participant 9",
-        "object-property": "schema:attendee",
+        "object-property": "schema:attendee9",
         "range": "foaf:Agent",
         "type": "resource"
       },
       {
        "label": "Participant 10",
-        "object-property": "schema:attendee",
+        "object-property": "schema:attendee10",
         "range": "foaf:Agent",
         "type": "resource"
       },
       {
        "label": "Participant 11",
-        "object-property": "schema:attendee",
+        "object-property": "schema:attendee11",
         "range": "foaf:Agent",
         "type": "resource"
       },
       {
        "label": "Participant 12",
-        "object-property": "schema:attendee",
+        "object-property": "schema:attendee12",
         "range": "foaf:Agent",
         "type": "resource"
       },
@@ -291,31 +291,31 @@
       },
       {
         "label": "Centre d'intérêt 2",
-        "object-property": "dcterms:subject",
+        "object-property": "dcterms:subject2",
         "range": "pair:Idea",
         "type": "resource"
       },
       {
         "label": "Centre d'intérêt 3",
-        "object-property": "dcterms:subject",
+        "object-property": "dcterms:subject3",
         "range": "pair:Idea",
         "type": "resource"
       },
       {
         "label": "Centre d'intérêt 4",
-        "object-property": "dcterms:subject",
+        "object-property": "dcterms:subject4",
         "range": "pair:Idea",
         "type": "resource"
       },
       {
         "label": "Centre d'intérêt 5",
-        "object-property": "dcterms:subject",
+        "object-property": "dcterms:subject5",
         "range": "pair:Idea",
         "type": "resource"
       },
       {
         "label": "Centre d'intérêt 6",
-        "object-property": "dcterms:subject",
+        "object-property": "dcterms:subject6",
         "range": "pair:Idea",
         "type": "resource"
       },
@@ -327,19 +327,19 @@
       },
       {
         "label": "Besoin de compétence 2",
-        "object-property": "gr:seeks",
+        "object-property": "gr:seeks2",
         "range": "cco:Skill",
         "type": "resource"
       },
       {
         "label" : "Besoin de ressource 1 (hors compétences)",
-        "object-property": "gr:seeks",
+        "object-property": "gr:seeks3",
         "range": "pair:Resource",
         "type": "resource"
       },
       {
         "label": "Besoin de ressource 2 (hors compétences)",
-        "object-property": "gr:seeks",
+        "object-property": "gr:seeks4",
         "range": "pair:Resource",
         "type": "resource"
       },
@@ -351,19 +351,19 @@
       },
       {
         "label": "Offre de compétence 2",
-        "object-property": "gr:offers",
+        "object-property": "gr:offers2",
         "range": "cco:Skill",
         "type": "resource"
       },
       {
         "label": "Offre de ressource 1 (hors compétences)",
-        "object-property": "gr:offers",
+        "object-property": "gr:offers3",
         "range": "pair:Resource",
         "type": "resource"
       },
       {
         "label": "Offre de ressource 2 (hors compétences)",
-        "object-property": "gr:offers",
+        "object-property": "gr:offers4",
         "range": "pair:Resource",
         "type": "resource"
       }

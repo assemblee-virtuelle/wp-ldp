@@ -42,13 +42,13 @@
       },
       {
         "label": "Projet 2 visant la mise en oeuvre de cette idée",
-        "object-property": "dcterms:subject",
+        "object-property": "dcterms:subject2",
         "range": "foaf:Project",
         "type": "resource"
       },
       {
         "label": "Evénement 1 portant sur cette idée",
-        "object-property": "dcterms:subject",
+        "object-property": "dcterms:subject3",
         "range": "schema:Event",
         "type": "resource"
       },
@@ -60,7 +60,7 @@
       },
       {
       "label": "Personne 2 ayant imaginé cette idée",
-        "object-property": "pair:hasCreator",
+        "object-property": "pair:hasCreator2",
         "range" : "foaf:Person",
         "type": "resource"
       },
@@ -72,31 +72,31 @@
       },
       {
       "label": "Personne 2 soutenant cette idée",
-        "object-property": "pair:hasFollower",
+        "object-property": "pair:hasFollower2",
         "range" : "foaf:Person",
         "type": "resource"
       },
       {
       "label": "Personne 3 soutenant cette idée",
-        "object-property": "pair:hasFollower",
+        "object-property": "pair:hasFollower3",
         "range" : "foaf:Person",
         "type": "resource"
       },
       {
       "label": "Organisation 1 soutenant cette idée",
-        "object-property": "pair:hasFollower",
+        "object-property": "pair:hasFollower4",
         "range" : "foaf:Organization",
         "type": "resource"
       },
       {
       "label": "Organisation 2 soutenant cette idée",
-        "object-property": "pair:hasFollower",
+        "object-property": "pair:hasFollower5",
         "range" : "foaf:Organization",
         "type": "resource"
       },
       {
       "label": "Organisation 3 soutenant cette idée",
-        "object-property": "pair:hasFollower",
+        "object-property": "pair:hasFollower6",
         "range" : "foaf:Organization",
         "type": "resource"
       },
@@ -108,13 +108,13 @@
       },
       {
         "label": "Thématique 2 en lien avec cette idée",
-        "object-property": "dcterms:subject",
+        "object-property": "dcterms:subject2",
         "range": "pair:Theme",
         "type": "resource"
       },
       {
         "label": "Thématique 3 en lien avec cette idée",
-        "object-property": "dcterms:subject",
+        "object-property": "dcterms:subject3",
         "range": "pair:Theme",
         "type": "resource"
       },
@@ -132,7 +132,7 @@
       },
       {
         "label": "Ressource documentaire 2 sur cette idée",
-        "object-property": "dcterms:subject",
+        "object-property": "dcterms:subject2",
         "range": "foaf:Document",
         "type": "resource"
       },
@@ -144,19 +144,19 @@
       },
       {
         "label": "Compétence 1 recherchée pour le développement de cette idée",
-        "object-property": "gr:seeks",
+        "object-property": "gr:seeks2",
         "range": "cco:Skill",
         "type": "resource"
       },
       {
         "label": "Compétence 2 recherchée pour le développement de cette idée",
-        "object-property": "gr:seeks",
+        "object-property": "gr:seeks3",
         "range": "cco:Skill",
         "type": "resource"
       },
       {
         "label": "Compétence 3 recherchée pour le développement de cette idée",
-        "object-property": "gr:seeks",
+        "object-property": "gr:seeks4",
         "range": "cco:Skill",
         "type": "resource"
       },
@@ -168,7 +168,7 @@
       },
       {
         "label": "Offre de ressource 2 liée à cette idée",
-        "object-property": "gr:offers",
+        "object-property": "gr:offers2",
         "range": "pair:Resource",
         "type": "resource"
       }

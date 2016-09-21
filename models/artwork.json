@@ -93,19 +93,19 @@
       {
         "label": "Tag 2",
         "object-property": "dc:subject",
-        "range": "pair:Theme",
+        "range": "pair:Theme2",
         "type": "resource"
       },
       {
         "label": "Tag 3",
         "object-property": "dc:subject",
-        "range": "pair:theme",
+        "range": "pair:theme3",
         "type": "resource"
       },
       {
         "label": "Tag 4",
         "object-property": "dc:subject",
-        "range": "pair:Theme",
+        "range": "pair:Theme4",
         "type": "resource"
       }
     ]
