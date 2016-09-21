@@ -1,19 +1,40 @@
 <div class="project-detail-active">
   <h1 class="text-center text-uppercase">
-    Le projet {{object.project_title}}
+    Le projet {{object.foaf:name}}
   </h1>
   <div class="detail-content">
     <h2>
       Description
     </h2>
     <p>
-      {{object.project_description}}
+      {{object.pair:shortDescription}}
     </p>
 
-    <h2>Objectifs</h2>
-    <p>{{object.project_goal}}</p>
+    <h2>Licence associée</h2>
+    <p>{{object.pair:licence}}</p>
 
-    <h2>Vision</h2>
+    <h2>Informations de contact</h2>
+    <ul>
+      {{#if object.pair:zipCode}}
+        <li>Adresse: {{object.pair:zipCode}} {{object.pair:town}}, {{object.pair:country}}</li>
+      {{/if}}
+      {{#if object.foaf:weblog}}
+        <li>Site web: {{object.foaf:weblog}}</li>
+      {{/if}}
+      {{#if object.foaf:mbox}}
+        <li>Contact: <a href="mailto:{{object.foaf:mbox}}">{{object.foaf:mbox}}</a></li>
+      {{/if}}
+    </ul>
+
+    {{#if object.pair:socialNetworks}}
+    <p>Réseaux sociaux:
+      <ul>
+      {{#each object.pair:socialNetworks}}
+        <li><a href="{{object}}">{{object}}</a></li>
+      {{/each}}
+      </ul>
+    {{/if}}
+    
     <p>{{object.project_vision}}</p>
 
     <h2>Contexte</h2>

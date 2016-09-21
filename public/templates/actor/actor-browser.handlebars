@@ -4,8 +4,20 @@
     {{#if object.foaf:knows}}
       {{#ldpeach object.foaf:knows "ul"}}{{> actorItem }}{{/ldpeach}}
     {{/if}}
-    {{#if object.project_contributes}}
-      {{#ldpeach object.project_contributes "ul"}}{{> actorItem }}{{/ldpeach}}
+    {{#if object.pair:worksWith}}
+      {{#ldpeach object.pair:worksWith "ul"}}{{> actorItem }}{{/ldpeach}}
+    {{/if}}
+    {{#if object.pair:manage2}}
+      {{#ldpeach object.pair:manage2 "ul"}}{{> actorItem }}{{/ldpeach}}
+    {{/if}}
+    {{#if object.pair:contributesTo}}
+      {{#ldpeach object.pair:contributesTo "ul"}}{{> actorItem }}{{/ldpeach}}
+    {{/if}}
+    {{#if object.pair:hasDirector}}
+      {{#ldpeach object.pair:hasDirector "ul"}}{{> actorItem }}{{/ldpeach}}
+    {{/if}}
+    {{#if object.pair:hasPartner}}
+      {{#ldpeach object.pair:hasPartner "ul"}}{{> actorItem }}{{/ldpeach}}
     {{/if}}
     </div>
   </div>

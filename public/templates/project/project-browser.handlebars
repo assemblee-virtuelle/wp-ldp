@@ -4,8 +4,11 @@
     {{#if object.foaf:currentProject}}
       {{#ldpeach object.foaf:currentProject "ul"}}{{> projectItem }}{{/ldpeach}}
     {{/if}}
-    {{#if object.related}}
-      {{#ldpeach object.related "ul"}}{{> projectItem }}{{/ldpeach}}
+    {{#if object.pair:supports}}
+      {{#ldpeach object.pair:supports "ul"}}{{> projectItem }}{{/ldpeach}}
+    {{/if}}
+    {{#if object.pair:hasUseCase}}
+      {{#ldpeach object.pair:hasUseCase "ul"}}{{> projectItem }}{{/ldpeach}}
     {{/if}}
   </div>
 </div>
