@@ -6,6 +6,27 @@ if (!class_exists('\WpLdp\WpLdpUtils')) {
       public function __construct() {
       }
 
+      /**
+       * getFieldName - Get the current field name, with retro-compatibility
+       * with the older notation system
+       *
+       * @param  {type} $field the current field to process
+       * @return {type}        The field name
+       */
+      public static function getFieldName( $field ) {
+        $field_name = null;
+
+        if ( isset( $field->name ) ) {
+          $field_name = $field->name;
+        } elseif ( isset( $field->{'data-property'} ) ) {
+          $field_name = $field->{'data-property'};
+        } elseif ( isset( $field->{'object-property'} ) ) {
+          $field_name = $field->{'object-property'};
+        }
+
+        return $field_name;
+      }
+
       public static function getResourceUri( $resource ) {
         $resourceUri = null;
         if ('publish' === get_post_status( $resource->ID )) {

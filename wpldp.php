@@ -4,7 +4,7 @@
  * Plugin URI: https://github.com/assemblee-virtuelle/wpldp
  * Description: This is a plugin which aims to emulate the default caracteristics of a Linked Data Platform compatible server
  * Text Domain: wpldp
- * Version: 1.0.6
+ * Version: 1.0.8
  * Author: Sylvain LE BON, Benoit ALESSANDRONI
  * Author URI: http://www.happy-dev.fr/team/sylvain, http://benoit-alessandroni.fr/
  * License: GPL2
@@ -29,7 +29,7 @@ if (!class_exists('\WpLdp\WpLdp')) {
       /**
        * The current plugin version number
        */
-      protected static $version_number = '1.0.6';
+      protected static $version_number = '1.0.8';
 
       /**
        * Default Constructor
@@ -392,12 +392,9 @@ if (!class_exists('\WpLdp\WpLdp')) {
         if (!empty($fields)) {
           foreach($_POST as $key => $value) {
             foreach($fields as $field) {
-              if ( isset( $field->name ) ) {
-                if ($key === $field->name) {
-                    update_post_meta($resource_id, $key, $value);
-                }
-              } elseif (isset( $field->{'data-property'} ) ) {
-                if ( $key === $field->{'data-property'} ) {
+              $field_name = \WpLdp\WpLdpUtils::getFieldName( $field );
+              if ( isset( $field_name ) ) {
+                if ($key === $field_name) {
                     update_post_meta($resource_id, $key, $value);
                 }
               }

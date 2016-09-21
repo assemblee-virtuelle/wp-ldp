@@ -23,13 +23,11 @@
             // Handling special case of editing trhough the wordpress admin backend
             if (!empty($referer) && strstr($referer, 'wp-admin/post.php')) {
               foreach($fields as $field) {
-                if ( isset( $field->name ) ) {
-                  echo('          "'. $field->name .'": ');
-                  echo('' . json_encode(get_post_custom_values($field->name)[0]) . ',');
-                  echo "\n";
-                } elseif ( isset( $field->{'data-property'} ) ) {
-                  echo('          "'. $field->{'data-property'} .'": ');
-                  echo('' . json_encode(get_post_custom_values($field->{'data-property'})[0]) . ',');
+                $field_name = \WpLdp\WpLdpUtils::getFieldName( $field );
+                if ( isset( $field_name ) ) {
+                  $field_value = get_post_custom_values($field_name)[0];
+                  echo('          "'. $field_name .'": ');
+                  echo('' . ( !empty( $field_value ) ? json_encode( $field_value ) : '""' ) . ',');
                   echo "\n";
                 }
               }
@@ -38,7 +36,8 @@
               $fieldNotToRender = [];
               // Construct proper values array, if any, based on field endings with number:
               foreach($fields as $field) {
-                $endsWithNumber = preg_match_all("/(.*)?(\d+)$/", $field->name, $matches);
+                $field_name = \WpLdp\WpLdpUtils::getFieldName( $field );
+                $endsWithNumber = preg_match_all("/(.*)?(\d+)$/", $field_name, $matches);
                 if (!empty($matches)) {
                   if ($endsWithNumber > 0) {
                     $fieldName = $matches[1][0];
@@ -62,19 +61,13 @@
 
               foreach($arrayToProcess as $arrayField) {
                 foreach($fields as $field) {
-                  if ( isset($field->name) &&
-                      strstr($field->name, $arrayField) ||
-                      $field->name === $arrayField ) {
-                    $value = get_post_custom_values($field->name)[0];
+                  $field_name = \WpLdp\WpLdpUtils::getFieldName( $field );
+                  if ( isset($field_name) &&
+                      strstr($field_name, $arrayField) ||
+                      $field_name === $arrayField ) {
+                    $value = get_post_custom_values($field_name)[0];
                     if (!empty($value) && $value != '""') {
-                      $valuesArray[$arrayField][] = json_encode(get_post_custom_values($field->name)[0]);
-                    }
-                  } elseif (isset($field->{'data-property'}) &&
-                      strstr($field->{'data-property'}, $arrayField) ||
-                      $field->{'data-property'} === $arrayField ) {
-                    $value = get_post_custom_values($field->{'data-property'})[0];
-                    if (!empty($value) && $value != '""') {
-                      $valuesArray[$arrayField][] = json_encode(get_post_custom_values($field->{'data-property'})[0]);
+                      $valuesArray[$arrayField][] = json_encode(get_post_custom_values($field_name)[0]);
                     }
                   }
                 }
@@ -102,13 +95,10 @@
               }
 
               foreach($fields as $field) {
-                if (!in_array($field->name, $fieldNotToRender)) {
-                  echo('          "'. $field->name .'": ');
-                  echo('' . json_encode(get_post_custom_values($field->name)[0]) . ',');
-                  echo "\n";
-                } elseif (!in_array($field->{'data-property'}, $fieldNotToRender)) {
-                  echo('          "'. $field->{'data-property'} .'": ');
-                  echo('' . json_encode(get_post_custom_values($field->{'data-property'})[0]) . ',');
+                $field_name = \WpLdp\WpLdpUtils::getFieldName( $field );
+                if ( isset( $field_name ) && !in_array($field_name, $fieldNotToRender)) {
+                  echo('          "'. $field_name .'": ');
+                  echo('' . json_encode(get_post_custom_values($field_name)[0]) . ',');
                   echo "\n";
                 }
               }
@@ -117,10 +107,9 @@
             // Get user to retrieve associated posts !
             $user_login;
             foreach($fields as $field) {
-              if (isset($field->name) && $field->name == 'foaf:nick') {
-                $user_login = get_post_custom_values($field->name)[0];
-              } elseif (isset( $field->{'data-property'} ) && $field->{'data-property'} == 'foaf:nick' ) {
-                $user_login = get_post_custom_values($field->{'data-property'})[0];
+              $field_name = \WpLdp\WpLdpUtils::getFieldName( $field );
+              if (isset($field_name) && $field_name == 'foaf:nick') {
+                $user_login = get_post_custom_values($field_name)[0];
               }
             }
 
