@@ -48,15 +48,16 @@ function displayProject(divName, itemId, templateId) {
   refreshBrowsePanel(itemId, 'actor');
   refreshBrowsePanel(itemId, 'project');
   refreshBrowsePanel(itemId, 'resource');
+  refreshBrowsePanel(itemId, 'idea');
   window.location.hash = itemId;
 }
 
 function displayActor(divName, itemId, templateId) {
-    console.log(templateId);
   store.render(divName, itemId, templateId);
   refreshBrowsePanel(itemId, 'project');
   refreshBrowsePanel(itemId, 'actor');
   refreshBrowsePanel(itemId, 'resource');
+  refreshBrowsePanel(itemId, 'idea');
   window.location.hash = itemId;
 }
 

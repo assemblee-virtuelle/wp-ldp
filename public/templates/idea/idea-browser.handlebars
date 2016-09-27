@@ -1,0 +1,22 @@
+<div class="browser-item">
+  <h2 class="text-uppercase">Idées associées</h2>
+  <div id="offers" style="min-height: 50px;">
+  {{#if object.gr:offers}}
+    {{#ldpeach object.gr:offers "ul"}}{{> actorItem }}{{/ldpeach}}
+  {{/if}}
+  </div>
+
+  <h3 class="text-uppercase">A besoin de</h3>
+  <div id="needs" style="min-height: 50px;">
+  {{#if object.gr:seeks}}
+    {{#ldpeach object.gr:seeks "ul"}}{{> actorItem }}{{/ldpeach}}
+  {{/if}}
+  </div>
+
+  <h3 class="text-uppercase">Intéressé par</h3>
+  <div id="subjects" style="min-height: 50px;">
+  {{#if object.dcterms:subject}}
+    {{#ldpeach object.dcterms:subject "ul"}}{{> actorItem }}{{/ldpeach}}
+  {{/if}}
+  </div>
+</div>
