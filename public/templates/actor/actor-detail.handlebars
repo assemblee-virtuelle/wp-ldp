@@ -2,7 +2,7 @@
   <h1 class="text-center text-uppercase">{{object.foaf:firstName}} {{object.foaf:name}}</h1>
   <div class="detail-content">
     <h2>Description</h2>
-    <p>{{object.description}}</p>
+    <p>{{object.pair:description}}</p>
 
     <div class="row personal-information">
       <h2>Informations personnelles</h2>
@@ -10,21 +10,25 @@
         <img height="200" width="200" src="{{object.foaf:img}}" alt="Photo de profil" />
       </div>
       <div class="col-md-9 equal information-content">
-        <p>Date de naissance: {{object.birthdate}}</p>
-        <p>Adresse: {{object.address}}, {{object.zipcode}} {{object.city}}</p>
+        {{#if object.pair:zipCode}}
+          <p>Adresse: {{object.pair:zipCode}} {{object.pair:town}}, {{object.pair:country}}</p>
+        {{/if}}
+        {{#if object.foaf:homePage}}
+          <p>Personal Website: {{object.foaf:homePage}}</p>
+        {{/if}}
+        {{#if object.foaf:mbox}}
+          <p>Contact: <a href="mailto:{{object.foaf:mbox}}">{{object.foaf:mbox}}</a></p>
+        {{/if}}
 
-        <p>Personal Website: {{object.foaf:homePage}}</p>
-        <p>Contact: <a href="mailto:{{object.foaf:mbox}}">{{object.foaf:mbox}}</a></p>
-
-        <p>
-          Reseaux sociaux:
+        {{#if object.pair:socialNetworks}}
+        <p>Réseaux sociaux:
           <ul>
-            {{#if object.linkedin }}<li>Linkedin: <a href="{{object.linkedin}}">{{object.linkedin}}</a></li>{{/if}}
-            {{#if object.twitter }}<li>Twitter:   <a href="{{object.twitter}}">{{object.twitter}}</a></li>{{/if}}
-            {{#if object.github }}<li>Github:     <a href="{{object.github}}">{{object.github}}</a></li>{{/if}}
-            {{#if object.facebook }}<li>Facebook: <a href="{{object.facebook}}">{{object.facebook}}</a></li>{{/if}}
+            {{#each object.pair:socialNetworks}}
+              <li><a href="{{this}}">{{this}}</a></li>
+            {{/each}}
           </ul>
         </p>
+        {{/if}}
       </div>
     </div>
 

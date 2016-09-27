@@ -47,6 +47,7 @@ function displayProject(divName, itemId, templateId) {
   store.render(divName, itemId, templateId);
   refreshBrowsePanel(itemId, 'actor');
   refreshBrowsePanel(itemId, 'project');
+  refreshBrowsePanel(itemId, 'resource');
   window.location.hash = itemId;
 }
 
@@ -55,22 +56,7 @@ function displayActor(divName, itemId, templateId) {
   store.render(divName, itemId, templateId);
   refreshBrowsePanel(itemId, 'project');
   refreshBrowsePanel(itemId, 'actor');
-  // store.get(itemId).then(function(object) {
-  //   var postsFeedUrl;
-  //   if (typeof object['foaf:weblog'] != 'undefined') {
-  //     postFeedUrl = object['foaf:weblog'] + '#me';
-  //   } else if (typeof object['foaf:accountName'] != 'undefined') {
-  //     postsFeedUrl = 'http://localhost/wordpress/author/' + object['foaf:accountName'] + '#me';
-  //   } else if (typeof object['foaf:nick'] != 'undefined') {
-  //     postsFeedUrl = 'http://localhost/wordpress/author/' + object['foaf:nick'] + '#me';
-  //   }
-  //   console.log('postsFeedUrl', postsFeedUrl);
-  //   store.get(postsFeedUrl).then(function(postObjects) {
-  //     console.log('postsFeed', JSON.stringify(postObjects));
-  //   });
-  //   // store.render('#posts', postsFeedUrl, '#actor-posts-template');
-  // });
-
+  refreshBrowsePanel(itemId, 'resource');
   window.location.hash = itemId;
 }
 

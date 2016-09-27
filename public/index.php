@@ -22,6 +22,9 @@ get_header();
   <!-- Project templates -->
   <script id="project-list-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/project/project-list.handlebars"></script>
 
+  <!-- Resources templates -->
+  <script id="resource-browser-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/resource/resource-browser.handlebars"></script>
+
   <script>
       function getProjectsList() {
         var projectsList = [];
@@ -34,8 +37,8 @@ get_header();
                 if (data.project_title && data.project_description) {
                   var currentProject = {
                     'id' : data['@id'],
-                    'title' : data.project_title,
-                    'description' : data.project_description.substring(0, 147) + '...'
+                    'title' : data['foaf:name'],
+                    'description' : data['foaf:shortDescription'].substring(0, 147) + '...'
                   };
                   projectsList.push(currentProject);
                   displayTemplate('#project-list-template', '#detail', projectsList);
@@ -44,6 +47,31 @@ get_header();
             });
           } else {
             displayTemplate('#project-list-template', '#detail', undefined);
+          }
+        });
+      }
+
+      function getActorsList() {
+        var actorsList = [];
+
+        var url = config.resourceBaseUrl + 'ldp/actor/';
+        store.get(url).then(function(object) {
+          if (object['ldp:contains']) {
+            jQuery.each(object['ldp:contains'], function(index, project) {
+              store.get(project).then(function(data) {
+                if (data.project_title && data.project_description) {
+                  var currentProject = {
+                    'id' : data['@id'],
+                    'title' : data['foaf:name'],
+                    'description' : data['foaf:shortDescription'].substring(0, 147) + '...'
+                  };
+                  projectsList.push(currentProject);
+                  displayTemplate('#actor-list-template', '#actor-detail', actorsList);
+                }
+              });
+            });
+          } else {
+            displayTemplate('#actor-list-template', '#actor-detail', undefined);
           }
         });
       }
@@ -72,6 +100,7 @@ get_header();
             refreshCardFromHash();
           } else {
             getProjectsList();
+            getActorsList();
           }
       });
 
@@ -84,10 +113,12 @@ get_header();
       <div id="main-container" class="container-fluid">
         <div id="detail-wrapper" class="col-md-9">
             <div id="detail"></div>
+            <div id="actor-detail"></div>
         </div>
         <div id="browser" class="col-md-3">
           <div id="project-browser" class="row"></div>
           <div id="actor-browser" class="row"></div>
+          <div id="resource-browser" class="row"></div>
         </div>
       </div>
       <div id="graph-container" style="display: none;" height="1000px">
