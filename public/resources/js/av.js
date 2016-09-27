@@ -51,6 +51,7 @@ function displayProject(divName, itemId, templateId) {
 }
 
 function displayActor(divName, itemId, templateId) {
+    console.log(templateId);
   store.render(divName, itemId, templateId);
   refreshBrowsePanel(itemId, 'project');
   refreshBrowsePanel(itemId, 'actor');
@@ -82,11 +83,13 @@ function refreshBrowsePanel(itemId, templatePrefix) {
 }
 
 function displayResource(resourceIri) {
-  if (resourceIri.contains('/project/')) {
-    displayProject('#detail', resourceIri, '#project-detail-template');
-  } else if (resourceIri.contains('/actor/')) {
-    displayActor('#detail', resourceIri, '#actor-detail-template');
-  }
+    var url_array = resourceIri.substring(1).split('/ldp/');
+    var segmentsIRI = url_array[1].split('/');
+    var templateConcept = '#'+segmentsIRI[0]+'-detail-template';
+    var displayFunction = 'display'+segmentsIRI[0].substring(0,1).toUpperCase()+segmentsIRI[0].substring(1);
+    console.log(displayFunction);
+    console.log(window[displayFunction]);
+    window[displayFunction].call(window,'#detail', resourceIri, templateConcept);
 }
 
 function getKnownHostsList() {
@@ -110,6 +113,7 @@ function refreshCardFromHash() {
     var url_array = hash.substring(1, hash.length).split('/ldp/');
     if (url_array) {
       var hostname = url_array[0];
+      //   Mise en cache de l'URL de la source de données
       if (hostname && typeof(Storage)) {
         var hostList = localStorage.getItem('ldp_hostname_list');
         if (hostList) {
@@ -135,7 +139,8 @@ function refreshCardFromHash() {
         localStorage.setItem('ldp_hostname_list', JSON.stringify(hostList));
       }
     }
-    displayResource(hash.substring(1, hash.length));
+    // Modif : L'info pertinente est dans url_array[1] ?
+    displayResource(hash.substring(1));
   } else {
     var resourceId = config.resourceBaseUrl + '/ldp/project/assemblee-virtuelle/';
     displayProject('#detail', resourceId, '#project-detail-template');
