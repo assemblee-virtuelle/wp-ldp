@@ -119,6 +119,7 @@ get_header();
           <div id="project-browser" class="row"></div>
           <div id="actor-browser" class="row"></div>
           <div id="resource-browser" class="row"></div>
+          <div id="idea-browser" class="row"></div>
         </div>
       </div>
       <div id="graph-container" style="display: none;" height="1000px">
