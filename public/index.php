@@ -16,6 +16,12 @@ get_header();
   <script id="actor-posts-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/actor/actor-posts.handlebars"></script>
   <script id="actor-item-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/actor/actor-item.handlebars"></script>
 
+  <!-- Group templates -->
+  <script id="group-browser-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/group/group-browser.handlebars"></script>
+  <script id="group-detail-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/group/group-detail.handlebars"></script>
+  <script id="group-posts-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/group/group-posts.handlebars"></script>
+  <script id="group-item-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/group/group-item.handlebars"></script>
+
   <!-- Post templates -->
   <script id="post-item-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/post/post-item.handlebars"></script>
 
@@ -24,6 +30,9 @@ get_header();
 
   <!-- Resources templates -->
   <script id="resource-browser-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/resource/resource-browser.handlebars"></script>
+
+  <!-- Ideas templates -->
+  <script id="idea-browser-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/idea/idea-browser.handlebars"></script>
 
   <script>
       function getProjectsList() {

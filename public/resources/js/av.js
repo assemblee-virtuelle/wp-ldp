@@ -61,6 +61,15 @@ function displayActor(divName, itemId, templateId) {
   window.location.hash = itemId;
 }
 
+function displayGroup(divName, itemId, templateId) {
+  store.render(divName, itemId, templateId);
+  refreshBrowsePanel(itemId, 'project');
+  refreshBrowsePanel(itemId, 'actor');
+  refreshBrowsePanel(itemId, 'resource');
+  refreshBrowsePanel(itemId, 'idea');
+  window.location.hash = itemId;
+}
+
 function refreshBrowsePanel(itemId, templatePrefix) {
   store.render(
     "#" + templatePrefix + "-browser",
