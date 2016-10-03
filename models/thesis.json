@@ -30,6 +30,11 @@
         "type":"url"
       },
       {
+        "label": "Email",
+        "data-property": "foaf:mbox",
+        "type": "email"
+      },
+      {
         "label": "Site ou page web",
         "data-property": "foaf:weblog",
         "type": "url"
