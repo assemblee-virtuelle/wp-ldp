@@ -1,17 +1,18 @@
 <div class="browser-item">
   <h2 class="text-uppercase">Ressources associées</h2>
-  <h3 class="text-uppercase">offre</h3>
-  <div id="offers" style="min-height: 50px;">
-  {{#if object.gr:offers}}
-    {{#ldpeach object.gr:offers "ul"}}{{> actorItem }}{{/ldpeach}}
-  {{/if}}
-  </div>
 
-  <h3 class="text-uppercase">recherche</h3>
-  <div id="needs" style="min-height: 50px;">
-  {{#if object.gr:seeks}}
-    {{#ldpeach object.gr:seeks "ul"}}{{> actorItem }}{{/ldpeach}}
-  {{/if}}
+  {{#if object.gr:offers}}
+  <h3 class="text-uppercase">Offre</h3>
+  <div id="offers" style="min-height: 50px;">
+    {{#ldpeach object.gr:offers "ul"}}{{> actorItem }}{{/ldpeach}}
   </div>
+  {{/if}}
+
+  {{#if object.gr:seeks}}
+  <h3 class="text-uppercase">Recherche</h3>
+  <div id="needs" style="min-height: 50px;">
+    {{#ldpeach object.gr:seeks "ul"}}{{> actorItem }}{{/ldpeach}}
+  </div>
+  {{/if}}
   </div>
 </div>
