@@ -55,7 +55,7 @@
       {
         "label": "Email",
         "data-property": "foaf:mbox",
-        "type": "url"
+        "type": "email"
       },
       {
         "label": "Site ou page web",
