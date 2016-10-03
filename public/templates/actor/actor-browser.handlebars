@@ -4,18 +4,23 @@
     {{#if object.foaf:knows}}
       {{#ldpeach object.foaf:knows "ul"}}{{> actorItem }}{{/ldpeach}}
     {{/if}}
+    <h3 class="text-uppercase">collaborateur de</h3>
     {{#if object.pair:worksWith}}
       {{#ldpeach object.pair:worksWith "ul"}}{{> actorItem }}{{/ldpeach}}
     {{/if}}
+    <h3 class="text-uppercase">responsable de</h3>
     {{#if object.pair:manage2}}
       {{#ldpeach object.pair:manage2 "ul"}}{{> actorItem }}{{/ldpeach}}
     {{/if}}
+    <h3 class="text-uppercase">contribue à</h3>
     {{#if object.pair:contributesTo}}
       {{#ldpeach object.pair:contributesTo "ul"}}{{> actorItem }}{{/ldpeach}}
     {{/if}}
+    <h3 class="text-uppercase">a pour responsable</h3>
     {{#if object.pair:hasDirector}}
       {{#ldpeach object.pair:hasDirector "ul"}}{{> actorItem }}{{/ldpeach}}
     {{/if}}
+    <h3 class="text-uppercase">a pour partenaire</h3>
     {{#if object.pair:hasPartner}}
       {{#ldpeach object.pair:hasPartner "ul"}}{{> actorItem }}{{/ldpeach}}
     {{/if}}
