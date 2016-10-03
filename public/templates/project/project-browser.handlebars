@@ -1,12 +1,15 @@
 <div class="browser-item">
   <h2 class="text-uppercase">Projets associés</h2>
   <div id="projects">
+  <h3 class="text-uppercase">contribue à</h3>    
     {{#if object.foaf:currentProject}}
       {{#ldpeach object.foaf:currentProject "ul"}}{{> projectItem }}{{/ldpeach}}
     {{/if}}
+  <h3 class="text-uppercase">soutient</h3>
     {{#if object.pair:supports}}
       {{#ldpeach object.pair:supports "ul"}}{{> projectItem }}{{/ldpeach}}
     {{/if}}
+  <h3 class="text-uppercase">a pour cas d'usage</h3>
     {{#if object.pair:hasUseCase}}
       {{#ldpeach object.pair:hasUseCase "ul"}}{{> projectItem }}{{/ldpeach}}
     {{/if}}
