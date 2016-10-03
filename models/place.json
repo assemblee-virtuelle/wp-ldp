@@ -37,14 +37,14 @@
         "data-property": "pair:country"
       },
       {
-        "label": "Email",
-        "data-property": "foaf:mbox",
-        "type": "url"
-      },
-      {
         "label": "Site ou page web",
         "data-property": "foaf:weblog",
         "type": "url"
+      },
+      {
+        "label": "Email",
+        "data-property": "foaf:mbox",
+        "type": "email"
       },
       {
         "label": "Réseau social 1",
