@@ -22,13 +22,40 @@
             $referer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : null;
             // Handling special case of editing trhough the wordpress admin backend
             if (!empty($referer) && strstr($referer, 'wp-admin/post.php')) {
+              $custom_fields_keys = get_post_custom_keys();
               foreach($fields as $field) {
                 $field_name = \WpLdp\WpLdpUtils::getFieldName( $field );
                 if ( isset( $field_name ) ) {
-                  $field_value = get_post_custom_values($field_name)[0];
-                  echo('          "'. $field_name .'": ');
-                  echo('' . ( !empty( $field_value ) ? json_encode( $field_value ) : '""' ) . ',');
-                  echo "\n";
+                  if ( !isset($field->multiple) || !$field->multiple ) {
+                    $field_value = get_post_custom_values($field_name)[0];
+                    echo('          "'. $field_name .'": ');
+                    echo('' . ( !empty( $field_value ) ? json_encode( $field_value ) : '""' ) . ',');
+                    echo "\n";
+                  } else {
+                    echo('          "' . $field_name . '": [');
+                    $arrayToProcess = array();
+                    foreach ($custom_fields_keys as $custom_field_name) {
+                      if (substr($custom_field_name, 0, strlen($field_name)) === $field_name) {
+                        $arrayToProcess[] = $custom_field_name;
+                      }
+                    }
+
+                    $count = 1;
+                    foreach ($arrayToProcess as $custom_field_name) {
+                      $field_value = get_post_custom_values($custom_field_name)[0];
+                      if ($count < count($arrayToProcess)) {
+                        echo('{"@id":' . ( !empty( $field_value ) ? json_encode( $field_value ) : '""' ) . ',');
+                        echo('"name":"' . $custom_field_name . '"},');
+                        echo "\n";
+                      } else {
+                        echo('{"@id":' . ( !empty( $field_value ) ? json_encode( $field_value ) : '""' ) . ',');
+                        echo('"name":"' . $custom_field_name . '"}');
+                      }
+                      $count++;
+                    }
+                    echo('],');
+                    echo "\n";
+                  }
                 }
               }
             } else {

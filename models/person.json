@@ -49,17 +49,8 @@
       {
         "label": "Réseau social 1",
         "data-property": "pair:socialNetworks",
-        "type": "url"
-      },
-      {
-        "label": "Réseau social 2",
-        "data-property": "pair:socialNetworks2",
-        "type": "url"
-      },
-      {
-        "label": "Réseau social 3",
-        "data-property": "pair:socialNetworks3",
-        "type": "url"
+        "type": "url",
+        "multiple": "true"
       },
       {
         "label": "Description (1000 caractères max)",
@@ -75,19 +66,8 @@
         "label": "Projet 1 auquel vous contribuez",
         "object-property": "foaf:currentProject",
         "range": "foaf:Project",
-        "type": "resource"
-      },
-      {
-        "label": "Projet 2 auquel vous contribuez",
-        "object-property": "foaf:currentProject2",
-        "range": "foaf:Project",
-        "type": "resource"
-      },
-      {
-        "label": "Projet 3 auquel vous contribuez",
-        "object-property": "foaf:currentProject3",
-        "range": "foaf:Project",
-        "type": "resource"
+        "type": "resource",
+        "multiple": "true"
       },
       {
         "label": "Projet 1 que vous soutenez",

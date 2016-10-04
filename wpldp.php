@@ -394,7 +394,9 @@ if (!class_exists('\WpLdp\WpLdp')) {
             foreach($fields as $field) {
               $field_name = \WpLdp\WpLdpUtils::getFieldName( $field );
               if ( isset( $field_name ) ) {
-                if ($key === $field_name) {
+                if ($key === $field_name ||
+                      (substr($key, 0, strlen($field_name)) === $field_name)
+                  ) {
                     update_post_meta($resource_id, $key, $value);
                 }
               }
