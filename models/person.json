@@ -90,15 +90,15 @@
         "type": "resource"
       },
       {
-        "label": "Organisations dans laquelle vous exercez des responsabilités",
+        "label": "Groupe ou organisation dans laquelle vous exercez des responsabilités",
         "object-property": "pair:manage",
-        "range": "foaf:Organization",
+        "range": "foaf:Agent",
         "type": "resource",
         "multiple": "true"
       },
       {
-        "label": "Organisations à laquelle vous contribuez",
-        "object-property": "pair:contributesTo",
+        "label": "Groupe ou organisation à laquelle vous contribuez",
+        "object-property": "pair:Agent",
         "range": "foaf:Organization",
         "type": "resource",
         "multiple": "true"
