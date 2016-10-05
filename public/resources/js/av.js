@@ -52,7 +52,7 @@ function displayProject(divName, itemId, templateId) {
   window.location.hash = itemId;
 }
 
-function displayActor(divName, itemId, templateId) {
+function displayPerson(divName, itemId, templateId) {
   store.render(divName, itemId, templateId);
   refreshBrowsePanel(itemId, 'project');
   refreshBrowsePanel(itemId, 'actor');

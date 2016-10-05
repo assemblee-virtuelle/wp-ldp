@@ -62,9 +62,10 @@
               $arrayToProcess = [];
               $fieldNotToRender = [];
               // Construct proper values array, if any, based on field endings with number:
-              foreach($fields as $field) {
-                $field_name = \WpLdp\WpLdpUtils::getFieldName( $field );
-                $endsWithNumber = preg_match_all("/(.*)?(\d+)$/", $field_name, $matches);
+              $custom_fields_keys = get_post_custom_keys();
+              foreach ($custom_fields_keys as $field) {
+                // $field_name = \WpLdp\WpLdpUtils::getFieldName( $field );
+                $endsWithNumber = preg_match_all("/(.*)?(\d+)$/", $field, $matches);
                 if (!empty($matches)) {
                   if ($endsWithNumber > 0) {
                     $fieldName = $matches[1][0];
@@ -87,14 +88,13 @@
               // Example of arrayToProcess ['ldp_foaf:knows', 'ldp_foaf:currentProject']
 
               foreach($arrayToProcess as $arrayField) {
-                foreach($fields as $field) {
-                  $field_name = \WpLdp\WpLdpUtils::getFieldName( $field );
-                  if ( isset($field_name) &&
-                      strstr($field_name, $arrayField) ||
-                      $field_name === $arrayField ) {
-                    $value = get_post_custom_values($field_name)[0];
+                foreach ($custom_fields_keys as $field) {
+                  if ( isset($field) &&
+                      strstr($field, $arrayField) ||
+                      $field === $arrayField ) {
+                    $value = get_post_custom_values($field)[0];
                     if (!empty($value) && $value != '""') {
-                      $valuesArray[$arrayField][] = json_encode(get_post_custom_values($field_name)[0]);
+                      $valuesArray[$arrayField][] = json_encode(get_post_custom_values($field)[0]);
                     }
                   }
                 }

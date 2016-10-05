@@ -11,10 +11,10 @@ get_header();
   <script id="project-item-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/project/project-item.handlebars"></script>
 
   <!-- Actor templates -->
-  <script id="actor-browser-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/actor/actor-browser.handlebars"></script>
-  <script id="actor-detail-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/actor/actor-detail.handlebars"></script>
-  <script id="actor-posts-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/actor/actor-posts.handlebars"></script>
-  <script id="actor-item-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/actor/actor-item.handlebars"></script>
+  <script id="person-browser-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/person/person-browser.handlebars"></script>
+  <script id="person-detail-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/person/person-detail.handlebars"></script>
+  <script id="person-posts-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/person/person-posts.handlebars"></script>
+  <script id="person-item-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/person/person-item.handlebars"></script>
 
   <!-- Group templates -->
   <script id="group-browser-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/group/group-browser.handlebars"></script>
@@ -60,10 +60,10 @@ get_header();
         });
       }
 
-      function getActorsList() {
-        var actorsList = [];
+      function getPersonsList() {
+        var personsList = [];
 
-        var url = config.resourceBaseUrl + 'ldp/actor/';
+        var url = config.resourceBaseUrl + 'ldp/person/';
         store.get(url).then(function(object) {
           if (object['ldp:contains']) {
             jQuery.each(object['ldp:contains'], function(index, project) {
@@ -75,12 +75,12 @@ get_header();
                     'description' : data['foaf:shortDescription'].substring(0, 147) + '...'
                   };
                   projectsList.push(currentProject);
-                  displayTemplate('#actor-list-template', '#actor-detail', actorsList);
+                  displayTemplate('#person-list-template', '#person-detail', personsList);
                 }
               });
             });
           } else {
-            displayTemplate('#actor-list-template', '#actor-detail', undefined);
+            displayTemplate('#person-list-template', '#person-detail', undefined);
           }
         });
       }
@@ -93,12 +93,12 @@ get_header();
           }
 
           window.store = new MyStore({
-              container: config.containerUrl + 'actor/',
+              container: config.containerUrl + 'person/',
               context: config.contextUrl,
-              template: '#actor-detail-template',
+              template: '#person-detail-template',
               partials: {
-                'actorItem': '#actor-item-template',
-                'actorDetail': '#actor-detail-template',
+                'personItem': '#person-item-template',
+                'personDetail': '#person-detail-template',
                 'projectItem': '#project-item-template',
                 'projectDetail': '#project-detail-template',
                 'postItem': '#post-item-template'
@@ -109,7 +109,7 @@ get_header();
             refreshCardFromHash();
           } else {
             getProjectsList();
-            getActorsList();
+            getPersonsList();
           }
       });
 
@@ -122,11 +122,11 @@ get_header();
       <div id="main-container" class="container-fluid">
         <div id="detail-wrapper" class="col-md-9">
             <div id="detail"></div>
-            <div id="actor-detail"></div>
+            <div id="person-detail"></div>
         </div>
         <div id="browser" class="col-md-3">
           <div id="project-browser" class="row"></div>
-          <div id="actor-browser" class="row"></div>
+          <div id="person-browser" class="row"></div>
           <div id="resource-browser" class="row"></div>
           <div id="idea-browser" class="row"></div>
         </div>
