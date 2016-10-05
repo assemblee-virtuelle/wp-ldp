@@ -11,16 +11,6 @@
   {{#ldpeach object.pair:worksWith "ul"}}{{> personItem }}{{/ldpeach}}
   {{/if}}
 
-  {{#if object.pair:manage2}}
-  <h3 class="text-uppercase">responsable de</h3>
-  {{#ldpeach object.pair:manage2 "ul"}}{{> personItem }}{{/ldpeach}}
-  {{/if}}
-
-  {{#if object.pair:contributesTo}}
-  <h3 class="text-uppercase">contribue à</h3>
-    {{#ldpeach object.pair:contributesTo "ul"}}{{> personItem }}{{/ldpeach}}
-  {{/if}}
-
   {{#if object.pair:hasDirector}}
   <h3 class="text-uppercase">a pour responsable</h3>
   {{#ldpeach object.pair:hasDirector "ul"}}{{> personItem }}{{/ldpeach}}
