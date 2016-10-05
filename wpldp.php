@@ -81,11 +81,24 @@ if (!class_exists('\WpLdp\WpLdp')) {
         $update_option = null;
 
         if (self::$version_number !== $plugin_version) {
-          if (self::$version_number == '1.2.0') {
+          if (self::$version_number == '1.1.0') {
               //Force reinitializing the ldp containers models:
               if ( !empty( $wpLdpSettings ) ) {
                 $wpLdpSettings->initialize_container();
               }
+              $actor_term = get_term_by('slug', 'actor', 'ldp_container');
+              $person_term = get_term_by('slug', 'person', 'ldp_container');
+              wp_delete_term( $actor_term->term_id, 'ldp_container', array('default' => $person_term->term_id ) );
+
+              $project_term = get_term_by('slug', 'project', 'ldp_container');
+              $initiative_term = get_term_by('slug', 'initiative', 'ldp_container');
+              wp_delete_term( $project_term->term_id, 'ldp_container', array('default' => $initiative_term->term_id ) );
+
+              $resource_term = get_term_by('slug', 'resource', 'ldp_container');
+              wp_delete_term( $resource_term->term_id, 'ldp_container' );
+
+              $idea_term = get_term_by('slug', 'idea', 'ldp_container');
+              wp_delete_term( $idea_term->term_id, 'ldp_container' );
           }
 
           if (self::$version_number > $plugin_version) {

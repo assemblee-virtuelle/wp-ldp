@@ -82,6 +82,10 @@ if (!class_exists('\WpLdp\WpLdpSettings')) {
                   'label' => __('Actor', 'wpldp'),
                   'rdftype' => 'pair:actor'
                 ),
+               'person' => array(
+                  'label' => __('Person', 'wpldp'),
+                  'rdftype' => 'pair:actor'
+                ),
                'idea' => array(
                   'label' => __('Idea', 'wpldp'),
                   'rdftype' => 'pair:label'
