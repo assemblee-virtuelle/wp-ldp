@@ -2,7 +2,7 @@
   <h2 class="text-uppercase">Acteurs associés</h2>
 
   {{#if object.foaf:knows}}
-  <div id="actor">
+  <h3 class="text-uppercase">ami de</h3>
   {{#ldpeach object.foaf:knows "ul"}}{{> personItem }}{{/ldpeach}}
   {{/if}}
 
