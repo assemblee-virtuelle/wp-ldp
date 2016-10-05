@@ -104,6 +104,13 @@
         "multiple": "true"
       },
       {
+        "label": "Groupe ou organisation que vous soutenez",
+        "object-property": "pair:supports",
+        "range": "foaf:Agent",
+        "type": "resource",
+        "multiple": "true"
+      },
+      {
         "label": "Centres d'intérêts",
         "object-property": "dcterms:subject",
         "range": "pair:Idea",
