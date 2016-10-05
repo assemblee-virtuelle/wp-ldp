@@ -4,7 +4,7 @@
  * Plugin URI: https://github.com/assemblee-virtuelle/wpldp
  * Description: This is a plugin which aims to emulate the default caracteristics of a Linked Data Platform compatible server
  * Text Domain: wpldp
- * Version: 1.0.13
+ * Version: 1.1.0
  * Author: Sylvain LE BON, Benoit ALESSANDRONI
  * Author URI: http://www.happy-dev.fr/team/sylvain, http://benoit-alessandroni.fr/
  * License: GPL2
@@ -29,7 +29,7 @@ if (!class_exists('\WpLdp\WpLdp')) {
       /**
        * The current plugin version number
        */
-      protected static $version_number = '1.0.13';
+      protected static $version_number = '1.1.0';
 
       /**
        * Default Constructor
@@ -81,6 +81,13 @@ if (!class_exists('\WpLdp\WpLdp')) {
         $update_option = null;
 
         if (self::$version_number !== $plugin_version) {
+          if (self::$version_number == '1.2.0') {
+              //Force reinitializing the ldp containers models:
+              if ( !empty( $wpLdpSettings ) ) {
+                $wpLdpSettings->initialize_container();
+              }
+          }
+
           if (self::$version_number > $plugin_version) {
             $update_option = $this->wpldp_db_upgrade();
 

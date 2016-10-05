@@ -40,142 +40,79 @@
         "type": "email"
       },
       {
-        "label": "Projet 1 visant la mise en oeuvre de cette idée",
+        "label": "Projets visant la mise en oeuvre de cette idée",
         "object-property": "dcterms:subject",
         "range": "foaf:Project",
-        "type": "resource"
+        "type": "resource",
+        "multiple": "true"
       },
       {
-        "label": "Projet 2 visant la mise en oeuvre de cette idée",
-        "object-property": "dcterms:subject2",
-        "range": "foaf:Project",
-        "type": "resource"
-      },
-      {
-        "label": "Evénement 1 portant sur cette idée",
+        "label": "Evénements portant sur cette idée",
         "object-property": "dcterms:subject3",
         "range": "schema:Event",
-        "type": "resource"
+        "type": "resource",
+        "multiple": "true"
       },
       {
-      "label": "Personne 1 ayant imaginé cette idée",
+      "label": "Personne ayant imaginé cette idée",
         "object-property": "pair:hasCreator",
         "range" : "foaf:Person",
-        "type": "resource"
+        "type": "resource",
+        "multiple": "true"
       },
       {
-      "label": "Personne 2 ayant imaginé cette idée",
-        "object-property": "pair:hasCreator2",
-        "range" : "foaf:Person",
-        "type": "resource"
-      },
-      {
-      "label": "Personne 1 soutenant cette idée",
+      "label": "Personnes soutenant cette idée",
         "object-property": "pair:hasFollower",
         "range" : "foaf:Person",
-        "type": "resource"
+        "type": "resource",
+        "multiple": "true"
       },
       {
-      "label": "Personne 2 soutenant cette idée",
-        "object-property": "pair:hasFollower2",
-        "range" : "foaf:Person",
-        "type": "resource"
-      },
-      {
-      "label": "Personne 3 soutenant cette idée",
-        "object-property": "pair:hasFollower3",
-        "range" : "foaf:Person",
-        "type": "resource"
-      },
-      {
-      "label": "Organisation 1 soutenant cette idée",
-        "object-property": "pair:hasFollower4",
+      "label": "Organisations soutenant cette idée",
+        "object-property": "pair:hasFollower",
         "range" : "foaf:Organization",
-        "type": "resource"
+        "type": "resource",
+        "multiple": "true"
       },
       {
-      "label": "Organisation 2 soutenant cette idée",
-        "object-property": "pair:hasFollower5",
-        "range" : "foaf:Organization",
-        "type": "resource"
-      },
-      {
-      "label": "Organisation 3 soutenant cette idée",
-        "object-property": "pair:hasFollower6",
-        "range" : "foaf:Organization",
-        "type": "resource"
-      },
-      {
-        "label": "Thématique 1 en lien avec cette idée",
+        "label": "Thématiques en lien avec cette idée",
         "object-property": "dcterms:subject",
         "range": "pair:Theme",
-        "type": "resource"
+        "type": "resource",
+        "multiple": "true"
       },
       {
-        "label": "Thématique 2 en lien avec cette idée",
-        "object-property": "dcterms:subject2",
-        "range": "pair:Theme",
-        "type": "resource"
-      },
-      {
-        "label": "Thématique 3 en lien avec cette idée",
-        "object-property": "dcterms:subject3",
-        "range": "pair:Theme",
-        "type": "resource"
-      },
-      {
-        "label": "Idée (Proposition) 1 convergente avec cette idée",
+        "label": "Idées (Proposition) convergente avec cette idée",
         "object-property": "pair:convergesWith",
         "range": "pair:Thesis",
-        "type": "resource"
+        "type": "resource",
+        "multiple": "true"
       },
       {
-        "label": "Ressource documentaire 1 portant sur cette idée",
+        "label": "Ressources documentaire portant sur cette idée",
         "object-property": "dcterms:subject",
         "range": "foaf:Document",
-        "type": "resource"
+        "type": "resource",
+        "multiple": "true"
       },
       {
-        "label": "Ressource documentaire 2 sur cette idée",
-        "object-property": "dcterms:subject2",
-        "range": "foaf:Document",
-        "type": "resource"
-      },
-      {
-        "label": "Ressource financière recherchée pour le développement de cette idée ?",
+        "label": "Ressources financières recherchée pour le développement de cette idée ?",
         "object-property": "gr:seeks",
         "range": "pair:FinancialResource",
         "type": "resource"
       },
       {
-        "label": "Compétence 1 recherchée pour le développement de cette idée",
-        "object-property": "gr:seeks2",
+        "label": "Compétences recherchées pour le développement de cette idée",
+        "object-property": "gr:seeks",
         "range": "cco:Skill",
         "type": "resource"
       },
       {
-        "label": "Compétence 2 recherchée pour le développement de cette idée",
-        "object-property": "gr:seeks3",
-        "range": "cco:Skill",
-        "type": "resource"
-      },
-      {
-        "label": "Compétence 3 recherchée pour le développement de cette idée",
-        "object-property": "gr:seeks4",
-        "range": "cco:Skill",
-        "type": "resource"
-      },
-      {
-        "label": "Offre de ressource 1 liée à cette idée",
+        "label": "Offres de ressource liée à cette idée",
         "object-property": "gr:offers",
         "range": "pair:Resource",
-        "type": "resource"
-      },
-      {
-        "label": "Offre de ressource 2 liée à cette idée",
-        "object-property": "gr:offers2",
-        "range": "pair:Resource",
-        "type": "resource"
+        "type": "resource",
+        "multiple": "true"
       }
     ]
   }

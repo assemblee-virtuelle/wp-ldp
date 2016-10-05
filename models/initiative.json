@@ -49,17 +49,8 @@
       {
         "label": "Réseau social 1",
         "data-property": "pair:socialNetworks",
-        "type": "url"
-      },
-      {
-        "label": "Réseau social 2",
-        "data-property": "pair:socialNetworks2",
-        "type": "url"
-      },
-      {
-        "label": "Réseau social 3",
-        "data-property": "pair:socialNetworks3",
-        "type": "url"
+        "type": "url",
+        "multiple": "true"
       },
       {
         "label": "Espace(s) de travail physique",
@@ -87,220 +78,74 @@
         "type": "textarea"
       },
       {
-        "label": "Cas d'usage 1",
+        "label": "Cas d'usage",
         "object-property": "pair:hasUseCase",
         "range": "pair:Project",
-        "type": "resource"
+        "type": "resource",
+        "multiple": "true"
       },
       {
-        "label": "Cas d'usage 2",
-        "object-property": "pair:hasUseCase2",
-        "range": "pair:Project",
-        "type": "resource"
-      },
-      {
-        "label": "Cas d'usage 3",
-        "object-property": "pair:hasUseCase3",
-        "range": "pair:Project",
-        "type": "resource"
-      },
-      {
-        "label": "Projet 1 que vous soutenez (en tant porteur de projet)",
+        "label": "Projets que vous soutenez (en tant porteur de projet)",
         "object-property": "pair:supports",
         "range": "foaf:Project",
-        "type": "resource"
+        "type": "resource",
+        "multiple": "true"
       },
       {
-        "label": "Projet 2 que vous soutenez (en tant porteur de projet)",
-        "object-property": "pair:supports2",
-        "range": "foaf:Project",
-        "type": "resource"
-      },
-      {
-        "label": "Projet 3 que vous soutenez (en tant porteur de projet)",
-        "object-property": "pair:supports3",
-        "range": "foaf:Project",
-        "type": "resource"
-      },
-      {
-        "label": "Acteur 1 responsable du projet ",
+        "label": "Acteurs responsable du projet ",
         "object-property": "pair:hasDirector",
         "range": "foaf:agent",
-        "type": "resource"
+        "type": "resource",
+        "multiple": "true"
       },
       {
-        "label": "Acteur 2 responsable du projet ",
-        "object-property": "pair:hasDirector2",
-        "range": "foaf:agent",
-        "type": "resource"
-      },
-      {
-        "label": "Acteur 3 responsable du projet ",
-        "object-property": "pair:hasDirector3",
-        "range": "foaf:agent",
-        "type": "resource"
-      },
-      {
-        "label": "Contributeur 1",
+        "label": "Contributeurs",
         "object-property": "pair:contributesTo",
         "range": "foaf:Person",
-        "type": "resource"
+        "type": "resource",
+        "multiple": "true"
       },
       {
-        "label": "Contributeur 2",
-        "object-property": "pair:contributesTo2",
-        "range": "foaf:Person",
-        "type": "resource"
-      },
-      {
-        "label": "Contributeur 3",
-        "object-property": "pair:contributesTo3",
-        "range": "foaf:Person",
-        "type": "resource"
-      },
-      {
-        "label": "Contributeur 4",
-        "object-property": "pair:contributesTo4",
-        "range": "foaf:Person",
-        "type": "resource"
-      },
-      {
-       "label": "Contributeur 5",
-        "object-property": "pair:contributesTo5",
-        "range": "foaf:Person",
-        "type": "resource"
-      },
-      {
-       "label": "Contributeur 6",
-        "object-property": "pair:contributesTo6",
-        "range": "foaf:Person",
-        "type": "resource"
-      },
-      {
-       "label": "Contributeur 7",
-        "object-property": "pair:contributesTo7",
-        "range": "foaf:Person",
-        "type": "resource"
-      },
-      {
-       "label": "Contributeur 8",
-        "object-property": "pair:contributesTo8",
-        "range": "foaf:Person",
-        "type": "resource"
-      },
-      {
-        "label": "Acteur partenaire 1 ",
+        "label": "Acteur partenaires ",
         "object-property": "pair:hasPartner",
         "range": "foaf:Agent",
-        "type": "resource"
+        "type": "resource",
+        "multiple": "true"
       },
       {
-        "label": "Acteur partenaire 2 ",
-        "object-property": "pair:hasPartner2",
-        "range": "foaf:Agent",
-        "type": "resource"
-      },
-      {
-        "label": "Acteur partenaire 3 ",
-        "object-property": "pair:hasPartner3",
-        "range": "foaf:Agent",
-        "type": "resource"
-      },
-      {
-        "label": "Acteur partenaire 4 ",
-        "object-property": "pair:hasPartner4",
-        "range": "foaf:Agent",
-        "type": "resource"
-      },
-      {
-        "label": "Acteur partenaire 5 ",
-        "object-property": "pair:hasPartner5",
-        "range": "foaf:Agent",
-        "type": "resource"
-      },
-      {
-        "label": "Centre d'intérêt 1",
+        "label": "Centres d'intérêt",
         "object-property": "dcterms:subject",
         "range": "pair:Idea",
-        "type": "resource"
+        "type": "resource",
+        "multiple": "true"
       },
       {
-        "label": "Centre d'intérêt 2",
-        "object-property": "dcterms:subject2",
-        "range": "pair:Idea",
-        "type": "resource"
-      },
-      {
-        "label": "Centre d'intérêt 3",
-        "object-property": "dcterms:subject3",
-        "range": "pair:Idea",
-        "type": "resource"
-      },
-      {
-        "label": "Centre d'intérêt 4",
-        "object-property": "dcterms:subject4",
-        "range": "pair:Idea",
-        "type": "resource"
-      },
-      {
-        "label": "Centre d'intérêt 5",
-        "object-property": "dcterms:subject5",
-        "range": "pair:Idea",
-        "type": "resource"
-      },
-      {
-        "label": "Centre d'intérêt 6",
-        "object-property": "dcterms:subject6",
-        "range": "pair:Idea",
-        "type": "resource"
-      },
-      {
-        "label": "Besoin de compétence 1",
+        "label": "Besoin de compétences",
         "object-property": "gr:seeks",
         "range": "cco:Skill",
-        "type": "resource"
+        "type": "resource",
+        "multiple": "true"
       },
       {
-        "label": "Besoin de compétence 2",
-        "object-property": "gr:seeks2",
-        "range": "cco:Skill",
-        "type": "resource"
-      },
-      {
-        "label" : "Besoin de ressource 1 (hors compétences)",
+        "label" : "Besoin de ressources (hors compétences)",
         "object-property": "gr:seeks3",
         "range": "pair:Resource",
-        "type": "resource"
+        "type": "resource",
+        "multiple": "true"
       },
       {
-        "label": "Besoin de ressource 2 (hors compétences)",
-        "object-property": "gr:seeks4",
-        "range": "pair:Resource",
-        "type": "resource"
-      },
-      {
-        "label": "Offre de compétence 1",
+        "label": "Offre de compétences",
         "object-property": "gr:offers5",
         "range": "cco:Skill",
-        "type": "resource"
+        "type": "resource",
+        "multiple": "true"
       },
       {
-        "label": "Offre de compétence 2",
-        "object-property": "gr:offers6",
-        "range": "cco:Skill",
-        "type": "resource"
-      },
-      {
-        "label": "Offre de ressource 1 (hors compétences)",
+        "label": "Offre de ressources (hors compétences)",
         "object-property": "gr:offers7",
         "range": "pair:Resource",
-        "type": "resource"
-      },
-      {
-        "label": "Offre de ressource 2 (hors compétences)",
-        "object-property": "gr:offers8",
-        "range": "pair:Resource",
-        "type": "resource"
+        "type": "resource",
+        "multiple": "true"
       }
     ]
   }

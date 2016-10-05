@@ -2,19 +2,10 @@
   "artwork": {
     "fields": [
       {
-        "label": "Photo, image 1",
+        "label": "Photos, images",
         "data-property": "foaf:img",
-        "type": "url"
-      },
-      {
-        "label": "Photo, image 2",
-        "data-property": "foaf:img",
-        "type": "url"
-      },
-      {
-        "label": "Photo, image 3",
-        "data-property": "foaf:img",
-        "type": "url"
+        "type": "url",
+        "multiple": "true"
       },
       {
         "label": "Nom",
@@ -88,25 +79,8 @@
         "label": "Tag 1",
         "object-property": "dc:subject",
         "range": "pair:Theme",
-        "type": "resource"
-      },
-      {
-        "label": "Tag 2",
-        "object-property": "dc:subject",
-        "range": "pair:Theme2",
-        "type": "resource"
-      },
-      {
-        "label": "Tag 3",
-        "object-property": "dc:subject",
-        "range": "pair:theme3",
-        "type": "resource"
-      },
-      {
-        "label": "Tag 4",
-        "object-property": "dc:subject",
-        "range": "pair:Theme4",
-        "type": "resource"
+        "type": "resource",
+        "multiple": "true"
       }
     ]
   }
