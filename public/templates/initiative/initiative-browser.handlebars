@@ -4,17 +4,17 @@
 
   {{#if object.foaf:currentProject}}
   <h3 class="text-uppercase">contribue à</h3>
-      {{#ldpeach object.foaf:currentProject "ul"}}{{> initiativeItem }}{{/ldpeach}}
+      {{#ldpeach object.foaf:currentProject "ul"}}{{> personItem }}{{/ldpeach}}
     {{/if}}
 
   {{#if object.pair:supports}}
   <h3 class="text-uppercase">soutient</h3>
-    {{#ldpeach object.pair:supports "ul"}}{{> initiativeItem }}{{/ldpeach}}
+    {{#ldpeach object.pair:supports "ul"}}{{> personItem }}{{/ldpeach}}
   {{/if}}
 
   {{#if object.pair:hasUseCase}}
   <h3 class="text-uppercase">a pour cas d'usage</h3>
-      {{#ldpeach object.pair:hasUseCase "ul"}}{{> initiativeItem }}{{/ldpeach}}
+      {{#ldpeach object.pair:hasUseCase "ul"}}{{> personItem }}{{/ldpeach}}
   {{/if}}
   </div>
 </div>

@@ -5,11 +5,6 @@ include_once('../../../../wp-load.php');
 
 get_header();
 ?>
-  <!-- Project templates -->
-  <script id="project-browser-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/project/project-browser.handlebars"></script>
-  <script id="project-detail-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/project/project-detail.handlebars"></script>
-  <script id="project-item-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/project/project-item.handlebars"></script>
-
   <!-- Actor templates -->
   <script id="person-browser-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/person/person-browser.handlebars"></script>
   <script id="person-detail-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/person/person-detail.handlebars"></script>
@@ -34,28 +29,32 @@ get_header();
   <!-- Ideas templates -->
   <script id="idea-browser-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/idea/idea-browser.handlebars"></script>
 
-  <script>
-      function getProjectsList() {
-        var projectsList = [];
+  <!-- Ideas templates -->
+  <script id="initiative-browser-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/initiative/initiative-browser.handlebars"></script>
+  <script id="initiative-detail-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/initiative/initiative-detail.handlebars"></script>
 
-        var url = config.resourceBaseUrl + 'ldp/project/';
+  <script>
+      function getInitiativesList() {
+        var initiativesList = [];
+
+        var url = config.resourceBaseUrl + 'ldp/initiative/';
         store.get(url).then(function(object) {
           if (object['ldp:contains']) {
             jQuery.each(object['ldp:contains'], function(index, project) {
               store.get(project).then(function(data) {
-                if (data.project_title && data.project_description) {
+                if ( data['foaf:name'] ) {
                   var currentProject = {
                     'id' : data['@id'],
                     'title' : data['foaf:name'],
                     'description' : data['foaf:shortDescription'].substring(0, 147) + '...'
                   };
-                  projectsList.push(currentProject);
-                  displayTemplate('#project-list-template', '#detail', projectsList);
+                  projectsList.push(data);
+                  displayTemplate('#initiative-list-template', '#detail', initiativesList);
                 }
               });
             });
           } else {
-            displayTemplate('#project-list-template', '#detail', undefined);
+            displayTemplate('#initiative-list-template', '#detail', undefined);
           }
         });
       }
@@ -68,13 +67,13 @@ get_header();
           if (object['ldp:contains']) {
             jQuery.each(object['ldp:contains'], function(index, project) {
               store.get(project).then(function(data) {
-                if (data.project_title && data.project_description) {
-                  var currentProject = {
-                    'id' : data['@id'],
-                    'title' : data['foaf:name'],
-                    'description' : data['foaf:shortDescription'].substring(0, 147) + '...'
-                  };
-                  projectsList.push(currentProject);
+                if ( data['foaf:name'] ) {
+                  // var currentProject = {
+                  //   'id' : data['@id'],
+                  //   'title' : data['foaf:name'],
+                  //   'description' : data['foaf:shortDescription'].substring(0, 147) + '...'
+                  // };
+                  projectsList.push(data);
                   displayTemplate('#person-list-template', '#person-detail', personsList);
                 }
               });
@@ -99,8 +98,8 @@ get_header();
               partials: {
                 'personItem': '#person-item-template',
                 'personDetail': '#person-detail-template',
-                'projectItem': '#project-item-template',
-                'projectDetail': '#project-detail-template',
+                //'initiativeItem': '#initiative-item-template',
+                'initiativeDetail': '#initiative-detail-template',
                 'postItem': '#post-item-template'
               }
           });
@@ -108,7 +107,7 @@ get_header();
           if ( window.location.hash ) {
             refreshCardFromHash();
           } else {
-            getProjectsList();
+            getInitiativesList();
             getPersonsList();
           }
       });
@@ -125,10 +124,10 @@ get_header();
             <div id="person-detail"></div>
         </div>
         <div id="browser" class="col-md-3">
-          <div id="project-browser" class="row"></div>
+          <div id="initiative-browser" class="row"></div>
           <div id="person-browser" class="row"></div>
+          <div id="theme-browser" class="row"></div>
           <div id="resource-browser" class="row"></div>
-          <div id="idea-browser" class="row"></div>
         </div>
       </div>
       <div id="graph-container" style="display: none;" height="1000px">

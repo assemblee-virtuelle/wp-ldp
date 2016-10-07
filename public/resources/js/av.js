@@ -2,9 +2,9 @@
 //// Contains() polyfill method ///
 ///////////////////////////////////
 if (!String.prototype.contains) {
-    String.prototype.contains = function(s) {
-        return this.indexOf(s) > -1
-    }
+  String.prototype.contains = function(s) {
+      return this.indexOf(s) > -1
+  }
 }
 
 /********************************************
@@ -43,10 +43,10 @@ jQuery('#menu li a').click(
 /*********************************************
 **************** POC FUNCTIONS ***************
 **********************************************/
-function displayProject(divName, itemId, templateId) {
+function displayInitiative(divName, itemId, templateId) {
   store.render(divName, itemId, templateId);
-  refreshBrowsePanel(itemId, 'actor');
-  refreshBrowsePanel(itemId, 'project');
+  refreshBrowsePanel(itemId, 'person');
+  refreshBrowsePanel(itemId, 'initiative');
   refreshBrowsePanel(itemId, 'resource');
   refreshBrowsePanel(itemId, 'idea');
   window.location.hash = itemId;
@@ -54,8 +54,8 @@ function displayProject(divName, itemId, templateId) {
 
 function displayPerson(divName, itemId, templateId) {
   store.render(divName, itemId, templateId);
-  refreshBrowsePanel(itemId, 'project');
-  refreshBrowsePanel(itemId, 'actor');
+  refreshBrowsePanel(itemId, 'initiative');
+  refreshBrowsePanel(itemId, 'person');
   refreshBrowsePanel(itemId, 'resource');
   refreshBrowsePanel(itemId, 'idea');
   window.location.hash = itemId;
@@ -63,8 +63,8 @@ function displayPerson(divName, itemId, templateId) {
 
 function displayGroup(divName, itemId, templateId) {
   store.render(divName, itemId, templateId);
-  refreshBrowsePanel(itemId, 'project');
-  refreshBrowsePanel(itemId, 'actor');
+  refreshBrowsePanel(itemId, 'initiative');
+  refreshBrowsePanel(itemId, 'person');
   refreshBrowsePanel(itemId, 'resource');
   refreshBrowsePanel(itemId, 'idea');
   window.location.hash = itemId;
@@ -83,8 +83,6 @@ function displayResource(resourceIri) {
     var segmentsIRI = url_array[1].split('/');
     var templateConcept = '#'+segmentsIRI[0]+'-detail-template';
     var displayFunction = 'display'+segmentsIRI[0].substring(0,1).toUpperCase()+segmentsIRI[0].substring(1);
-    console.log(displayFunction);
-    console.log(window[displayFunction]);
     window[displayFunction].call(window,'#detail', resourceIri, templateConcept);
 }
 
@@ -138,8 +136,8 @@ function refreshCardFromHash() {
     // Modif : L'info pertinente est dans url_array[1] ?
     displayResource(hash.substring(1));
   } else {
-    var resourceId = config.resourceBaseUrl + '/ldp/project/assemblee-virtuelle/';
-    displayProject('#detail', resourceId, '#project-detail-template');
+    var resourceId = config.resourceBaseUrl + '/ldp/initiative/assemblee-virtuelle/';
+    displayInitiative('#detail', resourceId, '#initiative-detail-template');
   }
 }
 
@@ -177,7 +175,6 @@ function loadGraphFromRdfViewer(){
   //  var loadVal = hash.substring(1, hash.length);
   // Temporary Hack
    var loadVal = "http://benoit-alessandroni.fr/rdf/foaf.rdf";
-   console.log('loadVal', loadVal);
     if (loadVal != null) {
         loadVal = decodeURIComponent(loadVal);
     }

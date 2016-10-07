@@ -1,17 +1,17 @@
 <div class="resources-list actor-detail-active">
   <h1 class="text-uppercase">
-    Liste des acteurs
+    Liste des personnes
   </h1>
   <div id="actors" class="detail-content">
     {{#if this}}
       {{#each this}}
-        <a onclick="displayActor('#detail', &quot;{{id}}&quot;,  '#actor-detail-template')">
+        <a onclick="displayPerson('#detail', &quot;{{id}}&quot;,  '#person-detail-template')">
           <div class="actor-item">
             <h2>
-              {{name}}
+              {{foaf:name}}
             </h2>
             <p>
-              {{description}}
+              {{foaf:description}}
             </p>
           </div>
         </a>

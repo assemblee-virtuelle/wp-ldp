@@ -4,22 +4,22 @@
     
     {{#if object.pair:hasPartner}}
     <h3 class="text-uppercase">a pour partenaire</h3>
-    {{#ldpeach object.pair:hasPartner "ul"}}{{> organizationItem }}{{/ldpeach}}
+    {{#ldpeach object.pair:hasPartner "ul"}}{{> personItem }}{{/ldpeach}}
     {{/if}}
 
     {{#if object.pair:manage2}}
     <h3 class="text-uppercase">responsable de</h3>
-    {{#ldpeach object.pair:manage2 "ul"}}{{> organizationItem }}{{/ldpeach}}
+    {{#ldpeach object.pair:manage2 "ul"}}{{> personItem }}{{/ldpeach}}
     {{/if}}
 
     {{#if object.pair:contributesTo}}
     <h3 class="text-uppercase">contribue à</h3>
-    {{#ldpeach object.pair:contributesTo "ul"}}{{> organizationItem }}{{/ldpeach}}
+    {{#ldpeach object.pair:contributesTo "ul"}}{{> personItem }}{{/ldpeach}}
     {{/if}}
     
     {{#if object.pair:supports}}
     <h3 class="text-uppercase">soutient</h3>
-    {{#ldpeach object.pair:supports "ul"}}{{> organizationItem }}{{/ldpeach}}
+    {{#ldpeach object.pair:supports "ul"}}{{> personItem }}{{/ldpeach}}
     {{/if}}
     </div>
 </div>
