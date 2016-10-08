@@ -27,17 +27,13 @@ if (!class_exists('\WpLdp\WpLdpSettings')) {
         * @param  {type} $_newValue the new checkbox value (should be true)
         * @return {type}            description
         */
-       function initialize_container() {
-         if (isset($_GET['settings-updated'])) {
+       function initialize_container( $force = false ) {
+         if (isset($_GET['settings-updated']) || $force ) {
            $ldp_container_init = get_option('ldp_container_init', false);
 
-           if ($ldp_container_init) {
+           if ($ldp_container_init  || $force ) {
              //TODO: Initialize the PAIR containers
              $pair_terms = array(
-               'project' => array(
-                  'label' => __('Project', 'wpldp'),
-                  'rdftype' => 'foaf:project'
-                ),
                'initiative' => array(
                   'label' => __('Initiative', 'wpldp'),
                   'rdftype' => 'pair:initiative'
@@ -78,21 +74,9 @@ if (!class_exists('\WpLdp\WpLdpSettings')) {
                   'label' => __('Thesis', 'wpldp'),
                   'rdftype' => 'pair:thesis'
                 ),
-               'actor' => array(
-                  'label' => __('Actor', 'wpldp'),
-                  'rdftype' => 'pair:actor'
-                ),
                'person' => array(
                   'label' => __('Person', 'wpldp'),
                   'rdftype' => 'pair:person'
-                ),
-               'idea' => array(
-                  'label' => __('Idea', 'wpldp'),
-                  'rdftype' => 'pair:label'
-                ),
-               'resource' => array(
-                  'label' => __('Resource', 'wpldp'),
-                  'rdftype' => 'pair:resource'
                 )
              );
 

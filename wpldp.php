@@ -83,8 +83,9 @@ if (!class_exists('\WpLdp\WpLdp')) {
         if (self::$version_number !== $plugin_version) {
           if (self::$version_number == '1.1.0') {
               //Force reinitializing the ldp containers models:
+              global $wpLdpSettings;
               if ( !empty( $wpLdpSettings ) ) {
-                $wpLdpSettings->initialize_container();
+                $wpLdpSettings->initialize_container( true );
               }
               $actor_term = get_term_by('slug', 'actor', 'ldp_container');
               $person_term = get_term_by('slug', 'person', 'ldp_container');
