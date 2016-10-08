@@ -159,7 +159,7 @@
                       $loop->next_post ();
                       $post = $loop->post;
                       echo "               {\n";
-                      echo "                    \"url\": \"" . get_permalink ($post->ID) . "\",\n";
+                      echo "                    \"@id\": \"" . get_permalink ($post->ID) . "\",\n";
                       echo '                    "dc:title":' . json_encode($post->post_title) . ",\n";
                       $post_content = (!empty($post->post_content) && $post->post_content !== false) ? json_encode(substr($post->post_content, 0, 150)) : "";
                       echo '                    "sioc:blogPost":' . $post_content . "\n";
