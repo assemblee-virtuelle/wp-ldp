@@ -95,6 +95,13 @@
         "multiple": "true"
       },
       {
+        "label": "Evénements que vous (co-)organisez",
+        "object-property": "pair:organize",
+        "range": "schema:Event",
+        "type": "resource",
+        "multiple": "true"
+      },
+      {
         "label": "Contributeurs",
         "object-property": "pair:hasContributor",
         "range": "foaf:Person",
