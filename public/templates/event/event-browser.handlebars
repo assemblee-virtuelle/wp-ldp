@@ -1,34 +1,21 @@
   <div class="browser-item">
-    <h2 class="text-uppercase">Acteurs associés</h2>
-
-    {{#if object.foaf:knows}}
-    <div id="actor">
-    {{#ldpeach object.foaf:knows "ul"}}{{> personItem }}{{/ldpeach}}
-    {{/if}}
-
-    {{#if object.pair:worksWith}}
-    <h3 class="text-uppercase">collaborateur de</h3>
-    {{#ldpeach object.pair:worksWith "ul"}}{{> personItem }}{{/ldpeach}}
-    {{/if}}
-
-    {{#if object.pair:manage2}}
-    <h3 class="text-uppercase">responsable de</h3>
-    {{#ldpeach object.pair:manage2 "ul"}}{{> personItem }}{{/ldpeach}}
-    {{/if}}
-
-    {{#if object.pair:contributesTo}}
-    <h3 class="text-uppercase">contribue à</h3>
-      {{#ldpeach object.pair:contributesTo "ul"}}{{> personItem }}{{/ldpeach}}
-    {{/if}}
-
-    {{#if object.pair:hasDirector}}
-    <h3 class="text-uppercase">a pour responsable</h3>
-    {{#ldpeach object.pair:hasDirector "ul"}}{{> personItem }}{{/ldpeach}}
-    {{/if}}
-
-    {{#if object.pair:hasPartner}}
-    <h3 class="text-uppercase">a pour partenaire</h3>
-    {{#ldpeach object.pair:hasPartner "ul"}}{{> personItem }}{{/ldpeach}}
-    {{/if}}
-    </div>
+    <h2 class="text-uppercase">Projets associés</h2>
+    <div id="projects">
+   
+   {{#if object.pair:organize}}
+  <h3 class="text-uppercase">organise</h3>
+    {{#ldpeach object.pair:organize "ul"}}{{> agentItem }}{{/ldpeach}}
+  {{/if}}
+   
+   {{#if object.foaf:currentProject}}
+   <h3 class="text-uppercase">contribue à</h3>
+      {{#ldpeach object.foaf:currentProject "ul"}}{{> agentItem }}{{/ldpeach}}
+   {{/if}}
+   
+  {{#if object.pair:supports}}
+  <h3 class="text-uppercase">soutient</h3>
+    {{#ldpeach object.pair:supports "ul"}}{{> agentItem }}{{/ldpeach}}
+  {{/if}}
+   
+   </div>
   </div>
