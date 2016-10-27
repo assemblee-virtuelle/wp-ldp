@@ -29,6 +29,12 @@ get_header();
   <!-- Ideas templates -->
   <script id="idea-browser-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/idea/idea-browser.handlebars"></script>
 
+  <!-- Theme templates -->
+  <script id="theme-browser-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/theme/theme-browser.handlebars"></script>
+
+  <!-- Event templates -->
+  <script id="event-browser-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/event/event-browser.handlebars"></script>
+
   <!-- Ideas templates -->
   <script id="initiative-browser-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/initiative/initiative-browser.handlebars"></script>
   <script id="initiative-detail-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/initiative/initiative-detail.handlebars"></script>
@@ -127,7 +133,9 @@ get_header();
           <div id="initiative-browser" class="row"></div>
           <div id="person-browser" class="row"></div>
           <div id="theme-browser" class="row"></div>
+          <div id="event-browser" class="row"></div>
           <div id="resource-browser" class="row"></div>
+          <div id="idea-browser" class="row"></div>
         </div>
       </div>
       <div id="graph-container" style="display: none;" height="1000px">
