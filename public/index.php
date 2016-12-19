@@ -132,10 +132,10 @@ get_header();
         <div id="browser" class="col-md-3">
           <div id="initiative-browser" class="row"></div>
           <div id="person-browser" class="row"></div>
-          <div id="theme-browser" class="row"></div>
-          <div id="event-browser" class="row"></div>
-          <div id="resource-browser" class="row"></div>
           <div id="idea-browser" class="row"></div>
+          <div id="resource-browser" class="row"></div>
+          <div id="event-browser" class="row"></div>
+          <div id="theme-browser" class="row"></div>
         </div>
       </div>
       <div id="graph-container" style="display: none;" height="1000px">
