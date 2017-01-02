@@ -2,9 +2,9 @@
 //// Contains() polyfill method ///
 ///////////////////////////////////
 if (!String.prototype.contains) {
-  String.prototype.contains = function(s) {
-      return this.indexOf(s) > -1
-  }
+    String.prototype.contains = function(s) {
+        return this.indexOf(s) > -1;
+    }
 }
 
 /********************************************
@@ -78,6 +78,13 @@ function refreshBrowsePanel(itemId, templatePrefix) {
   );
 }
 
+/**
+ * displayResource Affiche du contenu d'une ressource
+ *
+ * @param  {String} resourceIri IRI de la ressource à afficher
+ *
+ * @return {void}
+ */
 function displayResource(resourceIri) {
     var url_array = resourceIri.substring(1).split('/ldp/');
     var segmentsIRI = url_array[1].split('/');
@@ -101,6 +108,11 @@ function getKnownHostsList() {
   return knownHostsList;
 }
 
+/**
+ * refreshCardFromHash Collecte le contenu d'une page en fonction du segment fourni dans l'URL
+ *
+ * @return {void}
+ */
 function refreshCardFromHash() {
   var hash = window.location.hash;
   if (hash) {
@@ -141,6 +153,14 @@ function refreshCardFromHash() {
   }
 }
 
+/**
+ * getTemplateAjax Charge un template depuis un URL donné
+ *
+ * @param  {String}   path     URL
+ * @param  {Function} callback callback à éxécuter sur le template
+ *
+ * @return {void}
+ */
 function getTemplateAjax(path, callback) {
   var source, template;
   jQuery.ajax({
@@ -153,6 +173,15 @@ function getTemplateAjax(path, callback) {
   });
 }
 
+/**
+ * displayTemplate Affiche un template Handlebars à un emplacement déterminé du DOM
+ *
+ * @param  {String} template id du template Handlebars à afficher
+ * @param  {String} div      id de l'élément recevant le contenu du template
+ * @param  {JSON}   data     données pour hydrater le template
+ *
+ * @return {void}
+ */
 function displayTemplate(template, div, data) {
   if (typeof(template) == 'string' && template.substring(0, 1) == '#') {
     var element = jQuery(template);
@@ -161,7 +190,9 @@ function displayTemplate(template, div, data) {
         jQuery(div).html(template(data));
       });
     } else {
+      console.log(element);
       template = Handlebars.compile(element.html());
+      console.log(jQuery(div));
       jQuery(div).html(template(data));
     }
   } else {

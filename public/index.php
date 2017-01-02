@@ -10,6 +10,7 @@ get_header();
   <script id="person-detail-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/person/person-detail.handlebars"></script>
   <script id="person-posts-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/person/person-posts.handlebars"></script>
   <script id="person-item-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/person/person-item.handlebars"></script>
+  <script id="person-list-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/person/person-list.handlebars"></script>
 
   <!-- Group templates -->
   <script id="group-browser-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/group/group-browser.handlebars"></script>
@@ -38,6 +39,7 @@ get_header();
   <!-- Ideas templates -->
   <script id="initiative-browser-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/initiative/initiative-browser.handlebars"></script>
   <script id="initiative-detail-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/initiative/initiative-detail.handlebars"></script>
+  <script id="initiative-list-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/initiative/initiative-list.handlebars"></script>
 
   <script>
       function getInitiativesList() {
@@ -52,9 +54,9 @@ get_header();
                   var currentProject = {
                     'id' : data['@id'],
                     'title' : data['foaf:name'],
-                    'description' : data['foaf:shortDescription'].substring(0, 147) + '...'
+                    'description' : data['pair:shortDescription'].substring(0, 147) + '...'
                   };
-                  projectsList.push(data);
+                  initiativesList.push(data);
                   displayTemplate('#initiative-list-template', '#detail', initiativesList);
                 }
               });
@@ -79,7 +81,7 @@ get_header();
                   //   'title' : data['foaf:name'],
                   //   'description' : data['foaf:shortDescription'].substring(0, 147) + '...'
                   // };
-                  projectsList.push(data);
+                  personsList.push(data);
                   displayTemplate('#person-list-template', '#person-detail', personsList);
                 }
               });
@@ -90,7 +92,35 @@ get_header();
         });
       }
 
-      jQuery(function(){
+    //   function getDocumentsList() {
+    //     var resourcesList = [];
+      //
+    //     var url = config.resourceBaseUrl + 'ldp/document/';
+    //     store.get(url).then(function(object) {
+    //       if (object['ldp:contains']) {
+    //         jQuery.each(object['ldp:contains'], function(index, project) {
+    //           store.get(project).then(function(data) {
+    //             if ( data['pair:name'] ) {
+    //               var currentDocument = {
+    //                 'id' : data['@id'],
+    //                 'title' : data['pair:name'],
+    //                 'description' : data['pair:shortDescription'].substring(0, 147) + '...'
+    //               };
+    //               resourcesList.push(data);
+    //               displayTemplate('#resource-browser-template', '#resource-browser', resourcesList);
+    //             }
+    //           });
+    //         });
+    //       } else {
+    //         displayTemplate('#resource-browser-template', '#resource-browser', undefined);
+    //       }
+    //     });
+    //   }
+
+    /**
+     * Bootstrap de la collecte de données pour la page
+     */
+      jQuery(document).ready(function(){
           window.config = {
             'containerUrl': '<?php echo site_url(); ?>/ldp_container/',
             'resourceBaseUrl' : '<?php echo site_url(); ?>/',
@@ -115,6 +145,7 @@ get_header();
           } else {
             getInitiativesList();
             getPersonsList();
+            // getDocumentsList();
           }
       });
 
