@@ -14,7 +14,7 @@
       {
         "label": "Titre du document",
         "data-property": "pair:name",
-        "type": "url"
+        "type": "textarea"
       },
       {
         "label": "Description courte (140 caractères max)",
