@@ -4,14 +4,14 @@
   {{#if object.gr:offers}}
   <h3 class="text-uppercase">Offre</h3>
   <div id="offers" style="min-height: 50px;">
-    {{#ldpeach object.gr:offers "ul"}}{{> personItem }}{{/ldpeach}}
+    {{#ldpeach object.gr:offers "ul"}}{{> resourceItem }}{{/ldpeach}}
   </div>
   {{/if}}
 
   {{#if object.gr:seeks}}
   <h3 class="text-uppercase">Recherche</h3>
   <div id="needs" style="min-height: 50px;">
-    {{#ldpeach object.gr:seeks "ul"}}{{> personItem }}{{/ldpeach}}
+    {{#ldpeach object.gr:seeks "ul"}}{{> resourceItem }}{{/ldpeach}}
   </div>
   {{/if}}
   </div>
