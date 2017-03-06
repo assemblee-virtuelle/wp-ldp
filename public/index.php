@@ -2,44 +2,43 @@
 // Include WordPress
 define('WP_USE_THEMES', true);
 include_once('../../../../wp-load.php');
-
 get_header();
 ?>
   <!-- Actor templates -->
-  <script id="person-browser-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/person/person-browser.handlebars"></script>
-  <script id="person-detail-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/person/person-detail.handlebars"></script>
-  <script id="person-posts-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/person/person-posts.handlebars"></script>
-  <script id="person-item-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/person/person-item.handlebars"></script>
-  <script id="person-list-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/person/person-list.handlebars"></script>
+  <script id="person-browser-template" type="text/x-handlebars-template" src="<?=plugin_dir_url( __FILE__ )?>templates/person/person-browser.handlebars"></script>
+  <script id="person-detail-template" type="text/x-handlebars-template" src="<?=plugin_dir_url( __FILE__ )?>templates/person/person-detail.handlebars"></script>
+  <script id="person-posts-template" type="text/x-handlebars-template" src="<?=plugin_dir_url( __FILE__ )?>templates/person/person-posts.handlebars"></script>
+  <script id="person-item-template" type="text/x-handlebars-template" src="<?=plugin_dir_url( __FILE__ )?>templates/person/person-item.handlebars"></script>
+  <script id="person-list-template" type="text/x-handlebars-template" src="<?=plugin_dir_url( __FILE__ )?>templates/person/person-list.handlebars"></script>
 
   <!-- Group templates -->
-  <script id="group-browser-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/group/group-browser.handlebars"></script>
-  <script id="group-detail-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/group/group-detail.handlebars"></script>
-  <script id="group-posts-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/group/group-posts.handlebars"></script>
-  <script id="group-item-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/group/group-item.handlebars"></script>
+  <script id="group-browser-template" type="text/x-handlebars-template" src="<?=plugin_dir_url( __FILE__ )?>templates/group/group-browser.handlebars"></script>
+  <script id="group-detail-template" type="text/x-handlebars-template" src="<?=plugin_dir_url( __FILE__ )?>templates/group/group-detail.handlebars"></script>
+  <script id="group-posts-template" type="text/x-handlebars-template" src="<?=plugin_dir_url( __FILE__ )?>templates/group/group-posts.handlebars"></script>
+  <script id="group-item-template" type="text/x-handlebars-template" src="<?=plugin_dir_url( __FILE__ )?>templates/group/group-item.handlebars"></script>
 
   <!-- Post templates -->
-  <script id="post-item-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/post/post-item.handlebars"></script>
+  <script id="post-item-template" type="text/x-handlebars-template" src="<?=plugin_dir_url( __FILE__ )?>templates/post/post-item.handlebars"></script>
 
   <!-- Project templates -->
-  <script id="project-list-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/project/project-list.handlebars"></script>
+  <script id="project-list-template" type="text/x-handlebars-template" src="<?=plugin_dir_url( __FILE__ )?>templates/project/project-list.handlebars"></script>
 
   <!-- Resources templates -->
-  <script id="resource-browser-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/resource/resource-browser.handlebars"></script>
+  <script id="resource-browser-template" type="text/x-handlebars-template" src="<?=plugin_dir_url( __FILE__ )?>templates/resource/resource-browser.handlebars"></script>
 
   <!-- Ideas templates -->
-  <script id="idea-browser-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/idea/idea-browser.handlebars"></script>
+  <script id="idea-browser-template" type="text/x-handlebars-template" src="<?=plugin_dir_url( __FILE__ )?>templates/idea/idea-browser.handlebars"></script>
 
   <!-- Theme templates -->
-  <script id="theme-browser-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/theme/theme-browser.handlebars"></script>
+  <script id="theme-browser-template" type="text/x-handlebars-template" src="<?=plugin_dir_url( __FILE__ )?>templates/theme/theme-browser.handlebars"></script>
 
   <!-- Event templates -->
-  <script id="event-browser-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/event/event-browser.handlebars"></script>
+  <script id="event-browser-template" type="text/x-handlebars-template" src="<?=plugin_dir_url( __FILE__ )?>templates/event/event-browser.handlebars"></script>
 
   <!-- Ideas templates -->
-  <script id="initiative-browser-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/initiative/initiative-browser.handlebars"></script>
-  <script id="initiative-detail-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/initiative/initiative-detail.handlebars"></script>
-  <script id="initiative-list-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/initiative/initiative-list.handlebars"></script>
+  <script id="initiative-browser-template" type="text/x-handlebars-template" src="<?=plugin_dir_url( __FILE__ )?>templates/initiative/initiative-browser.handlebars"></script>
+  <script id="initiative-detail-template" type="text/x-handlebars-template" src="<?=plugin_dir_url( __FILE__ )?>templates/initiative/initiative-detail.handlebars"></script>
+  <script id="initiative-list-template" type="text/x-handlebars-template" src="<?=plugin_dir_url( __FILE__ )?>templates/initiative/initiative-list.handlebars"></script>
 
   <script>
       function getInitiativesList() {
