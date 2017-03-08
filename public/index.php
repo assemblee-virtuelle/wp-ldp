@@ -5,12 +5,33 @@ include_once('../../../../wp-load.php');
 
 get_header();
 ?>
+
+<style media="screen">
+    #detail-wrapper {
+        margin-bottom: 3rem
+    }
+</style>
+
   <!-- Actor templates -->
   <script id="person-browser-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/person/person-browser.handlebars"></script>
   <script id="person-detail-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/person/person-detail.handlebars"></script>
   <script id="person-posts-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/person/person-posts.handlebars"></script>
   <script id="person-item-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/person/person-item.handlebars"></script>
   <script id="person-list-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/person/person-list.handlebars"></script>
+
+  <!-- Artwork templates -->
+  <script id="artwork-detail-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/artwork/artwork-detail.handlebars"></script>
+
+  <!-- Document templates -->
+  <script id="document-detail-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/document/document-detail.handlebars"></script>
+
+  <!-- Event templates -->
+  <script id="event-browser-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/event/event-browser.handlebars"></script>
+  <script id="event-detail-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/event/event-detail.handlebars"></script>
+
+  <!-- GoodOrService templates -->
+  <script id="goodorservice-browser-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/goodorservice/goodorservice-browser.handlebars"></script>
+  <script id="goodorservice-detail-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/goodorservice/goodorservice-detail.handlebars"></script>
 
   <!-- Group templates -->
   <script id="group-browser-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/group/group-browser.handlebars"></script>
@@ -26,18 +47,23 @@ get_header();
 
   <!-- Resources templates -->
   <script id="resource-browser-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/resource/resource-browser.handlebars"></script>
+  <script id="resource-item-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/resource/resource-item.handlebars"></script>
 
   <!-- Ideas templates -->
   <script id="idea-browser-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/idea/idea-browser.handlebars"></script>
+  <script id="idea-item-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/idea/idea-item.handlebars"></script>
 
   <!-- Theme templates -->
   <script id="theme-browser-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/theme/theme-browser.handlebars"></script>
+  <script id="theme-detail-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/theme/theme-detail.handlebars"></script>
 
-  <!-- Event templates -->
-  <script id="event-browser-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/event/event-browser.handlebars"></script>
+  <!-- Thesis templates -->
+  <script id="thesis-browser-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/thesis/thesis-browser.handlebars"></script>
+  <script id="thesis-detail-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/thesis/thesis-detail.handlebars"></script>
 
-  <!-- Ideas templates -->
+  <!-- Initiative templates -->
   <script id="initiative-browser-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/initiative/initiative-browser.handlebars"></script>
+  <script id="initiative-item-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/initiative/initiative-item.handlebars"></script>
   <script id="initiative-detail-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/initiative/initiative-detail.handlebars"></script>
   <script id="initiative-list-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/initiative/initiative-list.handlebars"></script>
 
@@ -127,16 +153,22 @@ get_header();
             'contextUrl': 'http://owl.openinitiative.com/oicontext.jsonld'
           }
 
+          Handlebars.registerHelper("log", function(something) {
+              console.log(something);
+          });
+
           window.store = new MyStore({
               container: config.containerUrl + 'person/',
               context: config.contextUrl,
               template: '#person-detail-template',
               partials: {
-                'personItem': '#person-item-template',
-                'personDetail': '#person-detail-template',
-                //'initiativeItem': '#initiative-item-template',
-                'initiativeDetail': '#initiative-detail-template',
-                'postItem': '#post-item-template'
+                'personItem': '#person-item-template'
+                , 'personDetail': '#person-detail-template'
+                , 'initiativeItem': '#initiative-item-template'
+                , 'initiativeDetail': '#initiative-detail-template'
+                , 'postItem': '#post-item-template'
+                , 'ideaItem': '#idea-item-template'
+                , 'resourceItem': '#resource-item-template'
               }
           });
 
