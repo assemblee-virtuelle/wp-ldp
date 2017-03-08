@@ -1,0 +1,34 @@
+  <div class="browser-item">
+    <h2 class="text-uppercase">Acteurs associés</h2>
+
+    {{#if object.foaf:knows}}
+    <div id="actor">
+    {{#ldpeach object.foaf:knows "ul"}}{{> actorItem }}{{/ldpeach}}
+    {{/if}}
+
+    {{#if object.pair:worksWith}}
+    <h3 class="text-uppercase">collaborateur de</h3>
+    {{#ldpeach object.pair:worksWith "ul"}}{{> actorItem }}{{/ldpeach}}
+    {{/if}}
+
+    {{#if object.pair:manage2}}
+    <h3 class="text-uppercase">responsable de</h3>
+    {{#ldpeach object.pair:manage2 "ul"}}{{> actorItem }}{{/ldpeach}}
+    {{/if}}
+
+    {{#if object.pair:contributesTo}}
+    <h3 class="text-uppercase">contribue à</h3>
+      {{#ldpeach object.pair:contributesTo "ul"}}{{> actorItem }}{{/ldpeach}}
+    {{/if}}
+
+    {{#if object.pair:hasDirector}}
+    <h3 class="text-uppercase">a pour responsable</h3>
+    {{#ldpeach object.pair:hasDirector "ul"}}{{> actorItem }}{{/ldpeach}}
+    {{/if}}
+
+    {{#if object.pair:hasPartner}}
+    <h3 class="text-uppercase">a pour partenaire</h3>
+    {{#ldpeach object.pair:hasPartner "ul"}}{{> actorItem }}{{/ldpeach}}
+    {{/if}}
+    </div>
+  </div>

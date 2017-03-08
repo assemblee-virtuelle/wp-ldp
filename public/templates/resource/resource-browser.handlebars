@@ -1,8 +1,9 @@
 <div class="browser-item">
-  <h2 class="text-uppercase">Ressources associées</h2>
+  <!--h2 class="text-uppercase">Ressources associées</h2-->
 
   {{#if object.gr:offers}}
   <h3 class="text-uppercase">Offre</h3>
+  {{ log object }}
   <div id="offers" style="min-height: 50px;">
     {{#ldpeach object.gr:offers "ul"}}{{> resourceItem }}{{/ldpeach}}
   </div>

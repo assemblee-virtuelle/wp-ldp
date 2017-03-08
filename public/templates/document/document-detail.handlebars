@@ -1,0 +1,61 @@
+<div class="document-detail-active">
+  <h1 class="text-center text-uppercase">{{ object.pair:name }}</h1>
+  <div class="detail-content">
+    <h2>Description</h2>
+    <p>{{object.pair:shortDescription}}</p>
+
+    <div class="row personal-information">
+      <h2>Informations</h2>
+      <div class="col-md-3 equal profile-picture">
+        <img height="200" width="200" src="{{object.foaf:img}}" alt="Photo de profil" />
+      </div>
+      <div class="col-md-9 equal information-content">
+
+          {{#if object.pair:hasAuthor}}
+          <p>Auteur(s):
+            <ul>
+              {{#each object.pair:hasAuthor}}
+                <li><a href="{{'@id'}}">{{ pair:firstName }} {{ pair:name }}</a></li>
+              {{/each}}
+            </ul>
+          </p>
+          {{/if}}
+
+          <div>{{object.pair:longDescription}}</div>
+
+          {{#if object.foaf:weblog}}
+            <p>Personal Website: {{object.foaf:homePage}}</p>
+          {{/if}}
+
+          {{#if object.dcterms:hasContributor}}
+          <p>Auteur(s):
+            <ul>
+              {{#each object.dcterms:hasContributor}}
+                <li><a href="{{'@id'}}">{{ pair:firstName }} {{ pair:name }}</a></li>
+              {{/each}}
+            </ul>
+          </p>
+          {{/if}}
+
+
+          {{#if object.dcterms:subject}}
+          <p>Thématique(s):
+            <ul>
+              {{#each object.dcterms:subject}}
+                <li><a href="{{'@id'}}">{{ pair:name }}</a></li>
+              {{/each}}
+            </ul>
+          </p>
+          {{/if}}
+
+          {{#if object.pair:file}}
+          <p>Source(s):
+            <ul>
+                <li><a href="{{ object.pair:file }}" target="_blank">{{ object.pair:file }}</a></li>
+            </ul>
+          </p>
+          {{/if}}
+
+      </div>
+  </div>
+</div>

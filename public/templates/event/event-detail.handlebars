@@ -1,0 +1,30 @@
+<div class="event-detail-active">
+  <h1 class="text-center text-uppercase">{{ object.pair:name }}</h1>
+  <div class="detail-content">
+    <h2>Description</h2>
+    <p>{{object.pair:shortDescription}}</p>
+
+    <div class="row personal-information">
+      <h2>Informations</h2>
+      <div class="col-md-3 equal profile-picture">
+        <img height="200" width="200" src="{{object.foaf:img}}" alt="Photo de profil" />
+      </div>
+      <div class="col-md-9 equal information-content">
+
+          <div>{{object.pair:longDescription}}</div>
+
+          {{#if object.pair:adress}}
+          <p>Lieu : {{object.pair:adress}}</p>
+          <p>{{object.pair:zipCode}} {{object.pair:town}} ({{object.pair:country}})</p>
+          {{/if}}
+
+          {{#if object.pair:from}}
+          <p>De : {{object.pair:from}} {{object.pair:at}}</p>
+          {{/if}}
+          {{#if object.pair:to}}
+          <p>De : {{object.pair:to}} {{object.pair:until}}</p>
+          {{/if}}
+
+      </div>
+  </div>
+</div>

@@ -1,9 +1,10 @@
 <div class="browser-item">
-  <h2 class="text-uppercase">Idées associées</h2>
+  <!--h2 class="text-uppercase">Idées associées</h2-->
   {{#if object.dcterms:subject}}
   <h3 class="text-uppercase">a pour thématique</h3>
+  {{ log object.dcterms:subject }}
   <div id="subjects" style="min-height: 50px;">
-    {{#ldpeach object.dcterms:subject "ul"}}{{> personItem }}{{/ldpeach}}
+    {{#ldpeach object.dcterms:subject "ul"}}{{> ideaItem }}{{/ldpeach}}
   </div>
   {{/if}}
 </div>
