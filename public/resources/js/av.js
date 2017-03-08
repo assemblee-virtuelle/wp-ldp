@@ -53,6 +53,8 @@ function displayInitiative(divName, itemId, templateId) {
 }
 
 function displayPerson(divName, itemId, templateId) {
+    console.log('itemId :');
+    console.log(itemId);
   store.render(divName, itemId, templateId);
   refreshBrowsePanel(itemId, 'initiative');
   refreshBrowsePanel(itemId, 'person');
@@ -70,6 +72,16 @@ function displayGroup(divName, itemId, templateId) {
   window.location.hash = itemId;
 }
 
+function displayResource(divName, itemId, templateId) {
+    store.render(divName, itemId, templateId);
+    refreshBrowsePanel(itemId, 'initiative');
+    refreshBrowsePanel(itemId, 'person');
+    refreshBrowsePanel(itemId, 'resource');
+    refreshBrowsePanel(itemId, 'idea');
+    window.location.hash = itemId;
+}
+
+
 function refreshBrowsePanel(itemId, templatePrefix) {
   store.render(
     "#" + templatePrefix + "-browser",
@@ -79,18 +91,27 @@ function refreshBrowsePanel(itemId, templatePrefix) {
 }
 
 /**
- * displayResource Affiche du contenu d'une ressource
+ * displayLDPResource Affiche du contenu d'une ressource
  *
  * @param  {String} resourceIri IRI de la ressource à afficher
  *
  * @return {void}
  */
-function displayResource(resourceIri) {
-    var url_array = resourceIri.substring(1).split('/ldp/');
+function displayLDPResource(targetResource) {
+    console.log(targetResource);
+    if (targetResource.startsWith('#')) {
+        var targetResource = targetResource.substring(1);
+    }
+    var url_array = targetResource.split('/ldp/');
     var segmentsIRI = url_array[1].split('/');
-    var templateConcept = '#'+segmentsIRI[0]+'-detail-template';
-    var displayFunction = 'display'+segmentsIRI[0].substring(0,1).toUpperCase()+segmentsIRI[0].substring(1);
-    window[displayFunction].call(window,'#detail', resourceIri, templateConcept);
+    var templateId = '#'+segmentsIRI[0]+'-detail-template';
+    console.log(targetResource);
+    store.render('#detail', targetResource, templateId);
+    refreshBrowsePanel(targetResource, 'initiative');
+    refreshBrowsePanel(targetResource, 'person');
+    refreshBrowsePanel(targetResource, 'resource');
+    refreshBrowsePanel(targetResource, 'idea');
+    window.location.hash = targetResource;
 }
 
 function getKnownHostsList() {
@@ -146,7 +167,8 @@ function refreshCardFromHash() {
       }
     }
     // Modif : L'info pertinente est dans url_array[1] ?
-    displayResource(hash.substring(1));
+    console.log(url_array);
+    displayLDPResource(hash);
   } else {
     var resourceId = config.resourceBaseUrl + '/ldp/initiative/assemblee-virtuelle/';
     displayInitiative('#detail', resourceId, '#initiative-detail-template');
