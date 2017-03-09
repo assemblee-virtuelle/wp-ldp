@@ -19,18 +19,18 @@ get_header();
   <script id="person-list-template" type="text/x-handlebars-template" src="<?=plugin_dir_url( __FILE__ )?>templates/person/person-list.handlebars"></script>
 
   <!-- Artwork templates -->
-  <script id="artwork-detail-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/artwork/artwork-detail.handlebars"></script>
+  <script id="artwork-detail-template" type="text/x-handlebars-template" src="<?=plugin_dir_url( __FILE__ )?>templates/artwork/artwork-detail.handlebars"></script>
 
   <!-- Document templates -->
-  <script id="document-detail-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/document/document-detail.handlebars"></script>
+  <script id="document-detail-template" type="text/x-handlebars-template" src="<?=plugin_dir_url( __FILE__ )?>templates/document/document-detail.handlebars"></script>
 
   <!-- Event templates -->
-  <script id="event-browser-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/event/event-browser.handlebars"></script>
+  <script id="event-browser-template" type="text/x-handlebars-template" src="<?=plugin_dir_url( __FILE__ )?>templates/event/event-browser.handlebars"></script>
   <script id="event-detail-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/event/event-detail.handlebars"></script>
 
   <!-- GoodOrService templates -->
-  <script id="goodorservice-browser-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/goodorservice/goodorservice-browser.handlebars"></script>
-  <script id="goodorservice-detail-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/goodorservice/goodorservice-detail.handlebars"></script>
+  <script id="goodorservice-browser-template" type="text/x-handlebars-template" src="<?=plugin_dir_url( __FILE__ )?>templates/goodorservice/goodorservice-browser.handlebars"></script>
+  <script id="goodorservice-detail-template" type="text/x-handlebars-template" src="<?=plugin_dir_url( __FILE__ )?>templates/goodorservice/goodorservice-detail.handlebars"></script>
 
   <!-- Group templates -->
   <script id="group-browser-template" type="text/x-handlebars-template" src="<?=plugin_dir_url( __FILE__ )?>templates/group/group-browser.handlebars"></script>
