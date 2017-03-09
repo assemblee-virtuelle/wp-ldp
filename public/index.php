@@ -26,7 +26,7 @@ get_header();
 
   <!-- Event templates -->
   <script id="event-browser-template" type="text/x-handlebars-template" src="<?=plugin_dir_url( __FILE__ )?>templates/event/event-browser.handlebars"></script>
-  <script id="event-detail-template" type="text/x-handlebars-template" src="../wp-content/plugins/wp-ldp/public/templates/event/event-detail.handlebars"></script>
+  <script id="event-detail-template" type="text/x-handlebars-template" src="<?=plugin_dir_url( __FILE__ )?>templates/event/event-detail.handlebars"></script>
 
   <!-- GoodOrService templates -->
   <script id="goodorservice-browser-template" type="text/x-handlebars-template" src="<?=plugin_dir_url( __FILE__ )?>templates/goodorservice/goodorservice-browser.handlebars"></script>
