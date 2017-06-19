@@ -152,7 +152,7 @@ get_header();
           window.config = {
             'containerUrl': '<?php echo site_url(); ?>/ldp_container/',
             'resourceBaseUrl' : '<?php echo site_url(); ?>/',
-            'contextUrl': '<?php echo get_option('ldp_context', 'http://owl.openinitiative.com/oicontext.jsonld'); ?>'
+            'contextUrl': '<?php echo get_option("ldp_context", "http://owl.openinitiative.com/oicontext.jsonld"); ?>'
           }
 
           Handlebars.registerHelper("log", function(something) {
