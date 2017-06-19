@@ -152,7 +152,7 @@ get_header();
           window.config = {
             'containerUrl': '<?php echo site_url(); ?>/ldp_container/',
             'resourceBaseUrl' : '<?php echo site_url(); ?>/',
-            'contextUrl': 'http://owl.openinitiative.com/oicontext.jsonld'
+            'contextUrl': 'https://www.balessan.me/rdf/context.jsonld'
           }
 
           Handlebars.registerHelper("log", function(something) {
