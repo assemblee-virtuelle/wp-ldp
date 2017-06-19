@@ -149,6 +149,7 @@ get_header();
      * Bootstrap de la collecte de données pour la page
      */
       jQuery(document).ready(function(){
+          console.log('<?php echo get_option("ldp_context", "http://owl.openinitiative.com/oicontext.jsonld"); ?>');
           window.config = {
             'containerUrl': '<?php echo site_url(); ?>/ldp_container/',
             'resourceBaseUrl' : '<?php echo site_url(); ?>/',
