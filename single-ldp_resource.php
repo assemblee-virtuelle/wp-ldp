@@ -188,6 +188,6 @@
     ]
 }
 <?php } elseif ( isset($_SERVER['HTTP_ACCEPT']) && strstr($_SERVER['HTTP_ACCEPT'], 'text/html' ) ) {
-  header("Location: " . site_url() . "/wp-ldp/front#http://" . site_url() . $_SERVER['REQUEST_URI']);
+  header("Location: " . site_url() . "/wp-ldp/front#" . site_url() . $_SERVER['REQUEST_URI']);
 }
 ?>
