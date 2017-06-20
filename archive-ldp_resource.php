@@ -14,7 +14,7 @@
      );
 ?>
 {
-    "@context": "<?php echo get_option('ldp_context', 'http://owl.openinitiative.com/oicontext.jsonld'); ?>",
+    "@context": "<?php echo get_option('ldp_context', 'http://lov.okfn.org/dataset/lov/context'); ?>",
     "@graph": [ {
         "@id" : "<?php echo 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']; ?>",
         "@type" : "http://www.w3.org/ns/ldp#BasicContainer"<?php if ( have_posts() ) : ?>,
