@@ -387,7 +387,7 @@ if (!class_exists('\WpLdp\WpLdp')) {
                 echo '<script>';
                 echo "var store = new MyStore({
                             container: '$resourceUri',
-                            context: '" . get_option('ldp_context', 'http://owl.openinitiative.com/oicontext.jsonld') ."',
+                            context: '" . get_option('ldp_context', 'http://lov.okfn.org/dataset/lov/context') ."',
                             template:\"{{{form '{$term[0]->slug}'}}}\",
                             models: $ldpModel
                       });";
