@@ -149,11 +149,11 @@ get_header();
      * Bootstrap de la collecte de données pour la page
      */
       jQuery(document).ready(function(){
-          console.log('<?php echo get_option("ldp_context", "http://owl.openinitiative.com/oicontext.jsonld"); ?>');
+          console.log('<?php echo get_option("ldp_context", "http://lov.okfn.org/dataset/lov/context"); ?>');
           window.config = {
             'containerUrl': '<?php echo site_url(); ?>/ldp_container/',
             'resourceBaseUrl' : '<?php echo site_url(); ?>/',
-            'contextUrl': '<?php echo get_option("ldp_context", "http://owl.openinitiative.com/oicontext.jsonld"); ?>'
+            'contextUrl': '<?php echo get_option("ldp_context", "http://lov.okfn.org/dataset/lov/context"); ?>'
           }
 
           Handlebars.registerHelper("log", function(something) {
