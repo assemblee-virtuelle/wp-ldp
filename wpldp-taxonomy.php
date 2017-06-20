@@ -15,7 +15,6 @@ if (!class_exists('\WpLdp\WpLdpTaxonomy')) {
       register_activation_hook( __FILE__, array($this, 'wpldp_rewrite_flush' ) );
       add_action( 'init', array($this, 'register_container_taxonomy'), 0 );
 
-      add_filter( 'template_include', array($this, 'include_template_function'));
       add_action( 'ldp_container_add_form_fields', array($this, 'add_custom_tax_fields_oncreate'));
       add_action( 'ldp_container_edit_form_fields', array($this, 'add_custom_tax_fields_onedit'));
       add_action( 'create_ldp_container', array($this, 'save_custom_tax_field'));
@@ -198,21 +197,6 @@ if (!class_exists('\WpLdp\WpLdpTaxonomy')) {
       update_option("ldp_container_$termID", $termMeta, false);
     }
 
-    ################################
-    # Resource publication
-    ################################
-    function include_template_function( $template_path ) {
-        if ( is_tax('ldp_container') ) {
-            // checks if the file exists in the theme first,
-            // otherwise serve the file from the plugin
-            if ( $file_theme = locate_template( array ( 'taxonomy-ldp_resource.php' ) ) ) {
-                $template_path = $theme_file;
-            } else {
-                $template_path = plugin_dir_path( __FILE__ ) . 'taxonomy-ldp_resource.php';
-            }
-        }
-        return $template_path;
-    }
   }
 
   // Instanciating the settings page object
