@@ -132,7 +132,7 @@
             }
 
             // Get user to retrieve associated posts !
-            $user_login;
+            $user_login = null;
             foreach($fields as $field) {
               $field_name = \WpLdp\WpLdpUtils::getFieldName( $field );
               if (isset($field_name) && $field_name == 'foaf:nick') {
@@ -140,9 +140,9 @@
               }
             }
 
-            if ($user_login) {
+            if ( !empty( $user_login ) ) {
               $user = get_user_by ( 'login', $user_login);
-              if ($user) {
+              if ( $user ) {
                 $loop = new WP_Query( array(
                     'post_type' => 'post',
                     'posts_per_page' => 12,
@@ -161,9 +161,8 @@
                       echo "               {\n";
                       echo "                    \"@id\": \"" . get_permalink ($post->ID) . "\",\n";
                       echo '                    "dc:title":' . json_encode($post->post_title) . ",\n";
-                      $post_content = (!empty($post->post_content) && $post->post_content !== false) ? json_encode(substr($post->post_content, 0, 150)) : "";
-                      echo '                    "sioc:blogPost":' . $post_content . "\n";
-                      json_last_error_msg();
+                      $post_content = ( !empty( $post->post_content ) && $post->post_content !== false) ? json_encode( substr($post->post_content, 0, 150) ) : "";
+                      if ( !empty( $post->post_content ) ) echo '                    "sioc:blogPost":' . $post_content . "\n";
                       if ($count < $loop->post_count) {
                         echo "               },\n";
                       } else {
