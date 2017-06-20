@@ -210,7 +210,7 @@ if (!class_exists('\WpLdp\WpLdpSettings')) {
        }
 
        function ldp_context_field() {
-           echo "<input type='text' size='150' name='ldp_context' value='" . get_option('ldp_context', 'http://owl.openinitiative.com/oicontext.jsonld') . "' />";
+           echo "<input type='text' size='150' name='ldp_context' value='" . get_option('ldp_context', 'http://lov.okfn.org/dataset/lov/context') . "' />";
        }
 
        function ldp_container_init_field() {
