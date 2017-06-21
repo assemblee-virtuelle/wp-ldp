@@ -25,7 +25,7 @@ if (!class_exists('\WpLdp\WpLdp')) {
        * The front page url, defaulted as 'wp-ldp/front'
        */
       protected static $front_page_url = 'wp-ldp/front';
-      protected static $stat_page_url = 'ldp/$';
+      protected static $ldp_root_url = 'ldp/$';
 
       /**
        * The current plugin version number
@@ -176,9 +176,9 @@ if (!class_exists('\WpLdp\WpLdp')) {
           // The substitution is prefixed with the "home root", at least a '/'
           // This is equivalent to appending it to `non_wp_rules`
           $wp_rewrite->add_external_rule(self::$front_page_url, $poc_url);
-          $new_poc_url = plugins_url('public/ldp_resource.php', __FILE__);
-          $new_poc_url = substr($new_poc_url, strlen( home_url() ) + 1);
-          $wp_rewrite->add_external_rule(self::$stat_page_url, $new_poc_url);
+          $ldp_root_file = plugins_url('public/index-ldp_ressource.php', __FILE__);
+          $ldp_root_file = substr($ldp_root_file, strlen( home_url() ) + 1);
+          $wp_rewrite->add_external_rule(self::$ldp_root_url, $ldp_root_file);
           //flush_rewrite_rules( true );
       }
 

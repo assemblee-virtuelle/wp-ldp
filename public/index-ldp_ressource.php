@@ -28,18 +28,20 @@ $array = [];
 
                   if($rdfType != null){
                       if(array_key_exists($rdfType,$array)){
-                        $array[$rdfType]++;
+                        $array[$rdfType]['value']++;
                       }
                       else{
-                          $array[$rdfType]=1;
+                          $array[$rdfType]['value']=1;
+                          $array[$rdfType]['id']=explode(':',$rdfType)[1];
                       }
                   }
                 ?>
 <?php endwhile; ?>
 <?php foreach ($array as $key => $value){
             echo "            {\n";
+            echo "                \"@id\" : \"http://" .$_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'].$value['id']."\",\n";
             echo "                \"@type\" : \"$key\",\n";
-            echo "                \"@count\" : \"$value\"\n";
+            echo "                \"@count\" : ".$value['value']."\n";
             echo "            }\n";
         }
 
