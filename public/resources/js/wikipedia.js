@@ -31,7 +31,7 @@ var urlReqPrefix = "http://lookup.dbpedia.org/api/search.asmx/PrefixSearch?Query
 
 $(document).ready(function() {
     var topics = [];
-    $(".sf-standard-form").on('focus', '.hasLookup', function(event) {
+    $("#ldpform").on('focus', '.hasLookup', function(event) {
         $(this).autocomplete({
             autoFocus: true,
             minlength: 3,
@@ -48,9 +48,6 @@ $(document).ready(function() {
                 console.log(ui);
                 $emptyFields = $(this).siblings().filter(function(index) { return $(this).val() == ''}).length;
                 console.log('Champs vides : '+ $emptyFields);
-                if ($emptyFields === 0) {
-                    addedWidget = cloneWidget($(this))
-                }
             },
             source: function(request, callback) {
                 console.log("Déclenche l'événement :")

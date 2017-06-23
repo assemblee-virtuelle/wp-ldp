@@ -464,6 +464,13 @@ if (!class_exists('\WpLdp\WpLdp')) {
               array('jquery')
             );
             wp_enqueue_script('wpldpjs');
+              // Loading the Handlebars library
+              wp_register_script(
+                'lookup',
+                plugins_url('public/resources/js/wikipedia.js', __FILE__),
+                array('ldpjs')
+              );
+              wp_enqueue_script('lookup');
           }
       }
 
