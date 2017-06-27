@@ -14,11 +14,16 @@ if (!class_exists('\WpLdp\WpLdpTaxonomy')) {
     public function __construct() {
       register_activation_hook( __FILE__, array($this, 'wpldp_rewrite_flush' ) );
       add_action( 'init', array($this, 'register_container_taxonomy'), 0 );
+      add_action( 'init', array($this, 'register_site_taxonomy'), 0 );
 
       add_action( 'ldp_container_add_form_fields', array($this, 'add_custom_tax_fields_oncreate'));
       add_action( 'ldp_container_edit_form_fields', array($this, 'add_custom_tax_fields_onedit'));
+      add_action( 'ldp_site_add_form_fields', array($this, 'add_custom_tax_fields_onedit_site'));
+      add_action( 'ldp_site_edit_form_fields', array($this, 'add_custom_tax_fields_onedit_site'));
       add_action( 'create_ldp_container', array($this, 'save_custom_tax_field'));
       add_action( 'edited_ldp_container', array($this, 'save_custom_tax_field'));
+      add_action( 'create_ldp_site', array($this, 'save_custom_tax_field_site'));
+      add_action( 'edited_ldp_site', array($this, 'save_custom_tax_field_site'));
     }
 
 
@@ -77,6 +82,46 @@ if (!class_exists('\WpLdp\WpLdpTaxonomy')) {
       register_taxonomy( 'ldp_container', 'ldp_resource', $args );
 
     }
+
+      function register_site_taxonomy() {
+
+          $labels = array(
+            'name'                       => __( 'Sites', 'wpldp' ),
+            'singular_name'              => __( 'Site', 'wpldp' ),
+            'menu_name'                  => __( 'Sites', 'wpldp' ),
+            'all_items'                  => __( 'All Items', 'wpldp' ),
+            'parent_item'                => __( 'Parent Item', 'wpldp' ),
+            'parent_item_colon'          => __( 'Parent Item:', 'wpldp' ),
+            'new_item_name'              => __( 'New Item Name', 'wpldp' ),
+            'add_new_item'               => __( 'Add New Item', 'wpldp' ),
+            'edit_item'                  => __( 'Edit Item', 'wpldp' ),
+            'update_item'                => __( 'Update Item', 'wpldp' ),
+            'view_item'                  => __( 'View Item', 'wpldp' ),
+            'separate_items_with_commas' => __( 'Separate items with commas', 'wpldp' ),
+            'add_or_remove_items'        => __( 'Add or remove items', 'wpldp' ),
+            'choose_from_most_used'      => __( 'Choose from the most used', 'wpldp' ),
+            'popular_items'              => __( 'Popular Items', 'wpldp' ),
+            'search_items'               => __( 'Search Items', 'wpldp' ),
+            'not_found'                  => __( 'Not Found', 'wpldp' ),
+          );
+          $rewrite = array(
+            'slug'                       => 'site',
+            'with_front'                 => true,
+            'hierarchical'               => false,
+          );
+          $args = array(
+            'labels'                     => $labels,
+            'hierarchical'               => true,
+            'public'                     => true,
+            'show_ui'                    => true,
+            'show_admin_column'          => true,
+            'show_in_nav_menus'          => true,
+            'show_tagcloud'              => true,
+            'rewrite'                    => $rewrite,
+          );
+          register_taxonomy( 'ldp_site', 'ldp_resource', $args );
+
+      }
 
     /**
        * Adds a LDP Model field to our custom LDP containers taxonomy
@@ -169,6 +214,26 @@ if (!class_exists('\WpLdp\WpLdpTaxonomy')) {
             </script>';
     }
 
+      /**
+       * Adds a LDP Model field to our custom LDP containers taxonomy
+       * in edition mode
+       *
+       * @param int $term the concrete term
+       * @return void
+       */
+      function add_custom_tax_fields_onedit_site($term) {
+          $termId = $term->term_id;
+          $termMeta = get_option("ldp_site_$termId");
+          $ldpRdfType = isset($termMeta['ldp_site']) ? $termMeta['ldp_site'] : '';
+
+          // Adding rdf:type field
+          echo "<tr class='form-field form-required term-model-wrap'>";
+          echo "<th scope='row'><label for='ldp_site'>" . __('web site', 'wpldp'). "</label></th>";
+          echo "<td><input type='url' placeholder='http://' name='ldp_site' id='ldp_site' value='$ldpRdfType' />";
+          echo "<p class='description'>" . __('WordPress site that you know and that the WP-LDP plugin is installed', 'wpldp'). "</p></td>";
+          echo "</tr>";
+      }
+
     /**
        * Save the value of the posted custom field for the custom taxonomy
        * in the options WP table
@@ -195,6 +260,17 @@ if (!class_exists('\WpLdp\WpLdpTaxonomy')) {
       }
 
       update_option("ldp_container_$termID", $termMeta, false);
+    }
+
+    function save_custom_tax_field_site($termID) {
+        $termMeta = get_option("ldp_site_$termID");
+        if (!is_array($termMeta)) {
+            $termMeta = array();
+        }
+        if (isset($_POST['ldp_site'])) {
+            $termMeta['ldp_site'] = $_POST['ldp_site'];
+        }
+        update_option("ldp_site_$termID", $termMeta, false);
     }
 
   }

@@ -196,6 +196,15 @@ msgstr "Le modèle en format JSON compatible LDP pour ce container"
 msgid "Model editor mode"
 msgstr "Éditeur de modèle"
 
+#: ../wpldp-taxonomy.php:233
+msgid "web site"
+msgstr "site web"
+
+#: ../wpldp-taxonomy.php:233
+msgid "WordPress site that you know and that the WP-LDP plugin is installed"
+msgstr "Site wordpress que vous connaissez et que le plugin WP-LDP est installé"
+
+
 #: ../wpldp.php:169
 msgid "Resources"
 msgstr "Ressources"
