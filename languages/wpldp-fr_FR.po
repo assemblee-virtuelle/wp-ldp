@@ -201,8 +201,8 @@ msgid "web site"
 msgstr "site web"
 
 #: ../wpldp-taxonomy.php:233
-msgid "WordPress site that you know and that the WP-LDP plugin is installed"
-msgstr "Site wordpress que vous connaissez et que le plugin WP-LDP est installé"
+msgid "WordPress site that you know and on which the WP-LDP plugin is installed"
+msgstr "Site wordpress que vous connaissez et sur lequel le plugin WP-LDP est installé"
 
 
 #: ../wpldp.php:169

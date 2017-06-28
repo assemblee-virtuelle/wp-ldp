@@ -18,7 +18,7 @@ if (!class_exists('\WpLdp\WpLdpTaxonomy')) {
 
       add_action( 'ldp_container_add_form_fields', array($this, 'add_custom_tax_fields_oncreate'));
       add_action( 'ldp_container_edit_form_fields', array($this, 'add_custom_tax_fields_onedit'));
-      add_action( 'ldp_site_add_form_fields', array($this, 'add_custom_tax_fields_onedit_site'));
+      add_action( 'ldp_site_add_form_fields', array($this, 'add_custom_tax_fields_oncreate_site'));
       add_action( 'ldp_site_edit_form_fields', array($this, 'add_custom_tax_fields_onedit_site'));
       add_action( 'create_ldp_container', array($this, 'save_custom_tax_field'));
       add_action( 'edited_ldp_container', array($this, 'save_custom_tax_field'));
@@ -223,14 +223,22 @@ if (!class_exists('\WpLdp\WpLdpTaxonomy')) {
        */
       function add_custom_tax_fields_onedit_site($term) {
           $termId = $term->term_id;
-          $termMeta = get_option("ldp_site_$termId");
-          $ldpRdfType = isset($termMeta['ldp_site']) ? $termMeta['ldp_site'] : '';
+          $termMeta = get_term_meta($termId,"ldp_site_url",true);
+          $ldpSiteUrl = isset($termMeta) ? $termMeta : '';
 
           // Adding rdf:type field
           echo "<tr class='form-field form-required term-model-wrap'>";
-          echo "<th scope='row'><label for='ldp_site'>" . __('web site', 'wpldp'). "</label></th>";
-          echo "<td><input type='url' placeholder='http://' name='ldp_site' id='ldp_site' value='$ldpRdfType' />";
-          echo "<p class='description'>" . __('WordPress site that you know and that the WP-LDP plugin is installed', 'wpldp'). "</p></td>";
+          echo "<th scope='row'><label for='ldp_site_url'>" . __('web site', 'wpldp'). "</label></th>";
+          echo "<td><input type='url' placeholder='http://' name='ldp_site_url' id='ldp_site_url' value='$ldpSiteUrl' />";
+          echo "<p class='description'>" . __('WordPress site that you know and on which the WP-LDP plugin is installed', 'wpldp'). "</p></td>";
+          echo "</tr>";
+      }
+
+      function add_custom_tax_fields_oncreate_site($term) {
+          echo "<tr class='form-field form-required term-model-wrap'>";
+          echo "<th scope='row'><label for='ldp_site_url'>" . __('web site', 'wpldp'). "</label></th>";
+          echo "<td><input type='url' placeholder='http://' name='ldp_site_url' id='ldp_site_url'/>";
+          echo "<p class='description'>" . __('WordPress site that you know and on which the WP-LDP plugin is installed', 'wpldp'). "</p></td>";
           echo "</tr>";
       }
 
@@ -263,14 +271,14 @@ if (!class_exists('\WpLdp\WpLdpTaxonomy')) {
     }
 
     function save_custom_tax_field_site($termID) {
-        $termMeta = get_option("ldp_site_$termID");
+        $termMeta = get_term_meta($termID,"ldp_site_url",true);
         if (!is_array($termMeta)) {
             $termMeta = array();
         }
-        if (isset($_POST['ldp_site'])) {
-            $termMeta['ldp_site'] = $_POST['ldp_site'];
+        if (isset($_POST['ldp_site_url'])) {
+            $termMeta = $_POST['ldp_site_url'];
         }
-        update_option("ldp_site_$termID", $termMeta, false);
+        update_term_meta($termID,"ldp_site_url",$termMeta);
     }
 
   }

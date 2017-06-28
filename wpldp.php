@@ -26,6 +26,7 @@ if (!class_exists('\WpLdp\WpLdp')) {
        */
       protected static $front_page_url = 'wp-ldp/front';
       protected static $ldp_root_url = 'ldp/$';
+      protected static $ldp_site_url = 'site\b';
 
       /**
        * The current plugin version number
@@ -179,6 +180,9 @@ if (!class_exists('\WpLdp\WpLdp')) {
           $ldp_root_file = plugins_url('public/index-ldp_ressource.php', __FILE__);
           $ldp_root_file = substr($ldp_root_file, strlen( home_url() ) + 1);
           $wp_rewrite->add_external_rule(self::$ldp_root_url, $ldp_root_file);
+          $ldp_site_file = plugins_url('public/index-ldp_site.php', __FILE__);
+          $ldp_site_file = substr($ldp_site_file, strlen( home_url() ) + 1);
+          $wp_rewrite->add_external_rule(self::$ldp_site_url, $ldp_site_file);
           //flush_rewrite_rules( true );
       }
 

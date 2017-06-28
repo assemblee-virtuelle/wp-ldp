@@ -37,16 +37,23 @@ $array = [];
                   }
                 ?>
 <?php endwhile; ?>
-<?php foreach ($array as $key => $value){
+<?php
+    $i = 0;
+    foreach ($array as $key => $value){
             echo "            {\n";
             echo "                \"@id\" : \"http://" .$_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'].$value['id']."\",\n";
             echo "                \"@type\" : \"$key\",\n";
             echo "                \"@count\" : ".$value['value']."\n";
-            echo "            }\n";
+            if($i +1 == sizeof($array)){
+                echo "            }\n";
+            }else{
+                echo "            },\n";
+            }
+            $i++;
+
         }
 
         ?>
-
         ]
 <?php endif; ?>
   }]
