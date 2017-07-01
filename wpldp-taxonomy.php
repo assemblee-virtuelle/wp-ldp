@@ -214,8 +214,24 @@ if (!class_exists('\WpLdp\WpLdpTaxonomy')) {
             </script>';
     }
 
+    /**
+       * Adds an URL field to our custom LDP Site taxonomy
+       * in creation mode
+       *
+       * @param int $term the concrete term
+       * @return void
+       */
+    function add_custom_tax_fields_oncreate_site() {
+        // Adding rdf:type field
+        echo "<div class='form-field term-model-wrap'>";
+        echo "<label for='ldp_site'>" . __('web site', 'wpldp'). "</label>";
+        echo "<input type='url' placeholder='http://' name='ldp_site' id='ldp_site' />";
+        echo "<p class='description'>" . __('WordPress site that you know and that the WP-LDP plugin is installed', 'wpldp'). "</p>";
+        echo "</div>";
+    }
+
       /**
-       * Adds a LDP Model field to our custom LDP containers taxonomy
+       * Adds a Site URL field to our custom LDP Site taxonomy
        * in edition mode
        *
        * @param int $term the concrete term
