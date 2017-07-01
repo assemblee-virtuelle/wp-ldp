@@ -214,7 +214,7 @@ if (!class_exists('\WpLdp\WpLdpTaxonomy')) {
             </script>';
     }
 
-    /**
+     /**
        * Adds an URL field to our custom LDP Site taxonomy
        * in creation mode
        *
@@ -246,14 +246,6 @@ if (!class_exists('\WpLdp\WpLdpTaxonomy')) {
           echo "<tr class='form-field form-required term-model-wrap'>";
           echo "<th scope='row'><label for='ldp_site_url'>" . __('web site', 'wpldp'). "</label></th>";
           echo "<td><input type='url' placeholder='http://' name='ldp_site_url' id='ldp_site_url' value='$ldpSiteUrl' />";
-          echo "<p class='description'>" . __('WordPress site that you know and on which the WP-LDP plugin is installed', 'wpldp'). "</p></td>";
-          echo "</tr>";
-      }
-
-      function add_custom_tax_fields_oncreate_site($term) {
-          echo "<tr class='form-field form-required term-model-wrap'>";
-          echo "<th scope='row'><label for='ldp_site_url'>" . __('web site', 'wpldp'). "</label></th>";
-          echo "<td><input type='url' placeholder='http://' name='ldp_site_url' id='ldp_site_url'/>";
           echo "<p class='description'>" . __('WordPress site that you know and on which the WP-LDP plugin is installed', 'wpldp'). "</p></td>";
           echo "</tr>";
       }
