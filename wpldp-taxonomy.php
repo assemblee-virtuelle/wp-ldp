@@ -278,15 +278,20 @@ if (!class_exists('\WpLdp\WpLdpTaxonomy')) {
       update_option("ldp_container_$termID", $termMeta, false);
     }
 
+    /**
+       * Save the value of the posted site url field for the site custom taxonomy
+       * in the term_meta WP table
+       *
+       * @param int $termID The updated term ID
+   */
     function save_custom_tax_field_site($termID) {
-        $termMeta = get_term_meta($termID,"ldp_site_url",true);
-        if (!is_array($termMeta)) {
-            $termMeta = array();
-        }
+        $termMeta = get_term_meta( $termID," ldp_site_url", true );
+
         if (isset($_POST['ldp_site_url'])) {
             $termMeta = $_POST['ldp_site_url'];
         }
-        update_term_meta($termID,"ldp_site_url",$termMeta);
+
+        update_term_meta( $termID, "ldp_site_url", $termMeta );
     }
 
   }
