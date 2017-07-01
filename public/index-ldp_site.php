@@ -7,7 +7,7 @@ $urlExplode = explode('site/',$url);
 $slug = rtrim($urlExplode[1],'/');
 $ldpSiteUrls = array();
 if($slug){
-    $term = get_term_by('slug',$slug,'ldp_site');
+    $term = get_term_by( 'slug', $slug, 'ldp_site' );
     $ldpSiteUrls[] = get_term_meta($term->term_id,"ldp_site_url",true);
 
 }
@@ -46,11 +46,13 @@ get_header();
               foreach ($outputJson->{'@graph'} as $content){
                   echo 'site : '.$content->{'@id'}."<br>";
                   echo "<br>";
-                  foreach ($content->{'http://www.w3.org/ns/ldp#contains'} as $data){
-                      echo '    id :'.$data->{'@id'}."<br>";
-                      echo '    type :'.$data->{'@type'}."<br>";
-                      echo '    count :'.$data->{'@count'}."<br>";
-                      echo "<br>";
+                  if ( isset( $content->{'http://www.w3.org/ns/ldp#contains'} ) ) {
+                      foreach ($content->{'http://www.w3.org/ns/ldp#contains'} as $data){
+                          echo '    id :'.$data->{'@id'}."<br>";
+                          echo '    type :'.$data->{'@type'}."<br>";
+                          echo '    count :'.$data->{'@count'}."<br>";
+                          echo "<br>";
+                      }
                   }
                   echo "<br>";
               }
