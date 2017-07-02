@@ -113,15 +113,16 @@ if (!class_exists('\WpLdp\WpLdpApi')) {
             );
 
             $posts = $query->get_posts();
-
+            
             $result = '
             {
                 "@context": "' . get_option('ldp_context', 'http://lov.okfn.org/dataset/lov/context') . '",
                 "@graph": [ {
                     "@id" : "http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . '",
                     "@type" : "http://www.w3.org/ns/ldp#BasicContainer",
-                    "http://www.w3.org/ns/ldp#contains" : [';
+                    "http://www.w3.org/ns/ldp#contains" : [{';
 
+            $count = 0;
             foreach ($posts as $post ) {
                   $values = get_the_terms($post->ID, 'ldp_container');
                   if (empty($values[0])) {
@@ -145,12 +146,20 @@ if (!class_exists('\WpLdp\WpLdpApi')) {
                   }
 
                   $rdfType = isset($termMeta["ldp_rdf_type"]) ? $termMeta["ldp_rdf_type"] : null;
-                  if (!empty($rdfType)) { $result .= "                \"@type\" : \"$rdfType\",\n";
-                            $result .= '"@id": "' . the_permalink() . '"';
-                        }
-                  if($wp_query->current_post + 1 < $wp_query->post_count) { $result .= ",\n"; } else { $result .= "\n"; }
-              }
-            $result .= "]}]}";
+                  if ( !empty( $rdfType ) ) {
+                      $result .= "                \"@type\" : \"$rdfType\",\n";
+                      $result .= '"@id": "' . get_permalink( $post->ID ) . '"';
+                  }
+
+                  if ( $count + 1 < $query->post_count ) {
+                      $result .= ",\n";
+                  } else {
+                      $result .= "\n";
+                  }
+
+                  $count++;
+            }
+            $result .= "}]}]}";
 
             return rest_ensure_response( json_decode( $result ) );
         }
