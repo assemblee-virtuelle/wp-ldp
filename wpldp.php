@@ -17,6 +17,7 @@ defined('ABSPATH') or die("No script kiddies please!");
 require_once('wpldp-utils.php');
 require_once('wpldp-taxonomy.php');
 require_once('wpldp-settings.php');
+require_once('wpldp-api.php');
 
 if (!class_exists('\WpLdp\WpLdp')) {
     class WpLdp {

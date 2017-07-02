@@ -17,7 +17,6 @@ if (!class_exists('\WpLdp\WpLdpSettings')) {
         add_action( 'admin_init', array($this, 'backend_hooking'));
       }
 
-
        /**
         * initialize_container - Initialiaze the PAIR containers if the associated
         * option is checked
