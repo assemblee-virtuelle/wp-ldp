@@ -15,7 +15,8 @@ namespace WpLdp;
 defined('ABSPATH') or die("No script kiddies please!");
 
 require_once('wpldp-utils.php');
-require_once('wpldp-taxonomy.php');
+require_once('wpldp-container-taxonomy.php');
+require_once('wpldp-site-taxonomy.php');
 require_once('wpldp-settings.php');
 require_once('wpldp-api.php');
 
