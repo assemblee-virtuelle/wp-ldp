@@ -24,12 +24,12 @@ if (!class_exists('\WpLdp\WpLdpApi')) {
                     'callback' => array( $this, 'get_sites_list' ),
                 ) );
 
-                register_rest_route( 'ldp/v1', '/(?P[\s]+)/', array(
+                register_rest_route( 'ldp/v1', '/(?P<ldp_container>[a-zA-Z0-9-]+)/', array(
                     'methods' => \WP_REST_Server::READABLE,
                     'callback' => array( $this, 'get_resources_from_container' ),
                 ) );
 
-                register_rest_route( 'ldp/v1', '/(?P[\s]+)/(?P[\s]+)', array(
+                register_rest_route( 'ldp/v1', '/(?P<ldp_container>[a-zA-Z0-9-]+)/(?P<ldp_resource>[a-zA-Z0-9-]+)', array(
                     'methods' => \WP_REST_Server::READABLE,
                     'callback' => array( $this, 'get_resource' ),
                 ) );
@@ -94,8 +94,25 @@ if (!class_exists('\WpLdp\WpLdpApi')) {
             return rest_ensure_response( json_decode( $result ) );
         }
 
-        public function get_resources_from_container() {
+        public function get_resources_from_container( \WP_REST_Request $request, \WP_REST_Response $response = null ) {
+            $params = $request->get_params();
+            $ldp_container = $params['ldp_container'];
 
+            $query = new \WP_Query(
+                array(
+                    'tax_query' => array(
+                        array(
+                          'taxonomy' => 'ldp_container',
+                          'terms' => $ldp_container,
+                          'field' => 'slug'
+                        )
+                    ),
+                   'post_type' => 'ldp_resource',
+                   'posts_per_page' => -1
+               )
+            );
+
+            $posts = $query->get_posts();
         }
 
         public function get_resource() {
