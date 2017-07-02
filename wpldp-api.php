@@ -113,7 +113,7 @@ if (!class_exists('\WpLdp\WpLdpApi')) {
             );
 
             $posts = $query->get_posts();
-            
+
             $result = '
             {
                 "@context": "' . get_option('ldp_context', 'http://lov.okfn.org/dataset/lov/context') . '",
@@ -139,9 +139,9 @@ if (!class_exists('\WpLdp\WpLdpApi')) {
                   $fields = $modelsDecoded->{$value->slug}->fields;
                   foreach ($fields as $field) {
                     if ((!empty($includedFieldsList) && in_array($field->name, $includedFieldsList))
-                          && !empty(get_post_custom_values($field->name)[0])) {
+                          && !empty(get_post_custom_values($field->name, $post->ID )[0])) {
                       $result .= '                "' . $field->name . '": ';
-                      $result .= (json_encode(get_post_custom_values($field->name)[0]) . ",\n");
+                      $result .= (json_encode(get_post_custom_values($field->name, $post->ID )[0]) . ",\n");
                     }
                   }
 
@@ -164,8 +164,199 @@ if (!class_exists('\WpLdp\WpLdpApi')) {
             return rest_ensure_response( json_decode( $result ) );
         }
 
-        public function get_resource() {
+        public function get_resource( \WP_REST_Request $request, \WP_REST_Response $response = null ) {
+            $params = $request->get_params();
+            $ldp_container = $params['ldp_container'];
 
+            $ldp_resource_slug = $params['ldp_resource'];
+            $query = new \WP_Query(
+                array(
+                    'name' => $ldp_resource_slug,
+                    'post_type' => 'ldp_resource'
+                )
+            );
+
+            $post = $query->get_posts()[0];
+            // Getting general information about the container associated with the current resource
+            $fields = \WpLdp\WpLdpUtils::getResourceFieldsList($post->ID);
+            $terms =  wp_get_post_terms( $post->ID, 'ldp_container' );
+            if ( !empty( $terms ) && is_array( $terms ) ) {
+              $termId = $terms[0]->term_id;
+              $termMeta = get_option("ldp_container_$termId");
+              $rdfType = isset($termMeta["ldp_rdf_type"]) ? $termMeta["ldp_rdf_type"] : null;
+            }
+
+            $result = '
+            {
+                "@context": "' . get_option('ldp_context', 'http://lov.okfn.org/dataset/lov/context') . '",
+                "@graph": [ {';
+
+
+            $referer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : null;
+            // Handling special case of editing trhough the wordpress admin backend
+            if (!empty($referer) && strstr($referer, 'wp-admin/post.php')) {
+              $custom_fields_keys = get_post_custom_keys();
+              foreach($fields as $field) {
+                $field_name = \WpLdp\WpLdpUtils::getFieldName( $field );
+                if ( isset( $field_name ) ) {
+                  if ( !isset($field->multiple) || !$field->multiple ) {
+                    $field_value = get_post_custom_values( $field_name, $post->ID )[0];
+                    $result .= '          "'. $field_name .'": ';
+                    $result .= '' . ( !empty( $field_value ) ? json_encode( $field_value ) : '""' ) . ',';
+                    $result .=  "\n";
+                  } else {
+                    $result .= '          "' . $field_name . '": [';
+                    $arrayToProcess = array();
+                    foreach ($custom_fields_keys as $custom_field_name) {
+                      if (substr($custom_field_name, 0, strlen($field_name)) === $field_name) {
+                        $arrayToProcess[] = $custom_field_name;
+                      }
+                    }
+
+                    $count = 1;
+                    foreach ($arrayToProcess as $custom_field_name) {
+                      $field_value = get_post_custom_values( $custom_field_name, $post->ID )[0];
+                      if ($count < count($arrayToProcess)) {
+                        $result .= '{"@id":' . ( !empty( $field_value ) ? json_encode( $field_value ) : '""' ) . ',';
+                        $result .= '"name":"' . $custom_field_name . '"},';
+                        $result .=  "\n";
+                      } else {
+                        $result .= '{"@id":' . ( !empty( $field_value ) ? json_encode( $field_value ) : '""' ) . ',';
+                        $result .= '"name":"' . $custom_field_name . '"}';
+                      }
+                      $count++;
+                    }
+                    $result .= '],';
+                    $result .= "\n";
+                  }
+                }
+              }
+            } else {
+              $arrayToProcess = [];
+              $fieldNotToRender = [];
+              // Construct proper values array, if any, based on field endings with number:
+              $custom_fields_keys = get_post_custom_keys( $post->ID );
+              foreach ($custom_fields_keys as $field) {
+                // $field_name = \WpLdp\WpLdpUtils::getFieldName( $field );
+                $endsWithNumber = preg_match_all("/(.*)?(\d+)$/", $field, $matches);
+                if (!empty($matches)) {
+                  if ($endsWithNumber > 0) {
+                    $fieldName = $matches[1][0];
+                    if (!in_array($fieldName, $arrayToProcess)) {
+                      $arrayToProcess[] = $fieldName;
+                    }
+
+                    // Generate proper array to exclude those fields from general rendering
+                    $excludedField = $matches[0][0];
+                    if (!in_array($excludedField, $fieldNotToRender)) {
+                      $fieldNotToRender[] = $excludedField;
+                    }
+
+                    if (!in_array($fieldName, $fieldNotToRender)) {
+                      $fieldNotToRender[] = $fieldName;
+                    }
+                  }
+                }
+              }
+              // Example of arrayToProcess ['ldp_foaf:knows', 'ldp_foaf:currentProject']
+
+              foreach($arrayToProcess as $arrayField) {
+                foreach ($custom_fields_keys as $field) {
+                  if ( isset($field) &&
+                      strstr($field, $arrayField) ||
+                      $field === $arrayField ) {
+                    $value = get_post_custom_values($field, $post->ID )[0];
+                    if (!empty($value) && $value != '""') {
+                      $valuesArray[$arrayField][] = json_encode(get_post_custom_values($field, $post->ID )[0]);
+                    }
+                  }
+                }
+              }
+
+              if (!empty($valuesArray)) {
+                foreach ($valuesArray as $fieldName => $values) {
+                  $result .= "          \"" . $fieldName . "\": [\n";
+                  $count = 0;
+                  foreach($values as $value) {
+                    if (!empty($value) && $value != '""') {
+                      $count++;
+                      $result .=  "               {\n";
+                      $result .= "                    \"@id\": " . $value . "\n";
+
+                      if ($count < count($values)) {
+                        $result .=  "               },\n";
+                      } else {
+                        $result .=  "               }\n";
+                      }
+                    }
+                  }
+                  $result .=  "          ],\n";
+                }
+              }
+
+              foreach($fields as $field) {
+                $field_name = \WpLdp\WpLdpUtils::getFieldName( $field );
+                if ( isset( $field_name ) && !in_array($field_name, $fieldNotToRender)) {
+                  $result .= '          "'. $field_name .'": ';
+                  $result .= '' . json_encode(get_post_custom_values($field_name, $post->ID )[0]) . ',';
+                  $result .=  "\n";
+                }
+              }
+            }
+
+            // Get user to retrieve associated posts !
+            $user_login = null;
+            foreach($fields as $field) {
+              $field_name = \WpLdp\WpLdpUtils::getFieldName( $field );
+              if (isset($field_name) && $field_name == 'foaf:nick') {
+                $user_login = get_post_custom_values( $field_name, $post->ID )[0];
+              }
+            }
+
+            if ( !empty( $user_login ) ) {
+              $user = get_user_by ( 'login', $user_login);
+              if ( $user ) {
+                $loop = new WP_Query( array(
+                    'post_type' => 'post',
+                    'posts_per_page' => 12,
+                    'orderby'=> 'menu_order',
+                    'author' => $user->data->ID,
+                    'post_status' => 'any',
+                    'paged'=>$paged
+                ));
+
+                if ($loop->have_posts ()) {
+                  $result .= "          \"posts\": [\n";
+                  $count = 1;
+                  foreach( $loop as $post ) {
+                      $result .= "               {\n";
+                      $result .= "                    \"@id\": \"" . get_permalink ($post->ID) . "\",\n";
+                      $result .= '                    "dc:title":' . json_encode($post->post_title) . ",\n";
+                      $post_content = ( !empty( $post->post_content ) && $post->post_content !== false) ? json_encode( substr($post->post_content, 0, 150) ) : "";
+                      if ( !empty( $post->post_content ) ) {
+                          $result .= '                    "sioc:blogPost":' . $post_content . "\n";
+                      }
+                      if ($count < $loop->post_count) {
+                          $result .= "               },\n";
+                      } else {
+                          $result .= "               }\n";
+                      }
+                      $count++;
+                  }
+                  $result .= "          ],\n";
+                }
+              }
+            }
+
+            if ( !empty($rdfType) ) {
+                $result .= "\"@type\" : \"$rdfType\",\n";
+            }
+
+            $resourceUri = \WpLdp\WpLdpUtils::getResourceUri($post);
+            $result .= '"@id": "' . $resourceUri . '"';
+            $result .= '}]}';
+
+            return rest_ensure_response( json_decode( $result ) );
         }
 
         public function define_api_slug( $slug ) {
