@@ -6,23 +6,25 @@ $url = $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
 $urlExplode = explode('site/',$url);
 $slug = rtrim($urlExplode[1],'/');
 $ldpSiteUrls = array();
-if($slug){
+if ( $slug ) {
     $term = get_term_by( 'slug', $slug, 'ldp_site' );
-    $ldpSiteUrls[] = get_term_meta($term->term_id,"ldp_site_url",true);
+    $ldpSiteUrls[] = get_term_meta( $term->term_id, "ldp_site_url", true );
 
-}
-else{
+} else {
     $terms = get_terms(array(
       'taxonomy' => 'ldp_site',
       'hide_empty' => false,
     ));
-    foreach ($terms as $term){
-        $possibleUrl = get_term_meta($term->term_id,"ldp_site_url",true);
-        if($possibleUrl)
+
+    foreach ( $terms as $term ){
+        $possibleUrl = get_term_meta( $term->term_id, "ldp_site_url", true );
+        if ( $possibleUrl ) {
             $ldpSiteUrls[] =$possibleUrl;
+        }
     }
 
 }
+
 $outputs = array();
 foreach ($ldpSiteUrls as $ldpSiteUrl){
     $ch = curl_init();
