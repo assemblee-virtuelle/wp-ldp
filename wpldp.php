@@ -401,7 +401,8 @@ if (!class_exists('\WpLdp\WpLdp')) {
                             template:\"{{{form '{$term[0]->slug}'}}}\",
                             models: $ldpModel
                       });";
-                echo "store.render('#ldpform', '$resourceUri', undefined, undefined, '{$term[0]->slug}');";
+                echo "var ldp_admin = new wpldpAdmin( store );";
+                echo "ldp_admin.render('#ldpform', '$resourceUri', undefined, undefined, '{$term[0]->slug}');";
 
                 // echo "var actorsList = store.list('/ldp_container/actor/');";
                 // echo "console.log(actorsList);";
@@ -463,6 +464,14 @@ if (!class_exists('\WpLdp\WpLdp')) {
             );
             wp_enqueue_script('jsoneditorjs');
 
+            // Loading the Handlebars library
+            wp_register_script(
+                'handlebarsjs',
+                plugins_url('library/js/handlebars/handlebars.js', __FILE__),
+                array('ldpjs')
+            );
+            wp_enqueue_script('handlebarsjs');
+
             // Loading the Plugin-javascript file
             wp_register_script(
               'wpldpjs',
@@ -470,13 +479,14 @@ if (!class_exists('\WpLdp\WpLdp')) {
               array('jquery')
             );
             wp_enqueue_script('wpldpjs');
-              // Loading the Handlebars library
-              wp_register_script(
+
+            // Loading the Handlebars library
+            wp_register_script(
                 'lookup',
                 plugins_url('public/resources/js/wikipedia.js', __FILE__),
                 array('ldpjs')
-              );
-              wp_enqueue_script('lookup');
+            );
+            wp_enqueue_script('lookup');
           }
       }
 
@@ -506,7 +516,7 @@ if (!class_exists('\WpLdp\WpLdp')) {
           );
           wp_enqueue_script('wpldpjs');
 
-          // Loading the Handlebars library
+          // Loading the BootstrapJS library
           wp_register_script(
             'bootstrapjs',
             plugins_url('public/library/bootstrap/js/bootstrap.min.js', __FILE__),
@@ -522,7 +532,7 @@ if (!class_exists('\WpLdp\WpLdp')) {
           );
           wp_enqueue_script('handlebarsjs');
 
-          // Loading the Handlebars library
+          // Loading the project specific JS library
           wp_register_script(
             'avpocjs',
             plugins_url('public/resources/js/av.js', __FILE__),
