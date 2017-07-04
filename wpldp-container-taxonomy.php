@@ -226,14 +226,16 @@ if (!class_exists('\WpLdp\WpLdpContainerTaxonomy')) {
             );
 
             $posts = $query->get_posts();
-
-            $result = '
-            {
-                "@context": "' . get_option('ldp_context', 'http://lov.okfn.org/dataset/lov/context') . '",
-                "@graph": [ {
-                    "@id" : "http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . '",
-                    "@type" : "http://www.w3.org/ns/ldp#BasicContainer",
-                    "http://www.w3.org/ns/ldp#contains" : [{';
+            $result = array(
+                "@context" => get_option('ldp_context', 'http://lov.okfn.org/dataset/lov/context'),
+                "@graph"   => array(
+                    array(
+                        "@id" => rtrim( get_rest_url(), '/' ) . $request->get_route() . '/',
+                        "@type" => "http://www.w3.org/ns/ldp#BasicContainer",
+                        "http://www.w3.org/ns/ldp#contains" => array()
+                    )
+                )
+            );
 
             $count = 0;
             foreach ($posts as $post ) {
@@ -250,31 +252,23 @@ if (!class_exists('\WpLdp\WpLdpContainerTaxonomy')) {
 
                   $includedFieldsList = !empty($ldpIncludedFieldsList) ? array_map('trim', explode(',', $ldpIncludedFieldsList)) : null;
                   $fields = $modelsDecoded->{$value->slug}->fields;
+                  $current_entry = array();
                   foreach ($fields as $field) {
                     if ((!empty($includedFieldsList) && in_array($field->name, $includedFieldsList))
                           && !empty(get_post_custom_values($field->name, $post->ID )[0])) {
-                      $result .= '                "' . $field->name . '": ';
-                      $result .= (json_encode(get_post_custom_values($field->name, $post->ID )[0]) . ",\n");
+                        $current_entry[$field->name] = json_encode(get_post_custom_values($field->name, $post->ID )[0]);
                     }
                   }
 
                   $rdfType = isset($termMeta["ldp_rdf_type"]) ? $termMeta["ldp_rdf_type"] : null;
                   if ( !empty( $rdfType ) ) {
-                      $result .= "                \"@type\" : \"$rdfType\",\n";
-                      $result .= '"@id": "' . get_permalink( $post->ID ) . '"';
+                      $current_entry['@type'] = $rdfType;
+                      $current_entry['@id'] = get_permalink( $post->ID );
                   }
-
-                  if ( $count + 1 < $query->post_count ) {
-                      $result .= ",\n";
-                  } else {
-                      $result .= "\n";
-                  }
-
-                  $count++;
+                  $result['@graph'][0]['http://www.w3.org/ns/ldp#contains'][] = $current_entry;
             }
-            $result .= "}]}]}";
 
-            return rest_ensure_response( json_decode( $result ) );
+            return rest_ensure_response( $result );
         }
     }
 
