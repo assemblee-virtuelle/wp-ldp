@@ -21,7 +21,7 @@ if (!class_exists('\WpLdp\WpLdpContainerTaxonomy')) {
           add_action( 'edited_ldp_container', array($this, 'save_custom_tax_field'));
 
           add_action( 'rest_api_init', function() {
-              register_rest_route( 'ldp/v1', '/(?P<ldp_container>[a-zA-Z0-9-]+)/', array(
+              register_rest_route( 'ldp/v1', '/(?P<ldp_container>((?!sites|schema)([a-zA-Z0-9-]+)))/', array(
                   'methods' => \WP_REST_Server::READABLE,
                   'callback' => array( $this, 'get_resources_from_container' ),
               ) );

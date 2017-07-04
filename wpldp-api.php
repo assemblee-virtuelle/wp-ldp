@@ -6,6 +6,8 @@ namespace WpLdp;
  **/
 if (!class_exists('\WpLdp\WpLdpApi')) {
     class WpLdpApi {
+        const LDP_API_URL = 'api/ldp/v1/';
+
         /**
          * __construct - Class default constructor
          *

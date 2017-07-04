@@ -10,7 +10,7 @@ if (!class_exists('\WpLdp\WpLdpSiteTaxonomy')) {
         public function __construct() {
             register_activation_hook( __FILE__, array($this, 'wpldp_rewrite_flush' ) );
             add_action( 'init', array($this, 'register_site_taxonomy'), 0 );
-            
+
             add_action( 'ldp_site_add_form_fields', array($this, 'add_custom_tax_fields_oncreate_site'));
             add_action( 'ldp_site_edit_form_fields', array($this, 'add_custom_tax_fields_onedit_site'));
 
@@ -138,11 +138,14 @@ if (!class_exists('\WpLdp\WpLdpSiteTaxonomy')) {
         * API method for retrieving the list of sites the current site knows
         */
         public function get_sites_list(  \WP_REST_Request $request, \WP_REST_Response $response = null ) {
-            $terms = get_terms( array(
-              'taxonomy' => 'ldp_site',
-              'hide_empty' => false,
-            ) );
+            $terms = get_terms(
+                array(
+                    'taxonomy' => 'ldp_site',
+                    'hide_empty' => false,
+                )
+            );
 
+            $ldpSiteUrls = array();
             foreach ( $terms as $term ){
                 $possibleUrl = get_term_meta( $term->term_id, "ldp_site_url", true );
                 if ( $possibleUrl ) {
@@ -157,8 +160,8 @@ if (!class_exists('\WpLdp\WpLdpSiteTaxonomy')) {
                 curl_setopt($ch, CURLOPT_HTTPGET, true);
                 curl_setopt($ch, CURLOPT_HTTPHEADER,array('Content-Type: application/ld+json', 'Accept: application/ld+json'));
                 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-                $outputs[$ldpSiteUrl.'/ldp/']['data'] = curl_exec($ch);
-                $outputs[$ldpSiteUrl.'/ldp/']['code'] = curl_getinfo($ch)['http_code'];
+                $outputs[ $ldpSiteUrl. WpldpApi::LDP_API_URL ]['data'] = curl_exec($ch);
+                $outputs[ $ldpSiteUrl. WpldpApi::LDP_API_URL ]['code'] = curl_getinfo($ch)['http_code'];
             }
 
             $sites = array();
