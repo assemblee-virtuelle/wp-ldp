@@ -401,7 +401,7 @@ if (!class_exists('\WpLdp\WpLdp')) {
                             template:\"{{{form '{$term[0]->slug}'}}}\",
                             models: $ldpModel
                       });";
-                echo "var ldp_admin = new wpldpAdmin( store );";
+                echo "var ldp_admin = new wpldp( store );";
                 echo "ldp_admin.render('#ldpform', '$resourceUri', undefined, undefined, '{$term[0]->slug}');";
 
                 // echo "var actorsList = store.list('/ldp_container/actor/');";

@@ -149,10 +149,9 @@ get_header();
      * Bootstrap de la collecte de données pour la page
      */
       jQuery(document).ready(function(){
-          console.log('<?php echo get_option("ldp_context", "http://lov.okfn.org/dataset/lov/context"); ?>');
           window.config = {
-            'containerUrl': '<?php echo site_url(); ?>/ldp_container/',
-            'resourceBaseUrl' : '<?php echo site_url(); ?>/',
+            'containerUrl': '<?php echo get_rest_url(); ?>/ldp/v1/',
+            'resourceBaseUrl' : '<?php echo get_rest_url(); ?>/ldp/v1/',
             'contextUrl': '<?php echo get_option("ldp_context", "http://lov.okfn.org/dataset/lov/context"); ?>'
           }
 
@@ -174,6 +173,8 @@ get_header();
                 , 'resourceItem': '#resource-item-template'
               }
           });
+
+          window.wpldp = new wpldp( window.store );
 
           if ( window.location.hash ) {
             refreshCardFromHash();

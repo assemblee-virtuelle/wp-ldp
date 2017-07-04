@@ -44,7 +44,7 @@ jQuery('#menu li a').click(
 **************** POC FUNCTIONS ***************
 **********************************************/
 function displayInitiative(divName, itemId, templateId) {
-  store.render(divName, itemId, templateId);
+  wpldp.render(divName, itemId, templateId);
   refreshBrowsePanel(itemId, 'person');
   refreshBrowsePanel(itemId, 'initiative');
   refreshBrowsePanel(itemId, 'resource');
@@ -55,7 +55,7 @@ function displayInitiative(divName, itemId, templateId) {
 function displayPerson(divName, itemId, templateId) {
     console.log('itemId :');
     console.log(itemId);
-  store.render(divName, itemId, templateId);
+  wpldp.render(divName, itemId, templateId);
   refreshBrowsePanel(itemId, 'initiative');
   refreshBrowsePanel(itemId, 'person');
   refreshBrowsePanel(itemId, 'resource');
@@ -64,7 +64,7 @@ function displayPerson(divName, itemId, templateId) {
 }
 
 function displayGroup(divName, itemId, templateId) {
-  store.render(divName, itemId, templateId);
+  wpldp.render(divName, itemId, templateId);
   refreshBrowsePanel(itemId, 'initiative');
   refreshBrowsePanel(itemId, 'person');
   refreshBrowsePanel(itemId, 'resource');
@@ -73,7 +73,7 @@ function displayGroup(divName, itemId, templateId) {
 }
 
 function displayResource(divName, itemId, templateId) {
-    store.render(divName, itemId, templateId);
+    wpldp.render(divName, itemId, templateId);
     refreshBrowsePanel(itemId, 'initiative');
     refreshBrowsePanel(itemId, 'person');
     refreshBrowsePanel(itemId, 'resource');
@@ -81,9 +81,8 @@ function displayResource(divName, itemId, templateId) {
     window.location.hash = itemId;
 }
 
-
 function refreshBrowsePanel(itemId, templatePrefix) {
-  store.render(
+  wpldp.render(
     "#" + templatePrefix + "-browser",
     itemId,
     '#' + templatePrefix + '-browser-template'
@@ -98,19 +97,21 @@ function refreshBrowsePanel(itemId, templatePrefix) {
  * @return {void}
  */
 function displayLDPResource(targetResource) {
-    console.log(targetResource);
     if (targetResource.startsWith('#')) {
         var targetResource = targetResource.substring(1);
     }
+
     var url_array = targetResource.split('/ldp/');
     var segmentsIRI = url_array[1].split('/');
-    var templateId = '#'+segmentsIRI[0]+'-detail-template';
-    console.log(targetResource);
-    store.render('#detail', targetResource, templateId);
+    var templateId = '#'+segmentsIRI[1]+'-detail-template';
+
+    wpldp.render('#detail', targetResource, templateId);
+
     refreshBrowsePanel(targetResource, 'initiative');
     refreshBrowsePanel(targetResource, 'person');
     refreshBrowsePanel(targetResource, 'resource');
     refreshBrowsePanel(targetResource, 'idea');
+
     window.location.hash = targetResource;
 }
 

@@ -22,11 +22,12 @@ jQuery( document ).ready(function($) {
   });
 });
 
-window.wpldpAdmin = function( store, options ) {
+window.wpldp = function( store, options ) {
 
     this.options = options || {};
     this.store   = store;
-
+    Handlebars.logger.level = 0;
+    
     this.render = function render( div, objectIri, template, context, modelName, prefix ) {
         var objectIri = this.store.getIri(objectIri);
         var template = template ? template : this.store.mainTemplate;

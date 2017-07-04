@@ -27,13 +27,13 @@ if (!class_exists('\WpLdp\WpLdpUtils')) {
         return $field_name;
       }
 
-      public static function getResourceUri( $resource ) {
+      public static function getResourceUri( $resourceId ) {
         $resourceUri = null;
-        if ('publish' === get_post_status( $resource->ID )) {
-          $resourceUri = get_permalink();
+        if ('publish' === get_post_status( $resourceId ) ) {
+          $resourceUri = get_permalink( $resourceId );
         } else {
-          $resourceUri = set_url_scheme( get_permalink( $resource->ID ) );
-          $resourceUri = apply_filters( 'preview_post_link', add_query_arg( 'preview', 'true', $resourceUri ), $resource );
+          $resourceUri = set_url_scheme( get_permalink( $resourceId ) );
+          $resourceUri = apply_filters( 'preview_post_link', add_query_arg( 'preview', 'true', $resourceUri ), $resourceId );
         }
 
         return $resourceUri;

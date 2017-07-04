@@ -91,6 +91,9 @@ if (!class_exists('\WpLdp\WpLdpApi')) {
         * API method for retrieving the details of the current ldp resource
         */
         public function get_resource( \WP_REST_Request $request, \WP_REST_Response $response = null ) {
+            header('Content-Type: application/ld+json');
+            header('Access-Control-Allow-Origin: *');
+
             $params = $request->get_params();
             $ldp_container = $params['ldp_container'];
 
@@ -278,8 +281,8 @@ if (!class_exists('\WpLdp\WpLdpApi')) {
                 $result .= "\"@type\" : \"$rdfType\",\n";
             }
 
-            $resourceUri = \WpLdp\WpLdpUtils::getResourceUri($post);
-            $result .= '"@id": "' . $resourceUri . '"';
+            $resourceUri = \WpLdp\WpLdpUtils::getResourceUri( $post->ID );
+            $result .= '"@id": "' . rtrim( get_rest_url(), '/' ) . $request->get_route() . '/"';
             $result .= '}]}';
 
             return rest_ensure_response( json_decode( $result ) );
