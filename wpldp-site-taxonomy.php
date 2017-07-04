@@ -149,25 +149,34 @@ if (!class_exists('\WpLdp\WpLdpSiteTaxonomy')) {
             foreach ( $terms as $term ){
                 $possibleUrl = get_term_meta( $term->term_id, "ldp_site_url", true );
                 if ( $possibleUrl ) {
-                    $ldpSiteUrls[] =$possibleUrl;
+                    $ldpSiteUrls[] = rtrim( $possibleUrl, '/' );
                 }
             }
 
             $outputs = array();
-            foreach ($ldpSiteUrls as $ldpSiteUrl){
+            foreach ($ldpSiteUrls as $ldpSiteUrl) {
                 $ch = curl_init();
-                curl_setopt($ch, CURLOPT_URL, $ldpSiteUrl.'/ldp/');
-                curl_setopt($ch, CURLOPT_HTTPGET, true);
-                curl_setopt($ch, CURLOPT_HTTPHEADER,array('Content-Type: application/ld+json', 'Accept: application/ld+json'));
-                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-                $outputs[ $ldpSiteUrl. WpldpApi::LDP_API_URL ]['data'] = curl_exec($ch);
-                $outputs[ $ldpSiteUrl. WpldpApi::LDP_API_URL ]['code'] = curl_getinfo($ch)['http_code'];
+                $build_url = $ldpSiteUrl . '/' . WpldpApi::LDP_API_URL . 'schema/';
+                curl_setopt( $ch, CURLOPT_URL, $build_url );
+                curl_setopt( $ch, CURLOPT_HTTPGET, true );
+                curl_setopt( $ch, CURLOPT_HTTPHEADER, array('Content-Type: application/ld+json', 'Accept: application/ld+json') );
+                curl_setopt( $ch, CURLOPT_RETURNTRANSFER, 1 );
+                $outputs[ $ldpSiteUrl ]['data'] = curl_exec($ch);
+                $outputs[ $ldpSiteUrl ]['code'] = curl_getinfo($ch)['http_code'];
             }
 
-            $sites = array();
-            foreach ($outputs as $output){
-                if($output['code'] == 200){
-                    $sites[] = json_decode( $output['data'] );
+            $sites = array(
+                "@context" => get_option('ldp_context', 'http://lov.okfn.org/dataset/lov/context'),
+                "@id"      => get_site_url(),
+                "@graph"   => array()
+            );
+            foreach ($outputs as $siteUrl => $output ){
+                if ($output['code'] == 200){
+                    $response = json_decode( $output['data'] );
+                    $current_site = $response->{"@graph"}[0];
+                    $current_site->{"@id"} = $siteUrl;
+
+                    $sites["@graph"][] = $current_site;
                 }
             }
 
