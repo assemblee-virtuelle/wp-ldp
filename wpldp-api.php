@@ -124,7 +124,7 @@ if (!class_exists('\WpLdp\WpLdpApi')) {
             $referer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : null;
             // Handling special case of editing trhough the wordpress admin backend
             if (!empty($referer) && strstr($referer, 'wp-admin/post.php')) {
-              $custom_fields_keys = get_post_custom_keys();
+              $custom_fields_keys = get_post_custom_keys( $post->ID );
               foreach($fields as $field) {
                 $field_name = \WpLdp\WpLdpUtils::getFieldName( $field );
                 if ( isset( $field_name ) ) {
@@ -281,7 +281,6 @@ if (!class_exists('\WpLdp\WpLdpApi')) {
                 $result .= "\"@type\" : \"$rdfType\",\n";
             }
 
-            $resourceUri = \WpLdp\WpLdpUtils::getResourceUri( $post->ID );
             $result .= '"@id": "' . rtrim( get_rest_url(), '/' ) . $request->get_route() . '/"';
             $result .= '}]}';
 

@@ -27,13 +27,14 @@ if (!class_exists('\WpLdp\WpLdpUtils')) {
         return $field_name;
       }
 
-      public static function getResourceUri( $resourceId ) {
+      public static function getResourceUri( $resource ) {
         $resourceUri = null;
-        if ('publish' === get_post_status( $resourceId ) ) {
-          $resourceUri = get_permalink( $resourceId );
+        if ('publish' === get_post_status( $resource->ID ) ) {
+            $ldp_container = wp_get_post_terms( $resource->ID, 'ldp_container' )[0];
+            $resourceUri = get_rest_url() . 'ldp/v1/' . $ldp_container->slug . '/' . $resource->post_name . '/';
         } else {
-          $resourceUri = set_url_scheme( get_permalink( $resourceId ) );
-          $resourceUri = apply_filters( 'preview_post_link', add_query_arg( 'preview', 'true', $resourceUri ), $resourceId );
+            $resourceUri = set_url_scheme( get_permalink( $resourceId ) );
+            $resourceUri = apply_filters( 'preview_post_link', add_query_arg( 'preview', 'true', $resourceUri ), $resourceId );
         }
 
         return $resourceUri;

@@ -368,7 +368,7 @@ if (!class_exists('\WpLdp\WpLdp')) {
        */
       public function wpldp_edit_form_advanced($post) {
           if ($post->post_type == 'ldp_resource') {
-              $resourceUri = WpLdpUtils::getResourceUri($post);
+              $resourceUri = WpLdpUtils::getResourceUri( $post );
 
               $term = get_the_terms($post->post_id, 'ldp_container');
               if (!empty($term) && !empty($resourceUri)) {
