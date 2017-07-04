@@ -167,8 +167,10 @@ if (!class_exists('\WpLdp\WpLdpSiteTaxonomy')) {
 
             $sites = array(
                 "@context" => get_option('ldp_context', 'http://lov.okfn.org/dataset/lov/context'),
-                "@id"      => get_site_url(),
-                "@graph"   => array()
+                "@graph"   => array(
+                    "@id"      => get_site_url(),
+                    "sites"    => array()
+                )
             );
             foreach ($outputs as $siteUrl => $output ){
                 if ($output['code'] == 200){
@@ -176,7 +178,7 @@ if (!class_exists('\WpLdp\WpLdpSiteTaxonomy')) {
                     $current_site = $response->{"@graph"}[0];
                     $current_site->{"@id"} = $siteUrl;
 
-                    $sites["@graph"][] = $current_site;
+                    $sites["@graph"]["sites"][] = $current_site;
                 }
             }
 
