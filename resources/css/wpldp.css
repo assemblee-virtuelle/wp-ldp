@@ -9,9 +9,10 @@
   line-height: 26px;
 }
 
-#ldpform button.add-field-button {
+#ldpform button.add-field-button, #ldpform button.remove-field-button {
   display: inline-block;
   float:   right;
+  margin-left: 10px;
 }
 
 #ldpform input[type='text'], #ldpform input[type='url'],
@@ -22,10 +23,10 @@
   font-size: 1.3em;
   height: 1.7em;
   display: block;
-  width: 100%;
+  width: 90%;
 }
 
 #ldpform textarea {
-  width: 100%;
+  width: 90%;
   margin-bottom:10px;
 }

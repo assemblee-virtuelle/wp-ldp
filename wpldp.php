@@ -392,7 +392,7 @@ if (!class_exists('\WpLdp\WpLdp')) {
                   $ldpModel = json_encode(json_decode($termMeta['ldp_model']));
                 }
 
-                echo('<br>');
+                echo '<br>';
                 echo '<div id="ldpform"></div>';
                 echo '<script>';
                 echo "var store = new MyStore({
@@ -401,11 +401,8 @@ if (!class_exists('\WpLdp\WpLdp')) {
                             template:\"{{{form '{$term[0]->slug}'}}}\",
                             models: $ldpModel
                       });";
-                echo "var ldp_admin = new wpldp( store );";
-                echo "ldp_admin.render('#ldpform', '$resourceUri', undefined, undefined, '{$term[0]->slug}');";
-
-                // echo "var actorsList = store.list('/ldp_container/actor/');";
-                // echo "console.log(actorsList);";
+                echo "var wpldp = new wpldp( store ); wpldp.init();";
+                echo "wpldp.render('#ldpform', '$resourceUri', undefined, undefined, '{$term[0]->slug}');";
                 echo '</script>';
               }
           }

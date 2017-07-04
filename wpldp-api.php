@@ -141,8 +141,12 @@ if (!class_exists('\WpLdp\WpLdpApi')) {
                         // $count = 1;
                         foreach ($arrayToProcess as $custom_field_name) {
                             $field_value = get_post_custom_values( $custom_field_name, $post->ID )[0];
-                            $result["@graph"][0][$field_name]['@id'] = !empty( $field_value ) ? $field_value : null;
-                            $result["@graph"][0][$field_name]['name'] = $custom_field_name;
+                            $multiple_field_entry = array(
+                                '@id'  => !empty( $field_value ) ? $field_value : null,
+                                'name' => $custom_field_name
+                            );
+
+                            $result["@graph"][0][$field_name][] = $multiple_field_entry;
                         }
                   }
                 }

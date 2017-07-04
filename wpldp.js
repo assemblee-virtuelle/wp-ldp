@@ -1,33 +1,48 @@
-jQuery( document ).ready(function($) {
-  $('input:radio[name="tax_input[ldp_container][]"]').click(function() {
-      //TODO: Switch to a smooth AJAX call for changing the container, instead of reloading the page.
-      // var value = $(this).val();
-      // console.log('Radio button selected value: ', value);
-      // console.log(store);
-      // var firstLabel = $('#ldp_container-' + value).find('label')[0];
-      // var newContainerName = firstLabel.innerText.toLowerCase();
-      //
-      // console.log(newContainerName);
-      // store.render('#ldpform', containerName, undefined, undefined, newContainerName, 'ldp_');
-
-      var form = $('#post');
-      form.submit();
-  });
-
-  $('input').keypress(function(event) {
-      if (event.which == 13) {
-          event.preventDefault();
-          $('#post').submit();
-      }
-  });
-});
-
 window.wpldp = function( store, options ) {
 
     this.options = options || {};
     this.store   = store;
     Handlebars.logger.level = 0;
-    
+
+    this.init = function() {
+      $('input:radio[name="tax_input[ldp_container][]"]').click(function() {
+          //TODO: Switch to a smooth AJAX call for changing the container, instead of reloading the page.
+
+          var form = $('#post');
+          form.submit();
+      });
+
+      $('input').keypress(function(event) {
+          if (event.which == 13) {
+              event.preventDefault();
+              $('#post').submit();
+          }
+      });
+
+      this.bindEvent();
+   }
+
+    this.bindEvent = function() {
+        var instance = this;
+        $('.remove-field-button').click( function( event ) {
+            instance.removeField( event );
+        });
+    }
+
+     this.removeField = function removeField( event ) {
+         event.preventDefault();
+         event.stopPropagation();
+
+         var target_id = event.target.id.substring('remove-field-'.length);
+         var target_div = document.getElementById( target_id );
+
+         console.log( target_div );
+         console.log( event.target );
+         target_div.parentNode.removeChild( target_div );
+         event.target.parentNode.removeChild( event.target );
+         return false;
+     }
+
     this.render = function render( div, objectIri, template, context, modelName, prefix ) {
         var objectIri = this.store.getIri(objectIri);
         var template = template ? template : this.store.mainTemplate;
@@ -53,9 +68,9 @@ window.wpldp = function( store, options ) {
                 if ( field.multiple == "true" ) {
                   if (object[field.name]) {
                     if ( Array.isArray(object[field.name])) {
-                      field.fields = object[field.name];
+                        field.fields = object[field.name];
                     } else {
-                     field.fields = [ object[field.name] ];
+                        field.fields = [ object[field.name] ];
                     }
                   } else {
                     field.fields = new Array();
@@ -80,6 +95,7 @@ window.wpldp = function( store, options ) {
              $(div).html(template({object: object}));
            }
 
+           instance.bindEvent();
         });
     }
 
@@ -96,24 +112,37 @@ window.wpldp = function( store, options ) {
        });
     }
 
+    Handlebars.registerHelper("inc", function(value, options)
+    {
+        return parseInt(value) + 1;
+    });
+
     // The partial definition for displaying a form field
-    var fieldPartialTest = "{{#if '@id'}}{{#if name}}<input id='{{name}}' type='text' name='{{name}}' value='{{'@id'}}' />{{/if}}{{/if}}";
+    var fieldPartialTest = "{{#this}}{{#if '@id'}}\
+                                <button class='button remove-field-button' id='remove-field-{{parent}}{{inc @index}}'>-</button>\
+                                <input id='{{parent}}{{inc @index}}' type='text' name='{{parent}}{{inc @index}}' value='{{'@id'}}' />\
+                            {{/if}}{{/this}}";
     Handlebars.registerPartial("LDPFieldTest", fieldPartialTest);
 
     // The partial definition for displaying a form field handling array values, with possibility to add a field dynamically
-    var fieldDisplayPartial = "{{#if name}}<label for='{{name}}'>{{label}}</label><button class='button add-field-button' id='add-field-{{name}}' onclick='return store.addField(event);'>+</button>{{/if}}\
-                             <div id='field-{{name}}'>\
-                               {{#if fields}}\
-                                 {{#each fields}}\
-                                   {{> LDPFieldTest}}\
-                                 {{/each}}\
-                               {{else}} \
-                                 <input id='{{name}}' type='text' placeholder='{{title}}' name='{{name}}' />\
-                               {{/if}}\
-                             </div>";
+    var fieldDisplayPartial = "{{#if name}}<label for='{{name}}'>{{label}}</label>\
+                                    <button class='button add-field-button' id='add-field-{{name}}' onclick='return wpldp.addField(event);'>+</button>\
+                                {{/if}}\
+                                 <div id='field-{{name}}'>\
+                                   {{#if fields}}\
+                                     {{#each fields }}\
+                                       {{>LDPFieldTest this parent=../name}}\
+                                     {{/each}}\
+                                   {{else}} \
+                                     <input id='{{name}}' type='text' placeholder='{{title}}' name='{{name}}' />\
+                                   {{/if}}\
+                                 </div>";
     Handlebars.registerPartial("ArrayFieldDisplay", fieldDisplayPartial);
 
     this.addField = function addField( event ) {
+       event.stopPropagation();
+       event.preventDefault();
+
        var target_id = event.target.id.substring('add-'.length);
 
        var target_div = document.getElementById(target_id);
@@ -122,8 +151,17 @@ window.wpldp = function( store, options ) {
        input.id = target_id.substring('field-'.length) + child_count;
        input.name = target_id.substring('field-'.length) + child_count;
        input.type = "text";
+
+       var remove_button = document.createElement('button');
+       remove_button.id = "remove-field-" + target_id.substring('field-'.length) + child_count;
+       remove_button.className = "button remove-field-button";
+       remove_button.innerHTML = "-";
+
+       target_div.appendChild(remove_button);
        target_div.appendChild(input);
-       event.stopPropagation();
+
+       this.bindEvent();
+
        return false;
     }
 
@@ -177,17 +215,6 @@ window.wpldp = function( store, options ) {
             {{#each fields}}{{> LDPField }}{{/each}} \
             <input type='submit' value='Post' /> \
         </form>");
-
-    // if('partials' in options) {
-    //   for(var partialName in options.partials) {
-    //     var element = $(options.partials[partialName]);
-    //     if (element.attr('src')) {
-    //       registerPartialFromFile(partialName, element.attr('src'));
-    //     } else {
-    //       Handlebars.registerPartial(partialName, element.html());
-    //     }
-    //   }
-    // }
 
     this.registerPartialFromFile = function registerPartialFromFile( partialName, partialTemplatePath ) {
         $.ajax({

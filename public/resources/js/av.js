@@ -53,8 +53,6 @@ function displayInitiative(divName, itemId, templateId) {
 }
 
 function displayPerson(divName, itemId, templateId) {
-    console.log('itemId :');
-    console.log(itemId);
   wpldp.render(divName, itemId, templateId);
   refreshBrowsePanel(itemId, 'initiative');
   refreshBrowsePanel(itemId, 'person');
@@ -168,7 +166,6 @@ function refreshCardFromHash() {
       }
     }
     // Modif : L'info pertinente est dans url_array[1] ?
-    console.log(url_array);
     displayLDPResource(hash);
   } else {
     var resourceId = config.resourceBaseUrl + '/ldp/initiative/assemblee-virtuelle/';
@@ -213,9 +210,7 @@ function displayTemplate(template, div, data) {
         jQuery(div).html(template(data));
       });
     } else {
-      console.log(element);
       template = Handlebars.compile(element.html());
-      console.log(jQuery(div));
       jQuery(div).html(template(data));
     }
   } else {
