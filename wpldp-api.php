@@ -117,11 +117,13 @@ if (!class_exists('\WpLdp\WpLdpApi')) {
               $rdfType = isset($termMeta["ldp_rdf_type"]) ? $termMeta["ldp_rdf_type"] : null;
             }
 
-            $result = '
-            {
-                "@context": "' . get_option('ldp_context', 'http://lov.okfn.org/dataset/lov/context') . '",
-                "@graph": [ {';
-
+            $result_bis = array(
+                "@context" => get_option('ldp_context', 'http://lov.okfn.org/dataset/lov/context'),
+                "@graph"   => array(
+                    array(
+                    )
+                )
+            );
 
             $referer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : null;
             // Handling special case of editing trhough the wordpress admin backend
@@ -132,33 +134,22 @@ if (!class_exists('\WpLdp\WpLdpApi')) {
                 if ( isset( $field_name ) ) {
                   if ( !isset($field->multiple) || !$field->multiple ) {
                     $field_value = get_post_custom_values( $field_name, $post->ID )[0];
-                    $result .= '          "'. $field_name .'": ';
-                    $result .= '' . ( !empty( $field_value ) ? json_encode( $field_value ) : '""' ) . ',';
-                    $result .=  "\n";
+                    $result_bis["@graph"][0][$field_name] = !empty( $field_value ) ? $field_value : null;
                   } else {
-                    $result .= '          "' . $field_name . '": [';
-                    $arrayToProcess = array();
-                    foreach ($custom_fields_keys as $custom_field_name) {
-                      if (substr($custom_field_name, 0, strlen($field_name)) === $field_name) {
-                        $arrayToProcess[] = $custom_field_name;
-                      }
-                    }
+                        $result_bis["@graph"][0][$field_name] = array();
+                        $arrayToProcess = array();
+                        foreach ($custom_fields_keys as $custom_field_name) {
+                          if (substr($custom_field_name, 0, strlen($field_name)) === $field_name) {
+                            $arrayToProcess[] = $custom_field_name;
+                          }
+                        }
 
-                    $count = 1;
-                    foreach ($arrayToProcess as $custom_field_name) {
-                      $field_value = get_post_custom_values( $custom_field_name, $post->ID )[0];
-                      if ($count < count($arrayToProcess)) {
-                        $result .= '{"@id":' . ( !empty( $field_value ) ? json_encode( $field_value ) : '""' ) . ',';
-                        $result .= '"name":"' . $custom_field_name . '"},';
-                        $result .=  "\n";
-                      } else {
-                        $result .= '{"@id":' . ( !empty( $field_value ) ? json_encode( $field_value ) : '""' ) . ',';
-                        $result .= '"name":"' . $custom_field_name . '"}';
-                      }
-                      $count++;
-                    }
-                    $result .= '],';
-                    $result .= "\n";
+                        // $count = 1;
+                        foreach ($arrayToProcess as $custom_field_name) {
+                            $field_value = get_post_custom_values( $custom_field_name, $post->ID )[0];
+                            $result_bis["@graph"][0][$field_name]['@id'] = !empty( $field_value ) ? $field_value : null;
+                            $result_bis["@graph"][0][$field_name]['name'] = $custom_field_name;
+                        }
                   }
                 }
               }
@@ -189,16 +180,16 @@ if (!class_exists('\WpLdp\WpLdpApi')) {
                   }
                 }
               }
-              // Example of arrayToProcess ['ldp_foaf:knows', 'ldp_foaf:currentProject']
 
+              // Example of arrayToProcess ['ldp_foaf:knows', 'ldp_foaf:currentProject']
               foreach($arrayToProcess as $arrayField) {
                 foreach ($custom_fields_keys as $field) {
                   if ( isset($field) &&
                       strstr($field, $arrayField) ||
                       $field === $arrayField ) {
                     $value = get_post_custom_values($field, $post->ID )[0];
-                    if (!empty($value) && $value != '""') {
-                      $valuesArray[$arrayField][] = json_encode(get_post_custom_values($field, $post->ID )[0]);
+                    if (!empty($value) && $value != '') {
+                      $valuesArray[$arrayField][] = get_post_custom_values($field, $post->ID )[0];
                     }
                   }
                 }
@@ -206,31 +197,20 @@ if (!class_exists('\WpLdp\WpLdpApi')) {
 
               if (!empty($valuesArray)) {
                 foreach ($valuesArray as $fieldName => $values) {
-                  $result .= "          \"" . $fieldName . "\": [\n";
-                  $count = 0;
-                  foreach($values as $value) {
-                    if (!empty($value) && $value != '""') {
-                      $count++;
-                      $result .=  "               {\n";
-                      $result .= "                    \"@id\": " . $value . "\n";
+                    $result_bis["@graph"][0][$fieldName] = array( array() );
 
-                      if ($count < count($values)) {
-                        $result .=  "               },\n";
-                      } else {
-                        $result .=  "               }\n";
-                      }
+                    foreach($values as $value) {
+                        if (!empty($value) && $value != '') {
+                            $result_bis["@graph"][0][$fieldName][0]["@id"] = $value;
+                        }
                     }
-                  }
-                  $result .=  "          ],\n";
                 }
               }
 
               foreach($fields as $field) {
                 $field_name = \WpLdp\WpLdpUtils::getFieldName( $field );
                 if ( isset( $field_name ) && !in_array($field_name, $fieldNotToRender)) {
-                  $result .= '          "'. $field_name .'": ';
-                  $result .= '' . json_encode(get_post_custom_values($field_name, $post->ID )[0]) . ',';
-                  $result .=  "\n";
+                    $result_bis["@graph"][0][$field_name] = get_post_custom_values($field_name, $post->ID )[0];
                 }
               }
             }
@@ -257,36 +237,29 @@ if (!class_exists('\WpLdp\WpLdpApi')) {
                 ));
 
                 if ($loop->have_posts ()) {
-                  $result .= "          \"posts\": [\n";
-                  $count = 1;
-                  foreach( $loop as $post ) {
-                      $result .= "               {\n";
-                      $result .= "                    \"@id\": \"" . get_permalink ($post->ID) . "\",\n";
-                      $result .= '                    "dc:title":' . json_encode($post->post_title) . ",\n";
-                      $post_content = ( !empty( $post->post_content ) && $post->post_content !== false) ? json_encode( substr($post->post_content, 0, 150) ) : "";
-                      if ( !empty( $post->post_content ) ) {
-                          $result .= '                    "sioc:blogPost":' . $post_content . "\n";
-                      }
-                      if ($count < $loop->post_count) {
-                          $result .= "               },\n";
-                      } else {
-                          $result .= "               }\n";
-                      }
-                      $count++;
-                  }
-                  $result .= "          ],\n";
+                    $result_bis["@graph"][0]['posts'] = array( array( ) );
+                    foreach( $loop as $post ) {
+                        $current_post_entry = array();
+                        $current_post_entry["@id"] = get_permalink($post->ID);
+                        $current_post_entry["dc:title"] = $post->post_title;
+
+                        $post_content = ( !empty( $post->post_content ) && $post->post_content !== false) ? substr($post->post_content, 0, 150) : null;
+                        if ( !empty( $post->post_content ) ) {
+                            $current_post_entry["sioc:blogPost"] = $post_content;
+                        }
+                        $result_bis["@graph"][0]['posts'][] = $current_post_entry;
+                    }
                 }
               }
             }
 
             if ( !empty($rdfType) ) {
-                $result .= "\"@type\" : \"$rdfType\",\n";
+                $result_bis["@graph"][0]['@type'] = $rdfType;
             }
 
-            $result .= '"@id": "' . rtrim( get_rest_url(), '/' ) . $request->get_route() . '/"';
-            $result .= '}]}';
+            $result_bis["@graph"][0]['@id'] = rtrim( get_rest_url(), '/' ) . $request->get_route() . '/';
 
-            return rest_ensure_response( json_decode( $result ) );
+            return rest_ensure_response( $result_bis );
         }
 
         /**
