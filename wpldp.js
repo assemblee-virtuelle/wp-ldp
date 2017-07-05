@@ -120,7 +120,7 @@ window.wpldp = function( store, options ) {
     // The partial definition for displaying a form field
     var fieldPartialTest = "{{#this}}{{#if '@id'}}\
                                 <button class='button remove-field-button' id='remove-field-{{parent}}{{inc @index}}'>-</button>\
-                                <input id='{{parent}}{{inc @index}}' type='text' name='{{parent}}{{inc @index}}' value='{{'@id'}}' />\
+                                <input id='{{parent}}{{inc @index}}' type='text' name='{{parent}}[]' value='{{'@id'}}' />\
                             {{/if}}{{/this}}";
     Handlebars.registerPartial("LDPFieldTest", fieldPartialTest);
 
@@ -149,7 +149,7 @@ window.wpldp = function( store, options ) {
        var child_count = target_div.childElementCount + 1;
        var input = document.createElement('input');
        input.id = target_id.substring('field-'.length) + child_count;
-       input.name = target_id.substring('field-'.length) + child_count;
+       input.name = target_id.substring('field-'.length) + "[]";
        input.type = "text";
 
        var remove_button = document.createElement('button');

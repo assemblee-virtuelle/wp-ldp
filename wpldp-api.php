@@ -121,9 +121,8 @@ if (!class_exists('\WpLdp\WpLdpApi')) {
 
             $referer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : null;
             // Handling special case of editing trhough the wordpress admin backend
-            if (!empty($referer) && strstr($referer, 'wp-admin/post.php')) {
-              $custom_fields_keys = get_post_custom_keys( $post->ID );
-              foreach($fields as $field) {
+            $custom_fields_keys = get_post_custom_keys( $post->ID );
+            foreach($fields as $field) {
                 $field_name = \WpLdp\WpLdpUtils::getFieldName( $field );
                 if ( isset( $field_name ) ) {
                   if ( !isset($field->multiple) || !$field->multiple ) {
@@ -131,86 +130,20 @@ if (!class_exists('\WpLdp\WpLdpApi')) {
                     $result["@graph"][0][$field_name] = !empty( $field_value ) ? $field_value : null;
                   } else {
                         $result["@graph"][0][$field_name] = array();
-                        $arrayToProcess = array();
-                        foreach ($custom_fields_keys as $custom_field_name) {
-                          if (substr($custom_field_name, 0, strlen($field_name)) === $field_name) {
-                            $arrayToProcess[] = $custom_field_name;
-                          }
-                        }
+                        $field_values = get_post_custom_values( $field_name, $post->ID )[0];
 
-                        // $count = 1;
-                        foreach ($arrayToProcess as $custom_field_name) {
-                            $field_value = get_post_custom_values( $custom_field_name, $post->ID )[0];
-                            $multiple_field_entry = array(
-                                '@id'  => !empty( $field_value ) ? $field_value : null,
-                                'name' => $custom_field_name
-                            );
+                        if ( !empty ( $field_values ) ) {
+                            $field_values = unserialize( $field_values );
+                            foreach ($field_values as $value) {
+                                $multiple_field_entry = array(
+                                    '@id'  => !empty( $value ) ? $value : null,
+                                );
 
-                            $result["@graph"][0][$field_name][] = $multiple_field_entry;
+                                $result["@graph"][0][$field_name][] = $multiple_field_entry;
+                            }
                         }
                   }
                 }
-              }
-            } else {
-              $arrayToProcess = [];
-              $fieldNotToRender = [];
-              // Construct proper values array, if any, based on field endings with number:
-              $custom_fields_keys = get_post_custom_keys( $post->ID );
-              foreach ($custom_fields_keys as $field) {
-                // $field_name = \WpLdp\WpLdpUtils::getFieldName( $field );
-                $endsWithNumber = preg_match_all("/(.*)?(\d+)$/", $field, $matches);
-                if (!empty($matches)) {
-                  if ($endsWithNumber > 0) {
-                    $fieldName = $matches[1][0];
-                    if (!in_array($fieldName, $arrayToProcess)) {
-                      $arrayToProcess[] = $fieldName;
-                    }
-
-                    // Generate proper array to exclude those fields from general rendering
-                    $excludedField = $matches[0][0];
-                    if (!in_array($excludedField, $fieldNotToRender)) {
-                      $fieldNotToRender[] = $excludedField;
-                    }
-
-                    if (!in_array($fieldName, $fieldNotToRender)) {
-                      $fieldNotToRender[] = $fieldName;
-                    }
-                  }
-                }
-              }
-
-              // Example of arrayToProcess ['ldp_foaf:knows', 'ldp_foaf:currentProject']
-              foreach($arrayToProcess as $arrayField) {
-                foreach ($custom_fields_keys as $field) {
-                  if ( isset($field) &&
-                      strstr($field, $arrayField) ||
-                      $field === $arrayField ) {
-                    $value = get_post_custom_values($field, $post->ID )[0];
-                    if (!empty($value) && $value != '') {
-                      $valuesArray[$arrayField][] = get_post_custom_values($field, $post->ID )[0];
-                    }
-                  }
-                }
-              }
-
-              if (!empty($valuesArray)) {
-                foreach ($valuesArray as $fieldName => $values) {
-                    $result["@graph"][0][$fieldName] = array( array() );
-
-                    foreach($values as $value) {
-                        if (!empty($value) && $value != '') {
-                            $result["@graph"][0][$fieldName][0]["@id"] = $value;
-                        }
-                    }
-                }
-              }
-
-              foreach($fields as $field) {
-                $field_name = \WpLdp\WpLdpUtils::getFieldName( $field );
-                if ( isset( $field_name ) && !in_array($field_name, $fieldNotToRender)) {
-                    $result["@graph"][0][$field_name] = get_post_custom_values($field_name, $post->ID )[0];
-                }
-              }
             }
 
             // Get user to retrieve associated posts !
@@ -256,7 +189,6 @@ if (!class_exists('\WpLdp\WpLdpApi')) {
             }
 
             $result["@graph"][0]['@id'] = rtrim( get_rest_url(), '/' ) . $request->get_route() . '/';
-
             return rest_ensure_response( $result );
         }
 

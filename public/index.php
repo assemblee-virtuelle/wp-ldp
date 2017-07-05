@@ -120,31 +120,6 @@ get_header();
         });
       }
 
-    //   function getDocumentsList() {
-    //     var resourcesList = [];
-      //
-    //     var url = config.resourceBaseUrl + 'ldp/document/';
-    //     store.get(url).then(function(object) {
-    //       if (object['ldp:contains']) {
-    //         jQuery.each(object['ldp:contains'], function(index, project) {
-    //           store.get(project).then(function(data) {
-    //             if ( data['pair:name'] ) {
-    //               var currentDocument = {
-    //                 'id' : data['@id'],
-    //                 'title' : data['pair:name'],
-    //                 'description' : data['pair:shortDescription'].substring(0, 147) + '...'
-    //               };
-    //               resourcesList.push(data);
-    //               displayTemplate('#resource-browser-template', '#resource-browser', resourcesList);
-    //             }
-    //           });
-    //         });
-    //       } else {
-    //         displayTemplate('#resource-browser-template', '#resource-browser', undefined);
-    //       }
-    //     });
-    //   }
-
     /**
      * Bootstrap de la collecte de données pour la page
      */
