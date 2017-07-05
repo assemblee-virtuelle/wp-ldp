@@ -136,28 +136,32 @@
         "object-property": "gr:seeks",
         "range": "cco:Skill",
         "type": "resource",
-        "multiple": "true"
+        "multiple": "true",
+        "hasLookup": "true"
       },
       {
         "label" : "Besoin de ressources (hors compétences)",
         "object-property": "gr:seeks",
         "range": "pair:Resource",
         "type": "resource",
-        "multiple": "true"
+        "multiple": "true",
+        "hasLookup": "true"
       },
       {
         "label": "Offre de compétences",
         "object-property": "gr:offers",
         "range": "cco:Skill",
         "type": "resource",
-        "multiple": "true"
+        "multiple": "true",
+        "hasLookup": "true"
       },
       {
         "label": "Offre de ressources (hors compétences)",
         "object-property": "gr:offers",
         "range": "pair:Resource",
         "type": "resource",
-        "multiple": "true"
+        "multiple": "true",
+        "hasLookup": "true"
       }
     ]
   }

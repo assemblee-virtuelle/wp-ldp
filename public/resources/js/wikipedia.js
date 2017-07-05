@@ -18,7 +18,7 @@ var urlReqPrefix = "http://lookup.dbpedia.org/api/search.asmx/PrefixSearch?Query
 
 // function XHRCompletion (url) {
 //     return new Promise (function(resolve, reject) {
-//         $.when($.ajax({
+//         jQuery.when(jQuery.ajax({
 //             url: "http://lookup.dbpedia.org/api/search/PrefixSearch",
 //             data: { MaxHits: resultsCount, QueryString: request.term },
 //             dataType: "json",
@@ -29,35 +29,35 @@ var urlReqPrefix = "http://lookup.dbpedia.org/api/search.asmx/PrefixSearch?Query
 //     })
 // }
 
-$(document).ready(function() {
+jQuery(document).ready(function() {
     var topics = [];
-    $("#ldpform").on('focus', '.hasLookup', function(event) {
-        $(this).autocomplete({
+    jQuery("#ldpform").on('focus', '.hasLookup', function(event) {
+        jQuery(this).autocomplete({
             autoFocus: true,
             minlength: 3,
             search: function() {
-                $(this).addClass('sf-suggestion-search')
+                jQuery(this).addClass('sf-suggestion-search')
             },
             open: function() {
-                $(this).removeClass('sf-suggestion-search')
+                jQuery(this).removeClass('sf-suggestion-search')
             },
             select: function( event, ui ) {
                 console.log( "Topic chosen label event ");
-                console.log($(this));
+                console.log(jQuery(this));
                 console.log( "Topic chosen label ui");
                 console.log(ui);
-                $emptyFields = $(this).siblings().filter(function(index) { return $(this).val() == ''}).length;
-                console.log('Champs vides : '+ $emptyFields);
+                var emptyFields = jQuery(this).siblings().filter(function(index) { return jQuery(this).val() == ''}).length;
+                console.log('Champs vides : '+ emptyFields);
             },
             source: function(request, callback) {
                 console.log("Déclenche l'événement :")
-                console.log($(event.target));
+                console.log(jQuery(event.target));
                 console.log(event.target.value);
-                $.ajax({
+                jQuery.ajax({
                     url: "http://lookup.dbpedia.org/api/search/PrefixSearch",
                     data: { MaxHits: resultsCount, QueryString: request.term },
                     dataType: "json",
-                    timeout: 5000
+                    timeout: 25000
                 }).done(function (response) {
                     console.log(response)
                     callback(response.results.map(function (m) {
@@ -66,7 +66,7 @@ $(document).ready(function() {
                         cutStringAfterCharacter(m.description, '.'), "value": m.uri }
                     }));
                 }).fail(function (error){
-                    $.ajax({
+                    jQuery.ajax({
                         url: "/lookup",
                         data: { MaxHits: resultsCount, QueryString: request.term + "*" },
                         dataType: "json",

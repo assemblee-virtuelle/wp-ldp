@@ -5,26 +5,25 @@ window.wpldp = function( store, options ) {
     Handlebars.logger.level = 0;
 
     this.init = function() {
-      $('input:radio[name="tax_input[ldp_container][]"]').click(function() {
+      jQuery('input:radio[name="tax_input[ldp_container][]"]').click(function() {
           //TODO: Switch to a smooth AJAX call for changing the container, instead of reloading the page.
-
-          var form = $('#post');
+          var form = jQuery('#post');
           form.submit();
       });
 
-      $('input').keypress(function(event) {
+      jQuery('input').keypress(function(event) {
           if (event.which == 13) {
               event.preventDefault();
-              $('#post').submit();
+              jQuery('#post').submit();
           }
       });
 
-      this.bindEvent();
+      this.bindEvents();
    }
 
-    this.bindEvent = function() {
+    this.bindEvents = function() {
         var instance = this;
-        $('.remove-field-button').click( function( event ) {
+        jQuery('.remove-field-button').click( function( event ) {
             instance.removeField( event );
         });
     }
@@ -36,8 +35,6 @@ window.wpldp = function( store, options ) {
          var target_id = event.target.id.substring('remove-field-'.length);
          var target_div = document.getElementById( target_id );
 
-         console.log( target_div );
-         console.log( event.target );
          target_div.parentNode.removeChild( target_div );
          event.target.parentNode.removeChild( event.target );
          return false;
@@ -81,28 +78,28 @@ window.wpldp = function( store, options ) {
               });
             }
            if (typeof(template) == 'string' && template.substring(0, 1) == '#') {
-             var element = $(template);
+             var element = jQuery(template);
              if (element && typeof element.attr('src') !== 'undefined') {
                instance.getTemplateAjax(element.attr('src'), function(template) {
-                 $(div).html(template({object: object}));
+                 jQuery(div).html(template({object: object}));
                });
              } else {
                template = Handlebars.compile(element.html());
-               $(div).html(template({object: object}));
+               jQuery(div).html(template({object: object}));
              }
            } else {
              template = Handlebars.compile(template);
-             $(div).html(template({object: object}));
+             jQuery(div).html(template({object: object}));
            }
 
-           instance.bindEvent();
+           instance.bindEvents();
         });
     }
 
      // Get handlebars templates via ajax
     this.getTemplateAjax = function getTemplateAjax( path, callback ) {
        var source, template;
-       $.ajax({
+       jQuery.ajax({
            url: path,
            success: function (data) {
                source = data;
@@ -119,8 +116,8 @@ window.wpldp = function( store, options ) {
 
     // The partial definition for displaying a form field
     var fieldPartialTest = "{{#this}}{{#if '@id'}}\
-                                <button class='button remove-field-button' id='remove-field-{{parent}}{{inc @index}}'>-</button>\
-                                <input id='{{parent}}{{inc @index}}' type='text' name='{{parent}}[]' value='{{'@id'}}' />\
+                                <button class='button remove-field-button' id='remove-field-{{parent.name}}{{inc @index}}'>-</button>\
+                                <input data-range={{parent.range}} {{#ifCond parent.hasLookup 'true'}}class='hasLookup'{{/ifCond}} id='{{parent.name}}{{inc @index}}' type='text' name='{{parent.name}}[]' value='{{'@id'}}' />\
                             {{/if}}{{/this}}";
     Handlebars.registerPartial("LDPFieldTest", fieldPartialTest);
 
@@ -128,13 +125,13 @@ window.wpldp = function( store, options ) {
     var fieldDisplayPartial = "{{#if name}}<label for='{{name}}'>{{label}}</label>\
                                     <button class='button add-field-button' id='add-field-{{name}}' onclick='return wpldp.addField(event);'>+</button>\
                                 {{/if}}\
-                                 <div id='field-{{name}}'>\
+                                 <div id='field-{{name}}' {{#ifCond hasLookup 'true'}}data-has-lookup='true'{{/ifCond}}>\
                                    {{#if fields}}\
                                      {{#each fields }}\
-                                       {{>LDPFieldTest this parent=../name}}\
+                                       {{>LDPFieldTest this parent=../this}}\
                                      {{/each}}\
                                    {{else}} \
-                                     <input id='{{name}}' type='text' placeholder='{{title}}' name='{{name}}' />\
+                                     <input data-range={{range}} {{#ifCond hasLookup 'true'}}class='hasLookup'{{/ifCond}} id='{{name}}' type='text' placeholder='{{title}}' name='{{name}}' />\
                                    {{/if}}\
                                  </div>";
     Handlebars.registerPartial("ArrayFieldDisplay", fieldDisplayPartial);
@@ -151,6 +148,9 @@ window.wpldp = function( store, options ) {
        input.id = target_id.substring('field-'.length) + child_count;
        input.name = target_id.substring('field-'.length) + "[]";
        input.type = "text";
+       if ( target_div.dataset && target_div.dataset.hasLookup == 'true' ) {
+           input.className = 'hasLookup';
+       }
 
        var remove_button = document.createElement('button');
        remove_button.id = "remove-field-" + target_id.substring('field-'.length) + child_count;
@@ -160,7 +160,7 @@ window.wpldp = function( store, options ) {
        target_div.appendChild(remove_button);
        target_div.appendChild(input);
 
-       this.bindEvent();
+       this.bindEvents();
 
        return false;
     }
@@ -217,7 +217,7 @@ window.wpldp = function( store, options ) {
         </form>");
 
     this.registerPartialFromFile = function registerPartialFromFile( partialName, partialTemplatePath ) {
-        $.ajax({
+        jQuery.ajax({
             url: partialTemplatePath,
             success: function (data) {
                 Handlebars.registerPartial(partialName, data);
@@ -230,7 +230,7 @@ window.wpldp = function( store, options ) {
          var objects = Array.isArray(array) ? array : [array];
          objects.forEach(function(object) {
              this.store.get(object, this.store.context).then(function(object) {
-                 $('#'+id).append(options.fn(object));
+                 jQuery('#'+id).append(options.fn(object));
              }.bind(this));
          }.bind(this));
          return '<'+ tagName +' id="'+id+'"></' + tagName + '>';

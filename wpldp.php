@@ -469,15 +469,23 @@ if (!class_exists('\WpLdp\WpLdp')) {
             );
             wp_enqueue_script('handlebarsjs');
 
+            // Loading the Handlebars library
+            wp_register_script(
+                'select2',
+                plugins_url('library/js/select2/dist/js/select2.full.min.js', __FILE__),
+                array('jquery')
+            );
+            wp_enqueue_script('select2');
+
             // Loading the Plugin-javascript file
             wp_register_script(
               'wpldpjs',
               plugins_url('wpldp.js', __FILE__),
-              array('jquery')
+              array('jquery', 'select2')
             );
             wp_enqueue_script('wpldpjs');
 
-            // Loading the Handlebars library
+            // Loading the Wikipedia autocomplete library
             wp_register_script(
                 'lookup',
                 plugins_url('public/resources/js/wikipedia.js', __FILE__),
