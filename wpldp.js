@@ -26,6 +26,11 @@ window.wpldp = function( store, options ) {
         jQuery('.remove-field-button').click( function( event ) {
             instance.removeField( event );
         });
+
+        // jQuery('input[type=date]').each( function( this ) ) {
+        //     this.className = 'ui-datepicker'
+        // }
+        jQuery('input[type=date]').datepicker();
     }
 
      this.removeField = function removeField( event ) {

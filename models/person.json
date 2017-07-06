@@ -11,6 +11,11 @@
         "data-property": "foaf:name"
       },
       {
+        "label": "Date de naissance",
+        "data-property": "foaf:birthday",
+        "type": "date"
+      },
+      {
         "label": "Description courte (- de 140 caractères)",
         "data-property": "pair:shortDescription",
         "type": "textarea"

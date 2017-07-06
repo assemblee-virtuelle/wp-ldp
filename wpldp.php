@@ -67,11 +67,11 @@ if (!class_exists('\WpLdp\WpLdp')) {
 
         add_filter( 'post_type_link', array($this, 'ldp_resource_post_link'), 10, 3 );
 
-        add_action('admin_enqueue_scripts', array($this, 'ldp_enqueue_script'));
         add_action('admin_enqueue_scripts', array($this, 'ldp_enqueue_stylesheet'));
+        add_action('admin_enqueue_scripts', array($this, 'ldp_enqueue_script'));
 
-        add_action('wp_enqueue_scripts', array($this, 'wpldpfront_enqueue_script'));
         add_action('wp_enqueue_scripts', array($this, 'wpldpfront_enqueue_stylesheet'));
+        add_action('wp_enqueue_scripts', array($this, 'wpldpfront_enqueue_script'));
       }
 
 
@@ -444,7 +444,6 @@ if (!class_exists('\WpLdp\WpLdp')) {
           $screen = get_current_screen();
           if ($post_type == 'ldp_resource') {
             wp_enqueue_media();
-            wp_enqueue_script('', 'https://code.jquery.com/jquery-2.1.4.min.js');
 
             // Loading the LDP-framework library
             wp_register_script(
@@ -453,6 +452,13 @@ if (!class_exists('\WpLdp\WpLdp')) {
               array('jquery')
             );
             wp_enqueue_script('ldpjs');
+
+            // Loading the JqueryUI library
+            wp_register_script(
+              'jqueryui',
+              plugins_url('library/js/jquery-ui/jquery-ui.min.js', __FILE__)
+            );
+            wp_enqueue_script('jqueryui');
 
             // Loading the JSONEditor library
             wp_register_script(
@@ -503,7 +509,7 @@ if (!class_exists('\WpLdp\WpLdp')) {
       public function wpldpfront_enqueue_script() {
         $current_url = $_SERVER["REQUEST_URI"];
         if ( strstr( $current_url, self::$front_page_url ) ) {
-          wp_enqueue_script('', 'https://code.jquery.com/jquery-2.1.4.min.js');
+        //   wp_enqueue_script('', 'https://code.jquery.com/jquery-2.1.4.min.js');
 
           // Loading the LDP-framework library
           wp_register_script(
@@ -566,6 +572,21 @@ if (!class_exists('\WpLdp\WpLdp')) {
           plugins_url('library/js/node_modules/jsoneditor/dist/jsoneditor.min.css', __FILE__)
         );
         wp_enqueue_style('jsoneditorcss');
+
+        // Loading the JQueryUI stylesheet
+        wp_register_style(
+          'jqueryuicss',
+          plugins_url('library/js/jquery-ui/jquery-ui.css', __FILE__)
+        //   'http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.0/themes/base/jquery-ui.css'
+        );
+        wp_enqueue_style('jqueryuicss');
+
+        // Loading the JQueryUIStructure stylesheet
+        wp_register_style(
+          'jqueryuistructurecss',
+          plugins_url('library/js/jquery-ui/jquery-ui.structure.css', __FILE__)
+        );
+        wp_enqueue_style('jqueryuistructurecss');
       }
 
 
