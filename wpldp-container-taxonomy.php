@@ -260,7 +260,7 @@ if (!class_exists('\WpLdp\WpLdpContainerTaxonomy')) {
                     $fieldName = WpLdpUtils::getFieldName( $field );
                     if ( (!empty($includedFieldsList) && in_array( $fieldName, $includedFieldsList ) )
                           && !empty(get_post_custom_values( $fieldName, $post->ID )[0])) {
-                        $current_entry[ $fieldName ] = json_encode(get_post_custom_values( $fieldName, $post->ID )[0]);
+                        $current_entry[ $fieldName ] = get_post_custom_values( $fieldName, $post->ID )[0];
                     }
                   }
 
