@@ -208,6 +208,9 @@ if (!class_exists('\WpLdp\WpLdpContainerTaxonomy')) {
         * API method for retrieving the list of resources associated with the current taxonomy
         */
         public function get_resources_from_container( \WP_REST_Request $request, \WP_REST_Response $response = null ) {
+            header('Content-Type: application/ld+json');
+            header('Access-Control-Allow-Origin: *');
+
             $params = $request->get_params();
             $ldp_container = $params['ldp_container'];
 

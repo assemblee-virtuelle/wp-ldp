@@ -138,6 +138,9 @@ if (!class_exists('\WpLdp\WpLdpSiteTaxonomy')) {
         * API method for retrieving the list of sites the current site knows
         */
         public function get_sites_list(  \WP_REST_Request $request, \WP_REST_Response $response = null ) {
+            header('Content-Type: application/ld+json');
+            header('Access-Control-Allow-Origin: *');
+            
             $terms = get_terms(
                 array(
                     'taxonomy' => 'ldp_site',

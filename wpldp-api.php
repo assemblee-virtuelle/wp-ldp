@@ -32,6 +32,9 @@ if (!class_exists('\WpLdp\WpLdpApi')) {
         * API method for retrieving the general schema this site LPD API
         */
         public function get_api_definition( \WP_REST_Request $request, \WP_REST_Response $response = null ) {
+            header('Content-Type: application/ld+json');
+            header('Access-Control-Allow-Origin: *');
+            
             $query = new \WP_Query( array(
                'post_type' => 'ldp_resource',
                'posts_per_page' => -1 )
