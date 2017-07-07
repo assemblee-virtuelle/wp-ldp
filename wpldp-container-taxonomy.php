@@ -267,7 +267,7 @@ if (!class_exists('\WpLdp\WpLdpContainerTaxonomy')) {
                   $rdfType = isset($termMeta["ldp_rdf_type"]) ? $termMeta["ldp_rdf_type"] : null;
                   if ( !empty( $rdfType ) ) {
                       $current_entry['@type'] = $rdfType;
-                      $current_entry['@id'] = get_permalink( $post->ID );
+                      $current_entry['@id'] = site_url('/') . wpLdpApi::LDP_API_URL . $value->slug . '/' . $post->post_name;
                   }
                   $result['@graph'][0]['http://www.w3.org/ns/ldp#contains'][] = $current_entry;
             }
