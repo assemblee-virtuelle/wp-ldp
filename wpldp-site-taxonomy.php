@@ -171,17 +171,20 @@ if (!class_exists('\WpLdp\WpLdpSiteTaxonomy')) {
             $sites = array(
                 "@context" => get_option('ldp_context', 'http://lov.okfn.org/dataset/lov/context'),
                 "@graph"   => array(
-                    "@id"      => get_site_url(),
-                    "sites"    => array()
+                    "@id"      => get_site_url() . '/api/ldp/v1/sites/',
+                    "@type"    => "http://www.w3.org/ns/ldp#BasicContainer",
+                    "http://www.w3.org/ns/ldp#contains" => array()
                 )
             );
+
             foreach ($outputs as $siteUrl => $output ){
                 if ($output['code'] == 200){
                     $response = json_decode( $output['data'] );
                     $current_site = $response->{"@graph"}[0];
                     $current_site->{"@id"} = $siteUrl;
 
-                    $sites["@graph"]["sites"][] = $current_site;
+                    $sites["@graph"]["http://www.w3.org/ns/ldp#contains"][] =
+                    $sites["@graph"]["http://www.w3.org/ns/ldp#contains"][] = $current_site;
                 }
             }
 

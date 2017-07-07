@@ -27,10 +27,69 @@ window.wpldp = function( store, options ) {
             instance.removeField( event );
         });
 
-        // jQuery('input[type=date]').each( function( this ) ) {
-        //     this.className = 'ui-datepicker'
-        // }
         jQuery('input[type=date]').datepicker();
+
+        var topics = [];
+        jQuery("#ldpform").on('focus', '.ldpLookup', function(event) {
+            jQuery(this).autocomplete({
+                autoFocus: true,
+                minlength: 3,
+                search: function() {
+                    jQuery(this).addClass('sf-suggestion-search')
+                },
+                open: function() {
+                    jQuery(this).removeClass('sf-suggestion-search')
+                },
+                select: function( event, ui ) {
+                    var emptyFields = jQuery(this).siblings().filter(function(index) { return jQuery(this).val() == ''}).length;
+                },
+                source: function(request, callback) {
+                    var resultSet = [];
+                    var current_site_url = site_rest_url + "ldp/v1/sites/";
+                    console.log( current_site_url );
+                    store.list( current_site_url ).then( function( sites ) {
+                        console.log('M is not an array');
+                        console.log( sites );
+                        sites.forEach( function( site ) {
+                            store.list( site['@id'] ).then( function( containers ) {
+                                console.log( containers );
+                                containers.forEach( function( container ) {
+                                    console.log( container );
+                                    store.list( container['@id'] ).then( function( resources ) {
+                                        console.log( resources );
+                                        resources.forEach( function( resource ) {
+                                            console.log( resource );
+                                            var name = resource['foaf:name'];
+                                            var id = resource['@id'];
+                                            resultSet.push( { 'label': name, 'value': id } );
+                                            callback( resultSet );
+                                            console.log( resultSet );
+                                        });
+                                    });
+                                });
+                            });
+                        });
+
+                        // if ( m['http://www.w3.org/ns/ldp#contains'] ) {
+                            // m['http://www.w3.org/ns/ldp#contains'].forEach( function( container ) {
+                            //     console.log( 'Container content', container );
+                            //     if ( event.target.parentNode.dataset['range'] == container['@type'] ) {
+                            //         console.log(container['@id']);
+                            //         store.list( container['@id'] ).then(function(object) {
+                            //           console.log( object );
+                            //           if (object['ldp:contains']) {
+                            //             console.log( object );
+                            //           }
+                            //         });
+                        //         }
+                        //     });
+                        // }
+                        console.log( resultSet );
+                        return resultSet;
+                    });
+                }
+            });
+        });
     }
 
      this.removeField = function removeField( event ) {
@@ -122,7 +181,7 @@ window.wpldp = function( store, options ) {
     // The partial definition for displaying a form field
     var fieldPartialTest = "{{#this}}{{#if '@id'}}\
                                 <button class='button remove-field-button' id='remove-field-{{parent.name}}{{inc @index}}'>-</button>\
-                                <input data-range={{parent.range}} {{#ifCond parent.hasLookup 'true'}}class='hasLookup'{{/ifCond}} id='{{parent.name}}{{inc @index}}' type='text' name='{{parent.name}}[]' value='{{'@id'}}' />\
+                                <input data-range={{parent.range}} class='{{#ifCond parent.range 'resource'}}ldpLookup{{/ifCond}} {{#ifCond parent.hasLookup 'true'}}hasLookup{{/ifCond}}' id='{{parent.name}}{{inc @index}}' type='text' name='{{parent.name}}[]' value='{{'@id'}}' />\
                             {{/if}}{{/this}}";
     Handlebars.registerPartial("LDPFieldTest", fieldPartialTest);
 
@@ -130,13 +189,14 @@ window.wpldp = function( store, options ) {
     var fieldDisplayPartial = "{{#if name}}<label for='{{name}}'>{{label}}</label>\
                                     <button class='button add-field-button' id='add-field-{{name}}' onclick='return wpldp.addField(event);'>+</button>\
                                 {{/if}}\
-                                 <div id='field-{{name}}' {{#ifCond hasLookup 'true'}}data-has-lookup='true'{{/ifCond}}>\
+                                 <div id='field-{{name}}' data-range={{range}} {{#ifCond type 'resource'}}data-ldp-lookup='true'{{/ifCond}} {{#ifCond hasLookup 'true'}}data-has-lookup='true'{{/ifCond}}>\
                                    {{#if fields}}\
                                      {{#each fields }}\
                                        {{>LDPFieldTest this parent=../this}}\
                                      {{/each}}\
                                    {{else}} \
-                                     <input data-range={{range}} {{#ifCond hasLookup 'true'}}class='hasLookup'{{/ifCond}} id='{{name}}' type='text' placeholder='{{title}}' name='{{name}}' />\
+                                     {{log type}}\
+                                     <input data-range={{range}} class='{{type}} {{#ifCond type 'resource'}}ldpLookup{{/ifCond}} {{#ifCond hasLookup 'true'}}hasLookup{{/ifCond}}' id='{{name}}' type='text' placeholder='{{title}}' name='{{name}}' />\
                                    {{/if}}\
                                  </div>";
     Handlebars.registerPartial("ArrayFieldDisplay", fieldDisplayPartial);
@@ -154,7 +214,9 @@ window.wpldp = function( store, options ) {
        input.name = target_id.substring('field-'.length) + "[]";
        input.type = "text";
        if ( target_div.dataset && target_div.dataset.hasLookup == 'true' ) {
-           input.className = 'hasLookup';
+           input.className += ' hasLookup';
+       } else if ( target_div.dataset && target_div.dataset.ldpLookup == 'true' ) {
+           input.className += ' ldpLookup';
        }
 
        var remove_button = document.createElement('button');

@@ -489,6 +489,7 @@ if (!class_exists('\WpLdp\WpLdp')) {
               plugins_url('wpldp.js', __FILE__),
               array('jquery', 'select2')
             );
+            wp_localize_script( 'wpldpjs', 'site_rest_url', get_rest_url() );
             wp_enqueue_script('wpldpjs');
 
             // Loading the Wikipedia autocomplete library
@@ -577,7 +578,6 @@ if (!class_exists('\WpLdp\WpLdp')) {
         wp_register_style(
           'jqueryuicss',
           plugins_url('library/js/jquery-ui/jquery-ui.css', __FILE__)
-        //   'http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.0/themes/base/jquery-ui.css'
         );
         wp_enqueue_style('jqueryuicss');
 
