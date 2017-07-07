@@ -53,28 +53,30 @@ if (!class_exists('\WpLdp\WpLdpApi')) {
 
             foreach ($posts as $post ) {
                 $values = get_the_terms($post->ID, 'ldp_container');
-                if (empty($values[0])) {
-                  $value = reset($values);
-                } else {
-                  $value = $values[0];
-                }
-                $termMeta = get_option("ldp_container_$value->term_id");
-                $rdfType = isset($termMeta["ldp_rdf_type"]) ? $termMeta["ldp_rdf_type"] : null;
-
-                if ( $rdfType != null ){
-                    if (array_key_exists($rdfType,$array)){
-                      $array[$rdfType]['value']++;
+                if ( !empty( $values ) ) {
+                    if ( empty($values[0])) {
+                      $value = reset($values);
+                    } else {
+                      $value = $values[0];
                     }
-                    else{
-                        $array[$rdfType]['value']=1;
-                        $array[$rdfType]['id']=explode(':',$rdfType)[1];
+                    $termMeta = get_option("ldp_container_$value->term_id");
+                    $rdfType = isset($termMeta["ldp_rdf_type"]) ? $termMeta["ldp_rdf_type"] : null;
+
+                    if ( $rdfType != null ){
+                        if (array_key_exists($rdfType,$array)){
+                          $array[$rdfType]['value']++;
+                        }
+                        else{
+                            $array[$rdfType]['value']=1;
+                            $array[$rdfType]['id']=explode(':',$rdfType)[1];
+                        }
                     }
                 }
             }
 
             foreach ( $array as $key => $value ) {
                 $current_container_entry = array();
-                $current_container_entry["@id"] = "http://" .$_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']. $value['id'];
+                $current_container_entry["@id"] = site_url('/') . wpLdpApi::LDP_API_URL . $value['id'];
                 $current_container_entry["@type"] = $key;
                 $current_container_entry["@count"] = $value['value'];
                 $result["@graph"][0]["http://www.w3.org/ns/ldp#contains"][] = $current_container_entry;
