@@ -257,9 +257,10 @@ if (!class_exists('\WpLdp\WpLdpContainerTaxonomy')) {
                   $fields = $modelsDecoded->{$value->slug}->fields;
                   $current_entry = array();
                   foreach ($fields as $field) {
-                    if ((!empty($includedFieldsList) && in_array($field->name, $includedFieldsList))
-                          && !empty(get_post_custom_values($field->name, $post->ID )[0])) {
-                        $current_entry[$field->name] = json_encode(get_post_custom_values($field->name, $post->ID )[0]);
+                    $fieldName = WpLdpUtils::getFieldName( $field );
+                    if ( (!empty($includedFieldsList) && in_array( $fieldName, $includedFieldsList ) )
+                          && !empty(get_post_custom_values( $fieldName, $post->ID )[0])) {
+                        $current_entry[ $fieldName ] = json_encode(get_post_custom_values( $fieldName, $post->ID )[0]);
                     }
                   }
 
