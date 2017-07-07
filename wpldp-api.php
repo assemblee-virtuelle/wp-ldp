@@ -71,7 +71,7 @@ if (!class_exists('\WpLdp\WpLdpApi')) {
                         }
                         else{
                             $array[$rdfType]['value']=1;
-                            $array[$rdfType]['id']=explode(':',$rdfType)[1];
+                            $array[$rdfType]['id']= strtolower( explode(':',$rdfType)[1] );
                         }
                     }
                 }
@@ -80,7 +80,7 @@ if (!class_exists('\WpLdp\WpLdpApi')) {
             foreach ( $array as $key => $value ) {
                 $current_container_entry = array();
                 $current_container_entry["@id"] = site_url('/') . wpLdpApi::LDP_API_URL . $value['id'];
-                $current_container_entry["@type"] = $key;
+                $current_container_entry["@type"] = "http://www.w3.org/ns/ldp#BasicContainer";
                 $current_container_entry["@count"] = $value['value'];
                 $result["@graph"][0]["http://www.w3.org/ns/ldp#contains"][] = $current_container_entry;
             }

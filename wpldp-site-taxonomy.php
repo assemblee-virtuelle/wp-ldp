@@ -140,7 +140,7 @@ if (!class_exists('\WpLdp\WpLdpSiteTaxonomy')) {
         public function get_sites_list(  \WP_REST_Request $request, \WP_REST_Response $response = null ) {
             header('Content-Type: application/ld+json');
             header('Access-Control-Allow-Origin: *');
-            
+
             $terms = get_terms(
                 array(
                     'taxonomy' => 'ldp_site',
@@ -159,13 +159,13 @@ if (!class_exists('\WpLdp\WpLdpSiteTaxonomy')) {
             $outputs = array();
             foreach ($ldpSiteUrls as $ldpSiteUrl) {
                 $ch = curl_init();
-                $build_url = $ldpSiteUrl . '/' . WpldpApi::LDP_API_URL . 'schema/';
+                $build_url = $ldpSiteUrl . '/schema/';
                 curl_setopt( $ch, CURLOPT_URL, $build_url );
                 curl_setopt( $ch, CURLOPT_HTTPGET, true );
                 curl_setopt( $ch, CURLOPT_HTTPHEADER, array('Content-Type: application/ld+json', 'Accept: application/ld+json') );
                 curl_setopt( $ch, CURLOPT_RETURNTRANSFER, 1 );
-                $outputs[ $ldpSiteUrl ]['data'] = curl_exec($ch);
-                $outputs[ $ldpSiteUrl ]['code'] = curl_getinfo($ch)['http_code'];
+                $outputs[ $ldpSiteUrl  . '/schema/' ]['data'] = curl_exec($ch);
+                $outputs[ $ldpSiteUrl  . '/schema/' ]['code'] = curl_getinfo($ch)['http_code'];
             }
 
             $sites = array(
