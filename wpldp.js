@@ -2,7 +2,9 @@ window.wpldp = function( store, options ) {
 
     this.options = options || {};
     this.store   = store;
+    this.resultSet = [];
     Handlebars.logger.level = 0;
+    this.current_site_url = site_rest_url + 'ldp/v1/sites/';
 
     this.init = function() {
       jQuery('input:radio[name="tax_input[ldp_container][]"]').click(function() {
@@ -19,6 +21,30 @@ window.wpldp = function( store, options ) {
       });
 
       this.bindEvents();
+
+      this.loadData();
+   }
+
+   this.loadData = function () {
+       var instance = this;
+       this.store.list( instance.current_site_url ).then( function( sites ) {
+           console.log('TOTOT');
+           sites.forEach( function( site ) {
+               this.store.list( site['@id'] ).then( function( containers ) {
+                   console.log('TOTOT');
+                   containers.forEach( function( container ) {
+                       console.log('Contianer', container );
+                       this.store.list( container['@id'] ).then( function( resources ) {
+                           console.log( 'Resources', resources );
+                           resources.forEach( function( resource ) {
+                               instance.resultSet.push( resource );
+                               console.log( instance.resultSet );
+                           });
+                       });
+                   });
+               });
+           });
+       });
    }
 
     this.bindEvents = function() {
@@ -44,49 +70,13 @@ window.wpldp = function( store, options ) {
                     var emptyFields = jQuery(this).siblings().filter(function(index) { return jQuery(this).val() == ''}).length;
                 },
                 source: function(request, callback) {
-                    var resultSet = [];
-                    var current_site_url = site_rest_url + "ldp/v1/sites/";
-                    console.log( current_site_url );
-                    store.list( current_site_url ).then( function( sites ) {
-                        console.log('M is not an array');
-                        console.log( sites );
-                        sites.forEach( function( site ) {
-                            store.list( site['@id'] ).then( function( containers ) {
-                                console.log( containers );
-                                containers.forEach( function( container ) {
-                                    console.log( container );
-                                    store.list( container['@id'] ).then( function( resources ) {
-                                        console.log( resources );
-                                        resources.forEach( function( resource ) {
-                                            console.log( resource );
-                                            var name = resource['foaf:name'];
-                                            var id = resource['@id'];
-                                            resultSet.push( { 'label': name, 'value': id } );
-                                            callback( resultSet );
-                                            console.log( resultSet );
-                                        });
-                                    });
-                                });
-                            });
-                        });
-
-                        // if ( m['http://www.w3.org/ns/ldp#contains'] ) {
-                            // m['http://www.w3.org/ns/ldp#contains'].forEach( function( container ) {
-                            //     console.log( 'Container content', container );
-                            //     if ( event.target.parentNode.dataset['range'] == container['@type'] ) {
-                            //         console.log(container['@id']);
-                            //         store.list( container['@id'] ).then(function(object) {
-                            //           console.log( object );
-                            //           if (object['ldp:contains']) {
-                            //             console.log( object );
-                            //           }
-                            //         });
-                        //         }
-                        //     });
-                        // }
-                        console.log( resultSet );
-                        return resultSet;
+                    var searchResults = []
+                    instance.resultSet.forEach( function( result ) {
+                        if ( result['@type'] == event.target.parentNode.dataset.range ) {
+                            searchResults.push( { 'label': result['foaf:name'], 'value': result['@id'] } );
+                        }
                     });
+                    callback( searchResults );
                 }
             });
         });
