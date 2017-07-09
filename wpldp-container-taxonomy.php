@@ -25,6 +25,11 @@ if (!class_exists('\WpLdp\WpLdpContainerTaxonomy')) {
                   'methods' => \WP_REST_Server::READABLE,
                   'callback' => array( $this, 'get_resources_from_container' ),
               ) );
+
+              register_rest_route( 'ldp/v1', '/search/(?P<ldp_container>((?!sites|schema)([a-zA-Z0-9-]+)))/', array(
+                  'methods' => \WP_REST_Server::READABLE,
+                  'callback' => array( $this, 'get_search_results' ),
+              ) );
           } );
         }
 
@@ -240,6 +245,63 @@ if (!class_exists('\WpLdp\WpLdpContainerTaxonomy')) {
                 )
             );
 
+            $result = $this->formatPostsRendering( $result, $posts );
+
+            return rest_ensure_response( $result );
+        }
+
+        /**
+        * API method for retrieving the list of resources associated with the current taxonomy
+        */
+        public function get_search_results( \WP_REST_Request $request, \WP_REST_Response $response = null ) {
+            header('Content-Type: application/ld+json');
+            header('Access-Control-Allow-Origin: *');
+
+            $params = $request->get_params();
+            $ldp_container = $params['ldp_container'];
+            $meta_name = $params['meta_name'];
+            $meta_value = $params['meta_value'];
+
+            $query = new \WP_Query(
+                array(
+                    'tax_query' => array(
+                        array(
+                          'taxonomy' => 'ldp_container',
+                          'terms' => $ldp_container,
+                          'field' => 'slug'
+                        )
+                    ),
+                   'post_type' => 'ldp_resource',
+                   'posts_per_page' => -1,
+                   'meta_query' => array(
+                       array(
+                           'key' => $meta_name,
+                           'value' => $meta_value,
+                           'compare' => 'LIKE'
+                       )
+                   )
+               )
+            );
+
+            $posts = $query->get_posts();
+
+            $result = array(
+                "@context" => get_option('ldp_context', 'http://lov.okfn.org/dataset/lov/context'),
+                "@graph"   => array(
+                    array(
+                        "@id" => rtrim( get_rest_url(), '/' ) . $request->get_route() . '/',
+                        "@type" => "http://www.w3.org/ns/ldp#BasicContainer",
+                        "http://www.w3.org/ns/ldp#contains" => array()
+                    )
+                )
+            );
+
+            $result = $this->formatPostsRendering( $result, $posts );
+
+            return rest_ensure_response( $result );
+        }
+
+        private function formatPostsRendering( $result, $posts ) {
             $count = 0;
             foreach ($posts as $post ) {
                   $values = get_the_terms($post->ID, 'ldp_container');
@@ -272,7 +334,7 @@ if (!class_exists('\WpLdp\WpLdpContainerTaxonomy')) {
                   $result['@graph'][0]['http://www.w3.org/ns/ldp#contains'][] = $current_entry;
             }
 
-            return rest_ensure_response( $result );
+            return $result;
         }
     }
 
