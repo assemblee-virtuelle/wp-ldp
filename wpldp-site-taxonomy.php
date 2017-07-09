@@ -22,6 +22,11 @@ if (!class_exists('\WpLdp\WpLdpSiteTaxonomy')) {
                     'methods' => \WP_REST_Server::READABLE,
                     'callback' => array( $this, 'get_sites_list' ),
                 ) );
+
+                register_rest_route( 'ldp/v1', '/sites/', array(
+                    'methods' => \WP_REST_Server::CREATABLE,
+                    'callback' => array( $this, 'add_new_site' ),
+                ) );
             } );
         }
 
@@ -190,6 +195,42 @@ if (!class_exists('\WpLdp\WpLdpSiteTaxonomy')) {
 
             return rest_ensure_response( $sites );
         }
+
+        /**
+        * API method for retrieving the list of sites the current site knows
+        */
+        public function add_new_site(  \WP_REST_Request $request, \WP_REST_Response $response = null ) {
+            header('Content-Type: application/ld+json');
+            header('Access-Control-Allow-Origin: *');
+
+            // var_dump( $request->get_headers() );
+            $headers = $request->get_headers();
+
+            $source_site_url = $headers['referer'][0];
+
+            var_dump( $source_site_url );
+            $term = null;
+            $query = get_terms(
+                array(
+                    'taxonomy' => 'ldp_site',
+                    'meta_query' => array(
+                        'key' => 'site_url',
+                        'value' => $source_site_url,
+                        'compare' => 'LIKE'
+                    )
+                )
+            );
+
+            var_dump( $query );
+            $term = $query[0];
+
+            if ( !term_exists( $term, 'ldp_site' ) ) {
+                $new_term = create_term( $term );
+            }
+
+            return ( !empty( $new_term ) || !empty( $term ) ) ? true : false;
+        }
+
     }
     // Instanciating the settings page object
     $wpLdpSiteTaxonomy = new WpLdpSiteTaxonomy();
