@@ -214,7 +214,7 @@ if (!class_exists('\WpLdp\WpLdpSiteTaxonomy')) {
                 array(
                     'taxonomy' => 'ldp_site',
                     'meta_query' => array(
-                        'key' => 'site_url',
+                        'key' => 'ldp_site_url',
                         'value' => $source_site_url,
                         'compare' => 'LIKE'
                     )

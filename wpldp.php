@@ -426,12 +426,45 @@ if (!class_exists('\WpLdp\WpLdp')) {
                 if ($key === $field_name ||
                       (substr($key, 0, strlen($field_name)) === $field_name)
                   ) {
-                    update_post_meta($resource_id, $key, $value);
+                     if ( is_array( $value ) ) {
+                         foreach( $value as $site ) {
+                             if ( strpos( $site, 'ldp' ) !== false &&
+                                  ( strpos( $site, 'http://' ) !== false ||
+                                    strpos( $site, 'https://' ) !== false ) ) {
+                                $site_url = explode( WpldpApi::LDP_API_URL, $site );
+                                $site_url = $site_url[0] . WpldpApi::LDP_API_URL . 'schema/';
+
+                                $term = get_terms( array(
+                                        'taxonomy' => 'ldp_site',
+                                        'meta_query' => array(
+                                            'key' => 'ldp_site_url',
+                                            'value' => $site_url,
+                                            'compare' => 'LIKE'
+                                        )
+                                    )
+                                );
+
+                                if ( empty( $term ) || !is_array( $term ) ) {
+                                    $site_url_parsed = parse_url( $site );
+                                    $term = wp_insert_term(
+                                        $site_url_parsed['host'] . ' ' . $site_url_parsed['path'],
+                                        'ldp_site'
+                                    );
+
+                                    if ( !is_wp_error( $term ) ) {
+                                        update_term_meta( $term['term_id'], 'ldp_site_url', $site_url );
+                                    }
+                                }
+                             }
+                         }
+                     }
+                     update_post_meta( $resource_id, $key, $value );
                 }
               }
             }
           }
         }
+        die();
       }
 
       /**
