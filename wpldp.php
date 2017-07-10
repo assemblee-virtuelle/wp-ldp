@@ -464,7 +464,6 @@ if (!class_exists('\WpLdp\WpLdp')) {
             }
           }
         }
-        die();
       }
 
       /**

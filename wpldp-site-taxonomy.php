@@ -183,7 +183,7 @@ if (!class_exists('\WpLdp\WpLdpSiteTaxonomy')) {
             );
 
             foreach ($outputs as $siteUrl => $output ){
-                if ($output['code'] == 200){
+                if ( $output['code'] == 200 ) {
                     $response = json_decode( $output['data'] );
 
                     if ( !empty( $response ) ) {

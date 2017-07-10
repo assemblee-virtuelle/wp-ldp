@@ -98,7 +98,7 @@
       {
         "label": "Collaborateurs",
         "object-property": "pair:worksWith",
-        "range": "foaf:Person",
+        "range": "pair:person",
         "type": "resource",
         "multiple": "true"
       },

@@ -28,7 +28,6 @@ window.wpldp = function( store, options ) {
    this.loadData = function () {
        var instance = this;
        this.store.list( instance.current_site_url ).then( function( sites ) {
-           console.log('TOTOT');
            sites.forEach( function( site ) {
                this.store.list( site['@id'] ).then( function( containers ) {
                    console.log('TOTOT');
