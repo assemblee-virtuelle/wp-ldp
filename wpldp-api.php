@@ -106,7 +106,11 @@ if (!class_exists('\WpLdp\WpLdpApi')) {
                 )
             );
 
-            $post = $query->get_posts()[0];
+            $post = $query->get_posts();
+
+            if ( !empty( $post ) && is_array( $post) ) $post = $post[0];
+            else return null;
+
             // Getting general information about the container associated with the current resource
             $fields = \WpLdp\WpLdpUtils::getResourceFieldsList($post->ID);
             $terms =  wp_get_post_terms( $post->ID, 'ldp_container' );

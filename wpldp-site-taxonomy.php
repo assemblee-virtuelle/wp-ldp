@@ -185,11 +185,14 @@ if (!class_exists('\WpLdp\WpLdpSiteTaxonomy')) {
             foreach ($outputs as $siteUrl => $output ){
                 if ($output['code'] == 200){
                     $response = json_decode( $output['data'] );
-                    $current_site = $response->{"@graph"}[0];
-                    $current_site->{"@id"} = $siteUrl;
 
-                    $sites["@graph"]["http://www.w3.org/ns/ldp#contains"][] =
-                    $sites["@graph"]["http://www.w3.org/ns/ldp#contains"][] = $current_site;
+                    if ( !empty( $response ) ) {
+                        $current_site = $response->{"@graph"}[0];
+                        $current_site->{"@id"} = $siteUrl;
+
+                        $sites["@graph"]["http://www.w3.org/ns/ldp#contains"][] =
+                        $sites["@graph"]["http://www.w3.org/ns/ldp#contains"][] = $current_site;
+                    }
                 }
             }
 
@@ -208,7 +211,6 @@ if (!class_exists('\WpLdp\WpLdpSiteTaxonomy')) {
 
             $source_site_url = $headers['referer'][0];
 
-            var_dump( $source_site_url );
             $term = null;
             $query = get_terms(
                 array(
@@ -221,7 +223,6 @@ if (!class_exists('\WpLdp\WpLdpSiteTaxonomy')) {
                 )
             );
 
-            var_dump( $query );
             $term = $query[0];
 
             if ( !term_exists( $term, 'ldp_site' ) ) {
