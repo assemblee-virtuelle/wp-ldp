@@ -432,7 +432,7 @@ if (!class_exists('\WpLdp\WpLdp')) {
                                   ( strpos( $site, 'http://' ) !== false ||
                                     strpos( $site, 'https://' ) !== false ) ) {
                                 $site_url = explode( WpldpApi::LDP_API_URL, $site );
-                                $site_url = $site_url[0] . WpldpApi::LDP_API_URL . 'schema/';
+                                $site_url = $site_url[0] . WpldpApi::LDP_API_URL;
 
                                 $term = get_terms( array(
                                         'taxonomy' => 'ldp_site',
