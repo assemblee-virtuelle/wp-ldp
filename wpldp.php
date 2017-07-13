@@ -26,9 +26,7 @@ if (!class_exists('\WpLdp\WpLdp')) {
       /**
        * The front page url, defaulted as 'wp-ldp/front'
        */
-      protected static $front_page_url = 'wp-ldp/front';
-      protected static $ldp_root_url = 'ldp/$';
-      protected static $ldp_site_url = 'site\b';
+      const FRONT_PAGE_URL = 'wp-ldp/front';
 
       /**
        * The current plugin version number
@@ -61,7 +59,6 @@ if (!class_exists('\WpLdp\WpLdp')) {
         add_action( 'edit_form_advanced', array($this, 'wpldp_edit_form_advanced'));
         add_action( 'save_post', array($this, 'save_ldp_meta_for_post'));
 
-        add_filter( 'template_include', array($this, 'include_template_function'));
         add_action( 'add_meta_boxes', array($this, 'display_container_meta_box' ));
         add_action( 'add_meta_boxes', array($this, 'display_media_meta_box' ));
 
@@ -175,16 +172,7 @@ if (!class_exists('\WpLdp\WpLdp')) {
           global $wp_rewrite;
           $poc_url = plugins_url('public/index.php', __FILE__);
           $poc_url = substr($poc_url, strlen( home_url() ) + 1);
-          // The pattern is prefixed with '^'
-          // The substitution is prefixed with the "home root", at least a '/'
-          // This is equivalent to appending it to `non_wp_rules`
-          $wp_rewrite->add_external_rule(self::$front_page_url, $poc_url);
-          $ldp_root_file = plugins_url('public/index-ldp_ressource.php', __FILE__);
-          $ldp_root_file = substr($ldp_root_file, strlen( home_url() ) + 1);
-          $wp_rewrite->add_external_rule(self::$ldp_root_url, $ldp_root_file);
-          $ldp_site_file = plugins_url('public/index-ldp_site.php', __FILE__);
-          $ldp_site_file = substr($ldp_site_file, strlen( home_url() ) + 1);
-          $wp_rewrite->add_external_rule(self::$ldp_site_url, $ldp_site_file);
+          $wp_rewrite->add_external_rule(Wpldp::FRONT_PAGE_URL, $poc_url);
           //flush_rewrite_rules( true );
       }
 
@@ -216,7 +204,7 @@ if (!class_exists('\WpLdp\WpLdp')) {
                   'show_in_admin_bar'     => true,
                   'supports'              => array('title'),
                   'has_archive'           => true,
-                  'rewrite'               => array('slug' => 'ldp/%ldp_container%'),
+                  'rewrite'               => array('slug' => WpldpApi::LDP_API_URL . '%ldp_container%'),
                   'menu_icon'             => 'dashicons-image-filter',
           ));
       }
@@ -326,38 +314,6 @@ if (!class_exists('\WpLdp\WpLdp')) {
           echo '<a href="#" class="button insert-media add-media" data-editor="content" title="Add Media">';
           echo '  <span class="wp-media-buttons-icon"></span> Add Media';
           echo '</a>';
-      }
-
-      /**
-       * include_template_function - Including the template for displaying a resource
-       *
-       * @param  {type} $template_path description
-       * @return {type}                description
-       */
-      function include_template_function( $template_path ) {
-          if ( get_post_type() == 'ldp_resource' ) {
-              if ( is_single() ) {
-                  // checks if the file exists in the theme first,
-                  // otherwise serve the file from the plugin
-                  if ( $theme_file = locate_template( array ( 'single-ldp_resource.php' ) ) ) {
-                      $template_path = $theme_file;
-                  } else {
-                      $template_path = plugin_dir_path( __FILE__ ) . 'single-ldp_resource.php';
-                  }
-              }
-
-              else {
-                  // checks if the file exists in the theme first,
-                  // otherwise serve the file from the plugin
-                  if ( $theme_file = locate_template( array ( 'archive-ldp_resource.php' ) ) ) {
-                      $template_path = $theme_file;
-                  } else {
-                      $template_path = plugin_dir_path( __FILE__ ) . 'archive-ldp_resource.php';
-                  }
-              }
-          }
-
-          return $template_path;
       }
 
       /**
@@ -541,9 +497,7 @@ if (!class_exists('\WpLdp\WpLdp')) {
        */
       public function wpldpfront_enqueue_script() {
         $current_url = $_SERVER["REQUEST_URI"];
-        if ( strstr( $current_url, self::$front_page_url ) ) {
-        //   wp_enqueue_script('', 'https://code.jquery.com/jquery-2.1.4.min.js');
-
+        if ( strstr( $current_url, Wpldp::FRONT_PAGE_URL ) ) {
           // Loading the LDP-framework library
           wp_register_script(
             'ldpjs',
@@ -558,6 +512,7 @@ if (!class_exists('\WpLdp\WpLdp')) {
             plugins_url('wpldp.js', __FILE__),
             array('jquery')
           );
+          wp_localize_script( 'wpldpjs', 'site_rest_url', get_rest_url() );
           wp_enqueue_script('wpldpjs');
 
           // Loading the BootstrapJS library
@@ -629,7 +584,7 @@ if (!class_exists('\WpLdp\WpLdp')) {
        */
       public function wpldpfront_enqueue_stylesheet() {
         $current_url = $_SERVER["REQUEST_URI"];
-        if ( strstr( $current_url, self::$front_page_url ) ) {
+        if ( strstr( $current_url, Wpldp::FRONT_PAGE_URL ) ) {
           // Loading the WP-LDP stylesheet
           wp_register_style(
             'bootstrapcss',
@@ -666,7 +621,7 @@ if (!class_exists('\WpLdp\WpLdp')) {
               array(
                 'menu-item-title' =>  __('Ecosystem', 'wpldp'),
                 'menu-item-classes' => 'home',
-                'menu-item-url' => home_url( self::$front_page_url, 'relative' ),
+                'menu-item-url' => home_url( Wpldp::FRONT_PAGE_URL, 'relative' ),
                 'menu-item-status' => 'publish'
               )
             );
@@ -686,7 +641,7 @@ if (!class_exists('\WpLdp\WpLdp')) {
         $items = wp_get_nav_menu_items( $menu_id );
         $menu_object = wp_get_nav_menu_object( $menu_id );
         foreach ( $items as $key => $item ) {
-          if ( strstr( $item->url, self::$front_page_url ) ) {
+          if ( strstr( $item->url, Wpldp::FRONT_PAGE_URL ) ) {
             wp_delete_post( $item->ID, true );
             unset( $items[$key] );
           }

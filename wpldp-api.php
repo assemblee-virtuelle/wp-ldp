@@ -92,13 +92,20 @@ if (!class_exists('\WpLdp\WpLdpApi')) {
         * API method for retrieving the details of the current ldp resource
         */
         public function get_resource( \WP_REST_Request $request, \WP_REST_Response $response = null ) {
+            $params = $request->get_params();
+            $ldp_container = $params['ldp_container'];
+            $ldp_resource_slug = $params['ldp_resource'];
+
+            $headers = $request->get_headers();
+            if ( isset( $headers['accept'] )
+                       && strstr( $headers['accept'][0], 'text/html' ) !== false ) {
+               header("Location: " . site_url('/') . Wpldp::FRONT_PAGE_URL . "#" . get_rest_url() . "ldp/v1/" . $ldp_container . '/' . $ldp_resource_slug . '/');
+               exit;
+            }
+
             header('Content-Type: application/ld+json');
             header('Access-Control-Allow-Origin: *');
 
-            $params = $request->get_params();
-            $ldp_container = $params['ldp_container'];
-
-            $ldp_resource_slug = $params['ldp_resource'];
             $query = new \WP_Query(
                 array(
                     'name' => $ldp_resource_slug,

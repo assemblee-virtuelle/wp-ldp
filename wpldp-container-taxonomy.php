@@ -71,7 +71,7 @@ if (!class_exists('\WpLdp\WpLdpContainerTaxonomy')) {
           );
 
           $rewrite = array(
-            'slug'                       => 'ldp',
+            'slug'                       => rtrim( WpldpApi::LDP_API_URL, '/' ),
             'with_front'                 => true,
             'hierarchical'               => false,
           );
@@ -213,11 +213,18 @@ if (!class_exists('\WpLdp\WpLdpContainerTaxonomy')) {
         * API method for retrieving the list of resources associated with the current taxonomy
         */
         public function get_resources_from_container( \WP_REST_Request $request, \WP_REST_Response $response = null ) {
-            header('Content-Type: application/ld+json');
-            header('Access-Control-Allow-Origin: *');
-
             $params = $request->get_params();
             $ldp_container = $params['ldp_container'];
+
+            $headers = $request->get_headers();
+            if ( isset( $headers['accept'] )
+                       && strstr( $headers['accept'][0], 'text/html' ) !== false ) {
+               header("Location: " . site_url('/') . Wpldp::FRONT_PAGE_URL . "#" . get_rest_url() . "ldp/v1/" . $ldp_container . '/' );
+               exit;
+            }
+
+            header('Content-Type: application/ld+json');
+            header('Access-Control-Allow-Origin: *');
 
             $query = new \WP_Query(
                 array(
