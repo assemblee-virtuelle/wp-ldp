@@ -172,7 +172,7 @@ if (!class_exists('\WpLdp\WpLdp')) {
           global $wp_rewrite;
           $poc_url = plugins_url('public/index.php', __FILE__);
           $poc_url = substr($poc_url, strlen( home_url() ) + 1);
-          $wp_rewrite->add_external_rule(Wpldp::FRONT_PAGE_URL, $poc_url);
+          $wp_rewrite->add_external_rule( '([_0-9a-zA-Z-]+/)?' . Wpldp::FRONT_PAGE_URL, $poc_url);
           //flush_rewrite_rules( true );
       }
 
@@ -221,7 +221,7 @@ if (!class_exists('\WpLdp\WpLdp')) {
           if ( 'ldp_resource' == get_post_type( $post ) ) {
             if (is_object($post)){
               $terms = wp_get_object_terms( $post->ID, 'ldp_container' );
-              if (!empty($terms)) {
+              if ( !empty( $terms ) ) {
                   return str_replace('%ldp_container%', $terms[0]->slug, $post_link);
               }
             }
