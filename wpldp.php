@@ -4,7 +4,7 @@
  * Plugin URI: https://github.com/assemblee-virtuelle/wpldp
  * Description: This is a plugin which aims to emulate the default caracteristics of a Linked Data Platform compatible server
  * Text Domain: wpldp
- * Version: 2.0.2
+ * Version: 2.0.3
  * Author: Sylvain LE BON, Benoit ALESSANDRONI
  * Author URI: http://www.happy-dev.fr/team/sylvain, http://benoit-alessandroni.fr/
  * License: GPL2
@@ -31,7 +31,7 @@ if (!class_exists('\WpLdp\WpLdp')) {
       /**
        * The current plugin version number
        */
-      protected static $version_number = '2.0.2';
+      protected static $version_number = '2.0.3';
 
       /**
        * Default Constructor
@@ -88,29 +88,36 @@ if (!class_exists('\WpLdp\WpLdp')) {
               if ( !empty( $wpLdpSettings ) ) {
                 $wpLdpSettings->initialize_container( true );
               }
+              
               $actor_term = get_term_by('slug', 'actor', 'ldp_container');
               $person_term = get_term_by('slug', 'person', 'ldp_container');
-              wp_delete_term( $actor_term->term_id, 'ldp_container', array('default' => $person_term->term_id ) );
+              if ( !empty( $actor_term ) && !is_wp_error( $actor_term ) ) {
+                  wp_delete_term( $actor_term->term_id, 'ldp_container', array('default' => $person_term->term_id ) );
+              }
 
               $project_term = get_term_by('slug', 'project', 'ldp_container');
               $initiative_term = get_term_by('slug', 'initiative', 'ldp_container');
-              wp_delete_term( $project_term->term_id, 'ldp_container', array('default' => $initiative_term->term_id ) );
-
+              if ( !empty( $project_term ) && !is_wp_error( $project_term ) ) {
+                  wp_delete_term( $project_term->term_id, 'ldp_container', array('default' => $initiative_term->term_id ) );
+              }
+                  
               $resource_term = get_term_by('slug', 'resource', 'ldp_container');
-              wp_delete_term( $resource_term->term_id, 'ldp_container' );
+              if ( !empty( $resource_term ) && !is_wp_error( $resource_term ) ) {
+                  wp_delete_term( $resource_term->term_id, 'ldp_container' );
+              }
 
               $idea_term = get_term_by('slug', 'idea', 'ldp_container');
-              wp_delete_term( $idea_term->term_id, 'ldp_container' );
+              if ( !empty( $idea_term ) && !is_wp_error( $idea_term ) ) {
+                  wp_delete_term( $idea_term->term_id, 'ldp_container' );
+              }
           }
 
           if (self::$version_number > $plugin_version) {
-            $update_option = $this->wpldp_db_upgrade();
-
-            if ($update_option) {
-              update_option('wpldp_version', self::$version_number);
-            }
-          }
+              $update_option = $this->wpldp_db_upgrade();
+          }  
         }
+          
+        update_option('wpldp_version', self::$version_number);
       }
 
       private function wpldp_db_upgrade() {
