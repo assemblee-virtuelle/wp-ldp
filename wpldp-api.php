@@ -174,7 +174,7 @@ if (!class_exists('\WpLdp\WpLdpApi')) {
             if ( !empty( $user_login ) ) {
               $user = get_user_by ( 'login', $user_login);
               if ( $user ) {
-                $loop = new WP_Query( array(
+                $loop = new \WP_Query( array(
                     'post_type' => 'post',
                     'posts_per_page' => 12,
                     'orderby'=> 'menu_order',
