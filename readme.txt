@@ -3,8 +3,8 @@ Contributors: balessan
 Donate link: http://www.virtual-assembly.org/contribuez-financierement/
 Tags: decentralization, federation, linked-data, LDP, RDF, JSON-LD
 Requires at least: 4.4.0
-Tested up to: 4.4
-Stable tag: 4.4
+Tested up to: 4.8
+Stable tag: 4.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -56,6 +56,13 @@ Outside of the context of willing to share some resources between different webs
 9. The created resource generated JSON raw view
 
 == Changelog ==
+
+= 2.0.0 =
+* Full rewrite of the plugin to base it on the WP Rest API
+* Adding autocomplete on resources selection
+* Better handling of multiple values object properties
+* Minimal search API
+* Proper separation of concerns on the JS side
 
 = 1.0.5 =
 * Force refreshing the container models when initializing
