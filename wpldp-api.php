@@ -180,11 +180,12 @@ if (!class_exists('\WpLdp\WpLdpApi')) {
                     'orderby'=> 'menu_order',
                     'author' => $user->data->ID,
                     'post_status' => 'any'
-                ));
-
-                if ($loop->have_posts ()) {
+                ) );
+		
+		$posts = $loop->get_posts();
+                if ( !empty( $posts ) ) {
                     $result["@graph"][0]['posts'] = array( array( ) );
-                    foreach( $loop as $post ) {
+                    foreach( $posts as $post ) {
                         $current_post_entry = array();
                         $current_post_entry["@id"] = get_permalink($post->ID);
                         $current_post_entry["dc:title"] = $post->post_title;
