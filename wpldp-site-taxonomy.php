@@ -154,12 +154,14 @@ if (!class_exists('\WpLdp\WpLdpSiteTaxonomy')) {
             );
 
             $ldpSiteUrls = array();
-            foreach ( $terms as $term ){
-                $possibleUrl = get_term_meta( $term->term_id, "ldp_site_url", true );
-                if ( $possibleUrl ) {
-                    $ldpSiteUrls[] = rtrim( $possibleUrl, '/' );
+	    if ( !empty( $terms ) && !is_wp_error( $terms ) ) {
+                foreach ( $terms as $term ){
+                    $possibleUrl = get_term_meta( $term->term_id, "ldp_site_url", true );
+                    if ( $possibleUrl ) {
+                        $ldpSiteUrls[] = rtrim( $possibleUrl, '/' );
+                    }
                 }
-            }
+	    }
 
             $outputs = array();
             foreach ($ldpSiteUrls as $ldpSiteUrl) {
@@ -238,5 +240,3 @@ if (!class_exists('\WpLdp\WpLdpSiteTaxonomy')) {
 } else {
     exit ('Class WpLdpSiteTaxonomy already exists');
 }
-
- ?>
