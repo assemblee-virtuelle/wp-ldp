@@ -179,8 +179,7 @@ if (!class_exists('\WpLdp\WpLdpApi')) {
                     'posts_per_page' => 12,
                     'orderby'=> 'menu_order',
                     'author' => $user->data->ID,
-                    'post_status' => 'any',
-                    'paged'=>$paged
+                    'post_status' => 'any'
                 ));
 
                 if ($loop->have_posts ()) {
