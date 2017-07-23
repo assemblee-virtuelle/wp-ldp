@@ -31,7 +31,7 @@ if (!class_exists('\WpLdp\WpLdp')) {
       /**
        * The current plugin version number
        */
-      protected static $version_number = '1.1.1';
+      protected static $version_number = '2.0.0';
 
       /**
        * Default Constructor
