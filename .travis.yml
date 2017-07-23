@@ -9,5 +9,25 @@ php:
   - 7.1
  
 script:
-  # Run your tests here.
   - echo 'Tested'
+
+before_deploy:
+  - cd library/js
+  - npm install
+  - cd ../..
+  - git submodule init
+  - git submodule update
+ 
+deploy:
+  - provider: wordpress-plugin
+    edge:
+      source: TypistTech/dpl
+      branch: add-wordpress-plugin-deployment
+    on:
+      php: 7.1
+      tags: true
+      repo: assemblee-virtuelle/wp-ldp
+    slug: wp-ldp
+    username: balessan
+    password: $WORDPRESS_ORG_PASSWORD
+    build_dir: build 
