@@ -1,0 +1,10 @@
+{
+  "name": "wp-ldpdep",
+  "version": "1.0.0",
+  "dependencies": {
+    "jsoneditor": "latest"
+  },
+  "devDependencies" : {
+    "jsoneditor": "latest"
+  }
+}
