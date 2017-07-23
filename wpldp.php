@@ -4,7 +4,7 @@
  * Plugin URI: https://github.com/assemblee-virtuelle/wpldp
  * Description: This is a plugin which aims to emulate the default caracteristics of a Linked Data Platform compatible server
  * Text Domain: wpldp
- * Version: 2.0.1
+ * Version: 2.0.2
  * Author: Sylvain LE BON, Benoit ALESSANDRONI
  * Author URI: http://www.happy-dev.fr/team/sylvain, http://benoit-alessandroni.fr/
  * License: GPL2
@@ -31,7 +31,7 @@ if (!class_exists('\WpLdp\WpLdp')) {
       /**
        * The current plugin version number
        */
-      protected static $version_number = '2.0.1';
+      protected static $version_number = '2.0.2';
 
       /**
        * Default Constructor
