@@ -12,11 +12,26 @@ script:
   - echo 'Tested'
 
 before_deploy:
+  - mkdir build
   - cd library/js
   - npm install
   - cd ../..
   - git submodule init
   - git submodule update
+  - cp wpldp.php build
+  - cp wpldp-api.php build
+  - cp wpldp-settings.php build
+  - cp wpldp-container-taxonomy.php build
+  - cp wpldp-site-taxonomy.php build
+  - cp wpldp-utils.php build
+  - cp readme.txt build
+  - cp LICENSE build
+  - cp README.md build
+  - cp -R assets build
+  - cp -R languages build
+  - cp -R models build
+  - cp -R resources build
+  - cp -R public build
  
 deploy:
   - provider: wordpress-plugin
