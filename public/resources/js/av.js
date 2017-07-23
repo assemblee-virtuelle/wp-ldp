@@ -43,33 +43,6 @@ jQuery('#menu li a').click(
 /*********************************************
 **************** POC FUNCTIONS ***************
 **********************************************/
-function displayInitiative(divName, itemId, templateId) {
-  wpldp.render(divName, itemId, templateId);
-  refreshBrowsePanel(itemId, 'person');
-  refreshBrowsePanel(itemId, 'initiative');
-  refreshBrowsePanel(itemId, 'resource');
-  refreshBrowsePanel(itemId, 'idea');
-  window.location.hash = itemId;
-}
-
-function displayPerson(divName, itemId, templateId) {
-  wpldp.render(divName, itemId, templateId);
-  refreshBrowsePanel(itemId, 'initiative');
-  refreshBrowsePanel(itemId, 'person');
-  refreshBrowsePanel(itemId, 'resource');
-  refreshBrowsePanel(itemId, 'idea');
-  window.location.hash = itemId;
-}
-
-function displayGroup(divName, itemId, templateId) {
-  wpldp.render(divName, itemId, templateId);
-  refreshBrowsePanel(itemId, 'initiative');
-  refreshBrowsePanel(itemId, 'person');
-  refreshBrowsePanel(itemId, 'resource');
-  refreshBrowsePanel(itemId, 'idea');
-  window.location.hash = itemId;
-}
-
 function displayResource(divName, itemId, templateId) {
     wpldp.render(divName, itemId, templateId);
     refreshBrowsePanel(itemId, 'initiative');
@@ -115,7 +88,7 @@ function displayLDPResource(targetResource) {
 
 function getKnownHostsList() {
   var knownHostsList = [ config.resourceBaseUrl ];
-  if (typeof(Storage)) {
+  if ( typeof( Storage ) ) {
     var hostList = localStorage.getItem('ldp_hostname_list');
     if (hostList) {
       hostList = JSON.parse(hostList);

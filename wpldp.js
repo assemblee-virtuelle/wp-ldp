@@ -20,31 +20,146 @@ window.wpldp = function( store, options ) {
           }
       });
 
-      this.bindEvents();
-
       this.loadData();
+
+      this.bindEvents();
    }
 
    this.loadData = function () {
-       var instance = this;
-       this.store.list( instance.current_site_url ).then( function( sites ) {
-           sites.forEach( function( site ) {
-               this.store.list( site['@id'] ).then( function( containers ) {
-                   console.log('TOTOT');
-                   containers.forEach( function( container ) {
-                       console.log('Contianer', container );
-                       this.store.list( container['@id'] ).then( function( resources ) {
-                           console.log( 'Resources', resources );
-                           resources.forEach( function( resource ) {
-                               instance.resultSet.push( resource );
-                               console.log( instance.resultSet );
-                           });
-                       });
-                   });
-               });
-           });
-       });
+        var instance = this;
+        var sites = null;
+        if ( typeof( Storage ) ) {
+            sites = localStorage.getItem('ldp_sites_list');
+            if ( sites ) {
+                sites = JSON.parse( sites );
+                instance.getContainers( sites );
+            } else {
+                console.log( instance.current_site_url );
+                this.store.get( instance.current_site_url ).then( function( retrieved_sites ) {
+                    localStorage.setItem('ldp_sites_list', JSON.stringify( retrieved_sites ) );
+                    console.log( retrieved_sites['http://www.w3.org/ns/ldp#contains'] );
+                    instance.getContainers( retrieved_sites['http://www.w3.org/ns/ldp#contains'] );
+                });
+            }
+        } else {
+            this.store.list( instance.current_site_url ).then( function( sites ) {
+                sites.forEach( function( site ) {
+                    this.store.list( site['@id'] ).then( function( containers ) {
+                        containers.forEach( function( container ) {
+                            this.store.list( container['@id'] ).then( function( resources ) {
+                                resources.forEach( function( resource ) {
+                                    instance.resultSet.push( resource );
+                                });
+                            });
+                        });
+                    });
+                });
+            });
+        }
    }
+
+    this.getContainers = function( sitesArray ) {
+        var instance = this;
+        console.log( sitesArray );
+        if ( Array.isArray( sitesArray ) ) {
+            sitesArray.forEach( function( site ) {
+                var containers = localStorage.getItem( 'ldp_containers_list_' + site['@id'] );
+                if ( containers ) {
+                    containers = JSON.parse( containers );
+                    instance.getResources( site, containers );
+                } else {
+                    this.store.get( site['@id'] ).then( function( retrievedContainers ) {
+                        localStorage.setItem(
+                            'ldp_containers_list_' + site['@id'],
+                            JSON.stringify( retrievedContainers )
+                        );
+
+                        instance.getResources( site, retrievedContainers );
+                    });
+                }
+            });
+        } else {
+            var containers = localStorage.getItem( 'ldp_containers_list_' + sitesArray['@id'] );
+            if ( containers ) {
+                containers = JSON.parse( containers );
+                instance.getResources( site, containers );
+            } else {
+                this.store.get( sitesArray['@id'] ).then( function( retrievedContainers ) {
+                    localStorage.setItem(
+                        'ldp_containers_list_' + sitesArray['@id'],
+                        JSON.stringify( retrievedContainers )
+                    );
+
+                    instance.getResources( sitesArray, retrievedContainers['http://www.w3.org/ns/ldp#contains'] );
+                });
+            }
+        }
+    }
+
+    this.getResources = function( site, containers ) {
+        var instance = this;
+        console.log( containers );
+
+        if ( Array.isArray( containers ) ) {
+            containers.forEach( function( container ) {
+                var resources = localStorage.getItem( 'ldp_resources_list_' + site['@id'] + '_' + container['@id'] );
+                console.log( resources );
+                if ( resources ) {
+                    resources.forEach( function( resource ) {
+                        instance.resultSet.push( resource );
+                    });
+
+                    console.log( instance.resultSet );
+                } else {
+                    this.store.get( container['@id'] ).then( function( retrievedResources ) {
+                        localStorage.setItem(
+                            'ldp_resources_list__' + site['@id'] + '_' + container['@id'],
+                            JSON.stringify( retrievedResources['http://www.w3.org/ns/ldp#contains'] )
+                        );
+                        console.log( retrievedResources['http://www.w3.org/ns/ldp#contains'], instance.resultSet );
+
+                        if ( Array.isArray( retrievedResources['http://www.w3.org/ns/ldp#contains'] ) ) {
+                            retrievedResources['http://www.w3.org/ns/ldp#contains'].forEach( function( resource ) {
+                                instance.resultSet.push( resource );
+                            });
+                        } else {
+                            instance.resultSet.push( retrievedResources['http://www.w3.org/ns/ldp#contains'] );
+                        }
+
+                        console.log( instance.resultSet );
+                    });
+                }
+            });
+        } else {
+            var resources = localStorage.getItem( 'ldp_resources_list_' + site['@id'] + '_' + containers['@id'] );
+            console.log( resources );
+            if ( resources ) {
+                resources.forEach( function( resource ) {
+                    instance.resultSet.push( resource );
+                });
+
+                console.log( instance.resultSet );
+            } else {
+                this.store.get( containers['@id'] ).then( function( retrievedResources ) {
+                    localStorage.setItem(
+                        'ldp_resources_list__' + site['@id'] + '_' + containers['@id'],
+                        JSON.stringify( retrievedResources['http://www.w3.org/ns/ldp#contains'] )
+                    );
+                    console.log( retrievedResources['http://www.w3.org/ns/ldp#contains'], instance.resultSet );
+
+                    if ( Array.isArray( retrievedResources['http://www.w3.org/ns/ldp#contains'] ) ) {
+                        retrievedResources['http://www.w3.org/ns/ldp#contains'].forEach( function( resource ) {
+                            instance.resultSet.push( resource );
+                        });
+                    } else {
+                        instance.resultSet.push( retrievedResources['http://www.w3.org/ns/ldp#contains'] );
+                    }
+
+                    console.log( instance.resultSet );
+                });
+            }
+        }
+    }
 
     this.bindEvents = function() {
         var instance = this;
@@ -69,7 +184,8 @@ window.wpldp = function( store, options ) {
                     var emptyFields = jQuery(this).siblings().filter(function(index) { return jQuery(this).val() == ''}).length;
                 },
                 source: function(request, callback) {
-                    var searchResults = []
+                    var searchResults = [];
+                    console.log( instance.resultSet );
                     instance.resultSet.forEach( function( result ) {
                         if ( result['@type'] == event.target.parentNode.dataset.range ) {
                             searchResults.push( { 'label': result['foaf:name'], 'value': result['@id'] } );
