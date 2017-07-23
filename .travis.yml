@@ -39,7 +39,7 @@ deploy:
       source: TypistTech/dpl
       branch: add-wordpress-plugin-deployment
     on:
-      php: 7.1
+      php: 7.0
       tags: true
       repo: assemblee-virtuelle/wp-ldp
     slug: wp-ldp
