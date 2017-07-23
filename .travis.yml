@@ -40,7 +40,7 @@ deploy:
       branch: add-wordpress-plugin-deployment
     on:
       php: 7.0
-      tags: true
+      tags: false
       repo: assemblee-virtuelle/wp-ldp
     slug: wp-ldp
     username: balessan
