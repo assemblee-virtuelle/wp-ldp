@@ -63,8 +63,7 @@ cd svn/trunk/library/js
 npm install
 
 cd ../..
-git submodule init
-git submodule update
+
 TARGET=$(pwd)
 
 cd ../../svn-trunk/
