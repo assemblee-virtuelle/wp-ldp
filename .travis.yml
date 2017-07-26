@@ -7,17 +7,9 @@ sudo: false
 php:
   - 7.0
   - 7.1
-  
-phpunit: false
-  
+
+script: ./scripts/deploy.sh
+
 branches:
   only: 
     - master
-
-deploy:
-  provider: script
-  skip_cleanup: true
-  script: ./scripts/deploy.sh
-  on:
-    branch: master
-    php: 7.0
