@@ -17,9 +17,6 @@ fi
 
 WP_ORG_USERNAME="balessan"
 PLUGIN="wp-ldp"
-PROJECT_ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." && pwd )"
-PLUGIN_BUILDS_PATH="$PROJECT_ROOT/builds"
-PLUGIN_BUILD_CONFIG_PATH="$PROJECT_ROOT/build-cfg"
 VERSION=`grep "^Stable tag" "$GITPATH/readme.txt" | awk -F' ' '{print $3}' | sed 's/[[:space:]]//g'`
 ZIP_FILE="$PLUGIN_BUILDS_PATH/$PLUGIN-$VERSION.zip"
 
