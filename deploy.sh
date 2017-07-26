@@ -68,7 +68,8 @@ cd ../../svn-trunk/
 # Find all .svn dirs in sub dirs
 SVN_DIRS=`find . -type d -iname .svn`
 
-for SVN_DIR in $SVN_DIRS; do
+for SVN_DIR in $SVN_DIRS
+do
     SOURCE_DIR=${SVN_DIR/.}
     TARGET_DIR=$TARGET${SOURCE_DIR/.svn}
     TARGET_SVN_DIR=$TARGET${SVN_DIR/.}
