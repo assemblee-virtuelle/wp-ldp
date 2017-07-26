@@ -1,9 +1,14 @@
+# .travis.yml
+
 language: php
 
+sudo: false
+
+php:
+  - 7.0
+  - 7.1
+
 deploy:
-  #
-  # Auto-deploys the built plugin to WordPress.org on push to master branch
-  #
   provider: script
   skip_cleanup: true
   script: ./scripts/deploy.sh
