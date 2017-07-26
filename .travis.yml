@@ -8,6 +8,8 @@ php:
   - 7.0
   - 7.1
   
+phpunit: false
+  
 branches:
   only: 
     - master
