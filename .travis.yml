@@ -8,7 +8,7 @@ php:
   - 7.0
   - 7.1
 
-script: ./scripts/deploy.sh
+script: scripts/deploy
 
 branches:
   only: 
