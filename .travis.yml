@@ -1,47 +1,10 @@
-# .travis.yml
- 
-language: php
- 
-sudo: false
- 
-php:
-  - 7.0
-  - 7.1
- 
-script:
-  - echo 'Tested'
-
-before_deploy:
-  - mkdir build
-  - cd library/js
-  - npm install
-  - cd ../..
-  - git submodule init
-  - git submodule update
-  - cp wpldp.php build
-  - cp wpldp-api.php build
-  - cp wpldp-settings.php build
-  - cp wpldp-container-taxonomy.php build
-  - cp wpldp-site-taxonomy.php build
-  - cp wpldp-utils.php build
-  - cp readme.txt build
-  - cp LICENSE build
-  - cp README.md build
-  - cp -R assets build
-  - cp -R languages build
-  - cp -R models build
-  - cp -R resources build
-  - cp -R public build
- 
 deploy:
-  - provider: wordpress-plugin
-    edge:
-      source: TypistTech/dpl
-      branch: add-wordpress-plugin-deployment
-    on:
-      php: 7.0
-      repo: assemblee-virtuelle/wp-ldp
-    slug: wp-ldp
-    username: balessan
-    password: $WORDPRESS_ORG_PASSWORD
-    build_dir: build 
+  #
+  # Auto-deploys the built plugin to WordPress.org on push to master branch
+  #
+  provider: script
+  skip_cleanup: true
+  script: ./scripts/deploy.sh
+  on:
+    branch: master
+    php: 7.0
