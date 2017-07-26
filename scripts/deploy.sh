@@ -5,7 +5,7 @@ if [[ -z "$TRAVIS" ]]; then
 	exit 1
 fi
 
-if [[ -z "$WP_ORG_PASSWORD" ]]; then
+if [[ -z "$WORDPRESS_ORG_PASSWORD" ]]; then
 	echo "WordPress.org password not set" 1>&2
 	exit 1
 fi
@@ -99,7 +99,7 @@ svn stat svn | grep '^!' | awk '{print $2}' | xargs -I x svn rm --force x@
 svn stat svn
 
 # Commit to SVN
-svn ci --no-auth-cache --username $WP_ORG_USERNAME --password $WP_ORG_PASSWORD svn -m "Deploy version $VERSION"
+svn ci --no-auth-cache --username $WP_ORG_USERNAME --password $WORDPRESS_ORG_PASSWORD svn -m "Deploy version $VERSION"
 
 # Remove SVN temp dir
 rm -fR svn
