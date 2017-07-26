@@ -17,7 +17,7 @@ fi
 
 WP_ORG_USERNAME="balessan"
 PLUGIN="wp-ldp"
-VERSION=`grep "^Stable tag" "readme.txt" | awk -F' ' '{print $3}' | sed 's/[[:space:]]//g'`
+VERSION=`grep "^Version" "readme.txt" | awk -F' ' '{print $2}' | sed 's/[[:space:]]//g'`
 ZIP_FILE="$PLUGIN_BUILDS_PATH/$PLUGIN-$VERSION.zip"
 
 # Ensure the zip file for the current version has been built
