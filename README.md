@@ -1,6 +1,6 @@
 # LDP Plugin for wordpress
 
-[![Build Status](https://travis-ci.org/assemblee-virtuelle/wp-ldp.svg?branch=master)](https://travis-ci.org/assemblee-virtuelle/wp-ldp) <a href="https://codeclimate.com/github/assemblee-virtuelle/wp-ldp"><img src="https://codeclimate.com/github/assemblee-virtuelle/wp-ldp/badges/gpa.svg" /></a>
+[![Build Status](https://travis-ci.org/assemblee-virtuelle/wp-ldp.svg?branch=master)](https://travis-ci.org/assemblee-virtuelle/wp-ldp) <a href="https://codeclimate.com/github/assemblee-virtuelle/wp-ldp"><img src="https://codeclimate.com/github/assemblee-virtuelle/wp-ldp/badges/gpa.svg" /></a> [![Coverage Status](https://coveralls.io/repos/github/assemblee-virtuelle/wp-ldp/badge.svg?branch=master)](https://coveralls.io/github/assemblee-virtuelle/wp-ldp?branch=master)
 
 The goal of this project is to be able to manage (create, list, display) LDP resources directly from a Wordpress site backend.
 
