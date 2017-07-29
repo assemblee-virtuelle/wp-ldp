@@ -26,7 +26,16 @@ require_once( 'wpldp-site-taxonomy.php' );
 require_once( 'wpldp-settings.php' );
 require_once( 'wpldp-api.php' );
 
-if ( !class_exists( '\WpLdp\WpLdp' ) ) {
+if ( ! class_exists( '\WpLdp\WpLdp' ) ) {
+	/**
+	 * WpLdp Handles everything related to the resource post type.
+	 *
+	 * @category Class
+	 * @package WPLDP
+	 * @author  Benoit Alessandroni
+	 * @license https://www.gnu.org/licenses/gpl-2.0.txt GNU/GPLv2
+	 *
+	 */
 	class WpLdp {
 
 		/**

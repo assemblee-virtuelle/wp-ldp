@@ -1,10 +1,27 @@
 <?php
+/**
+ * Site taxonomy
+ *
+ * Site taxonomy class and instance.
+ *
+ * @package WPLDP
+ * @version 1.0.0
+ * @author  Benoit Alessandroni
+ * @license https://www.gnu.org/licenses/gpl-2.0.txt GNU/GPLv2
+ * @since  2.0.0
+ */
 namespace WpLdp;
 
-/**
-* Class handling everything related to the plugin custom taxonomies
-**/
 if ( ! class_exists( '\WpLdp\WpLdpSiteTaxonomy' ) ) {
+	/**
+	 * WpLdpSiteTaxonomy Handles everything related to our site taxonomy.
+	 *
+	 * @category Class
+	 * @package WPLDP
+	 * @author    Benoit Alessandroni
+	 * @license https://www.gnu.org/licenses/gpl-2.0.txt GNU/GPLv2
+	 *
+	 */
 	class WpLdpSiteTaxonomy {
 
 		public function __construct() {

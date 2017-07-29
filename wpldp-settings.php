@@ -1,10 +1,27 @@
 <?php
+/**
+ * Settings
+ *
+ * The plugin settings.
+ *
+ * @package WPLDP
+ * @version 1.0.0
+ * @author  Benoit Alessandroni
+ * @license https://www.gnu.org/licenses/gpl-2.0.txt GNU/GPLv2
+ * @since  2.0.0
+ */
 namespace WpLdp;
 
-/**
-* Class handling everything related to settings page and available options inside them
-**/
 if ( ! class_exists( '\WpLdp\WpLdpSettings' ) ) {
+	/**
+	 * WpLdpSettings Handles everything related to the admin settings.
+	 *
+	 * @category Class
+	 * @package WPLDP
+	 * @author    Benoit Alessandroni
+	 * @license https://www.gnu.org/licenses/gpl-2.0.txt GNU/GPLv2
+	 *
+	 */
 	class WpLdpSettings {
 		/**
 		* __construct - Class default constructor

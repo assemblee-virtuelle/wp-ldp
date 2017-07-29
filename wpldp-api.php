@@ -1,11 +1,33 @@
 <?php
+/**
+ * API
+ *
+ * The LDP API itself
+ *
+ * @package WPLDP
+ * @version 1.0.0
+ * @author  Benoit Alessandroni
+ * @license https://www.gnu.org/licenses/gpl-2.0.txt GNU/GPLv2
+ * @since  2.0.0
+ */
 namespace WpLdp;
 
 /**
 * Class handling everything related to settings page and available options inside them
 **/
-if ( !class_exists( '\WpLdp\WpLdpApi' ) ) {
+if ( ! class_exists( '\WpLdp\WpLdpApi' ) ) {
+	/**
+	 * WpLdpApi Handles everything related to our custom LDP API.
+	 *
+	 * @category Class
+	 * @package WPLDP
+	 * @author  Benoit Alessandroni
+	 * @license https://www.gnu.org/licenses/gpl-2.0.txt GNU/GPLv2
+	 *
+	 */
 	class WpLdpApi {
+
+
 		const LDP_API_URL = 'api/ldp/v1/';
 
 		/**
