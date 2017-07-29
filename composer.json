@@ -1,0 +1,7 @@
+{
+    "name": "virtual-assembly/wp-ldp",
+    "require": {
+        "phpunit/phpunit": "6.2.*",
+	"easyrdf/easyrdf": "0.9.1"
+    }
+}
