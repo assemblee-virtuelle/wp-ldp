@@ -1,45 +1,45 @@
 <?php
 /**
-* Plugin Name: WP LDP
-* Plugin URI: https://github.com/assemblee-virtuelle/wpldp
-* Description: This is a plugin which aims to emulate the default caracteristics of a Linked Data Platform compatible server
-* Text Domain: wpldp
-* Version: 2.0.4
-* Author: Sylvain LE BON, Benoit ALESSANDRONI
-* Author URI: http://www.happy-dev.fr/team/sylvain, http://benoit-alessandroni.fr/
-* License: GPL2
+ * Plugin Name: WP LDP
+ * Plugin URI: https://github.com/assemblee-virtuelle/wpldp
+ * Description: This is a plugin which aims to emulate the default caracteristics of a Linked Data Platform compatible server
+ * Text Domain: wpldp
+ * Version: 2.0.4
+ * Author: Sylvain LE BON, Benoit ALESSANDRONI
+ * Author URI: http://www.happy-dev.fr/team/sylvain, http://benoit-alessandroni.fr/
+ * License: GPL2
 */
 namespace WpLdp;
 
-// If the file is accessed outside of index.php (ie. directly), we just deny the access
-defined('ABSPATH') or die("No script kiddies please!");
+// If the file is accessed outside of index.php (ie. directly), we just deny the access.
+defined( 'ABSPATH' ) or die( "No script kiddies please!" );
 
-require_once('wpldp-utils.php');
-require_once('wpldp-container-taxonomy.php');
-require_once('wpldp-site-taxonomy.php');
-require_once('wpldp-settings.php');
-require_once('wpldp-api.php');
+require_once( 'wpldp-utils.php' );
+require_once( 'wpldp-container-taxonomy.php' );
+require_once( 'wpldp-site-taxonomy.php' );
+require_once( 'wpldp-settings.php' );
+require_once( 'wpldp-api.php' );
 
-if (!class_exists('\WpLdp\WpLdp')) {
+if ( !class_exists( '\WpLdp\WpLdp' ) ) {
     class WpLdp {
 
         /**
-        * The front page url, defaulted as 'wp-ldp/front'
+        * The front page url, defaulted as 'wp-ldp/front'.
         */
         const FRONT_PAGE_URL = 'wp-ldp/front';
 
         /*
-        * The resource post type name
+        * The resource post type name.
         */
         const RESOURCE_POST_TYPE = 'ldp_resource';
 
         /**
-        * The current plugin version number
+        * The current plugin version number.
         */
         protected static $version_number = '2.0.4';
 
         /**
-        * Default Constructor
+        * Default Constructor.
         **/
         public function __construct() {
             if ( get_magic_quotes_gpc() ) {
@@ -49,69 +49,69 @@ if (!class_exists('\WpLdp\WpLdp')) {
                 $_REQUEST   = array_map( 'stripslashes_deep', $_REQUEST );
             }
 
-            register_activation_hook( __FILE__, array($this, 'wpldp_rewrite_flush' ) );
-            register_deactivation_hook( __FILE__, array($this, 'wpldp_flush_rewrite_rules_on_deactivation' ) );
+            register_activation_hook( __FILE__, array( $this, 'wpldp_rewrite_flush' ) );
+            register_deactivation_hook( __FILE__, array( $this, 'wpldp_flush_rewrite_rules_on_deactivation' ) );
 
-            register_activation_hook( __FILE__, array($this, 'generate_menu_item') );
-            register_deactivation_hook( __FILE__, array($this, 'remove_menu_item' ) );
+            register_activation_hook( __FILE__, array( $this, 'generate_menu_item') );
+            register_deactivation_hook( __FILE__, array( $this, 'remove_menu_item' ) );
 
             // Entry point of the plugin
-            add_action('init', array($this, 'wpldp_plugin_update'));
-            add_action( 'init', array($this, 'load_translations_file'));
-            add_action( 'init', array($this, 'create_ldp_type'));
-            add_action( 'init', array($this, 'add_poc_rewrite_rule'));
+            add_action('init', array( $this, 'wpldp_plugin_update' ) );
+            add_action( 'init', array( $this, 'load_translations_file' ) );
+            add_action( 'init', array( $this, 'create_ldp_type' ) );
+            add_action( 'init', array( $this, 'add_poc_rewrite_rule' ) );
 
-            add_action( 'edit_form_advanced', array($this, 'wpldp_edit_form_advanced'));
-            add_action( 'save_post', array($this, 'save_ldp_meta_for_post'));
+            add_action( 'edit_form_advanced', array( $this, 'wpldp_edit_form_advanced') );
+            add_action( 'save_post', array( $this, 'save_ldp_meta_for_post') );
 
-            add_action( 'add_meta_boxes', array($this, 'display_container_meta_box' ));
-            add_action( 'add_meta_boxes', array($this, 'display_media_meta_box' ));
+            add_action( 'add_meta_boxes', array( $this, 'display_container_meta_box' ) );
+            add_action( 'add_meta_boxes', array( $this, 'display_media_meta_box' ) );
 
-            add_filter( 'post_type_link', array($this, 'ldp_resource_post_link'), 10, 3 );
+            add_filter( 'post_type_link', array( $this, 'ldp_resource_post_link' ), 10, 3 );
 
-            add_action('admin_enqueue_scripts', array($this, 'ldp_enqueue_stylesheet'));
-            add_action('admin_enqueue_scripts', array($this, 'ldp_enqueue_script'));
+            add_action( 'admin_enqueue_scripts', array( $this, 'ldp_enqueue_stylesheet' ) );
+            add_action( 'admin_enqueue_scripts', array( $this, 'ldp_enqueue_script' ) );
 
-            add_action('wp_enqueue_scripts', array($this, 'wpldpfront_enqueue_stylesheet'));
-            add_action('wp_enqueue_scripts', array($this, 'wpldpfront_enqueue_script'));
+            add_action( 'wp_enqueue_scripts', array( $this, 'wpldpfront_enqueue_stylesheet' ) );
+            add_action( 'wp_enqueue_scripts', array( $this, 'wpldpfront_enqueue_script' ) );
         }
 
 
         /**
-        * wpldp_plugin_update - Automatic database upgrade mechanism, planned for the future
+        * wpldp_plugin_update - Automatic database upgrade mechanism, planned for the future.
         *
-        * @return {boolean}  Update validation
+        * @return {boolean}  Update validation.
         */
         function wpldp_plugin_update() {
-            $plugin_version = get_option('wpldp_version');
+            $plugin_version = get_option( 'wpldp_version' );
             $update_option = null;
 
-            if (self::$version_number !== $plugin_version) {
-                if (self::$version_number >= '1.1.0') {
+            if ( self::$version_number !== $plugin_version ) {
+                if ( self::$version_number >= '1.1.0' ) {
                     //Force reinitializing the ldp containers models:
                     global $wpLdpSettings;
                     if ( !empty( $wpLdpSettings ) ) {
                         $wpLdpSettings->initialize_container( true );
                     }
 
-                    $actor_term = get_term_by('slug', 'actor', 'ldp_container');
-                    $person_term = get_term_by('slug', 'person', 'ldp_container');
+                    $actor_term = get_term_by( 'slug', 'actor', 'ldp_container' );
+                    $person_term = get_term_by( 'slug', 'person', 'ldp_container' );
                     if ( !empty( $actor_term ) && !is_wp_error( $actor_term ) ) {
-                        wp_delete_term( $actor_term->term_id, 'ldp_container', array('default' => $person_term->term_id ) );
+                        wp_delete_term( $actor_term->term_id, 'ldp_container', array( 'default' => $person_term->term_id ) );
                     }
 
-                    $project_term = get_term_by('slug', 'project', 'ldp_container');
-                    $initiative_term = get_term_by('slug', 'initiative', 'ldp_container');
+                    $project_term = get_term_by( 'slug', 'project', 'ldp_container' );
+                    $initiative_term = get_term_by( 'slug', 'initiative', 'ldp_container' );
                     if ( !empty( $project_term ) && !is_wp_error( $project_term ) ) {
-                        wp_delete_term( $project_term->term_id, 'ldp_container', array('default' => $initiative_term->term_id ) );
+                        wp_delete_term( $project_term->term_id, 'ldp_container', array( 'default' => $initiative_term->term_id ) );
                     }
 
-                    $resource_term = get_term_by('slug', 'resource', 'ldp_container');
+                    $resource_term = get_term_by( 'slug', 'resource', 'ldp_container' );
                     if ( !empty( $resource_term ) && !is_wp_error( $resource_term ) ) {
                         wp_delete_term( $resource_term->term_id, 'ldp_container' );
                     }
 
-                    $idea_term = get_term_by('slug', 'idea', 'ldp_container');
+                    $idea_term = get_term_by( 'slug', 'idea', 'ldp_container' );
                     if ( !empty( $idea_term ) && !is_wp_error( $idea_term ) ) {
                         wp_delete_term( $idea_term->term_id, 'ldp_container' );
                     }
@@ -122,7 +122,7 @@ if (!class_exists('\WpLdp\WpLdp')) {
                 }
             }
 
-            update_option('wpldp_version', self::$version_number);
+            update_option( 'wpldp_version', self::$version_number );
         }
 
         private function wpldp_db_upgrade() {
@@ -145,16 +145,16 @@ if (!class_exists('\WpLdp\WpLdp')) {
             );
 
             foreach ( $result as $current ) {
-                $option = get_option($current->option_name);
-                if (!empty($option)) {
-                    if (!empty($option['ldp_model'])) {
-                        $option['ldp_model'] = str_replace('ldp_', '', $option['ldp_model']);
+                $option = get_option( $current->option_name );
+                if ( !empty( $option ) ) {
+                    if ( !empty( $option['ldp_model'] ) ) {
+                        $option['ldp_model'] = str_replace( 'ldp_', '', $option['ldp_model'] );
                     }
 
-                    if (!empty($option['ldp_included_fields_list'])) {
-                        $option['ldp_included_fields_list'] = str_replace('ldp_', '', $option['ldp_included_fields_list']);
+                    if ( !empty( $option['ldp_included_fields_list'] ) ) {
+                        $option['ldp_included_fields_list'] = str_replace( 'ldp_', '', $option['ldp_included_fields_list'] );
                     }
-                    update_option($current->option_name, $option, false);
+                    update_option( $current->option_name, $option, false );
                 }
             }
 
@@ -170,8 +170,8 @@ if (!class_exists('\WpLdp\WpLdp')) {
         */
         function load_translations_file() {
             $path        = dirname( plugin_basename( __FILE__ ) ) . '/languages';
-            load_plugin_textdomain('wpldp', FALSE, $path);
-            load_theme_textdomain('wpldp', $path);
+            load_plugin_textdomain( 'wpldp', FALSE, $path );
+            load_theme_textdomain( 'wpldp', $path );
         }
 
 
@@ -182,9 +182,9 @@ if (!class_exists('\WpLdp\WpLdp')) {
         */
         public function add_poc_rewrite_rule() {
             global $wp_rewrite;
-            $poc_url = plugins_url('public/index.php', __FILE__);
-            $poc_url = substr($poc_url, strlen( home_url() ) + 1);
-            $wp_rewrite->add_external_rule( '([_0-9a-zA-Z-]+/)?' . Wpldp::FRONT_PAGE_URL, $poc_url);
+            $poc_url = plugins_url( 'public/index.php', __FILE__ );
+            $poc_url = substr( $poc_url, strlen( home_url() ) + 1 );
+            $wp_rewrite->add_external_rule( '([_0-9a-zA-Z-]+/)?' . Wpldp::FRONT_PAGE_URL, $poc_url );
             //flush_rewrite_rules( true );
         }
 
@@ -194,22 +194,22 @@ if (!class_exists('\WpLdp\WpLdp')) {
         * @return {type}  description
         */
         public function create_ldp_type() {
-            register_post_type('ldp_resource',
+            register_post_type( 'ldp_resource',
             array(
                 'labels'  => array(
-                    'name'              => __('Resources', 'wpldp'),
-                    'singular_name'     => __('Resource', 'wpldp'),
-                    'all_items'         => __('All resources', 'wpldp'),
-                    'add_new_item'      => __('Add a resource', 'wpldp'),
-                    'edit_item'         => __('Edit a resource', 'wpldp'),
-                    'new_item'          => __('New resource', 'wpldp'),
-                    'view_item'         => __('See the resource', 'wpldp'),
-                    'search_items'      => __('Search for a resource', 'wpldp'),
-                    'not_found'         => __('No corresponding resource', 'wpldp'),
-                    'not_found_in_trash'=> __('No corresponding resource in the trash', 'wpldp'),
-                    'add_new'           => __('Add a resource', 'wpldp'),
+                    'name'              => __( 'Resources', 'wpldp' ),
+                    'singular_name'     => __( 'Resource', 'wpldp' ),
+                    'all_items'         => __( 'All resources', 'wpldp' ),
+                    'add_new_item'      => __( 'Add a resource', 'wpldp' ),
+                    'edit_item'         => __( 'Edit a resource', 'wpldp' ),
+                    'new_item'          => __( 'New resource', 'wpldp' ),
+                    'view_item'         => __( 'See the resource', 'wpldp' ),
+                    'search_items'      => __( 'Search for a resource', 'wpldp' ),
+                    'not_found'         => __( 'No corresponding resource', 'wpldp' ),
+                    'not_found_in_trash'=> __( 'No corresponding resource in the trash', 'wpldp' ),
+                    'add_new'           => __( 'Add a resource', 'wpldp' ),
                 ),
-                'description'           => __('LDP Resource', 'wpldp'),
+                'description'           => __( 'LDP Resource', 'wpldp' ),
                 'public'                => true,
                 'show_in_nav_menu'      => true,
                 'show_in_menu'          => true,
@@ -218,7 +218,7 @@ if (!class_exists('\WpLdp\WpLdp')) {
                 'has_archive'           => true,
                 'rewrite'               => array('slug' => WpldpApi::LDP_API_URL . '%ldp_container%'),
                 'menu_icon'             => 'dashicons-image-filter',
-            ));
+            ) );
         }
 
         /**
