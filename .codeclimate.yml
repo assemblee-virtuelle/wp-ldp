@@ -9,6 +9,9 @@ engines:
       languages:
       - php
       - javascript
+ratings:
+  paths:
+    - "*"
 exclude_paths:
   - "tests/"
   - "library/"
