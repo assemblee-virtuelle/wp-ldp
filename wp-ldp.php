@@ -224,181 +224,182 @@ if ( !class_exists( '\WpLdp\WpLdp' ) ) {
 				'has_archive'           => true,
 				'rewrite'               => array( 'slug' => WpldpApi::LDP_API_URL . '%ldp_container%' ),
 				'menu_icon'             => 'dashicons-image-filter',
-				) );
-			}
+				)
+			);
+		}
 
-			/**
-			* Add custom filter for handling the custom permalink
-			*
-			* @param type
-			* @return void
-			*/
-			function ldp_resource_post_link( $post_link, $id = 0 ){
-				$post = get_post($id);
+		/**
+		* Add custom filter for handling the custom permalink
+		*
+		* @param type
+		* @return void
+		*/
+		function ldp_resource_post_link( $post_link, $id = 0 ){
+			$post = get_post($id);
 
-				if ( Wpldp::RESOURCE_POST_TYPE == get_post_type( $post ) ) {
-					if ( is_object( $post ) ){
-						$terms = wp_get_object_terms( $post->ID, 'ldp_container' );
-						if ( !empty( $terms ) ) {
-							return str_replace('%ldp_container%', $terms[0]->slug, $post_link);
-						}
+			if ( Wpldp::RESOURCE_POST_TYPE == get_post_type( $post ) ) {
+				if ( is_object( $post ) ){
+					$terms = wp_get_object_terms( $post->ID, 'ldp_container' );
+					if ( !empty( $terms ) ) {
+						return str_replace('%ldp_container%', $terms[0]->slug, $post_link);
 					}
 				}
-
-				return $post_link;
 			}
 
-			/**
-			* Remove the original meta box on the ldp_resource edition page and
-			* replace it with radio buttons selectors to avoid multiple selection
-			*
-			* @param type
-			* @return void
-			*/
-			function display_container_meta_box( $post_type ) {
-				remove_meta_box( 'ldp_containerdiv', $post_type, 'side' );
+			return $post_link;
+		}
 
-				if( $post_type == Wpldp::RESOURCE_POST_TYPE ) :
-					add_meta_box(
-						'ldp_containerdiv',
-						__( 'Containers', 'wpldp' ),
-						array( $this, 'container_meta_box_callback' ),
-						$post_type,
-						'normal',
-						'high'
-					);
+		/**
+		* Remove the original meta box on the ldp_resource edition page and
+		* replace it with radio buttons selectors to avoid multiple selection
+		*
+		* @param type
+		* @return void
+		*/
+		function display_container_meta_box( $post_type ) {
+			remove_meta_box( 'ldp_containerdiv', $post_type, 'side' );
 
-				endif;
-			}
-
-			/**
-			* Generate the HTML for the radio button based meta box
-			*
-			* @param type
-			* @return void
-			*/
-			function container_meta_box_callback($post) {
-				wp_nonce_field(
-					'wpldp_save_container_box_data',
-					'wpldp_container_box_nonce'
+			if( $post_type == Wpldp::RESOURCE_POST_TYPE ) :
+				add_meta_box(
+					'ldp_containerdiv',
+					__( 'Containers', 'wpldp' ),
+					array( $this, 'container_meta_box_callback' ),
+					$post_type,
+					'normal',
+					'high'
 				);
 
-				$value = get_the_terms( $post->ID, 'ldp_container' )[0];
-				$terms = get_terms( 'ldp_container', array( 'hide_empty' => 0 ) );
-				echo '<ul>';
-				foreach( $terms as $term ) {
-					echo '<li id="ldp_container-' . $term->term_id . '" class="category">';
-					echo '<label class="selectit">';
-					if ( !empty( $value ) && $term->term_id == $value->term_id ) {
-						echo '<input id="in-ldp_container-' . $term->term_id . '" type="radio" name="tax_input[ldp_container][]" value="' . $term->term_id . '" checked>';
+			endif;
+		}
+
+		/**
+		* Generate the HTML for the radio button based meta box
+		*
+		* @param type
+		* @return void
+		*/
+		function container_meta_box_callback($post) {
+			wp_nonce_field(
+				'wpldp_save_container_box_data',
+				'wpldp_container_box_nonce'
+			);
+
+			$value = get_the_terms( $post->ID, 'ldp_container' )[0];
+			$terms = get_terms( 'ldp_container', array( 'hide_empty' => 0 ) );
+			echo '<ul>';
+			foreach( $terms as $term ) {
+				echo '<li id="ldp_container-' . $term->term_id . '" class="category">';
+				echo '<label class="selectit">';
+				if ( !empty( $value ) && $term->term_id == $value->term_id ) {
+					echo '<input id="in-ldp_container-' . $term->term_id . '" type="radio" name="tax_input[ldp_container][]" value="' . $term->term_id . '" checked>';
+				} else {
+					echo '<input id="in-ldp_container-' . $term->term_id . '" type="radio" name="tax_input[ldp_container][]" value="' . $term->term_id . '">';
+				}
+				echo $term->name;
+				echo '</input>';
+				echo '</label>';
+				echo '</li>';
+			}
+			echo '</ul>';
+		}
+
+		/**
+		* Add an access to the media library from the ldp_resource edition page
+		*
+		* @param type
+		* @return void
+		*/
+		function display_media_meta_box ( $post_type ) {
+			if ( $post_type == Wpldp::RESOURCE_POST_TYPE ) {
+				add_meta_box(
+					'ldp_mediadiv',
+					__( 'Media', 'wpldp' ),
+					array( $this, 'media_meta_box_callback' ),
+					$post_type,
+					'side'
+				);
+			}
+		}
+
+
+		/**
+		* media_meta_box_callback - Specific metqbox for uploading a file to the media library from a resource edit
+		*
+		* @param  {type} $post description
+		* @return {type}       description
+		*/
+		public function media_meta_box_callback($post) {
+			echo '<p>' . __( 'If you need to upload a media during your editing, click here.', 'wpldp' ) . '</p>';
+			echo '<a href="#" class="button insert-media add-media" data-editor="content" title="Add Media">';
+			echo '  <span class="wp-media-buttons-icon"></span> Add Media';
+			echo '</a>';
+		}
+
+		/**
+		* wpldp_edit_form_advanced - Rendering the form for entering the data
+		*
+		* @param  {type} $post Current post we are working on
+		* @return {type} HTML Form
+		*/
+		public function wpldp_edit_form_advanced( $post ) {
+			if ( $post->post_type == Wpldp::RESOURCE_POST_TYPE ) {
+				$resourceUri = WpLdpUtils::getResourceUri( $post );
+
+				$term = get_the_terms( $post->post_id, 'ldp_container' );
+				if ( !empty( $term ) && !empty( $resourceUri ) ) {
+					$termId = $term[0]->term_id;
+					$termMeta = get_option("ldp_container_$termId");
+
+					if ( empty( $termMeta ) || !isset( $termMeta['ldp_model'] ) ) {
+						$ldpModel = '{"people":
+							{"fields":
+								[{
+									"title": "What\'s your name?",
+									"name": "ldp_name"
+								},
+								{
+									"title": "Who are you?",
+									"name": "ldp_description"
+								}]
+							}
+						}';
 					} else {
-						echo '<input id="in-ldp_container-' . $term->term_id . '" type="radio" name="tax_input[ldp_container][]" value="' . $term->term_id . '">';
+						$ldpModel = json_encode(json_decode($termMeta['ldp_model']));
 					}
-					echo $term->name;
-					echo '</input>';
-					echo '</label>';
-					echo '</li>';
-				}
-				echo '</ul>';
-			}
 
-			/**
-			* Add an access to the media library from the ldp_resource edition page
-			*
-			* @param type
-			* @return void
-			*/
-			function display_media_meta_box ( $post_type ) {
-				if ( $post_type == Wpldp::RESOURCE_POST_TYPE ) {
-					add_meta_box(
-						'ldp_mediadiv',
-						__( 'Media', 'wpldp' ),
-						array( $this, 'media_meta_box_callback' ),
-						$post_type,
-						'side'
-					);
+					echo '<br>';
+					echo '<div id="ldpform"></div>';
+					echo '<script>';
+					echo "var store = new MyStore({
+						container: '$resourceUri',
+						context: '" . get_option('ldp_context', 'http://lov.okfn.org/dataset/lov/context') ."',
+						template:\"{{{form '{$term[0]->slug}'}}}\",
+						models: $ldpModel
+					});";
+					echo 'var wpldp = new wpldp( store ); wpldp.init();';
+					echo "wpldp.render('#ldpform', '$resourceUri', undefined, undefined, '{$term[0]->slug}');";
+					echo '</script>';
 				}
 			}
+		}
 
 
-			/**
-			* media_meta_box_callback - Specific metqbox for uploading a file to the media library from a resource edit
-			*
-			* @param  {type} $post description
-			* @return {type}       description
-			*/
-			public function media_meta_box_callback($post) {
-				echo '<p>' . __( 'If you need to upload a media during your editing, click here.', 'wpldp' ) . '</p>';
-				echo '<a href="#" class="button insert-media add-media" data-editor="content" title="Add Media">';
-				echo '  <span class="wp-media-buttons-icon"></span> Add Media';
-				echo '</a>';
-			}
+		/**
+		* save_ldp_meta_for_post - Save the LDP Resource Post Meta on save
+		*
+		* @param  {int} $resource_id The current resource id
+		* @return {type}
+		*/
+		public function save_ldp_meta_for_post($resource_id) {
+			$fields = WpLdpUtils::getResourceFieldsList( $resource_id );
 
-			/**
-			* wpldp_edit_form_advanced - Rendering the form for entering the data
-			*
-			* @param  {type} $post Current post we are working on
-			* @return {type} HTML Form
-			*/
-			public function wpldp_edit_form_advanced( $post ) {
-				if ( $post->post_type == Wpldp::RESOURCE_POST_TYPE ) {
-					$resourceUri = WpLdpUtils::getResourceUri( $post );
-
-					$term = get_the_terms( $post->post_id, 'ldp_container' );
-					if ( !empty( $term ) && !empty( $resourceUri ) ) {
-						$termId = $term[0]->term_id;
-						$termMeta = get_option("ldp_container_$termId");
-
-						if ( empty( $termMeta ) || !isset( $termMeta['ldp_model'] ) ) {
-							$ldpModel = '{"people":
-								{"fields":
-									[{
-										"title": "What\'s your name?",
-										"name": "ldp_name"
-									},
-									{
-										"title": "Who are you?",
-										"name": "ldp_description"
-									}]
-								}
-							}';
-						} else {
-							$ldpModel = json_encode(json_decode($termMeta['ldp_model']));
-						}
-
-						echo '<br>';
-						echo '<div id="ldpform"></div>';
-						echo '<script>';
-						echo "var store = new MyStore({
-							container: '$resourceUri',
-							context: '" . get_option('ldp_context', 'http://lov.okfn.org/dataset/lov/context') ."',
-							template:\"{{{form '{$term[0]->slug}'}}}\",
-							models: $ldpModel
-						});";
-						echo 'var wpldp = new wpldp( store ); wpldp.init();';
-						echo "wpldp.render('#ldpform', '$resourceUri', undefined, undefined, '{$term[0]->slug}');";
-						echo '</script>';
-					}
-				}
-			}
-
-
-			/**
-			* save_ldp_meta_for_post - Save the LDP Resource Post Meta on save
-			*
-			* @param  {int} $resource_id The current resource id
-			* @return {type}
-			*/
-			public function save_ldp_meta_for_post($resource_id) {
-				$fields = WpLdpUtils::getResourceFieldsList( $resource_id );
-
-				if ( !empty( $fields ) ) {
-					foreach( $_POST as $key => $value ) {
-						foreach( $fields as $field ) {
-							$field_name = \WpLdp\WpLdpUtils::getFieldName( $field );
-							if ( isset( $field_name ) ) {
-								if ( $key === $field_name ||
-								( substr( $key, 0, strlen( $field_name ) ) === $field_name )
+			if ( !empty( $fields ) ) {
+				foreach( $_POST as $key => $value ) {
+					foreach( $fields as $field ) {
+						$field_name = \WpLdp\WpLdpUtils::getFieldName( $field );
+						if ( isset( $field_name ) ) {
+							if ( $key === $field_name ||
+							( substr( $key, 0, strlen( $field_name ) ) === $field_name )
 							) {
 								if ( is_array( $value ) ) {
 									foreach( $value as $site ) {
@@ -414,233 +415,233 @@ if ( !class_exists( '\WpLdp\WpLdp' ) ) {
 													'key' => 'ldp_site_url',
 													'value' => $site_url,
 													'compare' => 'LIKE'
+													)
 												)
-											)
-										);
-
-										if ( empty( $term ) || !is_array( $term ) ) {
-											$site_url_parsed = parse_url( $site );
-											$term = wp_insert_term(
-												$site_url_parsed['host'] . ' ' . $site_url_parsed['path'],
-												'ldp_site'
 											);
 
-											if ( !is_wp_error( $term ) ) {
-												update_term_meta( $term['term_id'], 'ldp_site_url', $site_url );
+											if ( empty( $term ) || !is_array( $term ) ) {
+												$site_url_parsed = parse_url( $site );
+												$term = wp_insert_term(
+													$site_url_parsed['host'] . ' ' . $site_url_parsed['path'],
+													'ldp_site'
+												);
+
+												if ( !is_wp_error( $term ) ) {
+													update_term_meta( $term['term_id'], 'ldp_site_url', $site_url );
+												}
 											}
 										}
 									}
 								}
+								update_post_meta( $resource_id, $key, $value );
 							}
-							update_post_meta( $resource_id, $key, $value );
 						}
 					}
 				}
 			}
 		}
-	}
 
-	/**
-	* ldp_enqueue_script - Loading requested javascript, on the admin only
-	*
-	* @return {type}  description
-	*/
-	public function ldp_enqueue_script() {
-		global $pagenow, $post_type;
-		$screen = get_current_screen();
-		if ( $post_type == Wpldp::RESOURCE_POST_TYPE ) {
-			wp_enqueue_media();
+		/**
+		* ldp_enqueue_script - Loading requested javascript, on the admin only
+		*
+		* @return {type}  description
+		*/
+		public function ldp_enqueue_script() {
+			global $pagenow, $post_type;
+			$screen = get_current_screen();
+			if ( $post_type == Wpldp::RESOURCE_POST_TYPE ) {
+				wp_enqueue_media();
 
-			// Loading the LDP-framework library
-			wp_register_script(
-				'ldpjs',
-				plugins_url( 'library/js/LDP-framework/ldpframework.js', __FILE__ ),
-				array( 'jquery' )
-			);
-			wp_enqueue_script( 'ldpjs' );
+				// Loading the LDP-framework library
+				wp_register_script(
+					'ldpjs',
+					plugins_url( 'library/js/LDP-framework/ldpframework.js', __FILE__ ),
+					array( 'jquery' )
+				);
+				wp_enqueue_script( 'ldpjs' );
 
-			// Loading the JqueryUI library
-			wp_register_script(
-				'jqueryui',
-				plugins_url( 'library/js/jquery-ui/jquery-ui.min.js', __FILE__ )
-			);
-			wp_enqueue_script( 'jqueryui' );
+				// Loading the JqueryUI library
+				wp_register_script(
+					'jqueryui',
+					plugins_url( 'library/js/jquery-ui/jquery-ui.min.js', __FILE__ )
+				);
+				wp_enqueue_script( 'jqueryui' );
 
-			// Loading the JSONEditor library
-			wp_register_script(
-				'jsoneditorjs',
-				plugins_url( 'library/js/node_modules/jsoneditor/dist/jsoneditor.min.js', __FILE__ )
-			);
-			wp_enqueue_script( 'jsoneditorjs' );
+				// Loading the JSONEditor library
+				wp_register_script(
+					'jsoneditorjs',
+					plugins_url( 'library/js/node_modules/jsoneditor/dist/jsoneditor.min.js', __FILE__ )
+				);
+				wp_enqueue_script( 'jsoneditorjs' );
 
-			// Loading the Handlebars library
-			wp_register_script(
-				'handlebarsjs',
-				plugins_url( 'library/js/handlebars/handlebars.js', __FILE__ ),
-				array( 'ldpjs' )
-			);
-			wp_enqueue_script( 'handlebarsjs' );
+				// Loading the Handlebars library
+				wp_register_script(
+					'handlebarsjs',
+					plugins_url( 'library/js/handlebars/handlebars.js', __FILE__ ),
+					array( 'ldpjs' )
+				);
+				wp_enqueue_script( 'handlebarsjs' );
 
-			// Loading the Handlebars library
-			wp_register_script(
-				'select2',
-				plugins_url( 'library/js/select2/dist/js/select2.full.min.js', __FILE__ ),
-				array( 'jquery' )
-			);
-			wp_enqueue_script( 'select2' );
+				// Loading the Handlebars library
+				wp_register_script(
+					'select2',
+					plugins_url( 'library/js/select2/dist/js/select2.full.min.js', __FILE__ ),
+					array( 'jquery' )
+				);
+				wp_enqueue_script( 'select2' );
 
-			// Loading the Plugin-javascript file
-			wp_register_script(
-				'wpldpjs',
-				plugins_url( 'wpldp.js', __FILE__ ),
-				array( 'jquery', 'select2' )
-			);
-			wp_localize_script( 'wpldpjs', 'site_rest_url', get_rest_url() );
-			wp_enqueue_script( 'wpldpjs' );
+				// Loading the Plugin-javascript file
+				wp_register_script(
+					'wpldpjs',
+					plugins_url( 'wpldp.js', __FILE__ ),
+					array( 'jquery', 'select2' )
+				);
+				wp_localize_script( 'wpldpjs', 'site_rest_url', get_rest_url() );
+				wp_enqueue_script( 'wpldpjs' );
 
-			// Loading the Wikipedia autocomplete library
-			wp_register_script(
-				'lookup',
-				plugins_url( 'public/resources/js/wikipedia.js', __FILE__ ),
-				array( 'ldpjs' )
-			);
-			wp_enqueue_script( 'lookup' );
+				// Loading the Wikipedia autocomplete library
+				wp_register_script(
+					'lookup',
+					plugins_url( 'public/resources/js/wikipedia.js', __FILE__ ),
+					array( 'ldpjs' )
+				);
+				wp_enqueue_script( 'lookup' );
+			}
 		}
-	}
 
-	/**
-	* wpldpfront_enqueue_script - Method used to load all proper javascript resource on the frontend
-	*
-	* @return {type}  description
-	*/
-	public function wpldpfront_enqueue_script() {
-		$current_url = $_SERVER['REQUEST_URI'];
-		if ( strstr( $current_url, Wpldp::FRONT_PAGE_URL ) ) {
-			// Loading the LDP-framework library
-			wp_register_script(
-				'ldpjs',
-				plugins_url('library/js/LDP-framework/ldpframework.js', __FILE__),
-				array( 'jquery' )
-			);
-			wp_enqueue_script('ldpjs');
+		/**
+		* wpldpfront_enqueue_script - Method used to load all proper javascript resource on the frontend
+		*
+		* @return {type}  description
+		*/
+		public function wpldpfront_enqueue_script() {
+			$current_url = $_SERVER['REQUEST_URI'];
+			if ( strstr( $current_url, Wpldp::FRONT_PAGE_URL ) ) {
+				// Loading the LDP-framework library
+				wp_register_script(
+					'ldpjs',
+					plugins_url('library/js/LDP-framework/ldpframework.js', __FILE__),
+					array( 'jquery' )
+				);
+				wp_enqueue_script('ldpjs');
 
-			// Loading the Plugin-javascript file
-			wp_register_script(
-				'wpldpjs',
-				plugins_url('wpldp.js', __FILE__),
-				array( 'jquery' )
-			);
-			wp_localize_script( 'wpldpjs', 'site_rest_url', get_rest_url() );
-			wp_enqueue_script('wpldpjs');
+				// Loading the Plugin-javascript file
+				wp_register_script(
+					'wpldpjs',
+					plugins_url('wpldp.js', __FILE__),
+					array( 'jquery' )
+				);
+				wp_localize_script( 'wpldpjs', 'site_rest_url', get_rest_url() );
+				wp_enqueue_script('wpldpjs');
 
-			// Loading the BootstrapJS library
-			wp_register_script(
-				'bootstrapjs',
-				plugins_url('public/library/bootstrap/js/bootstrap.min.js', __FILE__),
-				array( 'ldpjs' )
-			);
-			wp_enqueue_script('bootstrapjs');
+				// Loading the BootstrapJS library
+				wp_register_script(
+					'bootstrapjs',
+					plugins_url('public/library/bootstrap/js/bootstrap.min.js', __FILE__),
+					array( 'ldpjs' )
+				);
+				wp_enqueue_script('bootstrapjs');
 
-			// Loading the Handlebars library
-			wp_register_script(
-				'handlebarsjs',
-				plugins_url('library/js/handlebars/handlebars.js', __FILE__),
-				array( 'ldpjs' )
-			);
-			wp_enqueue_script('handlebarsjs');
+				// Loading the Handlebars library
+				wp_register_script(
+					'handlebarsjs',
+					plugins_url('library/js/handlebars/handlebars.js', __FILE__),
+					array( 'ldpjs' )
+				);
+				wp_enqueue_script('handlebarsjs');
 
-			// Loading the project specific JS library
-			wp_register_script(
-				'avpocjs',
-				plugins_url('public/resources/js/av.js', __FILE__),
-				array( 'ldpjs' )
-			);
-			wp_enqueue_script('avpocjs');
+				// Loading the project specific JS library
+				wp_register_script(
+					'avpocjs',
+					plugins_url('public/resources/js/av.js', __FILE__),
+					array( 'ldpjs' )
+				);
+				wp_enqueue_script('avpocjs');
+			}
 		}
-	}
 
-	/**
-	* ldp_enqueue_stylesheet - Loading requested stylesheet in the admin only
-	*
-	* @return {type}  description
-	*/
-	public function ldp_enqueue_stylesheet() {
-		// Loading the WP-LDP stylesheet
-		wp_register_style(
-			'wpldpcss',
-			plugins_url('resources/css/wpldp.css', __FILE__)
-		);
-		wp_enqueue_style('wpldpcss');
-
-		// Loading the JSONEditor stylesheet
-		wp_register_style(
-			'jsoneditorcss',
-			plugins_url('library/js/node_modules/jsoneditor/dist/jsoneditor.min.css', __FILE__)
-		);
-		wp_enqueue_style('jsoneditorcss');
-
-		// Loading the JQueryUI stylesheet
-		wp_register_style(
-			'jqueryuicss',
-			plugins_url('library/js/jquery-ui/jquery-ui.css', __FILE__)
-		);
-		wp_enqueue_style('jqueryuicss');
-
-		// Loading the JQueryUIStructure stylesheet
-		wp_register_style(
-			'jqueryuistructurecss',
-			plugins_url('library/js/jquery-ui/jquery-ui.structure.css', __FILE__)
-		);
-		wp_enqueue_style('jqueryuistructurecss');
-	}
-
-
-	/**
-	* wpldpfront_enqueue_stylesheet - Method used to properly load specific stylesheets for the plugin frontend
-	*
-	* @return {type}  description
-	*/
-	public function wpldpfront_enqueue_stylesheet() {
-		$current_url = $_SERVER['REQUEST_URI'];
-		if ( strstr( $current_url, Wpldp::FRONT_PAGE_URL ) ) {
+		/**
+		* ldp_enqueue_stylesheet - Loading requested stylesheet in the admin only
+		*
+		* @return {type}  description
+		*/
+		public function ldp_enqueue_stylesheet() {
 			// Loading the WP-LDP stylesheet
 			wp_register_style(
-				'bootstrapcss',
-				plugins_url('public/library/bootstrap/css/bootstrap.min.css', __FILE__)
+				'wpldpcss',
+				plugins_url('resources/css/wpldp.css', __FILE__)
 			);
-			wp_enqueue_style('bootstrapcss');
+			wp_enqueue_style('wpldpcss');
 
-			// Loading the WP-LDP stylesheet
+			// Loading the JSONEditor stylesheet
 			wp_register_style(
-				'font-asewomecss',
-				plugins_url('public/library/font-awesome/css/font-awesome.min.css', __FILE__)
+				'jsoneditorcss',
+				plugins_url('library/js/node_modules/jsoneditor/dist/jsoneditor.min.css', __FILE__)
 			);
-			wp_enqueue_style('font-asewomecss');
+			wp_enqueue_style('jsoneditorcss');
+
+			// Loading the JQueryUI stylesheet
+			wp_register_style(
+				'jqueryuicss',
+				plugins_url('library/js/jquery-ui/jquery-ui.css', __FILE__)
+			);
+			wp_enqueue_style('jqueryuicss');
+
+			// Loading the JQueryUIStructure stylesheet
+			wp_register_style(
+				'jqueryuistructurecss',
+				plugins_url('library/js/jquery-ui/jquery-ui.structure.css', __FILE__)
+			);
+			wp_enqueue_style('jqueryuistructurecss');
 		}
-	}
 
-	/**
-	* generate_menu_item - Add a menu item to the primary navigation menu to access
-	* the WP-ldp front page to navigate into our pairs
-	*
-	* @return {type}  description
-	*/
-	public static function generate_menu_item() {
-		$menu_name = 'primary';
-		$locations = get_nav_menu_locations();
 
-		if ( !empty( $locations ) && isset( $locations[ $menu_name ] ) ) {
-			$menu_id = $locations[ $menu_name ] ;
+		/**
+		* wpldpfront_enqueue_stylesheet - Method used to properly load specific stylesheets for the plugin frontend
+		*
+		* @return {type}  description
+		*/
+		public function wpldpfront_enqueue_stylesheet() {
+			$current_url = $_SERVER['REQUEST_URI'];
+			if ( strstr( $current_url, Wpldp::FRONT_PAGE_URL ) ) {
+				// Loading the WP-LDP stylesheet
+				wp_register_style(
+					'bootstrapcss',
+					plugins_url('public/library/bootstrap/css/bootstrap.min.css', __FILE__)
+				);
+				wp_enqueue_style('bootstrapcss');
 
-			if ( !empty( $menu_id ) ) {
-				wp_update_nav_menu_item(
-					$menu_id,
-					0,
-					array(
-						'menu-item-title' =>  __( 'Ecosystem', 'wpldp' ),
-						'menu-item-classes' => 'home',
-						'menu-item-url' => home_url( Wpldp::FRONT_PAGE_URL, 'relative' ),
-						'menu-item-status' => 'publish'
+				// Loading the WP-LDP stylesheet
+				wp_register_style(
+					'font-asewomecss',
+					plugins_url('public/library/font-awesome/css/font-awesome.min.css', __FILE__)
+				);
+				wp_enqueue_style('font-asewomecss');
+			}
+		}
+
+		/**
+		* generate_menu_item - Add a menu item to the primary navigation menu to access
+		* the WP-ldp front page to navigate into our pairs
+		*
+		* @return {type}  description
+		*/
+		public static function generate_menu_item() {
+			$menu_name = 'primary';
+			$locations = get_nav_menu_locations();
+
+			if ( !empty( $locations ) && isset( $locations[ $menu_name ] ) ) {
+				$menu_id = $locations[ $menu_name ] ;
+
+				if ( !empty( $menu_id ) ) {
+					wp_update_nav_menu_item(
+						$menu_id,
+						0,
+						array(
+							'menu-item-title' =>  __( 'Ecosystem', 'wpldp' ),
+							'menu-item-classes' => 'home',
+							'menu-item-url' => home_url( Wpldp::FRONT_PAGE_URL, 'relative' ),
+							'menu-item-status' => 'publish'
 						)
 					);
 				}
@@ -696,7 +697,3 @@ if ( !class_exists( '\WpLdp\WpLdp' ) ) {
 } else {
 	exit ('Class WpLdp already exists');
 }
-
-
-
-?>

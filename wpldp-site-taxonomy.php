@@ -4,7 +4,7 @@ namespace WpLdp;
 /**
 * Class handling everything related to the plugin custom taxonomies
 **/
-if (!class_exists('\WpLdp\WpLdpSiteTaxonomy')) {
+if ( ! class_exists( '\WpLdp\WpLdpSiteTaxonomy' ) ) {
 	class WpLdpSiteTaxonomy {
 
 		public function __construct() {
@@ -181,62 +181,62 @@ if (!class_exists('\WpLdp\WpLdpSiteTaxonomy')) {
 					'@id'      => get_site_url() . '/api/ldp/v1/sites/',
 					'@type'    => 'http://www.w3.org/ns/ldp#BasicContainer',
 					'http://www.w3.org/ns/ldp#contains' => array()
-					)
-				);
+				)
+			);
 
-				foreach ($outputs as $siteUrl => $output ){
-					if ( $output['code'] == 200 ) {
-						$response = json_decode( $output['data'] );
+			foreach ($outputs as $siteUrl => $output ){
+				if ( $output['code'] == 200 ) {
+					$response = json_decode( $output['data'] );
 
-						if ( !empty( $response ) ) {
-							$current_site = $response->{'@graph'}[0];
-							$current_site->{'@id'} = $siteUrl;
+					if ( !empty( $response ) ) {
+						$current_site = $response->{'@graph'}[0];
+						$current_site->{'@id'} = $siteUrl;
 
-							$sites['@graph']['http://www.w3.org/ns/ldp#contains'][] =
-							$sites['@graph']['http://www.w3.org/ns/ldp#contains'][] = $current_site;
-						}
+						$sites['@graph']['http://www.w3.org/ns/ldp#contains'][] =
+						$sites['@graph']['http://www.w3.org/ns/ldp#contains'][] = $current_site;
 					}
 				}
-
-				return rest_ensure_response( $sites );
 			}
 
-			/**
-			* API method for retrieving the list of sites the current site knows
-			*/
-			public function add_new_site(  \WP_REST_Request $request, \WP_REST_Response $response = null ) {
-				header('Content-Type: application/ld+json');
-				header('Access-Control-Allow-Origin: *');
-
-				// var_dump( $request->get_headers() );
-				$headers = $request->get_headers();
-
-				$source_site_url = $headers['referer'][0];
-
-				$term = null;
-				$query = get_terms(
-					array(
-						'taxonomy' => 'ldp_site',
-						'meta_query' => array(
-							'key' => 'ldp_site_url',
-							'value' => $source_site_url,
-							'compare' => 'LIKE'
-						)
-					)
-				);
-
-				$term = $query[0];
-
-				if ( !term_exists( $term, 'ldp_site' ) ) {
-					$new_term = create_term( $term );
-				}
-
-				return ( !empty( $new_term ) || !empty( $term ) ) ? true : false;
-			}
-
+			return rest_ensure_response( $sites );
 		}
-		// Instanciating the settings page object
-		$wpLdpSiteTaxonomy = new WpLdpSiteTaxonomy();
-	} else {
-		exit ('Class WpLdpSiteTaxonomy already exists');
+
+		/**
+		* API method for retrieving the list of sites the current site knows
+		*/
+		public function add_new_site(  \WP_REST_Request $request, \WP_REST_Response $response = null ) {
+			header('Content-Type: application/ld+json');
+			header('Access-Control-Allow-Origin: *');
+
+			// var_dump( $request->get_headers() );
+			$headers = $request->get_headers();
+
+			$source_site_url = $headers['referer'][0];
+
+			$term = null;
+			$query = get_terms(
+				array(
+					'taxonomy' => 'ldp_site',
+					'meta_query' => array(
+						'key' => 'ldp_site_url',
+						'value' => $source_site_url,
+						'compare' => 'LIKE'
+					)
+				)
+			);
+
+			$term = $query[0];
+
+			if ( !term_exists( $term, 'ldp_site' ) ) {
+				$new_term = create_term( $term );
+			}
+
+			return ( !empty( $new_term ) || !empty( $term ) ) ? true : false;
+		}
+
 	}
+	// Instanciating the settings page object
+	$wpLdpSiteTaxonomy = new WpLdpSiteTaxonomy();
+} else {
+	exit ('Class WpLdpSiteTaxonomy already exists');
+}

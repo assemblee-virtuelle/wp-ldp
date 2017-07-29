@@ -4,7 +4,7 @@ namespace WpLdp;
 /**
 * Class handling everything related to the plugin custom taxonomies
 **/
-if ( !class_exists('\WpLdp\WpLdpContainerTaxonomy') ) {
+if ( !class_exists( '\WpLdp\WpLdpContainerTaxonomy' ) ) {
 	class WpLdpContainerTaxonomy {
 		/**
 		* __construct - Default constructor
@@ -248,107 +248,105 @@ if ( !class_exists('\WpLdp\WpLdpContainerTaxonomy') ) {
 						'@id' => rtrim( get_rest_url(), '/' ) . $request->get_route() . '/',
 						'@type' => 'http://www.w3.org/ns/ldp#BasicContainer',
 						'http://www.w3.org/ns/ldp#contains' => array()
-						)
-						)
-					);
+					)
+				)
+			);
 
-					$result = $this->formatPostsRendering( $result, $posts );
+			$result = $this->formatPostsRendering( $result, $posts );
 
-					return rest_ensure_response( $result );
-				}
+			return rest_ensure_response( $result );
+		}
 
-				/**
-				* API method for retrieving the list of resources associated with the current taxonomy
-				*/
-				public function get_search_results( \WP_REST_Request $request, \WP_REST_Response $response = null ) {
-					header('Content-Type: application/ld+json');
-					header('Access-Control-Allow-Origin: *');
+		/**
+		* API method for retrieving the list of resources associated with the current taxonomy
+		*/
+		public function get_search_results( \WP_REST_Request $request, \WP_REST_Response $response = null ) {
+			header('Content-Type: application/ld+json');
+			header('Access-Control-Allow-Origin: *');
 
-					$params = $request->get_params();
-					$ldp_container = $params['ldp_container'];
-					$meta_name = $params['meta_name'];
-					$meta_value = $params['meta_value'];
+			$params = $request->get_params();
+			$ldp_container = $params['ldp_container'];
+			$meta_name = $params['meta_name'];
+			$meta_value = $params['meta_value'];
 
-					$query = new \WP_Query(
+			$query = new \WP_Query(
+				array(
+					'tax_query' => array(
 						array(
-							'tax_query' => array(
-								array(
-									'taxonomy' => 'ldp_container',
-									'terms' => $ldp_container,
-									'field' => 'slug'
-								)
-							),
-							'post_type' => 'ldp_resource',
-							'posts_per_page' => -1,
-							'meta_query' => array(
-								array(
-									'key' => $meta_name,
-									'value' => $meta_value,
-									'compare' => 'LIKE'
-								)
-							)
+							'taxonomy' => 'ldp_container',
+							'terms' => $ldp_container,
+							'field' => 'slug'
 						)
-					);
+					),
+					'post_type' => 'ldp_resource',
+					'posts_per_page' => -1,
+					'meta_query' => array(
+						array(
+							'key' => $meta_name,
+							'value' => $meta_value,
+							'compare' => 'LIKE'
+						)
+					)
+				)
+			);
 
-					$posts = $query->get_posts();
+			$posts = $query->get_posts();
 
-					$result = array(
-						'@context' => get_option( 'ldp_context', 'http://lov.okfn.org/dataset/lov/context' ),
-						'@graph'   => array(
-							array(
-								'@id' => rtrim( get_rest_url(), '/' ) . $request->get_route() . '/',
-								'@type' => 'http://www.w3.org/ns/ldp#BasicContainer',
-								'http://www.w3.org/ns/ldp#contains' => array()
-								)
-								)
-							);
+			$result = array(
+				'@context' => get_option( 'ldp_context', 'http://lov.okfn.org/dataset/lov/context' ),
+				'@graph'   => array(
+					array(
+						'@id' => rtrim( get_rest_url(), '/' ) . $request->get_route() . '/',
+						'@type' => 'http://www.w3.org/ns/ldp#BasicContainer',
+						'http://www.w3.org/ns/ldp#contains' => array()
+					)
+				)
+			);
 
-							$result = $this->formatPostsRendering( $result, $posts );
+			$result = $this->formatPostsRendering( $result, $posts );
 
-							return rest_ensure_response( $result );
-						}
+			return rest_ensure_response( $result );
+		}
 
-						private function formatPostsRendering( $result, $posts ) {
-							$count = 0;
-							foreach ($posts as $post ) {
-								$values = get_the_terms($post->ID, 'ldp_container');
-								if ( empty( $values[0] ) ) {
-									$value = reset($values);
-								} else {
-									$value = $values[0];
-								}
-
-								$termMeta = get_option( "ldp_container_$value->term_id" );
-								$ldpIncludedFieldsList = isset( $termMeta['ldp_included_fields_list'] ) ? $termMeta['ldp_included_fields_list'] : null;
-								$modelsDecoded = json_decode($termMeta['ldp_model']);
-
-								$includedFieldsList = !empty( $ldpIncludedFieldsList ) ? array_map( 'trim', explode( ',', $ldpIncludedFieldsList ) ) : null;
-								$fields = $modelsDecoded->{$value->slug}->fields;
-								$current_entry = array();
-								foreach ( $fields as $field ) {
-									$fieldName = WpLdpUtils::getFieldName( $field );
-									if ( (!empty( $includedFieldsList ) && in_array( $fieldName, $includedFieldsList ) )
-									&& !empty( get_post_custom_values( $fieldName, $post->ID )[0] ) ) {
-										$current_entry[ $fieldName ] = get_post_custom_values( $fieldName, $post->ID )[0];
-									}
-								}
-
-								$rdfType = isset( $termMeta['ldp_rdf_type'] ) ? $termMeta['ldp_rdf_type'] : null;
-								if ( !empty( $rdfType ) ) {
-									$current_entry['@type'] = $rdfType;
-									$current_entry['@id'] = site_url('/') . wpLdpApi::LDP_API_URL . $value->slug . '/' . $post->post_name;
-								}
-								$result['@graph'][0]['http://www.w3.org/ns/ldp#contains'][] = $current_entry;
-							}
-
-							return $result;
-						}
-					}
-
-					// Instanciating the settings page object
-					$wpLdpContainerTaxonomy = new WpLdpContainerTaxonomy();
+		private function formatPostsRendering( $result, $posts ) {
+			$count = 0;
+			foreach ($posts as $post ) {
+				$values = get_the_terms($post->ID, 'ldp_container');
+				if ( empty( $values[0] ) ) {
+					$value = reset($values);
 				} else {
-					exit ( 'Class WpLdpContainerTaxonomy already exists' );
+					$value = $values[0];
 				}
 
-				?>
+				$termMeta = get_option( "ldp_container_$value->term_id" );
+				$ldpIncludedFieldsList = isset( $termMeta['ldp_included_fields_list'] ) ? $termMeta['ldp_included_fields_list'] : null;
+				$modelsDecoded = json_decode($termMeta['ldp_model']);
+
+				$includedFieldsList = !empty( $ldpIncludedFieldsList ) ? array_map( 'trim', explode( ',', $ldpIncludedFieldsList ) ) : null;
+				$fields = $modelsDecoded->{$value->slug}->fields;
+				$current_entry = array();
+				foreach ( $fields as $field ) {
+					$fieldName = WpLdpUtils::getFieldName( $field );
+					if ( (!empty( $includedFieldsList ) && in_array( $fieldName, $includedFieldsList ) )
+					&& !empty( get_post_custom_values( $fieldName, $post->ID )[0] ) ) {
+						$current_entry[ $fieldName ] = get_post_custom_values( $fieldName, $post->ID )[0];
+					}
+				}
+
+				$rdfType = isset( $termMeta['ldp_rdf_type'] ) ? $termMeta['ldp_rdf_type'] : null;
+				if ( !empty( $rdfType ) ) {
+					$current_entry['@type'] = $rdfType;
+					$current_entry['@id'] = site_url('/') . wpLdpApi::LDP_API_URL . $value->slug . '/' . $post->post_name;
+				}
+				$result['@graph'][0]['http://www.w3.org/ns/ldp#contains'][] = $current_entry;
+			}
+
+			return $result;
+		}
+	}
+
+	// Instanciating the settings page object
+	$wpLdpContainerTaxonomy = new WpLdpContainerTaxonomy();
+} else {
+	exit ( 'Class WpLdpContainerTaxonomy already exists' );
+}

@@ -62,6 +62,3 @@ if (!class_exists('\WpLdp\WpLdpUtils')) {
 
 	$wpLdpUtils = new WpLdpUtils();
 }
-
-
-?>
