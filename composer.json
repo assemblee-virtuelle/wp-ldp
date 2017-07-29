@@ -1,5 +1,11 @@
 {
     "name": "virtual-assembly/wp-ldp",
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/assemblee-virtuelle/wp-ldp"
+        }
+    ],
     "require": {
         "phpunit/phpunit": "6.2.*",
 	"easyrdf/easyrdf": "0.9.1"
