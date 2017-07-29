@@ -1,5 +1,11 @@
 <?php
 /**
+ * @package     WPLDP
+ * @author      Benoit Alessandroni
+ * @copyright   2017 Assemblee Virtuelle
+ * @license     GPL-v2.0+
+ *
+ * @wordpress-plugin
  * Plugin Name: WP LDP
  * Plugin URI: https://github.com/assemblee-virtuelle/wpldp
  * Description: This is a plugin which aims to emulate the default caracteristics of a Linked Data Platform compatible server
@@ -214,9 +220,9 @@ if ( !class_exists( '\WpLdp\WpLdp' ) ) {
                 'show_in_nav_menu'      => true,
                 'show_in_menu'          => true,
                 'show_in_admin_bar'     => true,
-                'supports'              => array('title'),
+                'supports'              => array( 'title' ),
                 'has_archive'           => true,
-                'rewrite'               => array('slug' => WpldpApi::LDP_API_URL . '%ldp_container%'),
+                'rewrite'               => array( 'slug' => WpldpApi::LDP_API_URL . '%ldp_container%' ),
                 'menu_icon'             => 'dashicons-image-filter',
             ) );
         }
@@ -231,7 +237,7 @@ if ( !class_exists( '\WpLdp\WpLdp' ) ) {
             $post = get_post($id);
 
             if ( Wpldp::RESOURCE_POST_TYPE == get_post_type( $post ) ) {
-                if (is_object($post)){
+                if ( is_object( $post ) ){
                     $terms = wp_get_object_terms( $post->ID, 'ldp_container' );
                     if ( !empty( $terms ) ) {
                         return str_replace('%ldp_container%', $terms[0]->slug, $post_link);
@@ -255,8 +261,8 @@ if ( !class_exists( '\WpLdp\WpLdp' ) ) {
             if( $post_type == Wpldp::RESOURCE_POST_TYPE ) :
                 add_meta_box(
                     'ldp_containerdiv',
-                    __('Containers', 'wpldp'),
-                    array($this, 'container_meta_box_callback'),
+                    __( 'Containers', 'wpldp' ),
+                    array( $this, 'container_meta_box_callback' ),
                     $post_type,
                     'normal',
                     'high'
@@ -277,13 +283,13 @@ if ( !class_exists( '\WpLdp\WpLdp' ) ) {
                 'wpldp_container_box_nonce'
             );
 
-            $value = get_the_terms($post->ID, 'ldp_container')[0];
-            $terms = get_terms('ldp_container', array('hide_empty' => 0));
+            $value = get_the_terms( $post->ID, 'ldp_container' )[0];
+            $terms = get_terms( 'ldp_container', array( 'hide_empty' => 0 ) );
             echo '<ul>';
-            foreach($terms as $term) {
+            foreach( $terms as $term ) {
                 echo '<li id="ldp_container-' . $term->term_id . '" class="category">';
                 echo '<label class="selectit">';
-                if (!empty($value) && $term->term_id == $value->term_id) {
+                if ( !empty( $value ) && $term->term_id == $value->term_id ) {
                     echo '<input id="in-ldp_container-' . $term->term_id . '" type="radio" name="tax_input[ldp_container][]" value="' . $term->term_id . '" checked>';
                 } else {
                     echo '<input id="in-ldp_container-' . $term->term_id . '" type="radio" name="tax_input[ldp_container][]" value="' . $term->term_id . '">';
@@ -306,8 +312,8 @@ if ( !class_exists( '\WpLdp\WpLdp' ) ) {
             if ( $post_type == Wpldp::RESOURCE_POST_TYPE ) {
                 add_meta_box(
                     'ldp_mediadiv',
-                    __('Media', 'wpldp'),
-                    array($this, 'media_meta_box_callback'),
+                    __( 'Media', 'wpldp' ),
+                    array( $this, 'media_meta_box_callback' ),
                     $post_type,
                     'side'
                 );
@@ -322,7 +328,7 @@ if ( !class_exists( '\WpLdp\WpLdp' ) ) {
         * @return {type}       description
         */
         public function media_meta_box_callback($post) {
-            echo '<p>' . __('If you need to upload a media during your editing, click here.', 'wpldp') . '</p>';
+            echo '<p>' . __( 'If you need to upload a media during your editing, click here.', 'wpldp' ) . '</p>';
             echo '<a href="#" class="button insert-media add-media" data-editor="content" title="Add Media">';
             echo '  <span class="wp-media-buttons-icon"></span> Add Media';
             echo '</a>';
@@ -334,16 +340,16 @@ if ( !class_exists( '\WpLdp\WpLdp' ) ) {
         * @param  {type} $post Current post we are working on
         * @return {type} HTML Form
         */
-        public function wpldp_edit_form_advanced($post) {
-            if ($post->post_type == Wpldp::RESOURCE_POST_TYPE) {
+        public function wpldp_edit_form_advanced( $post ) {
+            if ( $post->post_type == Wpldp::RESOURCE_POST_TYPE ) {
                 $resourceUri = WpLdpUtils::getResourceUri( $post );
 
-                $term = get_the_terms($post->post_id, 'ldp_container');
-                if (!empty($term) && !empty($resourceUri)) {
+                $term = get_the_terms( $post->post_id, 'ldp_container' );
+                if ( !empty( $term ) && !empty( $resourceUri ) ) {
                     $termId = $term[0]->term_id;
                     $termMeta = get_option("ldp_container_$termId");
 
-                    if (empty($termMeta) || !isset($termMeta['ldp_model'])) {
+                    if ( empty( $termMeta ) || !isset( $termMeta['ldp_model'] ) ) {
                         $ldpModel = '{"people":
                             {"fields":
                                 [{
@@ -384,15 +390,15 @@ if ( !class_exists( '\WpLdp\WpLdp' ) ) {
         * @return {type}
         */
         public function save_ldp_meta_for_post($resource_id) {
-            $fields = WpLdpUtils::getResourceFieldsList($resource_id);
+            $fields = WpLdpUtils::getResourceFieldsList( $resource_id );
 
-            if (!empty($fields)) {
-                foreach($_POST as $key => $value) {
-                    foreach($fields as $field) {
+            if ( !empty( $fields ) ) {
+                foreach( $_POST as $key => $value ) {
+                    foreach( $fields as $field ) {
                         $field_name = \WpLdp\WpLdpUtils::getFieldName( $field );
                         if ( isset( $field_name ) ) {
-                            if ($key === $field_name ||
-                            (substr($key, 0, strlen($field_name)) === $field_name)
+                            if ( $key === $field_name ||
+                            ( substr( $key, 0, strlen( $field_name ) ) === $field_name )
                         ) {
                             if ( is_array( $value ) ) {
                                 foreach( $value as $site ) {
@@ -442,63 +448,63 @@ if ( !class_exists( '\WpLdp\WpLdp' ) ) {
 public function ldp_enqueue_script() {
     global $pagenow, $post_type;
     $screen = get_current_screen();
-    if ($post_type == Wpldp::RESOURCE_POST_TYPE) {
+    if ( $post_type == Wpldp::RESOURCE_POST_TYPE ) {
         wp_enqueue_media();
 
         // Loading the LDP-framework library
         wp_register_script(
             'ldpjs',
-            plugins_url('library/js/LDP-framework/ldpframework.js', __FILE__),
-            array('jquery')
+            plugins_url( 'library/js/LDP-framework/ldpframework.js', __FILE__ ),
+            array( 'jquery' )
         );
-        wp_enqueue_script('ldpjs');
+        wp_enqueue_script( 'ldpjs' );
 
         // Loading the JqueryUI library
         wp_register_script(
             'jqueryui',
-            plugins_url('library/js/jquery-ui/jquery-ui.min.js', __FILE__)
+            plugins_url( 'library/js/jquery-ui/jquery-ui.min.js', __FILE__ )
         );
-        wp_enqueue_script('jqueryui');
+        wp_enqueue_script( 'jqueryui' );
 
         // Loading the JSONEditor library
         wp_register_script(
             'jsoneditorjs',
-            plugins_url('library/js/node_modules/jsoneditor/dist/jsoneditor.min.js', __FILE__)
+            plugins_url( 'library/js/node_modules/jsoneditor/dist/jsoneditor.min.js', __FILE__ )
         );
-        wp_enqueue_script('jsoneditorjs');
+        wp_enqueue_script( 'jsoneditorjs' );
 
         // Loading the Handlebars library
         wp_register_script(
             'handlebarsjs',
-            plugins_url('library/js/handlebars/handlebars.js', __FILE__),
-            array('ldpjs')
+            plugins_url( 'library/js/handlebars/handlebars.js', __FILE__ ),
+            array( 'ldpjs' )
         );
-        wp_enqueue_script('handlebarsjs');
+        wp_enqueue_script( 'handlebarsjs' );
 
         // Loading the Handlebars library
         wp_register_script(
             'select2',
-            plugins_url('library/js/select2/dist/js/select2.full.min.js', __FILE__),
-            array('jquery')
+            plugins_url( 'library/js/select2/dist/js/select2.full.min.js', __FILE__ ),
+            array( 'jquery' )
         );
-        wp_enqueue_script('select2');
+        wp_enqueue_script( 'select2' );
 
         // Loading the Plugin-javascript file
         wp_register_script(
             'wpldpjs',
-            plugins_url('wpldp.js', __FILE__),
-            array('jquery', 'select2')
+            plugins_url( 'wpldp.js', __FILE__ ),
+            array( 'jquery', 'select2' )
         );
         wp_localize_script( 'wpldpjs', 'site_rest_url', get_rest_url() );
-        wp_enqueue_script('wpldpjs');
+        wp_enqueue_script( 'wpldpjs' );
 
         // Loading the Wikipedia autocomplete library
         wp_register_script(
             'lookup',
-            plugins_url('public/resources/js/wikipedia.js', __FILE__),
-            array('ldpjs')
+            plugins_url( 'public/resources/js/wikipedia.js', __FILE__ ),
+            array( 'ldpjs' )
         );
-        wp_enqueue_script('lookup');
+        wp_enqueue_script( 'lookup' );
     }
 }
 
@@ -514,7 +520,7 @@ public function wpldpfront_enqueue_script() {
         wp_register_script(
             'ldpjs',
             plugins_url('library/js/LDP-framework/ldpframework.js', __FILE__),
-            array('jquery')
+            array( 'jquery' )
         );
         wp_enqueue_script('ldpjs');
 
@@ -522,7 +528,7 @@ public function wpldpfront_enqueue_script() {
         wp_register_script(
             'wpldpjs',
             plugins_url('wpldp.js', __FILE__),
-            array('jquery')
+            array( 'jquery' )
         );
         wp_localize_script( 'wpldpjs', 'site_rest_url', get_rest_url() );
         wp_enqueue_script('wpldpjs');
@@ -531,7 +537,7 @@ public function wpldpfront_enqueue_script() {
         wp_register_script(
             'bootstrapjs',
             plugins_url('public/library/bootstrap/js/bootstrap.min.js', __FILE__),
-            array('ldpjs')
+            array( 'ldpjs' )
         );
         wp_enqueue_script('bootstrapjs');
 
@@ -539,7 +545,7 @@ public function wpldpfront_enqueue_script() {
         wp_register_script(
             'handlebarsjs',
             plugins_url('library/js/handlebars/handlebars.js', __FILE__),
-            array('ldpjs')
+            array( 'ldpjs' )
         );
         wp_enqueue_script('handlebarsjs');
 
@@ -547,7 +553,7 @@ public function wpldpfront_enqueue_script() {
         wp_register_script(
             'avpocjs',
             plugins_url('public/resources/js/av.js', __FILE__),
-            array('ldpjs')
+            array( 'ldpjs' )
         );
         wp_enqueue_script('avpocjs');
     }
@@ -631,7 +637,7 @@ public static function generate_menu_item() {
                 $menu_id,
                 0,
                 array(
-                    'menu-item-title' =>  __('Ecosystem', 'wpldp'),
+                    'menu-item-title' =>  __( 'Ecosystem', 'wpldp' ),
                     'menu-item-classes' => 'home',
                     'menu-item-url' => home_url( Wpldp::FRONT_PAGE_URL, 'relative' ),
                     'menu-item-status' => 'publish'
