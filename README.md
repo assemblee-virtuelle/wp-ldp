@@ -1,4 +1,7 @@
 # LDP Plugin for wordpress
+
+[![Build Status](https://travis-ci.org/assemblee-virtuelle/wp-ldp.svg?branch=master)](https://travis-ci.org/assemblee-virtuelle/wp-ldp)
+
 The goal of this project is to be able to manage (create, list, display) LDP resources directly from a Wordpress site backend.
 
 # Architecture
