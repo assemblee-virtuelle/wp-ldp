@@ -44,12 +44,12 @@ if (!class_exists('\WpLdp\WpLdpApi')) {
 			$posts = $query->get_posts();
 
 			$result = array(
-				"@context" => get_option( 'ldp_context', 'http://lov.okfn.org/dataset/lov/context' ),
-				"@graph"   => array(
+				'@context' => get_option( 'ldp_context', 'http://lov.okfn.org/dataset/lov/context' ),
+				'@graph'   => array(
 					array(
-						"@id" => rtrim( get_rest_url(), '/' ) . $request->get_route() . '/',
-						"@type" => "http://www.w3.org/ns/ldp#BasicContainer",
-						"http://www.w3.org/ns/ldp#contains" => array()
+						'@id' => rtrim( get_rest_url(), '/' ) . $request->get_route() . '/',
+						'@type' => 'http://www.w3.org/ns/ldp#BasicContainer',
+						'http://www.w3.org/ns/ldp#contains' => array()
 						)
 						)
 					);
@@ -63,7 +63,7 @@ if (!class_exists('\WpLdp\WpLdpApi')) {
 								$value = $values[0];
 							}
 							$termMeta = get_option( "ldp_container_$value->term_id" );
-							$rdfType = isset( $termMeta["ldp_rdf_type"] ) ? $termMeta["ldp_rdf_type"] : null;
+							$rdfType = isset( $termMeta['ldp_rdf_type'] ) ? $termMeta['ldp_rdf_type'] : null;
 
 							if ( $rdfType != null ){
 								if ( array_key_exists( $rdfType,$array) ){
@@ -79,10 +79,10 @@ if (!class_exists('\WpLdp\WpLdpApi')) {
 
 					foreach ( $array as $key => $value ) {
 						$current_container_entry = array();
-						$current_container_entry["@id"] = site_url( '/' ) . wpLdpApi::LDP_API_URL . $value['id'] . '/';
-						$current_container_entry["@type"] = "http://www.w3.org/ns/ldp#BasicContainer";
-						$current_container_entry["@count"] = $value['value'];
-						$result["@graph"][0]["http://www.w3.org/ns/ldp#contains"][] = $current_container_entry;
+						$current_container_entry['@id'] = site_url( '/' ) . wpLdpApi::LDP_API_URL . $value['id'] . '/';
+						$current_container_entry['@type'] = 'http://www.w3.org/ns/ldp#BasicContainer';
+						$current_container_entry['@count'] = $value['value'];
+						$result['@graph'][0]['http://www.w3.org/ns/ldp#contains'][] = $current_container_entry;
 					}
 
 					return rest_ensure_response( $result );
@@ -99,7 +99,7 @@ if (!class_exists('\WpLdp\WpLdpApi')) {
 					$headers = $request->get_headers();
 					if ( isset( $headers['accept'] )
 					&& strstr( $headers['accept'][0], 'text/html' ) !== false ) {
-						header( "Location: " . site_url('/') . Wpldp::FRONT_PAGE_URL . "#" . get_rest_url() . "ldp/v1/" . $ldp_container . '/' . $ldp_resource_slug . '/' );
+						header( 'Location: ' . site_url('/') . Wpldp::FRONT_PAGE_URL . '#' . get_rest_url() . 'ldp/v1/' . $ldp_container . '/' . $ldp_resource_slug . '/' );
 						exit;
 					}
 
@@ -124,12 +124,12 @@ if (!class_exists('\WpLdp\WpLdpApi')) {
 					if ( !empty( $terms ) && is_array( $terms ) ) {
 						$termId = $terms[0]->term_id;
 						$termMeta = get_option( "ldp_container_$termId" );
-						$rdfType = isset( $termMeta["ldp_rdf_type"] ) ? $termMeta["ldp_rdf_type"] : null;
+						$rdfType = isset( $termMeta['ldp_rdf_type'] ) ? $termMeta['ldp_rdf_type'] : null;
 					}
 
 					$result = array(
-						"@context" => get_option( 'ldp_context', 'http://lov.okfn.org/dataset/lov/context' ),
-						"@graph"   => array(
+						'@context' => get_option( 'ldp_context', 'http://lov.okfn.org/dataset/lov/context' ),
+						'@graph'   => array(
 							array(
 							)
 						)
@@ -143,9 +143,9 @@ if (!class_exists('\WpLdp\WpLdpApi')) {
 						if ( isset( $field_name ) ) {
 							if ( !isset($field->multiple) || !$field->multiple ) {
 								$field_value = get_post_custom_values( $field_name, $post->ID )[0];
-								$result["@graph"][0][$field_name] = !empty( $field_value ) ? $field_value : null;
+								$result['@graph'][0][$field_name] = !empty( $field_value ) ? $field_value : null;
 							} else {
-								$result["@graph"][0][$field_name] = array();
+								$result['@graph'][0][$field_name] = array();
 								$field_values = get_post_custom_values( $field_name, $post->ID )[0];
 
 								if ( !empty ( $field_values ) ) {
@@ -155,7 +155,7 @@ if (!class_exists('\WpLdp\WpLdpApi')) {
 											'@id'  => !empty( $value ) ? $value : null,
 										);
 
-										$result["@graph"][0][$field_name][] = $multiple_field_entry;
+										$result['@graph'][0][$field_name][] = $multiple_field_entry;
 									}
 								}
 							}
@@ -184,27 +184,27 @@ if (!class_exists('\WpLdp\WpLdpApi')) {
 
 							$posts = $loop->get_posts();
 							if ( !empty( $posts ) ) {
-								$result["@graph"][0]['posts'] = array( array( ) );
+								$result['@graph'][0]['posts'] = array( array( ) );
 								foreach( $posts as $post ) {
 									$current_post_entry = array();
-									$current_post_entry["@id"] = get_permalink( $post->ID );
-									$current_post_entry["dc:title"] = $post->post_title;
+									$current_post_entry['@id'] = get_permalink( $post->ID );
+									$current_post_entry['dc:title'] = $post->post_title;
 
 									$post_content = ( !empty( $post->post_content ) && $post->post_content !== false) ? substr($post->post_content, 0, 150) : null;
 									if ( !empty( $post->post_content ) ) {
-										$current_post_entry["sioc:blogPost"] = $post_content;
+										$current_post_entry['sioc:blogPost'] = $post_content;
 									}
-									$result["@graph"][0]['posts'][] = $current_post_entry;
+									$result['@graph'][0]['posts'][] = $current_post_entry;
 								}
 							}
 						}
 					}
 
 					if ( !empty( $rdfType ) ) {
-						$result["@graph"][0]['@type'] = $rdfType;
+						$result['@graph'][0]['@type'] = $rdfType;
 					}
 
-					$result["@graph"][0]['@id'] = rtrim( get_rest_url(), '/' ) . $request->get_route() . '/';
+					$result['@graph'][0]['@id'] = rtrim( get_rest_url(), '/' ) . $request->get_route() . '/';
 					return rest_ensure_response( $result );
 				}
 

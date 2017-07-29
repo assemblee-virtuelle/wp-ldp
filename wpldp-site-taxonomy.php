@@ -97,10 +97,10 @@ if (!class_exists('\WpLdp\WpLdpSiteTaxonomy')) {
 		function add_custom_tax_fields_oncreate_site() {
 			// Adding rdf:type field
 			echo "<div class='form-field term-model-wrap'>";
-			echo "<label for='ldp_site'>" . __( 'web site', 'wpldp' ). "</label>";
+			echo "<label for='ldp_site'>" . __( 'web site', 'wpldp' ). '</label>';
 			echo "<input type='url' placeholder='http://' name='ldp_site' id='ldp_site' />";
-			echo "<p class='description'>" . __( 'WordPress site that you know and that the WP-LDP plugin is installed', 'wpldp' ). "</p>";
-			echo "</div>";
+			echo "<p class='description'>" . __( 'WordPress site that you know and that the WP-LDP plugin is installed', 'wpldp' ). '</p>';
+			echo '</div>';
 		}
 
 		/**
@@ -110,17 +110,17 @@ if (!class_exists('\WpLdp\WpLdpSiteTaxonomy')) {
 		* @param int $term the concrete term
 		* @return void
 		*/
-		function add_custom_tax_fields_onedit_site($term) {
+		function add_custom_tax_fields_onedit_site( $term ) {
 			$termId = $term->term_id;
-			$termMeta = get_term_meta($termId,"ldp_site_url",true);
+			$termMeta = get_term_meta( $termId,'ldp_site_url', true );
 			$ldpSiteUrl = isset($termMeta) ? $termMeta : '';
 
 			// Adding rdf:type field
 			echo "<tr class='form-field form-required term-model-wrap'>";
-			echo "<th scope='row'><label for='ldp_site_url'>" . __( 'web site', 'wpldp' ). "</label></th>";
+			echo "<th scope='row'><label for='ldp_site_url'>" . __( 'web site', 'wpldp' ). '</label></th>';
 			echo "<td><input type='url' placeholder='http://' name='ldp_site_url' id='ldp_site_url' value='$ldpSiteUrl' />";
-			echo "<p class='description'>" . __( 'WordPress site that you know and on which the WP-LDP plugin is installed', 'wpldp' ). "</p></td>";
-			echo "</tr>";
+			echo "<p class='description'>" . __( 'WordPress site that you know and on which the WP-LDP plugin is installed', 'wpldp' ). '</p></td>';
+			echo '</tr>';
 		}
 
 		/**
@@ -129,14 +129,14 @@ if (!class_exists('\WpLdp\WpLdpSiteTaxonomy')) {
 		*
 		* @param int $termID The updated term ID
 		*/
-		function save_custom_tax_field_site($termID) {
-			$termMeta = get_term_meta( $termID," ldp_site_url", true );
+		function save_custom_tax_field_site( $termID ) {
+			$termMeta = get_term_meta( $termID, 'ldp_site_url', true );
 
-			if (isset($_POST['ldp_site_url'])) {
+			if ( isset( $_POST['ldp_site_url'] ) ) {
 				$termMeta = $_POST['ldp_site_url'];
 			}
 
-			update_term_meta( $termID, "ldp_site_url", $termMeta );
+			update_term_meta( $termID, 'ldp_site_url', $termMeta );
 		}
 
 		/**
@@ -156,7 +156,7 @@ if (!class_exists('\WpLdp\WpLdpSiteTaxonomy')) {
 			$ldpSiteUrls = array();
 			if ( !empty( $terms ) && !is_wp_error( $terms ) ) {
 				foreach ( $terms as $term ){
-					$possibleUrl = get_term_meta( $term->term_id, "ldp_site_url", true );
+					$possibleUrl = get_term_meta( $term->term_id, 'ldp_site_url', true );
 					if ( $possibleUrl ) {
 						$ldpSiteUrls[] = rtrim( $possibleUrl, '/' );
 					}
@@ -164,23 +164,23 @@ if (!class_exists('\WpLdp\WpLdpSiteTaxonomy')) {
 			}
 
 			$outputs = array();
-			foreach ($ldpSiteUrls as $ldpSiteUrl) {
+			foreach ( $ldpSiteUrls as $ldpSiteUrl ) {
 				$ch = curl_init();
 				$build_url = $ldpSiteUrl . '/schema/';
 				curl_setopt( $ch, CURLOPT_URL, $build_url );
 				curl_setopt( $ch, CURLOPT_HTTPGET, true );
 				curl_setopt( $ch, CURLOPT_HTTPHEADER, array( 'Content-Type: application/ld+json', 'Accept: application/ld+json' ) );
 				curl_setopt( $ch, CURLOPT_RETURNTRANSFER, 1 );
-				$outputs[ $ldpSiteUrl  . '/schema/' ]['data'] = curl_exec($ch);
-				$outputs[ $ldpSiteUrl  . '/schema/' ]['code'] = curl_getinfo($ch)['http_code'];
+				$outputs[ $ldpSiteUrl  . '/schema/' ]['data'] = curl_exec( $ch );
+				$outputs[ $ldpSiteUrl  . '/schema/' ]['code'] = curl_getinfo( $ch )['http_code'];
 			}
 
 			$sites = array(
-				"@context" => get_option( 'ldp_context', 'http://lov.okfn.org/dataset/lov/context' ),
-				"@graph"   => array(
-					"@id"      => get_site_url() . '/api/ldp/v1/sites/',
-					"@type"    => "http://www.w3.org/ns/ldp#BasicContainer",
-					"http://www.w3.org/ns/ldp#contains" => array()
+				'@context' => get_option( 'ldp_context', 'http://lov.okfn.org/dataset/lov/context' ),
+				'@graph'   => array(
+					'@id'      => get_site_url() . '/api/ldp/v1/sites/',
+					'@type'    => 'http://www.w3.org/ns/ldp#BasicContainer',
+					'http://www.w3.org/ns/ldp#contains' => array()
 					)
 				);
 
@@ -189,11 +189,11 @@ if (!class_exists('\WpLdp\WpLdpSiteTaxonomy')) {
 						$response = json_decode( $output['data'] );
 
 						if ( !empty( $response ) ) {
-							$current_site = $response->{"@graph"}[0];
-							$current_site->{"@id"} = $siteUrl;
+							$current_site = $response->{'@graph'}[0];
+							$current_site->{'@id'} = $siteUrl;
 
-							$sites["@graph"]["http://www.w3.org/ns/ldp#contains"][] =
-							$sites["@graph"]["http://www.w3.org/ns/ldp#contains"][] = $current_site;
+							$sites['@graph']['http://www.w3.org/ns/ldp#contains'][] =
+							$sites['@graph']['http://www.w3.org/ns/ldp#contains'][] = $current_site;
 						}
 					}
 				}

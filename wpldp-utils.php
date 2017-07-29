@@ -52,7 +52,7 @@ if (!class_exists('\WpLdp\WpLdpUtils')) {
 				}
 
 				$termMeta = get_option( "ldp_container_$value->term_id" );
-				$modelsDecoded = json_decode( $termMeta["ldp_model"] );
+				$modelsDecoded = json_decode( $termMeta['ldp_model'] );
 				$fields = $modelsDecoded->{$value->slug}->fields;
 			}
 

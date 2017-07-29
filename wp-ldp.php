@@ -18,7 +18,7 @@
 namespace WpLdp;
 
 // If the file is accessed outside of index.php (ie. directly), we just deny the access.
-defined( 'ABSPATH' ) or die( "No script kiddies please!" );
+defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
 
 require_once( 'wpldp-utils.php' );
 require_once( 'wpldp-container-taxonomy.php' );
@@ -299,7 +299,7 @@ if ( !class_exists( '\WpLdp\WpLdp' ) ) {
 					echo '</label>';
 					echo '</li>';
 				}
-				echo "</ul>";
+				echo '</ul>';
 			}
 
 			/**
@@ -375,7 +375,7 @@ if ( !class_exists( '\WpLdp\WpLdp' ) ) {
 							template:\"{{{form '{$term[0]->slug}'}}}\",
 							models: $ldpModel
 						});";
-						echo "var wpldp = new wpldp( store ); wpldp.init();";
+						echo 'var wpldp = new wpldp( store ); wpldp.init();';
 						echo "wpldp.render('#ldpform', '$resourceUri', undefined, undefined, '{$term[0]->slug}');";
 						echo '</script>';
 					}
@@ -514,7 +514,7 @@ if ( !class_exists( '\WpLdp\WpLdp' ) ) {
 	* @return {type}  description
 	*/
 	public function wpldpfront_enqueue_script() {
-		$current_url = $_SERVER["REQUEST_URI"];
+		$current_url = $_SERVER['REQUEST_URI'];
 		if ( strstr( $current_url, Wpldp::FRONT_PAGE_URL ) ) {
 			// Loading the LDP-framework library
 			wp_register_script(
@@ -601,7 +601,7 @@ if ( !class_exists( '\WpLdp\WpLdp' ) ) {
 	* @return {type}  description
 	*/
 	public function wpldpfront_enqueue_stylesheet() {
-		$current_url = $_SERVER["REQUEST_URI"];
+		$current_url = $_SERVER['REQUEST_URI'];
 		if ( strstr( $current_url, Wpldp::FRONT_PAGE_URL ) ) {
 			// Loading the WP-LDP stylesheet
 			wp_register_style(

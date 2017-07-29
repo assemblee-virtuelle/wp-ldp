@@ -100,24 +100,24 @@ if ( !class_exists('\WpLdp\WpLdpContainerTaxonomy') ) {
 		function add_custom_tax_fields_oncreate($term) {
 			// Adding rdf:type field
 			echo "<div class='form-field term-model-wrap'>";
-			echo "<label for='ldp_rdf_type'>" . __( 'Rdf:type, if any', 'wpldp' ). "</label>";
+			echo "<label for='ldp_rdf_type'>" . __( 'Rdf:type, if any', 'wpldp' ). '</label>';
 			echo "<input type='text' id='ldp_rdf_type' type='text' name='ldp_rdf_type' />";
-			echo "<p class='description'>" . __( 'Rdf:type associated with this container', 'wpldp' ). "</p>";
-			echo "</div>";
+			echo "<p class='description'>" . __( 'Rdf:type associated with this container', 'wpldp' ). '</p>';
+			echo '</div>';
 
 			// Adding container included fields field
 			echo "<div class='form-field term-model-wrap'>";
-			echo "<label for='ldp_included_fields_list'>" . __( 'Included fields', 'wpldp' ). "</label>";
+			echo "<label for='ldp_included_fields_list'>" . __( 'Included fields', 'wpldp' ). '</label>';
 			echo "<input type='text' id='ldp_included_fields_list' type='text' name='ldp_included_fields_list' />";
-			echo "<p class='description'>" . __( 'The fields from the model whose values you would like to include from the associated resources in the container, separated by commas', 'wpldp' ). "</p>";
-			echo "</div>";
+			echo "<p class='description'>" . __( 'The fields from the model whose values you would like to include from the associated resources in the container, separated by commas', 'wpldp' ). '</p>';
+			echo '</div>';
 
 			// Adding the JSON model field
 			echo "<div class='form-field form-required term-model-wrap'>";
-			echo "<label for='ldp_model'>" . __( 'Model', 'wpldp' ). "</label>";
+			echo "<label for='ldp_model'>" . __( 'Model', 'wpldp' ). '</label>';
 			echo "<textarea id='ldp_model' type='text' name='ldp_model' cols='40' rows='20'></textarea>";
-			echo "<p class='description'>" . __( 'The LDP-compatible JSON Model for this container', 'wpldp' ). "</p>";
-			echo "</div>";
+			echo "<p class='description'>" . __( 'The LDP-compatible JSON Model for this container', 'wpldp' ). '</p>';
+			echo '</div>';
 		}
 
 		/**
@@ -130,33 +130,33 @@ if ( !class_exists('\WpLdp\WpLdpContainerTaxonomy') ) {
 		function add_custom_tax_fields_onedit( $term ) {
 			$termId = $term->term_id;
 			$termMeta = get_option( "ldp_container_$termId" );
-			$ldpModel = !empty( $termMeta['ldp_model'] ) ? stripslashes_deep( $termMeta['ldp_model'] ) : "";
+			$ldpModel = !empty( $termMeta['ldp_model'] ) ? stripslashes_deep( $termMeta['ldp_model'] ) : '';
 			$ldpRdfType = isset( $termMeta['ldp_rdf_type'] ) ? $termMeta['ldp_rdf_type'] : '';
 			$ldpIncludedFieldsList = isset( $termMeta['ldp_included_fields_list'] ) ? $termMeta['ldp_included_fields_list'] : '';
 
 			// Adding rdf:type field
 			echo "<tr class='form-field form-required term-model-wrap'>";
-			echo "<th scope='row'><label for='ldp_rdf_type'>" . __( 'Rdf:type, if any', 'wpldp' ). "</label></th>";
+			echo "<th scope='row'><label for='ldp_rdf_type'>" . __( 'Rdf:type, if any', 'wpldp' ). '</label></th>';
 			echo "<td><input type='text' name='ldp_rdf_type' id='ldp_rdf_type' value='$ldpRdfType' />";
-			echo "<p class='description'>" . __( 'Rdf:type associated with this container', 'wpldp' ). "</p></td>";
-			echo "</tr>";
+			echo "<p class='description'>" . __( 'Rdf:type associated with this container', 'wpldp' ). '</p></td>';
+			echo '</tr>';
 
 			// Adding container included fields field
 			echo "<tr class='form-field form-required term-model-wrap'>";
-			echo "<th scope='row'><label for='ldp_included_fields_list'>" . __( 'Included fields', 'wpldp' ). "</label></th>";
+			echo "<th scope='row'><label for='ldp_included_fields_list'>" . __( 'Included fields', 'wpldp' ). '</label></th>';
 			echo "<td><input type='text' name='ldp_included_fields_list' id='ldp_included_fields_list' value='$ldpIncludedFieldsList' />";
-			echo "<p class='description'>" . __( 'The fields from the model whose values you would like to include from the associated resources in the container, separated by commas', 'wpldp' ). "</p></td>";
-			echo "</tr>";
+			echo "<p class='description'>" . __( 'The fields from the model whose values you would like to include from the associated resources in the container, separated by commas', 'wpldp' ). '</p></td>';
+			echo '</tr>';
 
 			// Adding the JSON model field
 			echo "<tr class='form-field form-required term-model-wrap'>";
-			echo "<th scope='row'><label for='ldp_model_editor'>" . __( 'Model editor mode', 'wpldp' ). "</label></th>";
+			echo "<th scope='row'><label for='ldp_model_editor'>" . __( 'Model editor mode', 'wpldp' ). '</label></th>';
 			echo "<td><div id='ldp_model_editor' style='width: 1000px; height: 400px;'></div>";
-			echo "<p class='description'>" . __( 'The LDP-compatible JSON Model for this container', 'wpldp' ). "</p></td>";
-			echo "</tr>";
+			echo "<p class='description'>" . __( 'The LDP-compatible JSON Model for this container', 'wpldp' ). '</p></td>';
+			echo '</tr>';
 			echo "<input type='hidden' id='ldp_model' name='ldp_model' value='$ldpModel'/>";
 
-			echo "</tr>";
+			echo '</tr>';
 
 			echo '<script>
 			var container = document.getElementById("ldp_model_editor");
@@ -219,7 +219,7 @@ if ( !class_exists('\WpLdp\WpLdpContainerTaxonomy') ) {
 			$headers = $request->get_headers();
 			if ( isset( $headers['accept'] )
 			&& strstr( $headers['accept'][0], 'text/html' ) !== false ) {
-				header("Location: " . site_url('/') . Wpldp::FRONT_PAGE_URL . "#" . get_rest_url() . "ldp/v1/" . $ldp_container . '/' );
+				header('Location: ' . site_url('/') . Wpldp::FRONT_PAGE_URL . '#' . get_rest_url() . 'ldp/v1/' . $ldp_container . '/' );
 				exit;
 			}
 
@@ -242,12 +242,12 @@ if ( !class_exists('\WpLdp\WpLdpContainerTaxonomy') ) {
 
 			$posts = $query->get_posts();
 			$result = array(
-				"@context" => get_option( 'ldp_context', 'http://lov.okfn.org/dataset/lov/context' ),
-				"@graph"   => array(
+				'@context' => get_option( 'ldp_context', 'http://lov.okfn.org/dataset/lov/context' ),
+				'@graph'   => array(
 					array(
-						"@id" => rtrim( get_rest_url(), '/' ) . $request->get_route() . '/',
-						"@type" => "http://www.w3.org/ns/ldp#BasicContainer",
-						"http://www.w3.org/ns/ldp#contains" => array()
+						'@id' => rtrim( get_rest_url(), '/' ) . $request->get_route() . '/',
+						'@type' => 'http://www.w3.org/ns/ldp#BasicContainer',
+						'http://www.w3.org/ns/ldp#contains' => array()
 						)
 						)
 					);
@@ -293,12 +293,12 @@ if ( !class_exists('\WpLdp\WpLdpContainerTaxonomy') ) {
 					$posts = $query->get_posts();
 
 					$result = array(
-						"@context" => get_option( 'ldp_context', 'http://lov.okfn.org/dataset/lov/context' ),
-						"@graph"   => array(
+						'@context' => get_option( 'ldp_context', 'http://lov.okfn.org/dataset/lov/context' ),
+						'@graph'   => array(
 							array(
-								"@id" => rtrim( get_rest_url(), '/' ) . $request->get_route() . '/',
-								"@type" => "http://www.w3.org/ns/ldp#BasicContainer",
-								"http://www.w3.org/ns/ldp#contains" => array()
+								'@id' => rtrim( get_rest_url(), '/' ) . $request->get_route() . '/',
+								'@type' => 'http://www.w3.org/ns/ldp#BasicContainer',
+								'http://www.w3.org/ns/ldp#contains' => array()
 								)
 								)
 							);
@@ -333,7 +333,7 @@ if ( !class_exists('\WpLdp\WpLdpContainerTaxonomy') ) {
 									}
 								}
 
-								$rdfType = isset( $termMeta["ldp_rdf_type"] ) ? $termMeta["ldp_rdf_type"] : null;
+								$rdfType = isset( $termMeta['ldp_rdf_type'] ) ? $termMeta['ldp_rdf_type'] : null;
 								if ( !empty( $rdfType ) ) {
 									$current_entry['@type'] = $rdfType;
 									$current_entry['@id'] = site_url('/') . wpLdpApi::LDP_API_URL . $value->slug . '/' . $post->post_name;
