@@ -1,163 +1,163 @@
 {
-  "event": {
-    "fields": [
-      {
-        "label": "Photo, image",
-        "data-property": "foaf:img",
-        "type": "url"
-      },
-      {
-        "label": "Nom",
-        "data-property": "foaf:name"
-      },
-      {
-        "label": "Description courte (140 caractères max)",
-        "data-property": "pair:shortDescription",
-        "type": "textarea"
-      },
-      {
-        "label": "Licence des contenus produits ou diffusés",
-        "data-property": "pair:licence"
-      },
-      {
-        "label": "Adresse",
-        "data-property": "pair:adress"
-      },
-      {
-        "label": "Code postal",
-        "data-property": "pair:zipCode",
-        "type": "zipcode"
-      },
-      {
-        "label": "Ville",
-        "data-property": "pair:town"
-      },
-      {
-        "label": "Country",
-        "data-property": "pair:country"
-      },
-      {
-        "label": "Date de début",
-        "data-property": "pair:from"
-      },
-      {
-        "label": "Date de fin",
-        "data-property": "pair:to"
-      },
-      {
-        "label": "Heure de début",
-        "data-property": "pair:at"
-      },
-      {
-        "label": "Heure de fin",
-        "data-property": "pair:until"
-      },
-      {
-        "label": "Email",
-        "data-property": "foaf:mbox",
-        "type": "email"
-      },
-      {
-        "label": "Site ou page web",
-        "data-property": "foaf:weblog",
-        "type": "url"
-      },
-      {
-        "label": "Lien vers billetterie",
-        "data-property": "pair:tickets",
-        "type": "url"
-      },
-      {
-        "label": "Réseaux sociaux",
-        "data-property": "pair:socialNetworks",
-        "type": "url",
-        "multiple": "true"
-      },
-      {
-        "label": "Espace(s) d'échange numérique",
-        "data-property": "pair:digitalWorkSpace",
-        "type": "textarea"
-      },
-      {
-        "label": "Description (1000 caractères max)",
-        "data-property": "pair:description",
-        "type": "textarea"
-      },
-      {
-        "label": "Description longue (illimité)",
-        "data-property": "pair:longDescription",
-        "type": "textarea"
-      },
-      {
-        "label": "Projets que vous soutenez (en tant porteur de projet)",
-        "object-property": "pair:supports",
-        "range": "foaf:Project",
-        "type": "resource",
-        "multiple": "true"
-      },
-      {
-        "label": "Acteurs responsable de l'événement",
-        "object-property": "pair:hasDirector",
-        "range": "foaf:Agent",
-        "type": "resource",
-        "multiple": "true"
-      },
-       {
-        "label": "Acteur partenaires",
-        "object-property": "pair:hasPartner",
-        "range": "foaf:Agent",
-        "type": "resource",
-        "multiple": "true"
-      },
-      {
-        "label": "Contributeurs",
-        "object-property": "pair:contributesTo",
-        "range": "foaf:Person",
-        "type": "resource",
-        "multiple": "true"
-      },
-      {
-       "label": "Participants",
-        "object-property": "schema:attendee",
-        "range": "foaf:Agent",
-        "type": "resource",
-        "multiple": "true"
-      },
-      {
-        "label": "Centres d'intérêt",
-        "object-property": "dcterms:subject",
-        "range": "pair:Idea",
-        "type": "resource",
-        "multiple": "true"
-      },
-      {
-        "label": "Besoin de compétences",
-        "object-property": "gr:seeks",
-        "range": "cco:Skill",
-        "type": "resource",
-        "multiple": "true"
-      },
-      {
-        "label" : "Besoin de ressources (hors compétences)",
-        "object-property": "gr:seeks3",
-        "range": "pair:Resource",
-        "type": "resource",
-        "multiple": "true"
-      },
-      {
-        "label": "Offre de compétences",
-        "object-property": "gr:offers",
-        "range": "cco:Skill",
-        "type": "resource",
-        "multiple": "true"
-      },
-      {
-        "label": "Offre de ressources (hors compétences)",
-        "object-property": "gr:offers3",
-        "range": "pair:Resource",
-        "type": "resource",
-        "multiple": "true"
-      }
-    ]
-  }
+    "event": {
+        "fields": [
+            {
+                "label": "Photo, image",
+                "data-property": "foaf:img",
+                "type": "url"
+            },
+            {
+                "label": "Nom",
+                "data-property": "foaf:name"
+            },
+            {
+                "label": "Description courte (140 caractères max)",
+                "data-property": "pair:shortDescription",
+                "type": "textarea"
+            },
+            {
+                "label": "Licence des contenus produits ou diffusés",
+                "data-property": "pair:licence"
+            },
+            {
+                "label": "Adresse",
+                "data-property": "pair:adress"
+            },
+            {
+                "label": "Code postal",
+                "data-property": "pair:zipCode",
+                "type": "zipcode"
+            },
+            {
+                "label": "Ville",
+                "data-property": "pair:town"
+            },
+            {
+                "label": "Country",
+                "data-property": "pair:country"
+            },
+            {
+                "label": "Date de début",
+                "data-property": "pair:from"
+            },
+            {
+                "label": "Date de fin",
+                "data-property": "pair:to"
+            },
+            {
+                "label": "Heure de début",
+                "data-property": "pair:at"
+            },
+            {
+                "label": "Heure de fin",
+                "data-property": "pair:until"
+            },
+            {
+                "label": "Email",
+                "data-property": "foaf:mbox",
+                "type": "email"
+            },
+            {
+                "label": "Site ou page web",
+                "data-property": "foaf:weblog",
+                "type": "url"
+            },
+            {
+                "label": "Lien vers billetterie",
+                "data-property": "pair:tickets",
+                "type": "url"
+            },
+            {
+                "label": "Réseaux sociaux",
+                "data-property": "pair:socialNetworks",
+                "type": "url",
+                "multiple": "true"
+            },
+            {
+                "label": "Espace(s) d'échange numérique",
+                "data-property": "pair:digitalWorkSpace",
+                "type": "textarea"
+            },
+            {
+                "label": "Description (1000 caractères max)",
+                "data-property": "pair:description",
+                "type": "textarea"
+            },
+            {
+                "label": "Description longue (illimité)",
+                "data-property": "pair:longDescription",
+                "type": "textarea"
+            },
+            {
+                "label": "Projets que vous soutenez (en tant porteur de projet)",
+                "object-property": "pair:supports",
+                "range": "foaf:Project",
+                "type": "resource",
+                "multiple": "true"
+            },
+            {
+                "label": "Acteurs responsable de l'événement",
+                "object-property": "pair:hasDirector",
+                "range": "foaf:Agent",
+                "type": "resource",
+                "multiple": "true"
+            },
+            {
+                "label": "Acteur partenaires",
+                "object-property": "pair:hasPartner",
+                "range": "foaf:Agent",
+                "type": "resource",
+                "multiple": "true"
+            },
+            {
+                "label": "Contributeurs",
+                "object-property": "pair:contributesTo",
+                "range": "foaf:Person",
+                "type": "resource",
+                "multiple": "true"
+            },
+            {
+                "label": "Participants",
+                "object-property": "schema:attendee",
+                "range": "foaf:Agent",
+                "type": "resource",
+                "multiple": "true"
+            },
+            {
+                "label": "Centres d'intérêt",
+                "object-property": "dcterms:subject",
+                "range": "pair:Idea",
+                "type": "resource",
+                "multiple": "true"
+            },
+            {
+                "label": "Besoin de compétences",
+                "object-property": "gr:seeks",
+                "range": "cco:Skill",
+                "type": "resource",
+                "multiple": "true"
+            },
+            {
+                "label" : "Besoin de ressources (hors compétences)",
+                "object-property": "gr:seeks3",
+                "range": "pair:Resource",
+                "type": "resource",
+                "multiple": "true"
+            },
+            {
+                "label": "Offre de compétences",
+                "object-property": "gr:offers",
+                "range": "cco:Skill",
+                "type": "resource",
+                "multiple": "true"
+            },
+            {
+                "label": "Offre de ressources (hors compétences)",
+                "object-property": "gr:offers3",
+                "range": "pair:Resource",
+                "type": "resource",
+                "multiple": "true"
+            }
+        ]
+    }
 }

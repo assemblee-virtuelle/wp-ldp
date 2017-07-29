@@ -9,11 +9,11 @@ alternate implementation, abandoned: http://blog.teamtreehouse.com/creating-auto
 TODO: translate in Scala:
 https://github.com/scala-js/scala-js-jquery
 https://www.google.fr/search?q=ajax+example+scala.js
- */
+*/
 
 var resultsCount = 15;
 var urlReqPrefix = "http://lookup.dbpedia.org/api/search.asmx/PrefixSearch?QueryClass=&MaxHits=" +
-      resultsCount + "&QueryString=" ;
+resultsCount + "&QueryString=" ;
 // var urlReqPrefix = "/lookup?q=";
 
 // function XHRCompletion (url) {

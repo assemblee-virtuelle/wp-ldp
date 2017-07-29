@@ -1,51 +1,51 @@
 {
-  "theme": {
-    "fields": [
-      {
-        "label": "Photo, image",
-        "data-property": "foaf:img",
-        "type": "url"
-      },
-      {
-        "label": "Nom",
-        "data-property": "pair:name"
-      },
-      {
-        "label": "Description courte (140 caractères max)",
-        "data-property": "pair:shortDescription",
-        "type": "textarea"
-      },
-      {
-        "label": "Description (1000 caractères max)",
-        "data-property": "pair:description",
-        "type": "textarea"
-      },
-      {
-        "label": "Lien wikipedia",
-        "data-property": "pair:wikipedia",
-        "type":"url"
-      },
-      {
-        "label": "Idées (autre thématique, proposition ...) en lien avec cette thématique",
-        "object-property": "pair:convergesWith",
-        "range": "pair:Theme",
-        "type": "resource",
-        "multiple": "true"
-      },
-      {
-        "label": "Ressources documentaires sur cette thématique",
-        "object-property": "dcterms:subject",
-        "range": "foaf:Document",
-        "type": "resource",
-        "multiple": "true"
-      },
-      {
-        "label": "Ressources financières fléchées sur cette thématique",
-        "object-property": "gr:offers",
-        "range": "pair:FinancialResource",
-        "type": "resource",
-        "multiple": "true"
-      }
-    ]
-  }
+    "theme": {
+        "fields": [
+            {
+                "label": "Photo, image",
+                "data-property": "foaf:img",
+                "type": "url"
+            },
+            {
+                "label": "Nom",
+                "data-property": "pair:name"
+            },
+            {
+                "label": "Description courte (140 caractères max)",
+                "data-property": "pair:shortDescription",
+                "type": "textarea"
+            },
+            {
+                "label": "Description (1000 caractères max)",
+                "data-property": "pair:description",
+                "type": "textarea"
+            },
+            {
+                "label": "Lien wikipedia",
+                "data-property": "pair:wikipedia",
+                "type":"url"
+            },
+            {
+                "label": "Idées (autre thématique, proposition ...) en lien avec cette thématique",
+                "object-property": "pair:convergesWith",
+                "range": "pair:Theme",
+                "type": "resource",
+                "multiple": "true"
+            },
+            {
+                "label": "Ressources documentaires sur cette thématique",
+                "object-property": "dcterms:subject",
+                "range": "foaf:Document",
+                "type": "resource",
+                "multiple": "true"
+            },
+            {
+                "label": "Ressources financières fléchées sur cette thématique",
+                "object-property": "gr:offers",
+                "range": "pair:FinancialResource",
+                "type": "resource",
+                "multiple": "true"
+            }
+        ]
+    }
 }

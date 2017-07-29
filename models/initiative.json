@@ -1,152 +1,152 @@
 {
-  "initiative": {
-    "fields": [
-      {
-        "label": "Photo, image",
-        "data-property": "foaf:img",
-        "type": "url"
-      },
-      {
-        "label": "Nom",
-        "data-property": "foaf:name"
-      },
-      {
-        "label": "Description courte (140 caractères max)",
-        "data-property": "pair:shortDescription",
-        "type": "textarea"
-      },
-      {
-        "label": "Licence",
-        "data-property": "pair:licence"
-      },
-      {
-        "label": "Adresse",
-        "data-property": "pair:adress"
-      },
-      {
-        "label": "Code postal",
-        "data-property": "pair:zipCode",
-        "type": "zipcode"
-      },
-      {
-        "label": "Ville",
-        "data-property": "pair:town"
-      },
-      {
-        "label": "Country",
-        "data-property": "pair:country"
-      },
-      {
-        "label": "Email",
-        "data-property": "foaf:mbox",
-        "type": "email"
-      },
-      {
-        "label": "Site ou page web",
-        "data-property": "foaf:weblog",
-        "type": "url"
-      },
-      {
-        "label": "Réseau social 1",
-        "data-property": "pair:socialNetworks",
-        "type": "url",
-        "multiple": "true"
-      },
-      {
-        "label": "Espace(s) de travail physique",
-        "data-property": "pair:physicalWorkSpace",
-        "type": "textarea"
-      },
-      {
-        "label": "Espace(s) de travail numérique",
-        "data-property": "pair:digitalWorkSpace",
-        "type": "textarea"
-      },
-      {
-        "label": "Description (1000 caractères max)",
-        "data-property": "pair:description",
-        "type": "textarea"
-      },
-      {
-        "label": "Description longue (illimité)",
-        "data-property": "pair:longDescription",
-        "type": "textarea"
-      },
-      {
-        "label": "Statut du projet (actif, inactif, R&D etc.)",
-        "data-property": "pair:status",
-        "type": "textarea"
-      },
-      {
-        "label": "Cas d'usage",
-        "object-property": "pair:hasUseCase",
-        "range": "pair:Project",
-        "type": "resource",
-        "multiple": "true"
-      },
-      {
-        "label": "Projets que vous soutenez (en tant porteur de projet)",
-        "object-property": "pair:supports",
-        "range": "foaf:Project",
-        "type": "resource",
-        "multiple": "true"
-      },
-      {
-        "label": "Acteurs responsable du projet ",
-        "object-property": "pair:hasDirector",
-        "range": "foaf:agent",
-        "type": "resource",
-        "multiple": "true"
-      },
-      {
-        "label": "Contributeurs",
-        "object-property": "pair:contributesTo",
-        "range": "foaf:Person",
-        "type": "resource",
-        "multiple": "true"
-      },
-      {
-        "label": "Acteur partenaires ",
-        "object-property": "pair:hasPartner",
-        "range": "foaf:Agent",
-        "type": "resource",
-        "multiple": "true"
-      },
-      {
-        "label": "Centres d'intérêt",
-        "object-property": "dcterms:subject",
-        "range": "pair:Idea",
-        "type": "resource",
-        "multiple": "true"
-      },
-      {
-        "label": "Besoin de compétences",
-        "object-property": "gr:seeks",
-        "range": "cco:Skill",
-        "type": "resource",
-        "multiple": "true"
-      },
-      {
-        "label" : "Besoin de ressources (hors compétences)",
-        "object-property": "gr:seeks3",
-        "range": "pair:Resource",
-        "type": "resource",
-        "multiple": "true"
-      },
-      {
-        "label": "Offre de compétences",
-        "object-property": "gr:offers5",
-        "range": "cco:Skill",
-        "type": "resource",
-        "multiple": "true"
-      },
-      {
-        "label": "Offre de ressources (hors compétences)",
-        "object-property": "gr:offers7",
-        "range": "pair:Resource",
-        "type": "resource",
-        "multiple": "true"
-      }
-    ]
-  }
+    "initiative": {
+        "fields": [
+            {
+                "label": "Photo, image",
+                "data-property": "foaf:img",
+                "type": "url"
+            },
+            {
+                "label": "Nom",
+                "data-property": "foaf:name"
+            },
+            {
+                "label": "Description courte (140 caractères max)",
+                "data-property": "pair:shortDescription",
+                "type": "textarea"
+            },
+            {
+                "label": "Licence",
+                "data-property": "pair:licence"
+            },
+            {
+                "label": "Adresse",
+                "data-property": "pair:adress"
+            },
+            {
+                "label": "Code postal",
+                "data-property": "pair:zipCode",
+                "type": "zipcode"
+            },
+            {
+                "label": "Ville",
+                "data-property": "pair:town"
+            },
+            {
+                "label": "Country",
+                "data-property": "pair:country"
+            },
+            {
+                "label": "Email",
+                "data-property": "foaf:mbox",
+                "type": "email"
+            },
+            {
+                "label": "Site ou page web",
+                "data-property": "foaf:weblog",
+                "type": "url"
+            },
+            {
+                "label": "Réseau social 1",
+                "data-property": "pair:socialNetworks",
+                "type": "url",
+                "multiple": "true"
+            },
+            {
+                "label": "Espace(s) de travail physique",
+                "data-property": "pair:physicalWorkSpace",
+                "type": "textarea"
+            },
+            {
+                "label": "Espace(s) de travail numérique",
+                "data-property": "pair:digitalWorkSpace",
+                "type": "textarea"
+            },
+            {
+                "label": "Description (1000 caractères max)",
+                "data-property": "pair:description",
+                "type": "textarea"
+            },
+            {
+                "label": "Description longue (illimité)",
+                "data-property": "pair:longDescription",
+                "type": "textarea"
+            },
+            {
+                "label": "Statut du projet (actif, inactif, R&D etc.)",
+                "data-property": "pair:status",
+                "type": "textarea"
+            },
+            {
+                "label": "Cas d'usage",
+                "object-property": "pair:hasUseCase",
+                "range": "pair:Project",
+                "type": "resource",
+                "multiple": "true"
+            },
+            {
+                "label": "Projets que vous soutenez (en tant porteur de projet)",
+                "object-property": "pair:supports",
+                "range": "foaf:Project",
+                "type": "resource",
+                "multiple": "true"
+            },
+            {
+                "label": "Acteurs responsable du projet ",
+                "object-property": "pair:hasDirector",
+                "range": "foaf:agent",
+                "type": "resource",
+                "multiple": "true"
+            },
+            {
+                "label": "Contributeurs",
+                "object-property": "pair:contributesTo",
+                "range": "foaf:Person",
+                "type": "resource",
+                "multiple": "true"
+            },
+            {
+                "label": "Acteur partenaires ",
+                "object-property": "pair:hasPartner",
+                "range": "foaf:Agent",
+                "type": "resource",
+                "multiple": "true"
+            },
+            {
+                "label": "Centres d'intérêt",
+                "object-property": "dcterms:subject",
+                "range": "pair:Idea",
+                "type": "resource",
+                "multiple": "true"
+            },
+            {
+                "label": "Besoin de compétences",
+                "object-property": "gr:seeks",
+                "range": "cco:Skill",
+                "type": "resource",
+                "multiple": "true"
+            },
+            {
+                "label" : "Besoin de ressources (hors compétences)",
+                "object-property": "gr:seeks3",
+                "range": "pair:Resource",
+                "type": "resource",
+                "multiple": "true"
+            },
+            {
+                "label": "Offre de compétences",
+                "object-property": "gr:offers5",
+                "range": "cco:Skill",
+                "type": "resource",
+                "multiple": "true"
+            },
+            {
+                "label": "Offre de ressources (hors compétences)",
+                "object-property": "gr:offers7",
+                "range": "pair:Resource",
+                "type": "resource",
+                "multiple": "true"
+            }
+        ]
+    }
 }

@@ -2,31 +2,31 @@
 }
 
 #ldpform label {
-  font-size: 1.3em;
-  display: inline-block;
-  width: 300px;
-  margin-bottom: 15px;
-  line-height: 26px;
+    font-size: 1.3em;
+    display: inline-block;
+    width: 300px;
+    margin-bottom: 15px;
+    line-height: 26px;
 }
 
 #ldpform button.add-field-button, #ldpform button.remove-field-button {
-  display: inline-block;
-  float:   right;
-  margin-left: 10px;
+    display: inline-block;
+    float:   right;
+    margin-left: 10px;
 }
 
 #ldpform input[type='text'], #ldpform input[type='url'],
 #ldpform input[type='email'], #ldpform input[type='date'] {
-  margin: 0;
-  margin-bottom:10px;
-  padding: 3px 8px;
-  font-size: 1.3em;
-  height: 1.7em;
-  display: block;
-  width: 90%;
+    margin: 0;
+    margin-bottom:10px;
+    padding: 3px 8px;
+    font-size: 1.3em;
+    height: 1.7em;
+    display: block;
+    width: 90%;
 }
 
 #ldpform textarea {
-  width: 90%;
-  margin-bottom:10px;
+    width: 90%;
+    margin-bottom:10px;
 }

@@ -1,96 +1,96 @@
 {
-  "goodorservice": {
-    "fields": [
-      {
-        "label": "Photo, image 1",
-        "data-property": "foaf:img",
-        "type": "url"
-      },
-      {
-        "label": "Photo, image 2",
-        "data-property": "foaf:img",
-        "type": "url"
-      },
-      {
-        "label": "Photo, image 3",
-        "data-property": "foaf:img",
-        "type": "url"
-      },
-      {
-        "label": "Nom",
-        "data-property": "foaf:name"
-      },
-      {
-        "label": "Description courte (140 caractères max)",
-        "data-property": "pair:shortDescription",
-        "type": "textarea"
-      },
-      {
-        "label": "Adresse",
-        "data-property": "pair:adress"
-      },
-      {
-        "label": "Code postal",
-        "data-property": "pair:zipCode",
-        "type": "zipcode"
-      },
-      {
-        "label": "Ville",
-        "data-property": "pair:town"
-      },
-      {
-        "label": "Country",
-        "data-property": "pair:country"
-      },
-      {
-        "label": "Email",
-        "data-property": "foaf:mbox",
-        "type": "email"
-      },
-      {
-        "label": "Site ou page web",
-        "data-property": "foaf:weblog",
-        "type": "url"
-      },
-      {
-        "label": "Description (1000 caractères max)",
-        "data-property": "pair:description",
-        "type": "textarea"
-      },
-      {
-        "label": "Description longue (illimité)",
-        "data-property": "pair:longDescription",
-        "type": "textarea"
-      },
-      {
-        "label": "Devise",
-        "data-property": "pair:currency",
-        "type": "text"
-      },
-      {
-        "label": "Prix",
-        "data-property": "pair:price",
-        "type": "number"
-      },
-      {
-        "label": "Créateur",
-        "object-property": "pair:creatorof",
-        "range": "foaf:Agent",
-        "type": "resource"
-      },
-      {
-        "label": "Vendeur",
-        "object-property": "gr:offers",
-        "range": "foaf:Agent",
-        "type": "resource"
-      },
-      {
-        "label": "Tags",
-        "object-property": "dc:subject",
-        "range": "pair:Theme",
-        "type": "resource",
-        "multiple": "true"
-      },
-    ]
-  }
+    "goodorservice": {
+        "fields": [
+            {
+                "label": "Photo, image 1",
+                "data-property": "foaf:img",
+                "type": "url"
+            },
+            {
+                "label": "Photo, image 2",
+                "data-property": "foaf:img",
+                "type": "url"
+            },
+            {
+                "label": "Photo, image 3",
+                "data-property": "foaf:img",
+                "type": "url"
+            },
+            {
+                "label": "Nom",
+                "data-property": "foaf:name"
+            },
+            {
+                "label": "Description courte (140 caractères max)",
+                "data-property": "pair:shortDescription",
+                "type": "textarea"
+            },
+            {
+                "label": "Adresse",
+                "data-property": "pair:adress"
+            },
+            {
+                "label": "Code postal",
+                "data-property": "pair:zipCode",
+                "type": "zipcode"
+            },
+            {
+                "label": "Ville",
+                "data-property": "pair:town"
+            },
+            {
+                "label": "Country",
+                "data-property": "pair:country"
+            },
+            {
+                "label": "Email",
+                "data-property": "foaf:mbox",
+                "type": "email"
+            },
+            {
+                "label": "Site ou page web",
+                "data-property": "foaf:weblog",
+                "type": "url"
+            },
+            {
+                "label": "Description (1000 caractères max)",
+                "data-property": "pair:description",
+                "type": "textarea"
+            },
+            {
+                "label": "Description longue (illimité)",
+                "data-property": "pair:longDescription",
+                "type": "textarea"
+            },
+            {
+                "label": "Devise",
+                "data-property": "pair:currency",
+                "type": "text"
+            },
+            {
+                "label": "Prix",
+                "data-property": "pair:price",
+                "type": "number"
+            },
+            {
+                "label": "Créateur",
+                "object-property": "pair:creatorof",
+                "range": "foaf:Agent",
+                "type": "resource"
+            },
+            {
+                "label": "Vendeur",
+                "object-property": "gr:offers",
+                "range": "foaf:Agent",
+                "type": "resource"
+            },
+            {
+                "label": "Tags",
+                "object-property": "dc:subject",
+                "range": "pair:Theme",
+                "type": "resource",
+                "multiple": "true"
+            },
+        ]
+    }
 }

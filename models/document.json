@@ -1,73 +1,73 @@
 {
-  "document": {
-    "fields": [
-      {
-        "label": "Photo, image",
-        "data-property": "foaf:img",
-        "type": "url"
-      },
-      {
-        "label": "Fichier",
-        "data-property": "pair:file",
-        "type": "url"
-      },
-      {
-        "label": "Titre du document",
-        "data-property": "foaf:name",
-        "type": "textarea"
-      },
-      {
-        "label": "Description courte (140 caractères max)",
-        "data-property": "pair:shortDescription",
-        "type": "textarea"
-      },
-      {
-        "label": "Description (1000 caractères max)",
-        "data-property": "pair:description",
-        "type": "textarea"
-      },
-      {
-        "label": "Projets dont parle ce document",
-        "object-property": "dcterms:subject",
-        "range": "foaf:Project",
-        "type": "resource",
-        "multiple": "true"
-      },
-      {
-        "label": "Thématiques de ce document",
-        "object-property": "dcterms:subject",
-        "range": "pair:Theme",
-        "type": "resource",
-        "multiple": "true"
-      },
-      {
-        "label": "Thèses défendues dans ce document",
-        "object-property": "dcterms:subject",
-        "range": "pair:Thesis",
-        "type": "resource",
-        "multiple": "true"
-      },
-      {
-      "label": "Auteurs ou organisations auteurs de ce document",
-        "object-property": "pair:hasAuthor",
-        "range" : "foaf:Person",
-        "type": "resource",
-        "multiple": "true"
-      },
-      {
-      "label": "Personnes ayant contribué à ce document",
-        "object-property": "pair:hasContributor",
-        "range" : "foaf:Person",
-        "type": "resource",
-        "multiple": "true"
-      },
-      {
-        "label": "Eléments bibliographiques",
-        "object-property": "dcterms:subject",
-        "range": "foaf:Document",
-        "type": "resource",
-        "multiple": "true"
-      }
-    ]
-  }
+    "document": {
+        "fields": [
+            {
+                "label": "Photo, image",
+                "data-property": "foaf:img",
+                "type": "url"
+            },
+            {
+                "label": "Fichier",
+                "data-property": "pair:file",
+                "type": "url"
+            },
+            {
+                "label": "Titre du document",
+                "data-property": "foaf:name",
+                "type": "textarea"
+            },
+            {
+                "label": "Description courte (140 caractères max)",
+                "data-property": "pair:shortDescription",
+                "type": "textarea"
+            },
+            {
+                "label": "Description (1000 caractères max)",
+                "data-property": "pair:description",
+                "type": "textarea"
+            },
+            {
+                "label": "Projets dont parle ce document",
+                "object-property": "dcterms:subject",
+                "range": "foaf:Project",
+                "type": "resource",
+                "multiple": "true"
+            },
+            {
+                "label": "Thématiques de ce document",
+                "object-property": "dcterms:subject",
+                "range": "pair:Theme",
+                "type": "resource",
+                "multiple": "true"
+            },
+            {
+                "label": "Thèses défendues dans ce document",
+                "object-property": "dcterms:subject",
+                "range": "pair:Thesis",
+                "type": "resource",
+                "multiple": "true"
+            },
+            {
+                "label": "Auteurs ou organisations auteurs de ce document",
+                "object-property": "pair:hasAuthor",
+                "range" : "foaf:Person",
+                "type": "resource",
+                "multiple": "true"
+            },
+            {
+                "label": "Personnes ayant contribué à ce document",
+                "object-property": "pair:hasContributor",
+                "range" : "foaf:Person",
+                "type": "resource",
+                "multiple": "true"
+            },
+            {
+                "label": "Eléments bibliographiques",
+                "object-property": "dcterms:subject",
+                "range": "foaf:Document",
+                "type": "resource",
+                "multiple": "true"
+            }
+        ]
+    }
 }

@@ -1,166 +1,166 @@
 {
-  "organization": {
-    "fields": [
-      {
-        "label": "Photo, image",
-        "data-property": "foaf:img",
-        "type": "url"
-      },
-      {
-        "label": "Nom",
-        "data-property": "foaf:name"
-      },
-      {
-        "label": "Description courte (140 caractères max)",
-        "data-property": "pair:shortDescription",
-        "type": "textarea"
-      },
-      {
-        "label": "Forme juridique",
-        "data-property": "pair:legalForm"
-      },
-      {
-        "label": "Date de création",
-        "data-property": "pair:creationDate",
-        "type": "date"
-      },
-      {
-        "label": "Adresse",
-        "data-property": "pair:address"
-      },
-      {
-        "label": "Code postal",
-        "data-property": "pair:zipCode",
-        "type": "zipcode"
-      },
-      {
-        "label": "Ville",
-        "data-property": "pair:town"
-      },
-      {
-        "label": "Country",
-        "data-property": "pair:country"
-      },
-      {
-        "label": "Email",
-        "data-property": "foaf:mbox",
-        "type": "email"
-      },
-      {
-        "label": "Site ou page web",
-        "data-property": "foaf:weblog",
-        "type": "url"
-      },
-      {
-        "label": "Réseaux sociaux",
-        "data-property": "pair:socialNetworks",
-        "type": "url",
-        "multiple": "true"
-      },
-      {
-        "label": "Espace(s) de travail physique",
-        "data-property": "pair:physicalWorkSpace",
-        "type": "textarea"
-      },
-      {
-        "label": "Espace(s) de travail numérique",
-        "data-property": "pair:digitalWorkSpace",
-        "type": "textarea"
-      },
-      {
-        "label": "Description (1000 caractères max)",
-        "data-property": "pair:description",
-        "type": "textarea"
-      },
-      {
-        "label": "Description longue (illimité)",
-        "data-property": "pair:longDescription",
-        "type": "textarea"
-      },
-      {
-        "label": "Projets que vous portez (en tant qu'orga)",
-        "object-property": "pair:manage",
-        "range": "foaf:Project",
-        "type": "resource",
-        "multiple": "true"
-      },
-      {
-        "label": "Projets auquel vous contribuez (en tant qu'orga)",
-        "object-property": "foaf:currentProject",
-        "range": "foaf:Project",
-        "type": "resource",
-        "multiple": "true"
-      },
-      {
-        "label": "Projets que vous soutenez (en tant qu'orga)",
-        "object-property": "pair:supports",
-        "range": "foaf:Project",
-        "type": "resource",
-        "multiple": "true"
-      },
-      {
-        "label": "Evénements que vous (co-)organisez",
-        "object-property": "pair:organize",
-        "range": "schema:Event",
-        "type": "resource",
-        "multiple": "true"
-      },
-      {
-        "label": "Contributeurs",
-        "object-property": "pair:hascontributor",
-        "range": "foaf:Person",
-        "type": "resource",
-        "multiple": "true"
-      },
-      {
-        "label": "sympathisants",
-        "object-property": "pair:hasFollower",
-        "range": "foaf:Person",
-        "type": "resource",
-        "multiple": "true"
-      },
-      {
-        "label": "Acteur partenaires ",
-        "object-property": "pair:hasFollower4",
-        "range": "foaf:agent",
-        "type": "resource",
-        "multiple": "true"
-      },
-      {
-        "label": "Centre d'intérêts",
-        "object-property": "dcterms:subject",
-        "range": "pair:Idea",
-        "type": "resource",
-        "multiple": "true"
-      },
-      {
-        "label": "Besoin de compétences",
-        "object-property": "gr:seeks",
-        "range": "cco:Skill",
-        "type": "resource",
-        "multiple": "true"
-      },
-      {
-        "label" : "Besoin de ressources (hors compétences)",
-        "object-property": "gr:seeks3",
-        "range": "pair:Resource",
-        "type": "resource",
-        "multiple": "true"
-      },
-      {
-        "label": "Offre de compétences",
-        "object-property": "gr:offers5",
-        "range": "cco:Skill",
-        "type": "resource",
-        "multiple": "true"
-      },
-      {
-        "label": "Offre de ressources (hors compétences)",
-        "object-property": "gr:offers7",
-        "range": "pair:Resource",
-        "type": "resource",
-        "multiple": "true"
-      }
-    ]
-  }
+    "organization": {
+        "fields": [
+            {
+                "label": "Photo, image",
+                "data-property": "foaf:img",
+                "type": "url"
+            },
+            {
+                "label": "Nom",
+                "data-property": "foaf:name"
+            },
+            {
+                "label": "Description courte (140 caractères max)",
+                "data-property": "pair:shortDescription",
+                "type": "textarea"
+            },
+            {
+                "label": "Forme juridique",
+                "data-property": "pair:legalForm"
+            },
+            {
+                "label": "Date de création",
+                "data-property": "pair:creationDate",
+                "type": "date"
+            },
+            {
+                "label": "Adresse",
+                "data-property": "pair:address"
+            },
+            {
+                "label": "Code postal",
+                "data-property": "pair:zipCode",
+                "type": "zipcode"
+            },
+            {
+                "label": "Ville",
+                "data-property": "pair:town"
+            },
+            {
+                "label": "Country",
+                "data-property": "pair:country"
+            },
+            {
+                "label": "Email",
+                "data-property": "foaf:mbox",
+                "type": "email"
+            },
+            {
+                "label": "Site ou page web",
+                "data-property": "foaf:weblog",
+                "type": "url"
+            },
+            {
+                "label": "Réseaux sociaux",
+                "data-property": "pair:socialNetworks",
+                "type": "url",
+                "multiple": "true"
+            },
+            {
+                "label": "Espace(s) de travail physique",
+                "data-property": "pair:physicalWorkSpace",
+                "type": "textarea"
+            },
+            {
+                "label": "Espace(s) de travail numérique",
+                "data-property": "pair:digitalWorkSpace",
+                "type": "textarea"
+            },
+            {
+                "label": "Description (1000 caractères max)",
+                "data-property": "pair:description",
+                "type": "textarea"
+            },
+            {
+                "label": "Description longue (illimité)",
+                "data-property": "pair:longDescription",
+                "type": "textarea"
+            },
+            {
+                "label": "Projets que vous portez (en tant qu'orga)",
+                "object-property": "pair:manage",
+                "range": "foaf:Project",
+                "type": "resource",
+                "multiple": "true"
+            },
+            {
+                "label": "Projets auquel vous contribuez (en tant qu'orga)",
+                "object-property": "foaf:currentProject",
+                "range": "foaf:Project",
+                "type": "resource",
+                "multiple": "true"
+            },
+            {
+                "label": "Projets que vous soutenez (en tant qu'orga)",
+                "object-property": "pair:supports",
+                "range": "foaf:Project",
+                "type": "resource",
+                "multiple": "true"
+            },
+            {
+                "label": "Evénements que vous (co-)organisez",
+                "object-property": "pair:organize",
+                "range": "schema:Event",
+                "type": "resource",
+                "multiple": "true"
+            },
+            {
+                "label": "Contributeurs",
+                "object-property": "pair:hascontributor",
+                "range": "foaf:Person",
+                "type": "resource",
+                "multiple": "true"
+            },
+            {
+                "label": "sympathisants",
+                "object-property": "pair:hasFollower",
+                "range": "foaf:Person",
+                "type": "resource",
+                "multiple": "true"
+            },
+            {
+                "label": "Acteur partenaires ",
+                "object-property": "pair:hasFollower4",
+                "range": "foaf:agent",
+                "type": "resource",
+                "multiple": "true"
+            },
+            {
+                "label": "Centre d'intérêts",
+                "object-property": "dcterms:subject",
+                "range": "pair:Idea",
+                "type": "resource",
+                "multiple": "true"
+            },
+            {
+                "label": "Besoin de compétences",
+                "object-property": "gr:seeks",
+                "range": "cco:Skill",
+                "type": "resource",
+                "multiple": "true"
+            },
+            {
+                "label" : "Besoin de ressources (hors compétences)",
+                "object-property": "gr:seeks3",
+                "range": "pair:Resource",
+                "type": "resource",
+                "multiple": "true"
+            },
+            {
+                "label": "Offre de compétences",
+                "object-property": "gr:offers5",
+                "range": "cco:Skill",
+                "type": "resource",
+                "multiple": "true"
+            },
+            {
+                "label": "Offre de ressources (hors compétences)",
+                "object-property": "gr:offers7",
+                "range": "pair:Resource",
+                "type": "resource",
+                "multiple": "true"
+            }
+        ]
+    }
 }

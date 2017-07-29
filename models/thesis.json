@@ -1,119 +1,119 @@
 {
-  "thesis": {
-    "fields": [
-      {
-        "label": "Photo, image",
-        "data-property": "foaf:img",
-        "type": "url"
-      },
-      {
-        "label": "Nom",
-        "data-property": "pair:name"
-      },
-      {
-        "label": "Licence",
-        "data-property": "pair:licence"
-      },
-      {
-        "label": "Description courte (140 caractères max)",
-        "data-property": "pair:shortDescription",
-        "type": "textarea"
-      },
-      {
-        "label": "Description (1000 caractères max)",
-        "data-property": "pair:description",
-        "type": "textarea"
-      },
-      {
-        "label": "Lien wikipedia",
-        "data-property": "pair:wikipedia",
-        "type":"url"
-      },
-      {
-        "label": "Site ou page web",
-        "data-property": "foaf:weblog",
-        "type": "url"
-      },
-      {
-        "label": "Email",
-        "data-property": "foaf:mbox",
-        "type": "email"
-      },
-      {
-        "label": "Projets visant la mise en oeuvre de cette idée",
-        "object-property": "dcterms:subject",
-        "range": "foaf:Project",
-        "type": "resource",
-        "multiple": "true"
-      },
-      {
-        "label": "Evénements portant sur cette idée",
-        "object-property": "dcterms:subject3",
-        "range": "schema:Event",
-        "type": "resource",
-        "multiple": "true"
-      },
-      {
-      "label": "Personne ayant imaginé cette idée",
-        "object-property": "pair:hasCreator",
-        "range" : "foaf:Person",
-        "type": "resource",
-        "multiple": "true"
-      },
-      {
-      "label": "Personnes soutenant cette idée",
-        "object-property": "pair:hasFollower",
-        "range" : "foaf:Person",
-        "type": "resource",
-        "multiple": "true"
-      },
-      {
-      "label": "Organisations soutenant cette idée",
-        "object-property": "pair:hasFollower",
-        "range" : "foaf:Organization",
-        "type": "resource",
-        "multiple": "true"
-      },
-      {
-        "label": "Thématiques en lien avec cette idée",
-        "object-property": "dcterms:subject",
-        "range": "pair:Theme",
-        "type": "resource",
-        "multiple": "true"
-      },
-      {
-        "label": "Idées (Proposition) convergente avec cette idée",
-        "object-property": "pair:convergesWith",
-        "range": "pair:Thesis",
-        "type": "resource",
-        "multiple": "true"
-      },
-      {
-        "label": "Ressources documentaire portant sur cette idée",
-        "object-property": "dcterms:subject",
-        "range": "foaf:Document",
-        "type": "resource",
-        "multiple": "true"
-      },
-      {
-        "label": "Ressources financières recherchée pour le développement de cette idée ?",
-        "object-property": "gr:seeks",
-        "range": "pair:FinancialResource",
-        "type": "resource"
-      },
-      {
-        "label": "Compétences recherchées pour le développement de cette idée",
-        "object-property": "gr:seeks",
-        "range": "cco:Skill",
-        "type": "resource"
-      },
-      {
-        "label": "Offres de ressource liée à cette idée",
-        "object-property": "gr:offers",
-        "range": "pair:Resource",
-        "type": "resource",
-        "multiple": "true"
-      }
-    ]
-  }
+    "thesis": {
+        "fields": [
+            {
+                "label": "Photo, image",
+                "data-property": "foaf:img",
+                "type": "url"
+            },
+            {
+                "label": "Nom",
+                "data-property": "pair:name"
+            },
+            {
+                "label": "Licence",
+                "data-property": "pair:licence"
+            },
+            {
+                "label": "Description courte (140 caractères max)",
+                "data-property": "pair:shortDescription",
+                "type": "textarea"
+            },
+            {
+                "label": "Description (1000 caractères max)",
+                "data-property": "pair:description",
+                "type": "textarea"
+            },
+            {
+                "label": "Lien wikipedia",
+                "data-property": "pair:wikipedia",
+                "type":"url"
+            },
+            {
+                "label": "Site ou page web",
+                "data-property": "foaf:weblog",
+                "type": "url"
+            },
+            {
+                "label": "Email",
+                "data-property": "foaf:mbox",
+                "type": "email"
+            },
+            {
+                "label": "Projets visant la mise en oeuvre de cette idée",
+                "object-property": "dcterms:subject",
+                "range": "foaf:Project",
+                "type": "resource",
+                "multiple": "true"
+            },
+            {
+                "label": "Evénements portant sur cette idée",
+                "object-property": "dcterms:subject3",
+                "range": "schema:Event",
+                "type": "resource",
+                "multiple": "true"
+            },
+            {
+                "label": "Personne ayant imaginé cette idée",
+                "object-property": "pair:hasCreator",
+                "range" : "foaf:Person",
+                "type": "resource",
+                "multiple": "true"
+            },
+            {
+                "label": "Personnes soutenant cette idée",
+                "object-property": "pair:hasFollower",
+                "range" : "foaf:Person",
+                "type": "resource",
+                "multiple": "true"
+            },
+            {
+                "label": "Organisations soutenant cette idée",
+                "object-property": "pair:hasFollower",
+                "range" : "foaf:Organization",
+                "type": "resource",
+                "multiple": "true"
+            },
+            {
+                "label": "Thématiques en lien avec cette idée",
+                "object-property": "dcterms:subject",
+                "range": "pair:Theme",
+                "type": "resource",
+                "multiple": "true"
+            },
+            {
+                "label": "Idées (Proposition) convergente avec cette idée",
+                "object-property": "pair:convergesWith",
+                "range": "pair:Thesis",
+                "type": "resource",
+                "multiple": "true"
+            },
+            {
+                "label": "Ressources documentaire portant sur cette idée",
+                "object-property": "dcterms:subject",
+                "range": "foaf:Document",
+                "type": "resource",
+                "multiple": "true"
+            },
+            {
+                "label": "Ressources financières recherchée pour le développement de cette idée ?",
+                "object-property": "gr:seeks",
+                "range": "pair:FinancialResource",
+                "type": "resource"
+            },
+            {
+                "label": "Compétences recherchées pour le développement de cette idée",
+                "object-property": "gr:seeks",
+                "range": "cco:Skill",
+                "type": "resource"
+            },
+            {
+                "label": "Offres de ressource liée à cette idée",
+                "object-property": "gr:offers",
+                "range": "pair:Resource",
+                "type": "resource",
+                "multiple": "true"
+            }
+        ]
+    }
 }

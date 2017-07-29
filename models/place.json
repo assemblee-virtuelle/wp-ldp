@@ -1,147 +1,147 @@
 {
-  "place": {
-    "fields": [
-      {
-        "label": "Photo, image",
-        "data-property": "foaf:img",
-        "type": "url"
-      },
-      {
-        "label": "Nom",
-        "data-property": "foaf:name"
-      },
-      {
-        "label": "Description courte (140 caractères max)",
-        "data-property": "pair:shortDescription",
-        "type": "textarea"
-      },
-      {
-        "label": "Forme juridique",
-        "data-property": "pair:legalForm"
-      },
-      {
-        "label": "Adresse",
-        "data-property": "pair:address"
-      },
-      {
-        "label": "Code postal",
-        "data-property": "pair:zipCode",
-        "type": "zipcode"
-      },
-      {
-        "label": "Ville",
-        "data-property": "pair:town"
-      },
-      {
-        "label": "Country",
-        "data-property": "pair:country"
-      },
-      {
-        "label": "Site ou page web",
-        "data-property": "foaf:weblog",
-        "type": "url"
-      },
-      {
-        "label": "Email",
-        "data-property": "foaf:mbox",
-        "type": "email"
-      },
-      {
-        "label": "Réseaux sociaux",
-        "data-property": "pair:socialNetworks",
-        "type": "url",
-        "multiple": "true"
-      },
-      {
-        "label": "Espace(s) de travail physique",
-        "data-property": "pair:physicalWorkSpace",
-        "type": "textarea"
-      },
-      {
-        "label": "Espace(s) de travail numérique",
-        "data-property": "pair:digitalWorkSpace",
-        "type": "textarea"
-      },
-      {
-        "label": "Description (1000 caractères max)",
-        "data-property": "pair:description",
-        "type": "textarea"
-      },
-      {
-        "label": "Description longue (illimité)",
-        "data-property": "pair:longDescription",
-        "type": "textarea"
-      },
-      {
-        "label": "Acteur 1 responsable du lieu ",
-        "object-property": "pair:hasDirector",
-        "range": "foaf:agent",
-        "type": "resource",
-        "multiple": "true"
-      },
-      {
-        "label": "Projet 1 hébergé sur le lieu",
-        "object-property": "pair:hosted",
-        "range": "foaf:Project",
-        "type": "resource",
-        "multiple": "true"
-      },
-      {
-        "label": "Contributeurs",
-        "object-property": "pair:contributesTo",
-        "range": "foaf:person",
-        "type": "resource",
-        "multiple": "true"
-      },
-      {
-        "label": "Sympathisants",
-        "object-property": "cito:likes",
-        "range": "foaf:person",
-        "type": "resource",
-        "multiple": "true"
-      },
-       {
-        "label": "Acteurs partenaire",
-        "object-property": "pair:hasPartner",
-        "range": "foaf:agent",
-        "type": "resource",
-        "multiple": "true"
-      },
-      {
-        "label": "Centres d'intérêts",
-        "object-property": "dcterms:subject",
-        "range": "pair:Idea",
-        "type": "resource",
-        "multiple": "true"
-      },
-      {
-        "label": "Besoin de compétences",
-        "object-property": "gr:seeks",
-        "range": "cco:Skill",
-        "type": "resource",
-        "multiple": "true"
-      },
-      {
-        "label" : "Besoin de ressources (hors compétences)",
-        "object-property": "gr:seeks",
-        "range": "pair:Resource",
-        "type": "resource",
-        "multiple": "true"
-      },
-      {
-        "label": "Offre de compétences",
-        "object-property": "gr:offers",
-        "range": "cco:Skill",
-        "type": "resource",
-        "multiple": "true"
-      },
-      {
-        "label": "Offre de ressources (hors compétences)",
-        "object-property": "gr:offers",
-        "range": "pair:Resource",
-        "type": "resource",
-        "multiple": "true"
-      }
-    ]
-  }
+    "place": {
+        "fields": [
+            {
+                "label": "Photo, image",
+                "data-property": "foaf:img",
+                "type": "url"
+            },
+            {
+                "label": "Nom",
+                "data-property": "foaf:name"
+            },
+            {
+                "label": "Description courte (140 caractères max)",
+                "data-property": "pair:shortDescription",
+                "type": "textarea"
+            },
+            {
+                "label": "Forme juridique",
+                "data-property": "pair:legalForm"
+            },
+            {
+                "label": "Adresse",
+                "data-property": "pair:address"
+            },
+            {
+                "label": "Code postal",
+                "data-property": "pair:zipCode",
+                "type": "zipcode"
+            },
+            {
+                "label": "Ville",
+                "data-property": "pair:town"
+            },
+            {
+                "label": "Country",
+                "data-property": "pair:country"
+            },
+            {
+                "label": "Site ou page web",
+                "data-property": "foaf:weblog",
+                "type": "url"
+            },
+            {
+                "label": "Email",
+                "data-property": "foaf:mbox",
+                "type": "email"
+            },
+            {
+                "label": "Réseaux sociaux",
+                "data-property": "pair:socialNetworks",
+                "type": "url",
+                "multiple": "true"
+            },
+            {
+                "label": "Espace(s) de travail physique",
+                "data-property": "pair:physicalWorkSpace",
+                "type": "textarea"
+            },
+            {
+                "label": "Espace(s) de travail numérique",
+                "data-property": "pair:digitalWorkSpace",
+                "type": "textarea"
+            },
+            {
+                "label": "Description (1000 caractères max)",
+                "data-property": "pair:description",
+                "type": "textarea"
+            },
+            {
+                "label": "Description longue (illimité)",
+                "data-property": "pair:longDescription",
+                "type": "textarea"
+            },
+            {
+                "label": "Acteur 1 responsable du lieu ",
+                "object-property": "pair:hasDirector",
+                "range": "foaf:agent",
+                "type": "resource",
+                "multiple": "true"
+            },
+            {
+                "label": "Projet 1 hébergé sur le lieu",
+                "object-property": "pair:hosted",
+                "range": "foaf:Project",
+                "type": "resource",
+                "multiple": "true"
+            },
+            {
+                "label": "Contributeurs",
+                "object-property": "pair:contributesTo",
+                "range": "foaf:person",
+                "type": "resource",
+                "multiple": "true"
+            },
+            {
+                "label": "Sympathisants",
+                "object-property": "cito:likes",
+                "range": "foaf:person",
+                "type": "resource",
+                "multiple": "true"
+            },
+            {
+                "label": "Acteurs partenaire",
+                "object-property": "pair:hasPartner",
+                "range": "foaf:agent",
+                "type": "resource",
+                "multiple": "true"
+            },
+            {
+                "label": "Centres d'intérêts",
+                "object-property": "dcterms:subject",
+                "range": "pair:Idea",
+                "type": "resource",
+                "multiple": "true"
+            },
+            {
+                "label": "Besoin de compétences",
+                "object-property": "gr:seeks",
+                "range": "cco:Skill",
+                "type": "resource",
+                "multiple": "true"
+            },
+            {
+                "label" : "Besoin de ressources (hors compétences)",
+                "object-property": "gr:seeks",
+                "range": "pair:Resource",
+                "type": "resource",
+                "multiple": "true"
+            },
+            {
+                "label": "Offre de compétences",
+                "object-property": "gr:offers",
+                "range": "cco:Skill",
+                "type": "resource",
+                "multiple": "true"
+            },
+            {
+                "label": "Offre de ressources (hors compétences)",
+                "object-property": "gr:offers",
+                "range": "pair:Resource",
+                "type": "resource",
+                "multiple": "true"
+            }
+        ]
+    }
 }
