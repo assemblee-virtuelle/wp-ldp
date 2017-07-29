@@ -28,6 +28,11 @@ if (!class_exists('\WpLdp\WpLdp')) {
         */
         const FRONT_PAGE_URL = 'wp-ldp/front';
 
+        /*
+        * The resource post type name
+        */
+        const RESOURCE_POST_TYPE = 'ldp_resource';
+
         /**
         * The current plugin version number
         */
@@ -225,7 +230,7 @@ if (!class_exists('\WpLdp\WpLdp')) {
         function ldp_resource_post_link( $post_link, $id = 0 ){
             $post = get_post($id);
 
-            if ( 'ldp_resource' == get_post_type( $post ) ) {
+            if ( Wpldp::RESOURCE_POST_TYPE == get_post_type( $post ) ) {
                 if (is_object($post)){
                     $terms = wp_get_object_terms( $post->ID, 'ldp_container' );
                     if ( !empty( $terms ) ) {
@@ -247,7 +252,7 @@ if (!class_exists('\WpLdp\WpLdp')) {
         function display_container_meta_box( $post_type ) {
             remove_meta_box( 'ldp_containerdiv', $post_type, 'side' );
 
-            if( $post_type == 'ldp_resource' ) :
+            if( $post_type == Wpldp::RESOURCE_POST_TYPE ) :
                 add_meta_box(
                     'ldp_containerdiv',
                     __('Containers', 'wpldp'),
@@ -298,7 +303,7 @@ if (!class_exists('\WpLdp\WpLdp')) {
         * @return void
         */
         function display_media_meta_box ( $post_type ) {
-            if ( $post_type == 'ldp_resource' ) {
+            if ( $post_type == Wpldp::RESOURCE_POST_TYPE ) {
                 add_meta_box(
                     'ldp_mediadiv',
                     __('Media', 'wpldp'),
@@ -330,7 +335,7 @@ if (!class_exists('\WpLdp\WpLdp')) {
         * @return {type} HTML Form
         */
         public function wpldp_edit_form_advanced($post) {
-            if ($post->post_type == 'ldp_resource') {
+            if ($post->post_type == Wpldp::RESOURCE_POST_TYPE) {
                 $resourceUri = WpLdpUtils::getResourceUri( $post );
 
                 $term = get_the_terms($post->post_id, 'ldp_container');
@@ -437,7 +442,7 @@ if (!class_exists('\WpLdp\WpLdp')) {
 public function ldp_enqueue_script() {
     global $pagenow, $post_type;
     $screen = get_current_screen();
-    if ($post_type == 'ldp_resource') {
+    if ($post_type == Wpldp::RESOURCE_POST_TYPE) {
         wp_enqueue_media();
 
         // Loading the LDP-framework library
