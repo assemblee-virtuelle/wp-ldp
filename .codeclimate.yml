@@ -12,9 +12,8 @@ engines:
       - php
       - javascript
 exclude_paths:
-  -"tests/"
-  -"library/"
-  -"assets/"
-  -"languages/"
-  -"models/"
-  -"vendor/"
+  - "tests/"
+  - "library/"
+  - "assets/"
+  - "languages/"
+  - "models/"
