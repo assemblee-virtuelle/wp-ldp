@@ -1,0 +1,19 @@
+engines:
+  phpcodesniffer:
+    enabled: true
+    config:
+      standard: "WordPress"
+  eslint:
+    enabled: true
+  duplication:
+    enabled: true
+    config:
+      languages:
+      - php
+      - javascript
+exclude_paths:
+- "tests/"
+- "library/"
+- "assets/"
+- "languages/"
+- "models/"
