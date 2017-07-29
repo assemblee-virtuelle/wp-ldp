@@ -32,8 +32,8 @@ if (!class_exists('\WpLdp\WpLdpApi')) {
         * API method for retrieving the general schema this site LPD API
         */
         public function get_api_definition( \WP_REST_Request $request, \WP_REST_Response $response = null ) {
-            header('Content-Type: application/ld+json');
-            header('Access-Control-Allow-Origin: *');
+            header( 'Content-Type: application/ld+json' );
+            header( 'Access-Control-Allow-Origin: *' );
 
             $query = new \WP_Query( array(
                 'post_type' => 'ldp_resource',
@@ -44,7 +44,7 @@ if (!class_exists('\WpLdp\WpLdpApi')) {
             $posts = $query->get_posts();
 
             $result = array(
-                "@context" => get_option('ldp_context', 'http://lov.okfn.org/dataset/lov/context'),
+                "@context" => get_option( 'ldp_context', 'http://lov.okfn.org/dataset/lov/context' ),
                 "@graph"   => array(
                     array(
                         "@id" => rtrim( get_rest_url(), '/' ) . $request->get_route() . '/',
@@ -55,23 +55,23 @@ if (!class_exists('\WpLdp\WpLdpApi')) {
                     );
 
                     foreach ($posts as $post ) {
-                        $values = get_the_terms($post->ID, 'ldp_container');
+                        $values = get_the_terms( $post->ID, 'ldp_container' );
                         if ( !empty( $values ) ) {
                             if ( empty($values[0])) {
-                                $value = reset($values);
+                                $value = reset( $values );
                             } else {
                                 $value = $values[0];
                             }
-                            $termMeta = get_option("ldp_container_$value->term_id");
-                            $rdfType = isset($termMeta["ldp_rdf_type"]) ? $termMeta["ldp_rdf_type"] : null;
+                            $termMeta = get_option( "ldp_container_$value->term_id" );
+                            $rdfType = isset( $termMeta["ldp_rdf_type"] ) ? $termMeta["ldp_rdf_type"] : null;
 
                             if ( $rdfType != null ){
-                                if (array_key_exists($rdfType,$array)){
+                                if ( array_key_exists( $rdfType,$array) ){
                                     $array[$rdfType]['value']++;
                                 }
                                 else{
                                     $array[$rdfType]['value']=1;
-                                    $array[$rdfType]['id']= strtolower( explode(':',$rdfType)[1] );
+                                    $array[$rdfType]['id']= strtolower( explode( ':', $rdfType )[1] );
                                 }
                             }
                         }
@@ -79,7 +79,7 @@ if (!class_exists('\WpLdp\WpLdpApi')) {
 
                     foreach ( $array as $key => $value ) {
                         $current_container_entry = array();
-                        $current_container_entry["@id"] = site_url('/') . wpLdpApi::LDP_API_URL . $value['id'] . '/';
+                        $current_container_entry["@id"] = site_url( '/' ) . wpLdpApi::LDP_API_URL . $value['id'] . '/';
                         $current_container_entry["@type"] = "http://www.w3.org/ns/ldp#BasicContainer";
                         $current_container_entry["@count"] = $value['value'];
                         $result["@graph"][0]["http://www.w3.org/ns/ldp#contains"][] = $current_container_entry;
@@ -99,12 +99,12 @@ if (!class_exists('\WpLdp\WpLdpApi')) {
                     $headers = $request->get_headers();
                     if ( isset( $headers['accept'] )
                     && strstr( $headers['accept'][0], 'text/html' ) !== false ) {
-                        header("Location: " . site_url('/') . Wpldp::FRONT_PAGE_URL . "#" . get_rest_url() . "ldp/v1/" . $ldp_container . '/' . $ldp_resource_slug . '/');
+                        header( "Location: " . site_url('/') . Wpldp::FRONT_PAGE_URL . "#" . get_rest_url() . "ldp/v1/" . $ldp_container . '/' . $ldp_resource_slug . '/' );
                         exit;
                     }
 
-                    header('Content-Type: application/ld+json');
-                    header('Access-Control-Allow-Origin: *');
+                    header( 'Content-Type: application/ld+json' );
+                    header( 'Access-Control-Allow-Origin: *' );
 
                     $query = new \WP_Query(
                         array(
@@ -119,26 +119,26 @@ if (!class_exists('\WpLdp\WpLdpApi')) {
                     else return null;
 
                     // Getting general information about the container associated with the current resource
-                    $fields = \WpLdp\WpLdpUtils::getResourceFieldsList($post->ID);
+                    $fields = \WpLdp\WpLdpUtils::getResourceFieldsList( $post->ID );
                     $terms =  wp_get_post_terms( $post->ID, 'ldp_container' );
                     if ( !empty( $terms ) && is_array( $terms ) ) {
                         $termId = $terms[0]->term_id;
-                        $termMeta = get_option("ldp_container_$termId");
-                        $rdfType = isset($termMeta["ldp_rdf_type"]) ? $termMeta["ldp_rdf_type"] : null;
+                        $termMeta = get_option( "ldp_container_$termId" );
+                        $rdfType = isset( $termMeta["ldp_rdf_type"] ) ? $termMeta["ldp_rdf_type"] : null;
                     }
 
                     $result = array(
-                        "@context" => get_option('ldp_context', 'http://lov.okfn.org/dataset/lov/context'),
+                        "@context" => get_option( 'ldp_context', 'http://lov.okfn.org/dataset/lov/context' ),
                         "@graph"   => array(
                             array(
                             )
                         )
                     );
 
-                    $referer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : null;
+                    $referer = isset( $_SERVER['HTTP_REFERER'] ) ? $_SERVER['HTTP_REFERER'] : null;
                     // Handling special case of editing trhough the wordpress admin backend
                     $custom_fields_keys = get_post_custom_keys( $post->ID );
-                    foreach($fields as $field) {
+                    foreach( $fields as $field ) {
                         $field_name = \WpLdp\WpLdpUtils::getFieldName( $field );
                         if ( isset( $field_name ) ) {
                             if ( !isset($field->multiple) || !$field->multiple ) {
@@ -150,7 +150,7 @@ if (!class_exists('\WpLdp\WpLdpApi')) {
 
                                 if ( !empty ( $field_values ) ) {
                                     $field_values = unserialize( $field_values );
-                                    foreach ($field_values as $value) {
+                                    foreach ( $field_values as $value ) {
                                         $multiple_field_entry = array(
                                             '@id'  => !empty( $value ) ? $value : null,
                                         );
@@ -164,15 +164,15 @@ if (!class_exists('\WpLdp\WpLdpApi')) {
 
                     // Get user to retrieve associated posts !
                     $user_login = null;
-                    foreach($fields as $field) {
+                    foreach( $fields as $field ) {
                         $field_name = \WpLdp\WpLdpUtils::getFieldName( $field );
-                        if (isset($field_name) && $field_name == 'foaf:nick') {
+                        if (isset( $field_name ) && $field_name == 'foaf:nick' ) {
                             $user_login = get_post_custom_values( $field_name, $post->ID )[0];
                         }
                     }
 
                     if ( !empty( $user_login ) ) {
-                        $user = get_user_by ( 'login', $user_login);
+                        $user = get_user_by ( 'login', $user_login );
                         if ( $user ) {
                             $loop = new \WP_Query( array(
                                 'post_type' => 'post',
@@ -187,7 +187,7 @@ if (!class_exists('\WpLdp\WpLdpApi')) {
                                 $result["@graph"][0]['posts'] = array( array( ) );
                                 foreach( $posts as $post ) {
                                     $current_post_entry = array();
-                                    $current_post_entry["@id"] = get_permalink($post->ID);
+                                    $current_post_entry["@id"] = get_permalink( $post->ID );
                                     $current_post_entry["dc:title"] = $post->post_title;
 
                                     $post_content = ( !empty( $post->post_content ) && $post->post_content !== false) ? substr($post->post_content, 0, 150) : null;
@@ -200,7 +200,7 @@ if (!class_exists('\WpLdp\WpLdpApi')) {
                         }
                     }
 
-                    if ( !empty($rdfType) ) {
+                    if ( !empty( $rdfType ) ) {
                         $result["@graph"][0]['@type'] = $rdfType;
                     }
 
@@ -218,5 +218,5 @@ if (!class_exists('\WpLdp\WpLdpApi')) {
             // Instanciating the settings page object
             $wpLdpApi = new WpLdpApi();
         } else {
-            exit ('Class WpLdpApi already exists');
+            exit ( 'Class WpLdpApi already exists' );
         }

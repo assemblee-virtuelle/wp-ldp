@@ -8,14 +8,14 @@ if (!class_exists('\WpLdp\WpLdpSiteTaxonomy')) {
     class WpLdpSiteTaxonomy {
 
         public function __construct() {
-            register_activation_hook( __FILE__, array($this, 'wpldp_rewrite_flush' ) );
-            add_action( 'init', array($this, 'register_site_taxonomy'), 0 );
+            register_activation_hook( __FILE__, array( $this, 'wpldp_rewrite_flush' ) );
+            add_action( 'init', array( $this, 'register_site_taxonomy' ), 0 );
 
-            add_action( 'ldp_site_add_form_fields', array($this, 'add_custom_tax_fields_oncreate_site'));
-            add_action( 'ldp_site_edit_form_fields', array($this, 'add_custom_tax_fields_onedit_site'));
+            add_action( 'ldp_site_add_form_fields', array( $this, 'add_custom_tax_fields_oncreate_site' ) );
+            add_action( 'ldp_site_edit_form_fields', array( $this, 'add_custom_tax_fields_onedit_site' ) );
 
-            add_action( 'create_ldp_site', array($this, 'save_custom_tax_field_site'));
-            add_action( 'edited_ldp_site', array($this, 'save_custom_tax_field_site'));
+            add_action( 'create_ldp_site', array( $this, 'save_custom_tax_field_site' ) );
+            add_action( 'edited_ldp_site', array( $this, 'save_custom_tax_field_site' ) );
 
             add_action( 'rest_api_init', function() {
                 register_rest_route( 'ldp/v1', '/sites/', array(
@@ -36,7 +36,7 @@ if (!class_exists('\WpLdp\WpLdpSiteTaxonomy')) {
         * @return {type}  description
         */
         public function wpldp_rewrite_flush() {
-            delete_option('rewrite_rules');
+            delete_option( 'rewrite_rules' );
             $this->register_container_taxonomy();
             flush_rewrite_rules( true );
         }
@@ -97,9 +97,9 @@ if (!class_exists('\WpLdp\WpLdpSiteTaxonomy')) {
         function add_custom_tax_fields_oncreate_site() {
             // Adding rdf:type field
             echo "<div class='form-field term-model-wrap'>";
-            echo "<label for='ldp_site'>" . __('web site', 'wpldp'). "</label>";
+            echo "<label for='ldp_site'>" . __( 'web site', 'wpldp' ). "</label>";
             echo "<input type='url' placeholder='http://' name='ldp_site' id='ldp_site' />";
-            echo "<p class='description'>" . __('WordPress site that you know and that the WP-LDP plugin is installed', 'wpldp'). "</p>";
+            echo "<p class='description'>" . __( 'WordPress site that you know and that the WP-LDP plugin is installed', 'wpldp' ). "</p>";
             echo "</div>";
         }
 
@@ -117,9 +117,9 @@ if (!class_exists('\WpLdp\WpLdpSiteTaxonomy')) {
 
             // Adding rdf:type field
             echo "<tr class='form-field form-required term-model-wrap'>";
-            echo "<th scope='row'><label for='ldp_site_url'>" . __('web site', 'wpldp'). "</label></th>";
+            echo "<th scope='row'><label for='ldp_site_url'>" . __( 'web site', 'wpldp' ). "</label></th>";
             echo "<td><input type='url' placeholder='http://' name='ldp_site_url' id='ldp_site_url' value='$ldpSiteUrl' />";
-            echo "<p class='description'>" . __('WordPress site that you know and on which the WP-LDP plugin is installed', 'wpldp'). "</p></td>";
+            echo "<p class='description'>" . __( 'WordPress site that you know and on which the WP-LDP plugin is installed', 'wpldp' ). "</p></td>";
             echo "</tr>";
         }
 
@@ -169,14 +169,14 @@ if (!class_exists('\WpLdp\WpLdpSiteTaxonomy')) {
                 $build_url = $ldpSiteUrl . '/schema/';
                 curl_setopt( $ch, CURLOPT_URL, $build_url );
                 curl_setopt( $ch, CURLOPT_HTTPGET, true );
-                curl_setopt( $ch, CURLOPT_HTTPHEADER, array('Content-Type: application/ld+json', 'Accept: application/ld+json') );
+                curl_setopt( $ch, CURLOPT_HTTPHEADER, array( 'Content-Type: application/ld+json', 'Accept: application/ld+json' ) );
                 curl_setopt( $ch, CURLOPT_RETURNTRANSFER, 1 );
                 $outputs[ $ldpSiteUrl  . '/schema/' ]['data'] = curl_exec($ch);
                 $outputs[ $ldpSiteUrl  . '/schema/' ]['code'] = curl_getinfo($ch)['http_code'];
             }
 
             $sites = array(
-                "@context" => get_option('ldp_context', 'http://lov.okfn.org/dataset/lov/context'),
+                "@context" => get_option( 'ldp_context', 'http://lov.okfn.org/dataset/lov/context' ),
                 "@graph"   => array(
                     "@id"      => get_site_url() . '/api/ldp/v1/sites/',
                     "@type"    => "http://www.w3.org/ns/ldp#BasicContainer",

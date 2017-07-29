@@ -44,15 +44,15 @@ if (!class_exists('\WpLdp\WpLdpUtils')) {
             $value = null;
             $fields = array();
             $values = get_the_terms( $resourceId, 'ldp_container' );
-            if (!empty($values) && !is_wp_error($values) ) {
-                if (empty($values[0])) {
-                    $value = reset($values);
+            if ( !empty( $values ) && !is_wp_error( $values ) ) {
+                if ( empty( $values[0] ) ) {
+                    $value = reset( $values );
                 } else {
                     $value = $values[0];
                 }
 
                 $termMeta = get_option( "ldp_container_$value->term_id" );
-                $modelsDecoded = json_decode($termMeta["ldp_model"]);
+                $modelsDecoded = json_decode( $termMeta["ldp_model"] );
                 $fields = $modelsDecoded->{$value->slug}->fields;
             }
 
