@@ -12,8 +12,8 @@ engines:
       - php
       - javascript
 exclude_paths:
-- "tests/"
-- "library/"
-- "assets/"
-- "languages/"
-- "models/"
+  - "tests/"
+  - "library/"
+  - "assets/"
+  - "languages/"
+  - "models/"
