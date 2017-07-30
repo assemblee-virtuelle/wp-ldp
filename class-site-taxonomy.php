@@ -248,8 +248,8 @@ if ( ! class_exists( '\WpLdp\SiteTaxonomy' ) ) {
 						'key' => 'ldp_site_url',
 						'value' => $source_site_url,
 						'compare' => 'LIKE',
-					),
-				),
+					)
+				)
 			);
 
 			$term = $query[0];

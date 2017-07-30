@@ -190,7 +190,7 @@ if ( ! class_exists( '\WpLdp\Settings' ) ) {
 				add_submenu_page(
 					'edit.php?post_type=ldp_resource',
 					sprintf(
-						__( 'List of all resources of type %$1', 'wpldp' ),
+						__( 'List of all resources of type %1$s', 'wpldp' ),
 						$term->name
 					),
 					$term->name,
