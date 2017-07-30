@@ -1,5 +1,6 @@
 <?php
 /**
+ * The WP-LDP Plugin main file
  * @package     WPLDP
  * @author      Benoit Alessandroni
  * @copyright   2017 Assemblee Virtuelle
@@ -280,12 +281,12 @@ if ( ! class_exists( '\WpLdp\WpLdp' ) ) {
 		}
 
 		/**
-		* Removes the original meta box on the ldp_resource edition page and
-		* replace it with radio buttons selectors to avoid multiple selection.
-		*
-		* @param {string} $post_type The current post type.
-		* @return void
-		*/
+		 * Removes the original meta box on the ldp_resource edition page and
+		 * replace it with radio buttons selectors to avoid multiple selection.
+		 *
+		 * @param {string} $post_type The current post type.
+		 * @return void
+		 */
 		function display_container_meta_box( $post_type ) {
 			remove_meta_box( 'ldp_containerdiv', $post_type, 'side' );
 
@@ -405,7 +406,7 @@ if ( ! class_exists( '\WpLdp\WpLdp' ) ) {
 					echo '<script>';
 					echo "var store = new MyStore({
 						container: '$resource_uri',
-						context: '" . get_option( 'ldp_context', 'http://lov.okfn.org/dataset/lov/context' ) ."',
+						context: '" . get_option( 'ldp_context', 'http://lov.okfn.org/dataset/lov/context' ) . "',
 						template:\"{{{form '{$term[0]->slug}'}}}\",
 						models: $ldp_model
 					});";
@@ -420,7 +421,7 @@ if ( ! class_exists( '\WpLdp\WpLdp' ) ) {
 		/**
 		 * Saves the LDP Resource Post Meta on save.
 		 *
-		 * @param  {int} $resource_id The current resource id
+		 * @param  {int} $resource_id The current resource id.
 		 * @return void
 		 */
 		public function save_ldp_meta_for_post( $resource_id ) {

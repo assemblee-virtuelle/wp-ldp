@@ -117,23 +117,23 @@ if ( ! class_exists( '\WpLdp\ContainerTaxonomy' ) ) {
 		function add_custom_tax_fields_oncreate( $term ) {
 			// Adding rdf:type field.
 			echo "<div class='form-field term-model-wrap'>";
-			echo "<label for='ldp_rdf_type'>" . __( 'Rdf:type, if any', 'wpldp' ). '</label>';
+			echo "<label for='ldp_rdf_type'>" . __( 'Rdf:type, if any', 'wpldp' ) . '</label>';
 			echo "<input type='text' id='ldp_rdf_type' type='text' name='ldp_rdf_type' />";
-			echo "<p class='description'>" . __( 'Rdf:type associated with this container', 'wpldp' ). '</p>';
+			echo "<p class='description'>" . __( 'Rdf:type associated with this container', 'wpldp' ) . '</p>';
 			echo '</div>';
 
 			// Adding container included fields field.
 			echo "<div class='form-field term-model-wrap'>";
-			echo "<label for='ldp_included_fields_list'>" . __( 'Included fields', 'wpldp' ). '</label>';
+			echo "<label for='ldp_included_fields_list'>" . __( 'Included fields', 'wpldp' ) . '</label>';
 			echo "<input type='text' id='ldp_included_fields_list' type='text' name='ldp_included_fields_list' />";
-			echo "<p class='description'>" . __( 'The fields from the model whose values you would like to include from the associated resources in the container, separated by commas', 'wpldp' ). '</p>';
+			echo "<p class='description'>" . __( 'The fields from the model whose values you would like to include from the associated resources in the container, separated by commas', 'wpldp' ) . '</p>';
 			echo '</div>';
 
 			// Adding the JSON model field.
 			echo "<div class='form-field form-required term-model-wrap'>";
-			echo "<label for='ldp_model'>" . __( 'Model', 'wpldp' ). '</label>';
+			echo "<label for='ldp_model'>" . __( 'Model', 'wpldp' ) . '</label>';
 			echo "<textarea id='ldp_model' type='text' name='ldp_model' cols='40' rows='20'></textarea>";
-			echo "<p class='description'>" . __( 'The LDP-compatible JSON Model for this container', 'wpldp' ). '</p>';
+			echo "<p class='description'>" . __( 'The LDP-compatible JSON Model for this container', 'wpldp' ) . '</p>';
 			echo '</div>';
 		}
 
@@ -141,7 +141,7 @@ if ( ! class_exists( '\WpLdp\ContainerTaxonomy' ) ) {
 		 * Adds a LDP Model field to our custom LDP containers taxonomy
 		 * in edition mode.
 		 *
-		 * @param int $term the concrete term
+		 * @param int $term the concrete term.
 		 * @return void
 		 */
 		function add_custom_tax_fields_onedit( $term ) {
@@ -153,23 +153,23 @@ if ( ! class_exists( '\WpLdp\ContainerTaxonomy' ) ) {
 
 			// Adding rdf:type field.
 			echo "<tr class='form-field form-required term-model-wrap'>";
-			echo "<th scope='row'><label for='ldp_rdf_type'>" . __( 'Rdf:type, if any', 'wpldp' ). '</label></th>';
+			echo "<th scope='row'><label for='ldp_rdf_type'>" . __( 'Rdf:type, if any', 'wpldp' ) . '</label></th>';
 			echo "<td><input type='text' name='ldp_rdf_type' id='ldp_rdf_type' value='$ldp_rdf_type' />";
-			echo "<p class='description'>" . __( 'Rdf:type associated with this container', 'wpldp' ). '</p></td>';
+			echo "<p class='description'>" . __( 'Rdf:type associated with this container', 'wpldp' ) . '</p></td>';
 			echo '</tr>';
 
 			// Adding container included fields field.
 			echo "<tr class='form-field form-required term-model-wrap'>";
-			echo "<th scope='row'><label for='ldp_included_fields_list'>" . __( 'Included fields', 'wpldp' ). '</label></th>';
+			echo "<th scope='row'><label for='ldp_included_fields_list'>" . __( 'Included fields', 'wpldp' ) . '</label></th>';
 			echo "<td><input type='text' name='ldp_included_fields_list' id='ldp_included_fields_list' value='$ldp_included_fields_list' />";
-			echo "<p class='description'>" . __( 'The fields from the model whose values you would like to include from the associated resources in the container, separated by commas', 'wpldp' ). '</p></td>';
+			echo "<p class='description'>" . __( 'The fields from the model whose values you would like to include from the associated resources in the container, separated by commas', 'wpldp' ) . '</p></td>';
 			echo '</tr>';
 
 			// Adding the JSON model field.
 			echo "<tr class='form-field form-required term-model-wrap'>";
-			echo "<th scope='row'><label for='ldp_model_editor'>" . __( 'Model editor mode', 'wpldp' ). '</label></th>';
+			echo "<th scope='row'><label for='ldp_model_editor'>" . __( 'Model editor mode', 'wpldp' ) . '</label></th>';
 			echo "<td><div id='ldp_model_editor' style='width: 1000px; height: 400px;'></div>";
-			echo "<p class='description'>" . __( 'The LDP-compatible JSON Model for this container', 'wpldp' ). '</p></td>';
+			echo "<p class='description'>" . __( 'The LDP-compatible JSON Model for this container', 'wpldp' ) . '</p></td>';
 			echo '</tr>';
 			echo "<input type='hidden' id='ldp_model' name='ldp_model' value='$ldp_model'/>";
 
@@ -202,7 +202,7 @@ if ( ! class_exists( '\WpLdp\ContainerTaxonomy' ) ) {
 		 * Save the value of the posted custom field for the custom taxonomy
 		 * in the options WP table.
 		 *
-		 * @param {int} $term_id The current term ID
+		 * @param {int} $term_id The current term ID.
 		 * @return void
 		 */
 		function save_custom_tax_field( $term_id ) {
@@ -220,7 +220,7 @@ if ( ! class_exists( '\WpLdp\ContainerTaxonomy' ) ) {
 			}
 
 			if ( isset( $_POST['ldp_model'] ) ) {
-				$term_meta['ldp_model'] = stripslashes_deep($_POST['ldp_model']);
+				$term_meta['ldp_model'] = stripslashes_deep( $_POST['ldp_model'] );
 			}
 
 			update_option( "ldp_container_$term_id", $term_meta, false );
@@ -360,7 +360,7 @@ if ( ! class_exists( '\WpLdp\ContainerTaxonomy' ) ) {
 				$current_entry = array();
 				foreach ( $fields as $field ) {
 					$field_name = Utils::get_field_name( $field );
-					if ( ( ! empty( $included_fields_list ) && true === in_array( $field_name, $included_fields_list ) )
+					if ( ( ! empty( $included_fields_list ) && in_array( $field_name, $included_fields_list, true ) )
 							&& ! empty( get_post_custom_values( $field_name, $post->ID )[0] ) ) {
 						$current_entry[ $field_name ] = get_post_custom_values( $field_name, $post->ID )[0];
 					}
