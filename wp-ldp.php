@@ -28,7 +28,7 @@ require_once( 'class-api.php' );
 
 if ( ! class_exists( '\WpLdp\WpLdp' ) ) {
 	/**
-	 * WpLdp Handles everything related to the resource post type.
+	 * Handles everything related to the resource post type.
 	 *
 	 * @category Class
 	 * @package WPLDP
@@ -58,13 +58,6 @@ if ( ! class_exists( '\WpLdp\WpLdp' ) ) {
 		 * @return {WpLdp}  instance of the object.
 		 */
 		public function __construct() {
-			if ( get_magic_quotes_gpc() ) {
-				$_POST      = array_map( 'stripslashes_deep', $_POST );
-				$_GET       = array_map( 'stripslashes_deep', $_GET );
-				$_COOKIE    = array_map( 'stripslashes_deep', $_COOKIE );
-				$_REQUEST   = array_map( 'stripslashes_deep', $_REQUEST );
-			}
-
 			register_activation_hook( __FILE__, array( $this, 'wpldp_rewrite_flush' ) );
 			register_deactivation_hook( __FILE__, array( $this, 'wpldp_flush_rewrite_rules_on_deactivation' ) );
 
@@ -94,7 +87,7 @@ if ( ! class_exists( '\WpLdp\WpLdp' ) ) {
 
 
 		/**
-		 * wpldp_plugin_update Automatic database upgrade mechanism, planned for the future.
+		 * Automatic database upgrade mechanism, planned for the future.
 		 *
 		 * @return void
 		 */
@@ -105,35 +98,53 @@ if ( ! class_exists( '\WpLdp\WpLdp' ) ) {
 			if ( self::$version_number !== $plugin_version ) {
 				if ( self::$version_number >= '1.1.0' ) {
 					//Force reinitializing the ldp containers models:
-					global $wpLdpSettings;
-					if ( !empty( $wpLdpSettings ) ) {
-						$wpLdpSettings->initialize_container( true );
+					global $wpldp_settings;
+					if ( ! empty( $wpldp_settings ) ) {
+						$wpldp_settings->initialize_container( true );
 					}
 
 					$actor_term = get_term_by( 'slug', 'actor', 'ldp_container' );
 					$person_term = get_term_by( 'slug', 'person', 'ldp_container' );
-					if ( !empty( $actor_term ) && !is_wp_error( $actor_term ) ) {
-						wp_delete_term( $actor_term->term_id, 'ldp_container', array( 'default' => $person_term->term_id ) );
+					if ( ! empty( $actor_term ) && ! is_wp_error( $actor_term ) ) {
+						wp_delete_term(
+							$actor_term->term_id,
+							'ldp_container',
+							array(
+								'default' => $person_term->term_id,
+							)
+						);
 					}
 
 					$project_term = get_term_by( 'slug', 'project', 'ldp_container' );
 					$initiative_term = get_term_by( 'slug', 'initiative', 'ldp_container' );
-					if ( !empty( $project_term ) && !is_wp_error( $project_term ) ) {
-						wp_delete_term( $project_term->term_id, 'ldp_container', array( 'default' => $initiative_term->term_id ) );
+					if ( ! empty( $project_term ) && ! is_wp_error( $project_term ) ) {
+						wp_delete_term(
+							$project_term->term_id,
+							'ldp_container',
+							array(
+								'default' => $initiative_term->term_id,
+							)
+						);
 					}
 
 					$resource_term = get_term_by( 'slug', 'resource', 'ldp_container' );
-					if ( !empty( $resource_term ) && !is_wp_error( $resource_term ) ) {
-						wp_delete_term( $resource_term->term_id, 'ldp_container' );
+					if ( ! empty( $resource_term ) && ! is_wp_error( $resource_term ) ) {
+						wp_delete_term(
+							$resource_term->term_id,
+							'ldp_container'
+						);
 					}
 
 					$idea_term = get_term_by( 'slug', 'idea', 'ldp_container' );
-					if ( !empty( $idea_term ) && !is_wp_error( $idea_term ) ) {
-						wp_delete_term( $idea_term->term_id, 'ldp_container' );
+					if ( ! empty( $idea_term ) && ! is_wp_error( $idea_term ) ) {
+						wp_delete_term(
+							$idea_term->term_id,
+							'ldp_container'
+						);
 					}
 				}
 
-				if (self::$version_number > $plugin_version) {
+				if ( self::$version_number > $plugin_version ) {
 					$update_option = $this->wpldp_db_upgrade();
 				}
 			}
@@ -141,6 +152,11 @@ if ( ! class_exists( '\WpLdp\WpLdp' ) ) {
 			update_option( 'wpldp_version', self::$version_number );
 		}
 
+		/**
+		 * Executes desired database upgrade.
+		 *
+		 * @return {bool} Is this a success ?
+		 */
 		private function wpldp_db_upgrade() {
 			$flush_cache = wp_cache_flush();
 			global $wpdb;
@@ -162,12 +178,12 @@ if ( ! class_exists( '\WpLdp\WpLdp' ) ) {
 
 			foreach ( $result as $current ) {
 				$option = get_option( $current->option_name );
-				if ( !empty( $option ) ) {
-					if ( !empty( $option['ldp_model'] ) ) {
+				if ( ! empty( $option ) ) {
+					if ( ! empty( $option['ldp_model'] ) ) {
 						$option['ldp_model'] = str_replace( 'ldp_', '', $option['ldp_model'] );
 					}
 
-					if ( !empty( $option['ldp_included_fields_list'] ) ) {
+					if ( ! empty( $option['ldp_included_fields_list'] ) ) {
 						$option['ldp_included_fields_list'] = str_replace( 'ldp_', '', $option['ldp_included_fields_list'] );
 					}
 					update_option( $current->option_name, $option, false );
@@ -180,7 +196,7 @@ if ( ! class_exists( '\WpLdp\WpLdp' ) ) {
 
 
 		/**
-		 * load_translations_file Loads proper text domain.
+		 * Loads proper text domain.
 		 *
 		 * @return void
 		 */
@@ -192,7 +208,7 @@ if ( ! class_exists( '\WpLdp\WpLdp' ) ) {
 
 
 		/**
-		 * add_poc_rewrite_rule Rewrites rule for accessing the Proof of concept page.
+		 * Rewrites rule for accessing the Proof of concept page.
 		 *
 		 * @return void
 		 */
@@ -204,7 +220,7 @@ if ( ! class_exists( '\WpLdp\WpLdp' ) ) {
 		}
 
 		/**
-		 * create_ldp_type Adds custom LDP Resource post type.
+		 * Adds custom LDP Resource post type.
 		 *
 		 * @return {void}
 		 */
@@ -238,7 +254,7 @@ if ( ! class_exists( '\WpLdp\WpLdp' ) ) {
 		}
 
 		/**
-		 * ldp_resource_post_link Adds custom filter for handling the custom permalink.
+		 * Adds custom filter for handling the custom permalink.
 		 *
 		 * @param {WP_Post} The current post instance.
 		 * @param {int} The current post ID, if defined.
@@ -250,7 +266,7 @@ if ( ! class_exists( '\WpLdp\WpLdp' ) ) {
 			if ( Wpldp::RESOURCE_POST_TYPE == get_post_type( $post ) ) {
 				if ( is_object( $post ) ){
 					$terms = wp_get_object_terms( $post->ID, 'ldp_container' );
-					if ( !empty( $terms ) ) {
+					if ( ! empty( $terms ) ) {
 						return str_replace( '%ldp_container%', $terms[0]->slug, $post_link );
 					}
 				}
@@ -260,7 +276,7 @@ if ( ! class_exists( '\WpLdp\WpLdp' ) ) {
 		}
 
 		/**
-		* display_container_meta_box Removes the original meta box on the ldp_resource edition page and
+		* Removes the original meta box on the ldp_resource edition page and
 		* replace it with radio buttons selectors to avoid multiple selection.
 		*
 		* @param {string} The current post type.
@@ -282,7 +298,7 @@ if ( ! class_exists( '\WpLdp\WpLdp' ) ) {
 		}
 
 		/**
-		* container_meta_box_callback Generate the HTML for the radio button based meta box.
+		* Generates the HTML for the radio button based meta box.
 		*
 		* @param {WP_Post} The current post instance.
 		* @return void
@@ -299,7 +315,7 @@ if ( ! class_exists( '\WpLdp\WpLdp' ) ) {
 			foreach ( $terms as $term ) {
 				echo '<li id="ldp_container-' . $term->term_id . '" class="category">';
 				echo '<label class="selectit">';
-				if ( !empty( $value ) && $term->term_id == $value->term_id ) {
+				if ( ! empty( $value ) && $term->term_id == $value->term_id ) {
 					echo '<input id="in-ldp_container-' . $term->term_id . '" type="radio" name="tax_input[ldp_container][]" value="' . $term->term_id . '" checked>';
 				} else {
 					echo '<input id="in-ldp_container-' . $term->term_id . '" type="radio" name="tax_input[ldp_container][]" value="' . $term->term_id . '">';
@@ -313,7 +329,7 @@ if ( ! class_exists( '\WpLdp\WpLdp' ) ) {
 		}
 
 		/**
-		 * display_media_meta_box Adds an access to the media library from the ldp_resource edition page.
+		 * Adds an access to the media library from the ldp_resource edition page.
 		 *
 		 * @param {string} The current post type.
 		 * @return void
@@ -331,7 +347,7 @@ if ( ! class_exists( '\WpLdp\WpLdp' ) ) {
 		}
 
 		/**
-		 * media_meta_box_callback Add specific metabox for uploading a file to the media library from a resource edit.
+		 * Add specific metabox for uploading a file to the media library from a resource edit.
 		 *
 		* @param {WP_Post} The current post instance.
 		 * @return void
@@ -344,7 +360,7 @@ if ( ! class_exists( '\WpLdp\WpLdp' ) ) {
 		}
 
 		/**
-		 * wpldp_edit_form_advanced Renders the form for entering the data.
+		 * Renders the form for entering the data.
 		 *
 		 * @param  {WP_Post} $post Current post we are working on
 		 * @return void
@@ -354,11 +370,11 @@ if ( ! class_exists( '\WpLdp\WpLdp' ) ) {
 				$resource_uri = Utils::get_resource_uri( $post );
 
 				$term = get_the_terms( $post->post_id, 'ldp_container' );
-				if ( !empty( $term ) && !empty( $resource_uri ) ) {
+				if ( ! empty( $term ) && ! empty( $resource_uri ) ) {
 					$term_id = $term[0]->term_id;
 					$term_meta = get_option("ldp_container_$term_id");
 
-					if ( empty( $term_meta ) || !isset( $term_meta['ldp_model'] ) ) {
+					if ( empty( $term_meta ) || ! isset( $term_meta['ldp_model'] ) ) {
 						$ldp_model = '{"people":
 							{"fields":
 								[{
@@ -393,7 +409,7 @@ if ( ! class_exists( '\WpLdp\WpLdp' ) ) {
 
 
 		/**
-		* save_ldp_meta_for_post Saves the LDP Resource Post Meta on save.
+		* Saves the LDP Resource Post Meta on save.
 		*
 		* @param  {int} $resource_id The current resource id
 		* @return void
@@ -401,7 +417,7 @@ if ( ! class_exists( '\WpLdp\WpLdp' ) ) {
 		public function save_ldp_meta_for_post( $resource_id ) {
 			$fields = Utils::get_resource_fields_list( $resource_id );
 
-			if ( !empty( $fields ) ) {
+			if ( ! empty( $fields ) ) {
 				foreach ( $_POST as $key => $value ) {
 					foreach ( $fields as $field ) {
 						$field_name = \WpLdp\Utils::get_field_name( $field );
@@ -427,14 +443,14 @@ if ( ! class_exists( '\WpLdp\WpLdp' ) ) {
 												)
 											);
 
-											if ( empty( $term ) || !is_array( $term ) ) {
+											if ( empty( $term ) || ! is_array( $term ) ) {
 												$site_url_parsed = parse_url( $site );
 												$term = wp_insert_term(
 													$site_url_parsed['host'] . ' ' . $site_url_parsed['path'],
 													'ldp_site'
 												);
 
-												if ( !is_wp_error( $term ) ) {
+												if ( ! is_wp_error( $term ) ) {
 													update_term_meta( $term['term_id'], 'ldp_site_url', $site_url );
 												}
 											}
@@ -450,7 +466,7 @@ if ( ! class_exists( '\WpLdp\WpLdp' ) ) {
 		}
 
 		/**
-		* ldp_enqueue_script Loads requested javascript, on the admin only.
+		* Loads requested javascript, on the admin only.
 		*
 		* @return void
 		*/
@@ -518,7 +534,7 @@ if ( ! class_exists( '\WpLdp\WpLdp' ) ) {
 		}
 
 		/**
-		* wpldpfront_enqueue_script Loads all proper javascript resource on the frontend.
+		* Loads all proper javascript resource on the frontend.
 		*
 		* @return void
 		*/
@@ -569,7 +585,7 @@ if ( ! class_exists( '\WpLdp\WpLdp' ) ) {
 		}
 
 		/**
-		 * ldp_enqueue_stylesheet Loads requested stylesheet in the admin only.
+		 * Loads requested stylesheet in the admin only.
 		 *
 		 * @return void
 		 */
@@ -605,7 +621,7 @@ if ( ! class_exists( '\WpLdp\WpLdp' ) ) {
 
 
 		/**
-		 * wpldpfront_enqueue_stylesheet Loads specific stylesheets for the plugin frontend.
+		 * Loads specific stylesheets for the plugin frontend.
 		 *
 		 * @return void
 		 */
@@ -629,7 +645,7 @@ if ( ! class_exists( '\WpLdp\WpLdp' ) ) {
 		}
 
 		/**
-		* generate_menu_item Adds a menu item to the primary navigation menu to access
+		* Adds a menu item to the primary navigation menu to access
 		* the WP-ldp front page to navigate into our pairs.
 		*
 		* @return void
@@ -638,10 +654,10 @@ if ( ! class_exists( '\WpLdp\WpLdp' ) ) {
 			$menu_name = 'primary';
 			$locations = get_nav_menu_locations();
 
-			if ( !empty( $locations ) && isset( $locations[ $menu_name ] ) ) {
+			if ( ! empty( $locations ) && isset( $locations[ $menu_name ] ) ) {
 				$menu_id = $locations[ $menu_name ] ;
 
-				if ( !empty( $menu_id ) ) {
+				if ( ! empty( $menu_id ) ) {
 					wp_update_nav_menu_item(
 						$menu_id,
 						0,
@@ -657,7 +673,7 @@ if ( ! class_exists( '\WpLdp\WpLdp' ) ) {
 		}
 
 		/**
-		* remove_menu_item Removes the additional menu item on plugin deactivation.
+		* Removes the additional menu item on plugin deactivation.
 		*
 		* @return void
 		*/
@@ -676,7 +692,7 @@ if ( ! class_exists( '\WpLdp\WpLdp' ) ) {
 		}
 
 		/**
-		* wpldp_rewrite_flush Forces the flush of rewrite rules on plugin activation
+		* Forces the flush of rewrite rules on plugin activation
 		* to prevent impossibility to access the LDP resources.
 		*
 		* @return void
@@ -691,7 +707,7 @@ if ( ! class_exists( '\WpLdp\WpLdp' ) ) {
 		}
 
 		/**
-		* wpldp_flush_rewrite_rules_on_deactivation Same thing - for deactivation only.
+		* Same thing - for deactivation only.
 		*
 		* @return void
 		*/

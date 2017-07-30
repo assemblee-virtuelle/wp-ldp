@@ -18,7 +18,7 @@ namespace WpLdp;
 **/
 if ( ! class_exists( '\WpLdp\ContainerTaxonomy' ) ) {
 	/**
-	 * ContainerTaxonomy Handles everything related to the container taxonomy.
+	 * Handles everything related to the container taxonomy.
 	 *
 	 * @category Class
 	 * @package WPLDP
@@ -27,7 +27,7 @@ if ( ! class_exists( '\WpLdp\ContainerTaxonomy' ) ) {
 	 */
 	class ContainerTaxonomy {
 		/**
-		* __construct - Default constructor.
+		* - Default constructor.
 		*
 		* @return {WpLdpTaxonomy}  instance of the object.
 		*/
@@ -54,7 +54,7 @@ if ( ! class_exists( '\WpLdp\ContainerTaxonomy' ) ) {
 		}
 
 		/**
-		 * wpldp_rewrite_flush Forces flushing the rewrite rules on plugin activation.
+		 * Forces flushing the rewrite rules on plugin activation.
 		 *
 		 * @return void
 		 */
@@ -65,7 +65,7 @@ if ( ! class_exists( '\WpLdp\ContainerTaxonomy' ) ) {
 		}
 
 		/**
-		 * register_container_taxonomy Registers the ldp container taxonomy.
+		 * Registers the ldp container taxonomy.
 		 *
 		 * @return void
 		 */
@@ -111,7 +111,7 @@ if ( ! class_exists( '\WpLdp\ContainerTaxonomy' ) ) {
 		}
 
 		/**
-		* add_custom_tax_fields_oncreate Adds a LDP Model field to our custom LDP containers taxonomy
+		* Adds a LDP Model field to our custom LDP containers taxonomy
 		* in creation mode.
 		*
 		* @param {int} $term the concrete term.
@@ -141,7 +141,7 @@ if ( ! class_exists( '\WpLdp\ContainerTaxonomy' ) ) {
 		}
 
 		/**
-		 * add_custom_tax_fields_onedit Adds a LDP Model field to our custom LDP containers taxonomy
+		 * Adds a LDP Model field to our custom LDP containers taxonomy
 		 * in edition mode.
 		 *
 		 * @param int $term the concrete term
@@ -202,7 +202,7 @@ if ( ! class_exists( '\WpLdp\ContainerTaxonomy' ) ) {
 		}
 
 		/**
-		 * save_custom_tax_field Save the value of the posted custom field for the custom taxonomy
+		 * Save the value of the posted custom field for the custom taxonomy
 		 * in the options WP table.
 		 *
 		 * @param {int} $term_id The current term ID
@@ -231,7 +231,7 @@ if ( ! class_exists( '\WpLdp\ContainerTaxonomy' ) ) {
 
 
 		/**
-		 * get_resources_from_container Gets the list of resources associated with the current taxonomy.
+		 * Gets the list of resources associated with the current taxonomy.
 		 *
 		 * @param  {\WP_REST_Request} $request The current HTTP request object.
 		 * @param  {\WP_REST_Response} $response The current HTTP response object.
@@ -283,7 +283,7 @@ if ( ! class_exists( '\WpLdp\ContainerTaxonomy' ) ) {
 		}
 
 		/**
-		 * get_search_results Gets the list of resources associated with the current taxonomy.
+		 * Gets the list of resources associated with the current taxonomy.
 		 *
 		 * @param  {\WP_REST_Request} $request The current HTTP request object.
 		 * @param  {\WP_REST_Response} $response The current HTTP response object.

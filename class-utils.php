@@ -15,7 +15,7 @@ namespace WpLdp;
 
 if ( ! class_exists( '\WpLdp\Utils' ) ) {
 	/**
-	 * Utils Class Doc Comment
+	 * Class Doc Comment
 	 *
 	 * @category Class
 	 * @package WPLDP
@@ -24,7 +24,7 @@ if ( ! class_exists( '\WpLdp\Utils' ) ) {
 	 */
 	class Utils {
 		/**
-		 * get_field_name Gets the current field name, with retro-compatibility
+		 * Gets the current field name, with retro-compatibility
 		 * with the older notation system.
 		 *
 		 * @param  {type} $field The current field to process.
@@ -45,7 +45,7 @@ if ( ! class_exists( '\WpLdp\Utils' ) ) {
 		}
 
 		/**
-		 * get_resource_uri Gets the URI of the resource passed as parameter.
+		 * Gets the URI of the resource passed as parameter.
 		 *
 		 * @param  {WP_Post} $resource The resource to process.
 		 * @return {string}  $resource_uri The current resource URI.
@@ -64,7 +64,7 @@ if ( ! class_exists( '\WpLdp\Utils' ) ) {
 		}
 
 		/**
-		 * get_resource_fields_list Gets the list of fields associated with the current resource.
+		 * Gets the list of fields associated with the current resource.
 		 *
 		 * @param  {int} $resource_id The ID of the resource to process.
 		 * @return {array} $fields    The list of available fields.

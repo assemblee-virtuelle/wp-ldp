@@ -15,7 +15,7 @@ namespace WpLdp;
 
 if ( ! class_exists( '\WpLdp\SiteTaxonomy' ) ) {
 	/**
-	 * SiteTaxonomy Handles everything related to our site taxonomy.
+	 * Handles everything related to our site taxonomy.
 	 *
 	 * @category Class
 	 * @package WPLDP
@@ -24,7 +24,7 @@ if ( ! class_exists( '\WpLdp\SiteTaxonomy' ) ) {
 	 */
 	class SiteTaxonomy {
 		/**
-		 * __construct Class default constructor.
+		 * Class default constructor.
 		 *
 		 * @return {SiteTaxonomy} Instance of the SiteTaxonomy class.
 		 */
@@ -52,7 +52,7 @@ if ( ! class_exists( '\WpLdp\SiteTaxonomy' ) ) {
 		}
 
 		/**
-		 * wpldp_rewrite_flush Forces flushing the rewrite rules on plugin activation.
+		 * Forces flushing the rewrite rules on plugin activation.
 		 *
 		 * @return void
 		 */
@@ -63,7 +63,7 @@ if ( ! class_exists( '\WpLdp\SiteTaxonomy' ) ) {
 		}
 
 		/**
-		 * register_site_taxonomy Registers the new LDP site taxonomy.
+		 * Registers the new LDP site taxonomy.
 		 *
 		 * @return void
 		 */
@@ -109,7 +109,7 @@ if ( ! class_exists( '\WpLdp\SiteTaxonomy' ) ) {
 		}
 
 		/**
-		 * add_custom_tax_fields_oncreate_site Adds an URL field to our custom LDP Site taxonomy
+		 * Adds an URL field to our custom LDP Site taxonomy
 		 * in creation mode.
 		 *
 		 * @return void
@@ -124,7 +124,7 @@ if ( ! class_exists( '\WpLdp\SiteTaxonomy' ) ) {
 		}
 
 		/**
-		 * add_custom_tax_fields_onedit_site Adds a Site URL field to our custom LDP Site taxonomy
+		 * Adds a Site URL field to our custom LDP Site taxonomy
 		 * in edition mode.
 		 *
 		 * @param {int} $term the concrete term
@@ -144,7 +144,7 @@ if ( ! class_exists( '\WpLdp\SiteTaxonomy' ) ) {
 		}
 
 		/**
-		 * save_custom_tax_field_site Save the value of the posted site url field for the site custom taxonomy
+		 * Save the value of the posted site url field for the site custom taxonomy
 		 * in the term_meta WP table.
 		 *
 		 * @param int $term_id The updated term ID.
@@ -160,7 +160,7 @@ if ( ! class_exists( '\WpLdp\SiteTaxonomy' ) ) {
 		}
 
 		/**
-		 * get_sites_list Gets the list of sites the current site knows.
+		 * Gets the list of sites the current site knows.
 		 *
 		 * @param  {\WP_REST_Request} $request The current HTTP request object.
 		 * @param  {\WP_REST_Response} $response The current HTTP response object.
@@ -226,7 +226,7 @@ if ( ! class_exists( '\WpLdp\SiteTaxonomy' ) ) {
 		}
 
 		/**
-		 * add_new_site Adds a new site to the list of sites the current site knows.
+		 * Adds a new site to the list of sites the current site knows.
 		 *
 		 * @param  {\WP_REST_Request} $request The current HTTP request object.
 		 * @param  {\WP_REST_Response} $response The current HTTP response object.

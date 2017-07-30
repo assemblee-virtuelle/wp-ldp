@@ -15,7 +15,7 @@ namespace WpLdp;
 
 if ( ! class_exists( '\WpLdp\Settings' ) ) {
 	/**
-	 * Settings Handles everything related to the admin settings.
+	 * Handles everything related to the admin settings.
 	 *
 	 * @category Class
 	 * @package WPLDP
@@ -25,7 +25,7 @@ if ( ! class_exists( '\WpLdp\Settings' ) ) {
 	 */
 	class Settings {
 		/**
-		 * __construct Class default constructor.
+		 * Class default constructor.
 		 */
 		public function __construct() {
 			add_action( 'admin_menu', array( $this, 'ldp_menu' ) );
@@ -34,7 +34,7 @@ if ( ! class_exists( '\WpLdp\Settings' ) ) {
 		}
 
 		/**
-		 * initialize_container Initializes the PAIR containers if the associated
+		 * Initializes the PAIR containers if the associated
 		 * option is checked.
 		 *
 		 * @param  {boolean} $force Should the refresh be forced ?
@@ -138,7 +138,7 @@ if ( ! class_exists( '\WpLdp\Settings' ) ) {
 
 
 		/**
-		 * wpldp_validation_notice Overrides the default update message or/and add a new one.
+		 * Overrides the default update message or/and add a new one.
 		 *
 		 * @return {type}  current workflow
 		 */
@@ -157,7 +157,7 @@ if ( ! class_exists( '\WpLdp\Settings' ) ) {
 		}
 
 		/**
-		 * menu_setup Generates the containers-filtered menu entries.
+		 * Generates the containers-filtered menu entries.
 		 *
 		 * @return {type}  current workflow
 		 */
@@ -197,7 +197,7 @@ if ( ! class_exists( '\WpLdp\Settings' ) ) {
 		}
 
 		/**
-		 * ldp_menu Generates the plugin settings menu and associated page.
+		 * Generates the plugin settings menu and associated page.
 		 *
 		 * @return {type}  current workflow
 		 */
@@ -215,7 +215,7 @@ if ( ! class_exists( '\WpLdp\Settings' ) ) {
 		}
 
 		/**
-		 * wpldp_options_page Populates the plugin option page.
+		 * Populates the plugin option page.
 		 *
 		 * @return {type}  current workflow
 		 */
@@ -231,7 +231,7 @@ if ( ! class_exists( '\WpLdp\Settings' ) ) {
 		}
 
 		/**
-		 * ldp_context_field Adds the custom JSON-LD context field.
+		 * Adds the custom JSON-LD context field.
 		 *
 		 * @return {type}  current workflow
 		 */
@@ -240,7 +240,7 @@ if ( ! class_exists( '\WpLdp\Settings' ) ) {
 		}
 
 		/**
-		 * ldp_container_init_field Initis the checkbox for container init.
+		 * Initis the checkbox for container init.
 		 *
 		 * @return {type}  current workflow
 		 */
@@ -251,7 +251,7 @@ if ( ! class_exists( '\WpLdp\Settings' ) ) {
 		}
 
 		/**
-		 * backend_hooking Adds every needed fiels to the options page.
+		 * Adds every needed fiels to the options page.
 		 *
 		 * @return {type}  current workflow
 		 */

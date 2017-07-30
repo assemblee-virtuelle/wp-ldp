@@ -15,7 +15,7 @@ namespace WpLdp;
 
 if ( ! class_exists( '\WpLdp\Api' ) ) {
 	/**
-	 * Api Handles everything related to our custom LDP API.
+	 * Handles everything related to our custom LDP API.
 	 *
 	 * @category Class
 	 * @package WPLDP
@@ -30,7 +30,7 @@ if ( ! class_exists( '\WpLdp\Api' ) ) {
 		const LDP_API_URL = 'api/ldp/v1/';
 
 		/**
-		 * __construct - Class default constructor
+		 * Class default constructor
 		 *
 		 * @return {Api}  Instance of the Api Class
 		 */
@@ -51,7 +51,7 @@ if ( ! class_exists( '\WpLdp\Api' ) ) {
 
 
 		/**
-		 * get_api_definition Gets the general schema this site LPD API.
+		 * Gets the general schema this site LPD API.
 		 *
 		 * @param  {\WP_REST_Request} $request The current HTTP request object.
 		 * @param  {\WP_REST_Response} $response The current HTTP response object.
@@ -118,7 +118,7 @@ if ( ! class_exists( '\WpLdp\Api' ) ) {
 
 
 		/**
-		 * get_api_definition Gets the details of the current ldp resource.
+		 * Gets the details of the current ldp resource.
 		 *
 		 * @param  {\WP_REST_Request} $request The current HTTP request object.
 		 * @param  {\WP_REST_Response} $response The current HTTP response object.
@@ -243,7 +243,7 @@ if ( ! class_exists( '\WpLdp\Api' ) ) {
 		}
 
 		/**
-		 * define_api_slug Filters the current site API slug.
+		 * Filters the current site API slug.
 		 *
 		 * @param  {string} $slug The current site API slug.
 		 * @return {string} $slug The current site API slug.
@@ -256,4 +256,4 @@ if ( ! class_exists( '\WpLdp\Api' ) ) {
 	$wpldp_api = new Api();
 } else {
 	exit( 'Class Api already exists' );
-} 
+}
