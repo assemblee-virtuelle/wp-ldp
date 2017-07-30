@@ -10,6 +10,7 @@
  * @license https://www.gnu.org/licenses/gpl-2.0.txt GNU/GPLv2
  * @since  2.0.0
  */
+
 namespace WpLdp;
 
 if ( ! class_exists( '\WpLdp\Utils' ) ) {
@@ -20,15 +21,14 @@ if ( ! class_exists( '\WpLdp\Utils' ) ) {
 	 * @package WPLDP
 	 * @author    Benoit Alessandroni
 	 * @license https://www.gnu.org/licenses/gpl-2.0.txt GNU/GPLv2
-	 *
 	 */
 	class Utils {
 		/**
-		 * get_field_name - Gets the current field name, with retro-compatibility
+		 * get_field_name Gets the current field name, with retro-compatibility
 		 * with the older notation system.
 		 *
-		 * @param  {type} $field the current field to process
-		 * @return {type}        The field name
+		 * @param  {type} $field The current field to process.
+		 * @return {type} $field_name The field name.
 		 */
 		public static function get_field_name( $field ) {
 			$field_name = null;
@@ -45,14 +45,14 @@ if ( ! class_exists( '\WpLdp\Utils' ) ) {
 		}
 
 		/**
-		 * get_resource_uri - Gets the URI of the resource passed as parameter.
+		 * get_resource_uri Gets the URI of the resource passed as parameter.
 		 *
-		 * @param  {WP_Post} $resource The resource to process
-		 * @return {string}  $resource_uri The current resource URI
+		 * @param  {WP_Post} $resource The resource to process.
+		 * @return {string}  $resource_uri The current resource URI.
 		 */
 		public static function get_resource_uri( $resource ) {
 			$resource_uri = null;
-			if ('publish' === get_post_status( $resource->ID ) ) {
+			if ( 'publish' === get_post_status( $resource->ID ) ) {
 				$ldp_container = wp_get_post_terms( $resource->ID, 'ldp_container' )[0];
 				$resource_uri = get_rest_url() . 'ldp/v1/' . $ldp_container->slug . '/' . $resource->post_name . '/';
 			} else {
@@ -64,16 +64,16 @@ if ( ! class_exists( '\WpLdp\Utils' ) ) {
 		}
 
 		/**
-		 * get_resource_fields_list - Gets the list of fields associated with the current resource.
+		 * get_resource_fields_list Gets the list of fields associated with the current resource.
 		 *
-		 * @param  {int} $resource_id The ID of the resource to process
-		 * @return {array} $fields    The list of available fields
+		 * @param  {int} $resource_id The ID of the resource to process.
+		 * @return {array} $fields    The list of available fields.
 		 */
 		public static function get_resource_fields_list( $resource_id ) {
 			$value = null;
 			$fields = array();
 			$values = get_the_terms( $resource_id, 'ldp_container' );
-			if ( !empty( $values ) && !is_wp_error( $values ) ) {
+			if ( ! empty( $values ) && ! is_wp_error( $values ) ) {
 				if ( empty( $values[0] ) ) {
 					$value = reset( $values );
 				} else {

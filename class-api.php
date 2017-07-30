@@ -10,11 +10,9 @@
  * @license https://www.gnu.org/licenses/gpl-2.0.txt GNU/GPLv2
  * @since  2.0.0
  */
+
 namespace WpLdp;
 
-/**
-* Class handling everything related to settings page and available options inside them
-**/
 if ( ! class_exists( '\WpLdp\Api' ) ) {
 	/**
 	 * Api Handles everything related to our custom LDP API.
@@ -23,20 +21,19 @@ if ( ! class_exists( '\WpLdp\Api' ) ) {
 	 * @package WPLDP
 	 * @author  Benoit Alessandroni
 	 * @license https://www.gnu.org/licenses/gpl-2.0.txt GNU/GPLv2
-	 *
 	 */
 	class Api {
 
 		/**
-		* The base url of the API.
-		*/
+		 * The base url of the API.
+		 */
 		const LDP_API_URL = 'api/ldp/v1/';
 
 		/**
-		* __construct - Class default constructor
-		*
-		* @return {Api}  Instance of the Api Class
-		*/
+		 * __construct - Class default constructor
+		 *
+		 * @return {Api}  Instance of the Api Class
+		 */
 		public function __construct() {
 			add_filter( 'rest_url_prefix', array( $this, 'define_api_slug' ) );
 			add_action( 'rest_api_init', function() {
@@ -52,16 +49,23 @@ if ( ! class_exists( '\WpLdp\Api' ) ) {
 			});
 		}
 
+
 		/**
-		* API method for retrieving the general schema this site LPD API
-		*/
+		 * get_api_definition Gets the general schema this site LPD API.
+		 *
+		 * @param  {\WP_REST_Request} $request The current HTTP request object.
+		 * @param  {\WP_REST_Response} $response The current HTTP response object.
+		 * @return {\WP_REST_Response} $response The current HTTP response object.
+		 */
 		public function get_api_definition( \WP_REST_Request $request, \WP_REST_Response $response = null ) {
 			header( 'Content-Type: application/ld+json' );
 			header( 'Access-Control-Allow-Origin: *' );
 
-			$query = new \WP_Query( array(
-				'post_type' => 'ldp_resource',
-				'posts_per_page' => -1 )
+			$query = new \WP_Query(
+				array(
+					'post_type' => 'ldp_resource',
+					'posts_per_page' => -1,
+				)
 			);
 			$array = [];
 
@@ -73,12 +77,12 @@ if ( ! class_exists( '\WpLdp\Api' ) ) {
 					array(
 						'@id' => rtrim( get_rest_url(), '/' ) . $request->get_route() . '/',
 						'@type' => 'http://www.w3.org/ns/ldp#BasicContainer',
-						'http://www.w3.org/ns/ldp#contains' => array()
-					)
+						'http://www.w3.org/ns/ldp#contains' => array(),
+					),
 				)
 			);
 
-			foreach ($posts as $post ) {
+			foreach ( $posts as $post ) {
 				$values = get_the_terms( $post->ID, 'ldp_container' );
 				if ( ! empty( $values ) ) {
 					if ( empty( $values[0] ) ) {
@@ -89,13 +93,13 @@ if ( ! class_exists( '\WpLdp\Api' ) ) {
 					$term_meta = get_option( "ldp_container_$value->term_id" );
 					$rdf_type = isset( $term_meta['ldp_rdf_type'] ) ? $term_meta['ldp_rdf_type'] : null;
 
-					if ( $rdf_type != null ){
-						if ( array_key_exists( $rdf_type,$array) ){
-							$array[$rdf_type]['value']++;
+					if ( null !== $rdf_type ) {
+						if ( array_key_exists( $rdf_type,$array ) ) {
+							$array[ $rdf_type ]['value']++;
 						}
-						else{
-							$array[$rdf_type]['value']=1;
-							$array[$rdf_type]['id']= strtolower( explode( ':', $rdf_type )[1] );
+						else {
+							$array[ $rdf_type ]['value'] = 1;
+							$array[ $rdf_type ]['id'] = strtolower( explode( ':', $rdf_type )[1] );
 						}
 					}
 				}
@@ -112,9 +116,14 @@ if ( ! class_exists( '\WpLdp\Api' ) ) {
 			return rest_ensure_response( $result );
 		}
 
+
 		/**
-		* API method for retrieving the details of the current ldp resource
-		*/
+		 * get_api_definition Gets the details of the current ldp resource.
+		 *
+		 * @param  {\WP_REST_Request} $request The current HTTP request object.
+		 * @param  {\WP_REST_Response} $response The current HTTP response object.
+		 * @return {\WP_REST_Response} $response The current HTTP response object.
+		 */
 		public function get_resource( \WP_REST_Request $request, \WP_REST_Response $response = null ) {
 			$params = $request->get_params();
 			$ldp_container = $params['ldp_container'];
@@ -133,20 +142,20 @@ if ( ! class_exists( '\WpLdp\Api' ) ) {
 			$query = new \WP_Query(
 				array(
 					'name' => $ldp_resource_slug,
-					'post_type' => 'ldp_resource'
+					'post_type' => 'ldp_resource',
 				)
 			);
 
 			$post = $query->get_posts();
 
-			if ( ! empty( $post ) && is_array( $post) ) {
+			if ( ! empty( $post ) && is_array( $post ) ) {
 				$post = $post[0];
 			}
 			else {
 				return null;
 			}
 
-			// Getting general information about the container associated with the current resource
+			// Getting general information about the container associated with the current resource.
 			$fields = \WpLdp\Utils::get_resource_fields_list( $post->ID );
 			$terms =  wp_get_post_terms( $post->ID, 'ldp_container' );
 			if ( ! empty( $terms ) && is_array( $terms ) ) {
@@ -157,23 +166,20 @@ if ( ! class_exists( '\WpLdp\Api' ) ) {
 
 			$result = array(
 				'@context' => get_option( 'ldp_context', 'http://lov.okfn.org/dataset/lov/context' ),
-				'@graph'   => array(
-					array(
-					)
-				)
+				'@graph'   => array( array() ),
 			);
 
 			$referer = isset( $_SERVER['HTTP_REFERER'] ) ? $_SERVER['HTTP_REFERER'] : null;
-			// Handling special case of editing trhough the wordpress admin backend
+			// Handling special case of editing trhough the WordPress admin backend.
 			$custom_fields_keys = get_post_custom_keys( $post->ID );
 			foreach ( $fields as $field ) {
 				$field_name = \WpLdp\Utils::get_field_name( $field );
 				if ( isset( $field_name ) ) {
-					if ( ! isset($field->multiple) || ! $field->multiple ) {
+					if ( ! isset( $field->multiple ) || ! $field->multiple ) {
 						$field_value = get_post_custom_values( $field_name, $post->ID )[0];
-						$result['@graph'][0][$field_name] = ! empty( $field_value ) ? $field_value : null;
+						$result['@graph'][0][ $field_name ] = ! empty( $field_value ) ? $field_value : null;
 					} else {
-						$result['@graph'][0][$field_name] = array();
+						$result['@graph'][0][ $field_name ] = array();
 						$field_values = get_post_custom_values( $field_name, $post->ID )[0];
 
 						if ( ! empty ( $field_values ) ) {
@@ -183,7 +189,7 @@ if ( ! class_exists( '\WpLdp\Api' ) ) {
 									'@id'  => ! empty( $value ) ? $value : null,
 								);
 
-								$result['@graph'][0][$field_name][] = $multiple_field_entry;
+								$result['@graph'][0][ $field_name ][] = $multiple_field_entry;
 							}
 						}
 					}
@@ -194,7 +200,7 @@ if ( ! class_exists( '\WpLdp\Api' ) ) {
 			$user_login = null;
 			foreach ( $fields as $field ) {
 				$field_name = \WpLdp\Utils::get_field_name( $field );
-				if (isset( $field_name ) && $field_name == 'foaf:nick' ) {
+				if ( isset( $field_name ) && 'foaf:nick' === $field_name ) {
 					$user_login = get_post_custom_values( $field_name, $post->ID )[0];
 				}
 			}
@@ -205,20 +211,20 @@ if ( ! class_exists( '\WpLdp\Api' ) ) {
 					$loop = new \WP_Query( array(
 						'post_type' => 'post',
 						'posts_per_page' => 12,
-						'orderby'=> 'menu_order',
+						'orderby' => 'menu_order',
 						'author' => $user->data->ID,
-						'post_status' => 'any'
+						'post_status' => 'any',
 					) );
 
 					$posts = $loop->get_posts();
 					if ( ! empty( $posts ) ) {
-						$result['@graph'][0]['posts'] = array( array( ) );
+						$result['@graph'][0]['posts'] = array( array() );
 						foreach ( $posts as $post ) {
 							$current_post_entry = array();
 							$current_post_entry['@id'] = get_permalink( $post->ID );
 							$current_post_entry['dc:title'] = $post->post_title;
 
-							$post_content = ( ! empty( $post->post_content ) && $post->post_content !== false) ? substr($post->post_content, 0, 150) : null;
+							$post_content = ( ! empty( $post->post_content ) && false !== $post->post_content ) ? substr( $post->post_content, 0, 150 ) : null;
 							if ( ! empty( $post->post_content ) ) {
 								$current_post_entry['sioc:blogPost'] = $post_content;
 							}
@@ -237,14 +243,17 @@ if ( ! class_exists( '\WpLdp\Api' ) ) {
 		}
 
 		/**
-		* API method for overriding the API namespace base slug
-		*/
+		 * define_api_slug Filters the current site API slug.
+		 *
+		 * @param  {string} $slug The current site API slug.
+		 * @return {string} $slug The current site API slug.
+		 */
 		public function define_api_slug( $slug ) {
 			return 'api';
 		}
 	}
-	// Instanciating the settings page object
+
 	$wpldp_api = new Api();
 } else {
-	exit ( 'Class Api already exists' );
-}
+	exit( 'Class Api already exists' );
+} 

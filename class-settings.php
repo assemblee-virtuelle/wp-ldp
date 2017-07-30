@@ -10,6 +10,7 @@
  * @license https://www.gnu.org/licenses/gpl-2.0.txt GNU/GPLv2
  * @since  2.0.0
  */
+
 namespace WpLdp;
 
 if ( ! class_exists( '\WpLdp\Settings' ) ) {
@@ -24,10 +25,8 @@ if ( ! class_exists( '\WpLdp\Settings' ) ) {
 	 */
 	class Settings {
 		/**
-		* __construct - Class default constructor
-		*
-		* @return {Settings}  Instance of the Settings Class
-		*/
+		 * __construct Class default constructor.
+		 */
 		public function __construct() {
 			add_action( 'admin_menu', array( $this, 'ldp_menu' ) );
 			add_action( 'admin_menu', array( $this, 'menu_setup' ) );
@@ -35,14 +34,11 @@ if ( ! class_exists( '\WpLdp\Settings' ) ) {
 		}
 
 		/**
-		* initialize_container - Initialiaze the PAIR containers if the associated
-		* option is checked
-		*
-		* @param  {type} $option    the checkbox to evaluate
-		* @param  {type} $oldValue  the oldvalue (should be false)
-		* @param  {type} $_newValue the new checkbox value (should be true)
-		* @return {type}            description
-		*/
+		 * initialize_container Initializes the PAIR containers if the associated
+		 * option is checked.
+		 *
+		 * @param  {boolean} $force Should the refresh be forced ?
+		 */
 		function initialize_container( $force = false ) {
 			if ( isset( $_GET['settings-updated'] ) || $force ) {
 				$ldp_container_init = get_option( 'ldp_container_init', false );
@@ -96,8 +92,8 @@ if ( ! class_exists( '\WpLdp\Settings' ) ) {
 					);
 
 					foreach ( $pair_terms as $term => $properties ) {
-						// Loop on the models files (or hardcoded array) and push them each as taxonomy term in the database
-						$model = file_get_contents(__DIR__  . '/models/' . $term . '.json');
+						// Loop on the models files (or hardcoded array) and push them each as taxonomy term in the database.
+						$model = file_get_contents( __DIR__  . '/models/' . $term . '.json' );
 						$term_id = null;
 
 						if ( ! term_exists( $term, 'ldp_container' ) ) {
@@ -142,13 +138,13 @@ if ( ! class_exists( '\WpLdp\Settings' ) ) {
 
 
 		/**
-		* wpldp_validation_notice - Override the default update message or/and add a new one.
-		*
-		* @return {type}  current workflow
-		*/
+		 * wpldp_validation_notice Overrides the default update message or/and add a new one.
+		 *
+		 * @return {type}  current workflow
+		 */
 		function wpldp_validation_notice() {
 			global $pagenow;
-			if ($pagenow == 'options-general.php' && $_GET['page'] == 'wpldp') { // change my-plugin to your plugin page
+			if ($pagenow == 'options-general.php' && $_GET['page'] == 'wpldp') { // change my-plugin to your plugin page.
 				if ( (isset( $_GET['settings-updated'] ) && $_GET['settings-updated'] == 'true') ) {
 
 					$ldp_container_init = get_option( 'ldp_container_init', false );
@@ -160,9 +156,14 @@ if ( ! class_exists( '\WpLdp\Settings' ) ) {
 			}
 		}
 
+		/**
+		 * menu_setup Generates the containers-filtered menu entries.
+		 *
+		 * @return {type}  current workflow
+		 */
 		function menu_setup() {
 			global $submenu;
-			// Removing all resources menu
+			// Removing all resources menu.
 			remove_submenu_page('edit.php?post_type=ldp_resource', 'edit.php?post_type=ldp_resource');
 			$terms = get_terms('ldp_container', array( 'hide_empty' => 0, 'order' => 'DESC' ) );
 
@@ -178,28 +179,28 @@ if ( ! class_exists( '\WpLdp\Settings' ) ) {
 					false
 				);
 
-				// Reordering position of menu pages
+				// Reordering position of menu pages.
 				$key_to_remove = null;
-				foreach ($submenu['edit.php?post_type=ldp_resource'] as $submenu_item_key => $submenu_item_value) {
-					if ($submenu_item_value[0] === $term->name) {
+				foreach ( $submenu['edit.php?post_type=ldp_resource'] as $submenu_item_key => $submenu_item_value ) {
+					if ( $submenu_item_value[0] === $term->name ) {
 						$submenu['edit.php?post_type=ldp_resource'][10 - $i] = $submenu_item_value;
 						$key_to_remove = $submenu_item_key;
 					}
 				}
 
 				if ( ! empty( $key_to_remove ) ) {
-					unset($submenu['edit.php?post_type=ldp_resource'][$key_to_remove]);
+					unset( $submenu['edit.php?post_type=ldp_resource'][ $key_to_remove ] );
 				}
 				$i++;
 			}
-			ksort($submenu['edit.php?post_type=ldp_resource']);
+			ksort( $submenu['edit.php?post_type=ldp_resource'] );
 		}
 
 		/**
-		* ldp_menu - Generate the plugin settings menu and associated page
-		*
-		* @return {type}  current workflow
-		*/
+		 * ldp_menu Generates the plugin settings menu and associated page.
+		 *
+		 * @return {type}  current workflow
+		 */
 		function ldp_menu() {
 			$hook = add_options_page(
 				__( 'WP-LDP Settings', 'wpldp' ),
@@ -213,27 +214,47 @@ if ( ! class_exists( '\WpLdp\Settings' ) ) {
 			add_action( 'admin_notices', array( $this, 'wpldp_validation_notice' ) );
 		}
 
+		/**
+		 * wpldp_options_page Populates the plugin option page.
+		 *
+		 * @return {type}  current workflow
+		 */
 		function wpldp_options_page() {
 			echo '<div class="wrap">';
 			echo '<h2>' . __( 'WP-LDP Settings', 'wpldp' ) . '</h2>';
 			echo '<form method="post" action="options.php">';
-			settings_fields('ldp_settings');
-			do_settings_sections('wpldp');
+			settings_fields( 'ldp_settings' );
+			do_settings_sections( 'wpldp' );
 			submit_button();
 			echo '</form>';
 			echo '</div>';
 		}
 
+		/**
+		 * ldp_context_field Adds the custom JSON-LD context field.
+		 *
+		 * @return {type}  current workflow
+		 */
 		function ldp_context_field() {
 			echo "<input type='text' size='150' name='ldp_context' value='" . get_option( 'ldp_context', 'http://lov.okfn.org/dataset/lov/context' ) . "' />";
 		}
 
+		/**
+		 * ldp_container_init_field Initis the checkbox for container init.
+		 *
+		 * @return {type}  current workflow
+		 */
 		function ldp_container_init_field() {
 			$optionValue = get_option( 'ldp_container_init', false );
 			$optionValue = ! empty( $optionValue ) ? 1 : 0;
 			echo "<input type='checkbox' name='ldp_container_init' value='1' " . checked( $optionValue, 1, false ) . " />";
 		}
 
+		/**
+		 * backend_hooking Adds every needed fiels to the options page.
+		 *
+		 * @return {type}  current workflow
+		 */
 		function backend_hooking() {
 			add_settings_section(
 				'ldp_settings',
@@ -265,8 +286,7 @@ if ( ! class_exists( '\WpLdp\Settings' ) ) {
 		}
 	}
 
-	// Instanciating the settings page object
-	$wpLdpSettings = new Settings();
+	$wpldp_settings = new Settings();
 } else {
-	exit ('Class Settings already exists');
+	exit( 'Class Settings already exists' );
 }
