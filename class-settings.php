@@ -12,9 +12,9 @@
  */
 namespace WpLdp;
 
-if ( ! class_exists( '\WpLdp\WpLdpSettings' ) ) {
+if ( ! class_exists( '\WpLdp\Settings' ) ) {
 	/**
-	 * WpLdpSettings Handles everything related to the admin settings.
+	 * Settings Handles everything related to the admin settings.
 	 *
 	 * @category Class
 	 * @package WPLDP
@@ -22,11 +22,11 @@ if ( ! class_exists( '\WpLdp\WpLdpSettings' ) ) {
 	 * @license https://www.gnu.org/licenses/gpl-2.0.txt GNU/GPLv2
 	 *
 	 */
-	class WpLdpSettings {
+	class Settings {
 		/**
 		* __construct - Class default constructor
 		*
-		* @return {WpLdpSettings}  Instance of the WpLdpSettings Class
+		* @return {Settings}  Instance of the Settings Class
 		*/
 		public function __construct() {
 			add_action( 'admin_menu', array( $this, 'ldp_menu' ) );
@@ -125,9 +125,9 @@ if ( ! class_exists( '\WpLdp\WpLdpSettings' ) ) {
 							$term_id = $existing_term->term_id;
 						}
 
-						if ( !empty( $term_id ) ) {
+						if ( ! empty( $term_id ) ) {
 							$term_meta = get_option( "ldp_container_$term_id" );
-							if ( !is_array( $term_meta ) ) {
+							if ( ! is_array( $term_meta ) ) {
 								$term_meta = array();
 							}
 
@@ -167,7 +167,7 @@ if ( ! class_exists( '\WpLdp\WpLdpSettings' ) ) {
 			$terms = get_terms('ldp_container', array( 'hide_empty' => 0, 'order' => 'DESC' ) );
 
 			$i = 0;
-			foreach($terms as $term) {
+			foreach ($terms as $term) {
 				$this->term_slug = $term->slug;
 				add_submenu_page(
 					'edit.php?post_type=ldp_resource',
@@ -180,14 +180,14 @@ if ( ! class_exists( '\WpLdp\WpLdpSettings' ) ) {
 
 				// Reordering position of menu pages
 				$key_to_remove = null;
-				foreach($submenu['edit.php?post_type=ldp_resource'] as $submenu_item_key => $submenu_item_value) {
+				foreach ($submenu['edit.php?post_type=ldp_resource'] as $submenu_item_key => $submenu_item_value) {
 					if ($submenu_item_value[0] === $term->name) {
 						$submenu['edit.php?post_type=ldp_resource'][10 - $i] = $submenu_item_value;
 						$key_to_remove = $submenu_item_key;
 					}
 				}
 
-				if (!empty($key_to_remove)) {
+				if ( ! empty( $key_to_remove ) ) {
 					unset($submenu['edit.php?post_type=ldp_resource'][$key_to_remove]);
 				}
 				$i++;
@@ -230,8 +230,8 @@ if ( ! class_exists( '\WpLdp\WpLdpSettings' ) ) {
 
 		function ldp_container_init_field() {
 			$optionValue = get_option( 'ldp_container_init', false );
-			$optionValue = !empty($optionValue) ? 1 : 0;
-			echo "<input type='checkbox' name='ldp_container_init' value='1' " . checked($optionValue, 1, false) . " />";
+			$optionValue = ! empty( $optionValue ) ? 1 : 0;
+			echo "<input type='checkbox' name='ldp_container_init' value='1' " . checked( $optionValue, 1, false ) . " />";
 		}
 
 		function backend_hooking() {
@@ -266,7 +266,7 @@ if ( ! class_exists( '\WpLdp\WpLdpSettings' ) ) {
 	}
 
 	// Instanciating the settings page object
-	$wpLdpSettings = new WpLdpSettings();
+	$wpLdpSettings = new Settings();
 } else {
-	exit ('Class WpLdpSettings already exists');
+	exit ('Class Settings already exists');
 }

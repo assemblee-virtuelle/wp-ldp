@@ -20,11 +20,11 @@ namespace WpLdp;
 // If the file is accessed outside of index.php (ie. directly), we just deny the access.
 defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
 
-require_once( 'wpldp-utils.php' );
-require_once( 'wpldp-container-taxonomy.php' );
-require_once( 'wpldp-site-taxonomy.php' );
-require_once( 'wpldp-settings.php' );
-require_once( 'wpldp-api.php' );
+require_once( 'class-utils.php' );
+require_once( 'class-container-taxonomy.php' );
+require_once( 'class-site-taxonomy.php' );
+require_once( 'class-settings.php' );
+require_once( 'class-api.php' );
 
 if ( ! class_exists( '\WpLdp\WpLdp' ) ) {
 	/**
@@ -231,7 +231,7 @@ if ( ! class_exists( '\WpLdp\WpLdp' ) ) {
 				'show_in_admin_bar'     => true,
 				'supports'              => array( 'title' ),
 				'has_archive'           => true,
-				'rewrite'               => array( 'slug' => WpldpApi::LDP_API_URL . '%ldp_container%' ),
+				'rewrite'               => array( 'slug' => \WpLdp\Api::LDP_API_URL . '%ldp_container%' ),
 				'menu_icon'             => 'dashicons-image-filter',
 				)
 			);
@@ -268,7 +268,7 @@ if ( ! class_exists( '\WpLdp\WpLdp' ) ) {
 		function display_container_meta_box( $post_type ) {
 			remove_meta_box( 'ldp_containerdiv', $post_type, 'side' );
 
-			if( $post_type == Wpldp::RESOURCE_POST_TYPE ) :
+			if ( $post_type == Wpldp::RESOURCE_POST_TYPE ) :
 				add_meta_box(
 					'ldp_containerdiv',
 					__( 'Containers', 'wpldp' ),
@@ -296,7 +296,7 @@ if ( ! class_exists( '\WpLdp\WpLdp' ) ) {
 			$value = get_the_terms( $post->ID, 'ldp_container' )[0];
 			$terms = get_terms( 'ldp_container', array( 'hide_empty' => 0 ) );
 			echo '<ul>';
-			foreach( $terms as $term ) {
+			foreach ( $terms as $term ) {
 				echo '<li id="ldp_container-' . $term->term_id . '" class="category">';
 				echo '<label class="selectit">';
 				if ( !empty( $value ) && $term->term_id == $value->term_id ) {
@@ -352,15 +352,15 @@ if ( ! class_exists( '\WpLdp\WpLdp' ) ) {
 		*/
 		public function wpldp_edit_form_advanced( $post ) {
 			if ( $post->post_type == Wpldp::RESOURCE_POST_TYPE ) {
-				$resourceUri = WpLdpUtils::getResourceUri( $post );
+				$resource_uri = Utils::get_resource_uri( $post );
 
 				$term = get_the_terms( $post->post_id, 'ldp_container' );
-				if ( !empty( $term ) && !empty( $resourceUri ) ) {
-					$termId = $term[0]->term_id;
-					$termMeta = get_option("ldp_container_$termId");
+				if ( !empty( $term ) && !empty( $resource_uri ) ) {
+					$term_id = $term[0]->term_id;
+					$term_meta = get_option("ldp_container_$term_id");
 
-					if ( empty( $termMeta ) || !isset( $termMeta['ldp_model'] ) ) {
-						$ldpModel = '{"people":
+					if ( empty( $term_meta ) || !isset( $term_meta['ldp_model'] ) ) {
+						$ldp_model = '{"people":
 							{"fields":
 								[{
 									"title": "What\'s your name?",
@@ -373,20 +373,20 @@ if ( ! class_exists( '\WpLdp\WpLdp' ) ) {
 							}
 						}';
 					} else {
-						$ldpModel = json_encode(json_decode($termMeta['ldp_model']));
+						$ldp_model = json_encode(json_decode($term_meta['ldp_model']));
 					}
 
 					echo '<br>';
 					echo '<div id="ldpform"></div>';
 					echo '<script>';
 					echo "var store = new MyStore({
-						container: '$resourceUri',
+						container: '$resource_uri',
 						context: '" . get_option('ldp_context', 'http://lov.okfn.org/dataset/lov/context') ."',
 						template:\"{{{form '{$term[0]->slug}'}}}\",
-						models: $ldpModel
+						models: $ldp_model
 					});";
 					echo 'var wpldp = new wpldp( store ); wpldp.init();';
-					echo "wpldp.render('#ldpform', '$resourceUri', undefined, undefined, '{$term[0]->slug}');";
+					echo "wpldp.render('#ldpform', '$resource_uri', undefined, undefined, '{$term[0]->slug}');";
 					echo '</script>';
 				}
 			}
@@ -400,23 +400,23 @@ if ( ! class_exists( '\WpLdp\WpLdp' ) ) {
 		* @return {type}
 		*/
 		public function save_ldp_meta_for_post($resource_id) {
-			$fields = WpLdpUtils::getResourceFieldsList( $resource_id );
+			$fields = Utils::get_resource_fields_list( $resource_id );
 
 			if ( !empty( $fields ) ) {
-				foreach( $_POST as $key => $value ) {
-					foreach( $fields as $field ) {
-						$field_name = \WpLdp\WpLdpUtils::getFieldName( $field );
+				foreach ( $_POST as $key => $value ) {
+					foreach ( $fields as $field ) {
+						$field_name = \WpLdp\Utils::get_field_name( $field );
 						if ( isset( $field_name ) ) {
 							if ( $key === $field_name ||
 							( substr( $key, 0, strlen( $field_name ) ) === $field_name )
 							) {
 								if ( is_array( $value ) ) {
-									foreach( $value as $site ) {
+									foreach ( $value as $site ) {
 										if ( strpos( $site, 'ldp' ) !== false &&
 										( strpos( $site, 'http://' ) !== false ||
 										strpos( $site, 'https://' ) !== false ) ) {
-											$site_url = explode( WpldpApi::LDP_API_URL, $site );
-											$site_url = $site_url[0] . WpldpApi::LDP_API_URL;
+											$site_url = explode( \WpLdp\Api::LDP_API_URL, $site );
+											$site_url = $site_url[0] . \WpLdp\Api::LDP_API_URL;
 
 											$term = get_terms( array(
 												'taxonomy' => 'ldp_site',

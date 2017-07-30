@@ -15,9 +15,9 @@ namespace WpLdp;
 /**
 * Class handling everything related to the plugin custom taxonomies
 **/
-if ( ! class_exists( '\WpLdp\WpLdpContainerTaxonomy' ) ) {
+if ( ! class_exists( '\WpLdp\ContainerTaxonomy' ) ) {
 	/**
-	 * WpLdpContainerTaxonomy Handles everything related to the container taxonomy.
+	 * ContainerTaxonomy Handles everything related to the container taxonomy.
 	 *
 	 * @category Class
 	 * @package WPLDP
@@ -25,7 +25,7 @@ if ( ! class_exists( '\WpLdp\WpLdpContainerTaxonomy' ) ) {
 	 * @license https://www.gnu.org/licenses/gpl-2.0.txt GNU/GPLv2
 	 *
 	 */
-	class WpLdpContainerTaxonomy {
+	class ContainerTaxonomy {
 		/**
 		* __construct - Default constructor
 		*
@@ -91,7 +91,7 @@ if ( ! class_exists( '\WpLdp\WpLdpContainerTaxonomy' ) ) {
 			);
 
 			$rewrite = array(
-				'slug'                       => rtrim( WpldpApi::LDP_API_URL, '/' ),
+				'slug'                       => rtrim( \WpLdp\Api::LDP_API_URL, '/' ),
 				'with_front'                 => true,
 				'hierarchical'               => false,
 			);
@@ -148,23 +148,23 @@ if ( ! class_exists( '\WpLdp\WpLdpContainerTaxonomy' ) ) {
 		* @return void
 		*/
 		function add_custom_tax_fields_onedit( $term ) {
-			$termId = $term->term_id;
-			$termMeta = get_option( "ldp_container_$termId" );
-			$ldpModel = !empty( $termMeta['ldp_model'] ) ? stripslashes_deep( $termMeta['ldp_model'] ) : '';
-			$ldpRdfType = isset( $termMeta['ldp_rdf_type'] ) ? $termMeta['ldp_rdf_type'] : '';
-			$ldpIncludedFieldsList = isset( $termMeta['ldp_included_fields_list'] ) ? $termMeta['ldp_included_fields_list'] : '';
+			$term_id = $term->term_id;
+			$term_meta = get_option( "ldp_container_$term_id" );
+			$ldp_model = ! empty( $term_meta['ldp_model'] ) ? stripslashes_deep( $term_meta['ldp_model'] ) : '';
+			$ldp_rdf_type = isset( $term_meta['ldp_rdf_type'] ) ? $term_meta['ldp_rdf_type'] : '';
+			$ldp_included_fields_list = isset( $term_meta['ldp_included_fields_list'] ) ? $term_meta['ldp_included_fields_list'] : '';
 
 			// Adding rdf:type field
 			echo "<tr class='form-field form-required term-model-wrap'>";
 			echo "<th scope='row'><label for='ldp_rdf_type'>" . __( 'Rdf:type, if any', 'wpldp' ). '</label></th>';
-			echo "<td><input type='text' name='ldp_rdf_type' id='ldp_rdf_type' value='$ldpRdfType' />";
+			echo "<td><input type='text' name='ldp_rdf_type' id='ldp_rdf_type' value='$ldp_rdf_type' />";
 			echo "<p class='description'>" . __( 'Rdf:type associated with this container', 'wpldp' ). '</p></td>';
 			echo '</tr>';
 
 			// Adding container included fields field
 			echo "<tr class='form-field form-required term-model-wrap'>";
 			echo "<th scope='row'><label for='ldp_included_fields_list'>" . __( 'Included fields', 'wpldp' ). '</label></th>';
-			echo "<td><input type='text' name='ldp_included_fields_list' id='ldp_included_fields_list' value='$ldpIncludedFieldsList' />";
+			echo "<td><input type='text' name='ldp_included_fields_list' id='ldp_included_fields_list' value='$ldp_included_fields_list' />";
 			echo "<p class='description'>" . __( 'The fields from the model whose values you would like to include from the associated resources in the container, separated by commas', 'wpldp' ). '</p></td>';
 			echo '</tr>';
 
@@ -174,7 +174,7 @@ if ( ! class_exists( '\WpLdp\WpLdpContainerTaxonomy' ) ) {
 			echo "<td><div id='ldp_model_editor' style='width: 1000px; height: 400px;'></div>";
 			echo "<p class='description'>" . __( 'The LDP-compatible JSON Model for this container', 'wpldp' ). '</p></td>';
 			echo '</tr>';
-			echo "<input type='hidden' id='ldp_model' name='ldp_model' value='$ldpModel'/>";
+			echo "<input type='hidden' id='ldp_model' name='ldp_model' value='$ldp_model'/>";
 
 			echo '</tr>';
 
@@ -195,7 +195,7 @@ if ( ! class_exists( '\WpLdp\WpLdpContainerTaxonomy' ) ) {
 			};
 			window.editor = new JSONEditor(container, options);
 
-			var json = ' . json_encode( json_decode( $ldpModel ) ) . ';
+			var json = ' . json_encode( json_decode( $ldp_model ) ) . ';
 			editor.set(json);
 			editor.expandAll();
 			</script>';
@@ -208,25 +208,25 @@ if ( ! class_exists( '\WpLdp\WpLdpContainerTaxonomy' ) ) {
 		* @param type
 		* @return void
 		*/
-		function save_custom_tax_field( $termID ) {
-			$termMeta = get_option( "ldp_container_$termID" );
-			if ( !is_array( $termMeta ) ) {
-				$termMeta = array();
+		function save_custom_tax_field( $term_id ) {
+			$term_meta = get_option( "ldp_container_$term_id" );
+			if ( ! is_array( $term_meta ) ) {
+				$term_meta = array();
 			}
 
 			if ( isset( $_POST['ldp_included_fields_list'] ) ) {
-				$termMeta['ldp_included_fields_list'] = $_POST['ldp_included_fields_list'];
+				$term_meta['ldp_included_fields_list'] = $_POST['ldp_included_fields_list'];
 			}
 
 			if ( isset( $_POST['ldp_rdf_type'] ) ) {
-				$termMeta['ldp_rdf_type'] = $_POST['ldp_rdf_type'];
+				$term_meta['ldp_rdf_type'] = $_POST['ldp_rdf_type'];
 			}
 
 			if ( isset( $_POST['ldp_model'] ) ) {
-				$termMeta['ldp_model'] = stripslashes_deep($_POST['ldp_model']);
+				$term_meta['ldp_model'] = stripslashes_deep($_POST['ldp_model']);
 			}
 
-			update_option( "ldp_container_$termID", $termMeta, false );
+			update_option( "ldp_container_$term_id", $term_meta, false );
 		}
 
 		/**
@@ -272,7 +272,7 @@ if ( ! class_exists( '\WpLdp\WpLdpContainerTaxonomy' ) ) {
 				)
 			);
 
-			$result = $this->formatPostsRendering( $result, $posts );
+			$result = $this->format_posts_rendering( $result, $posts );
 
 			return rest_ensure_response( $result );
 		}
@@ -323,40 +323,40 @@ if ( ! class_exists( '\WpLdp\WpLdpContainerTaxonomy' ) ) {
 				)
 			);
 
-			$result = $this->formatPostsRendering( $result, $posts );
+			$result = $this->format_posts_rendering( $result, $posts );
 
 			return rest_ensure_response( $result );
 		}
 
-		private function formatPostsRendering( $result, $posts ) {
+		private function format_posts_rendering( $result, $posts ) {
 			$count = 0;
 			foreach ($posts as $post ) {
-				$values = get_the_terms($post->ID, 'ldp_container');
+				$values = get_the_terms( $post->ID, 'ldp_container' );
 				if ( empty( $values[0] ) ) {
 					$value = reset($values);
 				} else {
 					$value = $values[0];
 				}
 
-				$termMeta = get_option( "ldp_container_$value->term_id" );
-				$ldpIncludedFieldsList = isset( $termMeta['ldp_included_fields_list'] ) ? $termMeta['ldp_included_fields_list'] : null;
-				$modelsDecoded = json_decode($termMeta['ldp_model']);
+				$term_meta = get_option( "ldp_container_$value->term_id" );
+				$ldp_included_fields_list = isset( $term_meta['ldp_included_fields_list'] ) ? $term_meta['ldp_included_fields_list'] : null;
+				$models_decoded = json_decode($term_meta['ldp_model']);
 
-				$includedFieldsList = !empty( $ldpIncludedFieldsList ) ? array_map( 'trim', explode( ',', $ldpIncludedFieldsList ) ) : null;
-				$fields = $modelsDecoded->{$value->slug}->fields;
+				$included_fields_list = ! empty( $ldp_included_fields_list ) ? array_map( 'trim', explode( ',', $ldp_included_fields_list ) ) : null;
+				$fields = $models_decoded->{$value->slug}->fields;
 				$current_entry = array();
 				foreach ( $fields as $field ) {
-					$fieldName = WpLdpUtils::getFieldName( $field );
-					if ( (!empty( $includedFieldsList ) && in_array( $fieldName, $includedFieldsList ) )
-					&& !empty( get_post_custom_values( $fieldName, $post->ID )[0] ) ) {
-						$current_entry[ $fieldName ] = get_post_custom_values( $fieldName, $post->ID )[0];
+					$field_name = Utils::get_field_name( $field );
+					if ( ( ! empty( $included_fields_list ) && in_array( $field_name, $included_fields_list ) )
+					&& ! empty( get_post_custom_values( $field_name, $post->ID )[0] ) ) {
+						$current_entry[ $field_name ] = get_post_custom_values( $field_name, $post->ID )[0];
 					}
 				}
 
-				$rdfType = isset( $termMeta['ldp_rdf_type'] ) ? $termMeta['ldp_rdf_type'] : null;
-				if ( !empty( $rdfType ) ) {
-					$current_entry['@type'] = $rdfType;
-					$current_entry['@id'] = site_url('/') . wpLdpApi::LDP_API_URL . $value->slug . '/' . $post->post_name;
+				$rdf_type = isset( $term_meta['ldp_rdf_type'] ) ? $term_meta['ldp_rdf_type'] : null;
+				if ( ! empty( $rdf_type ) ) {
+					$current_entry['@type'] = $rdf_type;
+					$current_entry['@id'] = site_url('/') . \WpLdp\Api::LDP_API_URL . $value->slug . '/' . $post->post_name;
 				}
 				$result['@graph'][0]['http://www.w3.org/ns/ldp#contains'][] = $current_entry;
 			}
@@ -366,7 +366,7 @@ if ( ! class_exists( '\WpLdp\WpLdpContainerTaxonomy' ) ) {
 	}
 
 	// Instanciating the settings page object
-	$wpLdpContainerTaxonomy = new WpLdpContainerTaxonomy();
+	$wpLdp_container_taxonomy = new ContainerTaxonomy();
 } else {
-	exit ( 'Class WpLdpContainerTaxonomy already exists' );
+	exit ( 'Class ContainerTaxonomy already exists' );
 }

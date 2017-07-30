@@ -12,9 +12,9 @@
  */
 namespace WpLdp;
 
-if ( ! class_exists( '\WpLdp\WpLdpSiteTaxonomy' ) ) {
+if ( ! class_exists( '\WpLdp\SiteTaxonomy' ) ) {
 	/**
-	 * WpLdpSiteTaxonomy Handles everything related to our site taxonomy.
+	 * SiteTaxonomy Handles everything related to our site taxonomy.
 	 *
 	 * @category Class
 	 * @package WPLDP
@@ -22,7 +22,7 @@ if ( ! class_exists( '\WpLdp\WpLdpSiteTaxonomy' ) ) {
 	 * @license https://www.gnu.org/licenses/gpl-2.0.txt GNU/GPLv2
 	 *
 	 */
-	class WpLdpSiteTaxonomy {
+	class SiteTaxonomy {
 
 		public function __construct() {
 			register_activation_hook( __FILE__, array( $this, 'wpldp_rewrite_flush' ) );
@@ -128,9 +128,9 @@ if ( ! class_exists( '\WpLdp\WpLdpSiteTaxonomy' ) ) {
 		* @return void
 		*/
 		function add_custom_tax_fields_onedit_site( $term ) {
-			$termId = $term->term_id;
-			$termMeta = get_term_meta( $termId,'ldp_site_url', true );
-			$ldpSiteUrl = isset($termMeta) ? $termMeta : '';
+			$term_id = $term->term_id;
+			$term_meta = get_term_meta( $term_id,'ldp_site_url', true );
+			$ldpSiteUrl = isset($term_meta) ? $term_meta : '';
 
 			// Adding rdf:type field
 			echo "<tr class='form-field form-required term-model-wrap'>";
@@ -144,16 +144,16 @@ if ( ! class_exists( '\WpLdp\WpLdpSiteTaxonomy' ) ) {
 		* Save the value of the posted site url field for the site custom taxonomy
 		* in the term_meta WP table
 		*
-		* @param int $termID The updated term ID
+		* @param int $term_id The updated term ID
 		*/
-		function save_custom_tax_field_site( $termID ) {
-			$termMeta = get_term_meta( $termID, 'ldp_site_url', true );
+		function save_custom_tax_field_site( $term_id ) {
+			$term_meta = get_term_meta( $term_id, 'ldp_site_url', true );
 
 			if ( isset( $_POST['ldp_site_url'] ) ) {
-				$termMeta = $_POST['ldp_site_url'];
+				$term_meta = $_POST['ldp_site_url'];
 			}
 
-			update_term_meta( $termID, 'ldp_site_url', $termMeta );
+			update_term_meta( $term_id, 'ldp_site_url', $term_meta );
 		}
 
 		/**
@@ -171,7 +171,7 @@ if ( ! class_exists( '\WpLdp\WpLdpSiteTaxonomy' ) ) {
 			);
 
 			$ldpSiteUrls = array();
-			if ( !empty( $terms ) && !is_wp_error( $terms ) ) {
+			if ( ! empty( $terms ) && ! is_wp_error( $terms ) ) {
 				foreach ( $terms as $term ){
 					$possibleUrl = get_term_meta( $term->term_id, 'ldp_site_url', true );
 					if ( $possibleUrl ) {
@@ -205,7 +205,7 @@ if ( ! class_exists( '\WpLdp\WpLdpSiteTaxonomy' ) ) {
 				if ( $output['code'] == 200 ) {
 					$response = json_decode( $output['data'] );
 
-					if ( !empty( $response ) ) {
+					if ( ! empty( $response ) ) {
 						$current_site = $response->{'@graph'}[0];
 						$current_site->{'@id'} = $siteUrl;
 
@@ -244,16 +244,16 @@ if ( ! class_exists( '\WpLdp\WpLdpSiteTaxonomy' ) ) {
 
 			$term = $query[0];
 
-			if ( !term_exists( $term, 'ldp_site' ) ) {
+			if ( ! term_exists( $term, 'ldp_site' ) ) {
 				$new_term = create_term( $term );
 			}
 
-			return ( !empty( $new_term ) || !empty( $term ) ) ? true : false;
+			return ( ! empty( $new_term ) || ! empty( $term ) ) ? true : false;
 		}
 
 	}
 	// Instanciating the settings page object
-	$wpLdpSiteTaxonomy = new WpLdpSiteTaxonomy();
+	$wpLdpSiteTaxonomy = new SiteTaxonomy();
 } else {
-	exit ('Class WpLdpSiteTaxonomy already exists');
+	exit ('Class SiteTaxonomy already exists');
 }
