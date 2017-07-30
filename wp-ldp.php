@@ -321,21 +321,22 @@ if ( ! class_exists( '\WpLdp\WpLdp' ) ) {
 					'hide_empty' => 0,
 				)
 			);
-			echo '<ul>';
+			?><ul><?php
 			foreach ( $terms as $term ) {
-				echo '<li id="ldp_container-' . $term->term_id . '" class="category">';
-				echo '<label class="selectit">';
-				if ( ! empty( $value ) && $term->term_id === $value->term_id ) {
-					echo '<input id="in-ldp_container-' . $term->term_id . '" type="radio" name="tax_input[ldp_container][]" value="' . $term->term_id . '" checked>';
-				} else {
-					echo '<input id="in-ldp_container-' . $term->term_id . '" type="radio" name="tax_input[ldp_container][]" value="' . $term->term_id . '">';
-				}
-				echo $term->name;
-				echo '</input>';
-				echo '</label>';
-				echo '</li>';
-			}
-			echo '</ul>';
+				?>
+					<li id="ldp_container-<?php echo $term->term_id; ?>" class="category">
+						<label class="selectit">
+				<?php if ( ! empty( $value ) && $term->term_id === $value->term_id ) { ?>
+					<input id="in-ldp_container-<?php echo $term->term_id; ?>" type="radio" name="tax_input[ldp_container][]" value="<?php echo $term->term_id; ?>" checked>
+				<?php } else { ?>
+					<input id="in-ldp_container-<?php echo $term->term_id; ?>" type="radio" name="tax_input[ldp_container][]" value="<?php echo $term->term_id; ?>">
+				<?php } ?>
+				<?php echo $term->name; ?>
+				</input>
+				</label>
+				</li>
+			<?php } ?>
+		</ul><?php
 		}
 
 		/**
@@ -363,10 +364,11 @@ if ( ! class_exists( '\WpLdp\WpLdp' ) ) {
 		 * @return void
 		 */
 		public function media_meta_box_callback( $post ) {
-			echo '<p>' . __( 'If you need to upload a media during your editing, click here.', 'wpldp' ) . '</p>';
-			echo '<a href="#" class="button insert-media add-media" data-editor="content" title="Add Media">';
-			echo '  <span class="wp-media-buttons-icon"></span> Add Media';
-			echo '</a>';
+			?>
+			<p><?php echo __( 'If you need to upload a media during your editing, click here.', 'wpldp' ); ?></p>
+			<a href="#" class="button insert-media add-media" data-editor="content" title="Add Media">
+				<span class="wp-media-buttons-icon"></span> Add Media
+			</a><?php
 		}
 
 		/**
@@ -401,18 +403,21 @@ if ( ! class_exists( '\WpLdp\WpLdp' ) ) {
 						$ldp_model = json_encode( json_decode( $term_meta['ldp_model'] ) );
 					}
 
-					echo '<br>';
-					echo '<div id="ldpform"></div>';
-					echo '<script>';
-					echo "var store = new MyStore({
-						container: '$resource_uri',
-						context: '" . get_option( 'ldp_context', 'http://lov.okfn.org/dataset/lov/context' ) . "',
-						template:\"{{{form '{$term[0]->slug}'}}}\",
-						models: $ldp_model
-					});";
-					echo 'var wpldp = new wpldp( store ); wpldp.init();';
-					echo "wpldp.render('#ldpform', '$resource_uri', undefined, undefined, '{$term[0]->slug}');";
-					echo '</script>';
+					?>
+					<br>
+					<div id="ldpform"></div>
+					<script>
+						var store = new MyStore({
+							container: '<?php echo $resource_uri; ?>',
+							context: "<?php echo get_option( 'ldp_context', 'http://lov.okfn.org/dataset/lov/context' ); ?>",
+							template: "{{{form '<?php echo $term[0]->slug; ?>'}}}",
+							models: <?php echo $ldp_model; ?>
+						});
+						var wpldp = new wpldp( store );
+						wpldp.init();
+						wpldp.render('#ldpform', '<?php echo $resource_uri; ?>', undefined, undefined, '<?php echo $term[0]->slug; ?>');
+					</script>
+					<?php
 				}
 			}
 		}
