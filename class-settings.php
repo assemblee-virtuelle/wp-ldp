@@ -47,53 +47,53 @@ if ( ! class_exists( '\WpLdp\Settings' ) ) {
 					$pair_terms = array(
 						'initiative' => array(
 							'label' => __( 'Initiative', 'wpldp' ),
-							'rdftype' => 'pair:initiative'
+							'rdftype' => 'pair:initiative',
 						),
 						'organization' => array(
 							'label' => __( 'Organization', 'wpldp' ),
-							'rdftype' => 'foaf:organization'
+							'rdftype' => 'foaf:organization',
 						),
 						'group' => array(
 							'label' => __( 'Group', 'wpldp' ),
-							'rdftype' => 'foaf:group'
+							'rdftype' => 'foaf:group',
 						),
 						'document' => array(
 							'label' => __( 'Document', 'wpldp' ),
-							'rdftype' => 'foaf:document'
+							'rdftype' => 'foaf:document',
 						),
 						'goodorservice' => array(
 							'label' => __( 'Good or Service', 'wpldp' ),
-							'rdftype' => 'goodRelation:goodOrService'
+							'rdftype' => 'goodRelation:goodOrService',
 						),
 						'artwork' => array(
 							'label' => __( 'Artwork', 'wpldp' ),
-							'rdftype' => 'schema:artwork'
+							'rdftype' => 'schema:artwork',
 						),
 						'event' => array(
 							'label' => __( 'Event', 'wpldp' ),
-							'rdftype' => 'schema:event'
+							'rdftype' => 'schema:event',
 						),
 						'place' => array(
 							'label' => __( 'Place', 'wpldp' ),
-							'rdftype' => 'schema:place'
+							'rdftype' => 'schema:place',
 						),
 						'theme' => array(
 							'label' => __( 'Theme', 'wpldp' ),
-							'rdftype' => 'pair:theme'
+							'rdftype' => 'pair:theme',
 						),
 						'thesis' => array(
 							'label' => __( 'Thesis', 'wpldp' ),
-							'rdftype' => 'pair:thesis'
+							'rdftype' => 'pair:thesis',
 						),
 						'person' => array(
 							'label' => __( 'Person', 'wpldp' ),
-							'rdftype' => 'pair:person'
+							'rdftype' => 'pair:person',
 						)
 					);
 
 					foreach ( $pair_terms as $term => $properties ) {
 						// Loop on the models files (or hardcoded array) and push them each as taxonomy term in the database.
-						$model = file_get_contents( __DIR__  . '/models/' . $term . '.json' );
+						$model = file_get_contents( __DIR__ . '/models/' . $term . '.json' );
 						$term_id = null;
 
 						if ( ! term_exists( $term, 'ldp_container' ) ) {
@@ -102,7 +102,13 @@ if ( ! class_exists( '\WpLdp\Settings' ) ) {
 								'ldp_container',
 								array(
 									'slug' => $term,
-									'description' => sprintf( __( 'The %1$s object model', 'wpldp' ), $term  )
+									'description' => sprintf(
+										__(
+											'The %1$s object model',
+											'wpldp'
+										),
+										$term
+									),
 								)
 							);
 
@@ -114,7 +120,13 @@ if ( ! class_exists( '\WpLdp\Settings' ) ) {
 								'ldp_container',
 								array(
 									'slug' => $term,
-									'description' => sprintf( __( 'The %1$s object model', 'wpldp' ), $term  )
+									'description' => sprintf(
+										__(
+											'The %1$s object model',
+											'wpldp'
+										),
+										$term
+									),
 								)
 							);
 
@@ -140,15 +152,15 @@ if ( ! class_exists( '\WpLdp\Settings' ) ) {
 		/**
 		 * Overrides the default update message or/and add a new one.
 		 *
-		 * @return {type}  current workflow
+		 * @return void
 		 */
 		function wpldp_validation_notice() {
 			global $pagenow;
-			if ($pagenow == 'options-general.php' && $_GET['page'] == 'wpldp') { // change my-plugin to your plugin page.
-				if ( (isset( $_GET['settings-updated'] ) && $_GET['settings-updated'] == 'true') ) {
+			if ( 'options-general.php' === $pagenow && 'wpldp' === $_GET['page'] ) { // change my-plugin to your plugin page.
+				if ( ( isset( $_GET['settings-updated'] ) && 'true' === $_GET['settings-updated'] ) ) {
 
 					$ldp_container_init = get_option( 'ldp_container_init', false );
-					if ($ldp_container_init) {
+					if ( $ldp_container_init ) {
 						$update_message = __( 'The PAIR containers have been initialized, enjoy ;-)', 'wpldp' );
 						add_settings_error( 'general', 'settings_updated', $update_message, 'updated' );
 					}
@@ -159,20 +171,23 @@ if ( ! class_exists( '\WpLdp\Settings' ) ) {
 		/**
 		 * Generates the containers-filtered menu entries.
 		 *
-		 * @return {type}  current workflow
+		 * @return void
 		 */
 		function menu_setup() {
 			global $submenu;
 			// Removing all resources menu.
-			remove_submenu_page('edit.php?post_type=ldp_resource', 'edit.php?post_type=ldp_resource');
-			$terms = get_terms('ldp_container', array( 'hide_empty' => 0, 'order' => 'DESC' ) );
+			remove_submenu_page( 'edit.php?post_type=ldp_resource', 'edit.php?post_type=ldp_resource' );
+			$terms = get_terms( 'ldp_container', array( 'hide_empty' => 0, 'order' => 'DESC' ) );
 
 			$i = 0;
-			foreach ($terms as $term) {
+			foreach ( $terms as $term ) {
 				$this->term_slug = $term->slug;
 				add_submenu_page(
 					'edit.php?post_type=ldp_resource',
-					__( 'List of all resources of type ' . $term->name, 'wpldp' ),
+					sprintf (
+						__( 'List of all resources of type %$1', 'wpldp' ),
+						$term->name
+					),
 					$term->name,
 					'edit_posts',
 					'edit.php?post_type=ldp_resource&ldp_container=' . $term->slug,
@@ -183,7 +198,7 @@ if ( ! class_exists( '\WpLdp\Settings' ) ) {
 				$key_to_remove = null;
 				foreach ( $submenu['edit.php?post_type=ldp_resource'] as $submenu_item_key => $submenu_item_value ) {
 					if ( $submenu_item_value[0] === $term->name ) {
-						$submenu['edit.php?post_type=ldp_resource'][10 - $i] = $submenu_item_value;
+						$submenu['edit.php?post_type=ldp_resource'][ 10 - $i ] = $submenu_item_value;
 						$key_to_remove = $submenu_item_key;
 					}
 				}
@@ -199,7 +214,7 @@ if ( ! class_exists( '\WpLdp\Settings' ) ) {
 		/**
 		 * Generates the plugin settings menu and associated page.
 		 *
-		 * @return {type}  current workflow
+		 * @return void
 		 */
 		function ldp_menu() {
 			$hook = add_options_page(
@@ -217,7 +232,7 @@ if ( ! class_exists( '\WpLdp\Settings' ) ) {
 		/**
 		 * Populates the plugin option page.
 		 *
-		 * @return {type}  current workflow
+		 * @return void
 		 */
 		function wpldp_options_page() {
 			echo '<div class="wrap">';
@@ -233,7 +248,7 @@ if ( ! class_exists( '\WpLdp\Settings' ) ) {
 		/**
 		 * Adds the custom JSON-LD context field.
 		 *
-		 * @return {type}  current workflow
+		 * @return void
 		 */
 		function ldp_context_field() {
 			echo "<input type='text' size='150' name='ldp_context' value='" . get_option( 'ldp_context', 'http://lov.okfn.org/dataset/lov/context' ) . "' />";
@@ -242,18 +257,18 @@ if ( ! class_exists( '\WpLdp\Settings' ) ) {
 		/**
 		 * Initis the checkbox for container init.
 		 *
-		 * @return {type}  current workflow
+		 * @return void
 		 */
 		function ldp_container_init_field() {
-			$optionValue = get_option( 'ldp_container_init', false );
-			$optionValue = ! empty( $optionValue ) ? 1 : 0;
-			echo "<input type='checkbox' name='ldp_container_init' value='1' " . checked( $optionValue, 1, false ) . " />";
+			$option_value = get_option( 'ldp_container_init', false );
+			$option_value = ! empty( $option_value ) ? 1 : 0;
+			echo "<input type='checkbox' name='ldp_container_init' value='1' " . checked( $option_value, 1, false ) . " />";
 		}
 
 		/**
 		 * Adds every needed fiels to the options page.
 		 *
-		 * @return {type}  current workflow
+		 * @return void
 		 */
 		function backend_hooking() {
 			add_settings_section(
