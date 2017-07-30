@@ -13,9 +13,6 @@
 
 namespace WpLdp;
 
-/**
-* Class handling everything related to the plugin custom taxonomies
-**/
 if ( ! class_exists( '\WpLdp\ContainerTaxonomy' ) ) {
 	/**
 	 * Handles everything related to the container taxonomy.
@@ -27,10 +24,10 @@ if ( ! class_exists( '\WpLdp\ContainerTaxonomy' ) ) {
 	 */
 	class ContainerTaxonomy {
 		/**
-		* - Default constructor.
-		*
-		* @return {WpLdpTaxonomy}  instance of the object.
-		*/
+		 * Default constructor.
+		 *
+		 * @return {WpLdpTaxonomy}  instance of the object.
+		 */
 		public function __construct() {
 			register_activation_hook( __FILE__, array( $this, 'wpldp_rewrite_flush' ) );
 			add_action( 'init', array( $this, 'register_container_taxonomy' ), 0 );
@@ -59,7 +56,7 @@ if ( ! class_exists( '\WpLdp\ContainerTaxonomy' ) ) {
 		 * @return void
 		 */
 		public function wpldp_rewrite_flush() {
-			delete_option('rewrite_rules');
+			delete_option( 'rewrite_rules' );
 			$this->register_container_taxonomy();
 			flush_rewrite_rules( true );
 		}
@@ -71,23 +68,23 @@ if ( ! class_exists( '\WpLdp\ContainerTaxonomy' ) ) {
 		 */
 		public function register_container_taxonomy() {
 			$labels = array(
-				'name'                       => __( 'Containers', 'wpldp'  ),
-				'singular_name'              => __( 'Container', 'wpldp'  ),
-				'menu_name'                  => __( 'Containers', 'wpldp'  ),
-				'all_items'                  => __( 'All Items', 'wpldp'  ),
-				'parent_item'                => __( 'Parent Item', 'wpldp'  ),
-				'parent_item_colon'          => __( 'Parent Item:', 'wpldp'  ),
-				'new_item_name'              => __( 'New Item Name', 'wpldp'  ),
-				'add_new_item'               => __( 'Add New Item', 'wpldp'  ),
-				'edit_item'                  => __( 'Edit Item', 'wpldp'  ),
-				'update_item'                => __( 'Update Item', 'wpldp'  ),
-				'view_item'                  => __( 'View Item', 'wpldp'  ),
-				'separate_items_with_commas' => __( 'Separate items with commas', 'wpldp'  ),
-				'add_or_remove_items'        => __( 'Add or remove items', 'wpldp'  ),
-				'choose_from_most_used'      => __( 'Choose from the most used', 'wpldp'  ),
-				'popular_items'              => __( 'Popular Items', 'wpldp'  ),
-				'search_items'               => __( 'Search Items', 'wpldp'  ),
-				'not_found'                  => __( 'Not Found', 'wpldp'  ),
+				'name'                       => __( 'Containers', 'wpldp' ),
+				'singular_name'              => __( 'Container', 'wpldp' ),
+				'menu_name'                  => __( 'Containers', 'wpldp' ),
+				'all_items'                  => __( 'All Items', 'wpldp' ),
+				'parent_item'                => __( 'Parent Item', 'wpldp' ),
+				'parent_item_colon'          => __( 'Parent Item:', 'wpldp' ),
+				'new_item_name'              => __( 'New Item Name', 'wpldp' ),
+				'add_new_item'               => __( 'Add New Item', 'wpldp' ),
+				'edit_item'                  => __( 'Edit Item', 'wpldp' ),
+				'update_item'                => __( 'Update Item', 'wpldp' ),
+				'view_item'                  => __( 'View Item', 'wpldp' ),
+				'separate_items_with_commas' => __( 'Separate items with commas', 'wpldp' ),
+				'add_or_remove_items'        => __( 'Add or remove items', 'wpldp' ),
+				'choose_from_most_used'      => __( 'Choose from the most used', 'wpldp' ),
+				'popular_items'              => __( 'Popular Items', 'wpldp' ),
+				'search_items'               => __( 'Search Items', 'wpldp' ),
+				'not_found'                  => __( 'Not Found', 'wpldp' ),
 			);
 
 			$rewrite = array(
@@ -111,12 +108,12 @@ if ( ! class_exists( '\WpLdp\ContainerTaxonomy' ) ) {
 		}
 
 		/**
-		* Adds a LDP Model field to our custom LDP containers taxonomy
-		* in creation mode.
-		*
-		* @param {int} $term the concrete term.
-		* @return void
-		*/
+		 * Adds a LDP Model field to our custom LDP containers taxonomy
+		 * in creation mode.
+		 *
+		 * @param {int} $term the concrete term.
+		 * @return void
+		 */
 		function add_custom_tax_fields_oncreate( $term ) {
 			// Adding rdf:type field.
 			echo "<div class='form-field term-model-wrap'>";
@@ -233,9 +230,9 @@ if ( ! class_exists( '\WpLdp\ContainerTaxonomy' ) ) {
 		/**
 		 * Gets the list of resources associated with the current taxonomy.
 		 *
-		 * @param  {\WP_REST_Request} $request The current HTTP request object.
-		 * @param  {\WP_REST_Response} $response The current HTTP response object.
-		 * @return {\WP_REST_Response} $response The current HTTP response object.
+		 * @param  \WP_REST_Request  $request The current HTTP request object.
+		 * @param  \WP_REST_Response $response The current HTTP response object.
+		 * @return \WP_REST_Response $response The current HTTP response object.
 		 */
 		public function get_resources_from_container( \WP_REST_Request $request, \WP_REST_Response $response = null ) {
 			$params = $request->get_params();
@@ -244,7 +241,7 @@ if ( ! class_exists( '\WpLdp\ContainerTaxonomy' ) ) {
 			$headers = $request->get_headers();
 			if ( isset( $headers['accept'] )
 				 && false !== strstr( $headers['accept'][0], 'text/html' ) ) {
-				header('Location: ' . site_url('/') . Wpldp::FRONT_PAGE_URL . '#' . get_rest_url() . 'ldp/v1/' . $ldp_container . '/' );
+				header( 'Location: ' . site_url( '/' ) . Wpldp::FRONT_PAGE_URL . '#' . get_rest_url() . 'ldp/v1/' . $ldp_container . '/' );
 				exit;
 			}
 
@@ -272,7 +269,7 @@ if ( ! class_exists( '\WpLdp\ContainerTaxonomy' ) ) {
 					array(
 						'@id' => rtrim( get_rest_url(), '/' ) . $request->get_route() . '/',
 						'@type' => 'http://www.w3.org/ns/ldp#BasicContainer',
-						'http://www.w3.org/ns/ldp#contains' => array()
+						'http://www.w3.org/ns/ldp#contains' => array(),
 					)
 				)
 			);
@@ -285,9 +282,9 @@ if ( ! class_exists( '\WpLdp\ContainerTaxonomy' ) ) {
 		/**
 		 * Gets the list of resources associated with the current taxonomy.
 		 *
-		 * @param  {\WP_REST_Request} $request The current HTTP request object.
-		 * @param  {\WP_REST_Response} $response The current HTTP response object.
-		 * @return {\WP_REST_Response} $response The current HTTP response object.
+		 * @param  \WP_REST_Request  $request The current HTTP request object.
+		 * @param  \WP_REST_Response $response The current HTTP response object.
+		 * @return \WP_REST_Response $response The current HTTP response object.
 		 */
 		public function get_search_results( \WP_REST_Request $request, \WP_REST_Response $response = null ) {
 			header( 'Content-Type: application/ld+json' );
@@ -337,27 +334,34 @@ if ( ! class_exists( '\WpLdp\ContainerTaxonomy' ) ) {
 			return rest_ensure_response( $result );
 		}
 
+		/**
+		 * Formats post rendering for use in the resource JSON-LD expression.
+		 *
+		 * @param {array} $result The current resource expression.
+		 * @param {array} $posts The current user posts.
+		 * @return {array} $result The new completed results.
+		 */
 		private function format_posts_rendering( $result, $posts ) {
 			$count = 0;
-			foreach ($posts as $post ) {
+			foreach ( $posts as $post ) {
 				$values = get_the_terms( $post->ID, 'ldp_container' );
 				if ( empty( $values[0] ) ) {
-					$value = reset($values);
+					$value = reset( $values );
 				} else {
 					$value = $values[0];
 				}
 
 				$term_meta = get_option( "ldp_container_$value->term_id" );
 				$ldp_included_fields_list = isset( $term_meta['ldp_included_fields_list'] ) ? $term_meta['ldp_included_fields_list'] : null;
-				$models_decoded = json_decode($term_meta['ldp_model']);
+				$models_decoded = json_decode( $term_meta['ldp_model'] );
 
 				$included_fields_list = ! empty( $ldp_included_fields_list ) ? array_map( 'trim', explode( ',', $ldp_included_fields_list ) ) : null;
 				$fields = $models_decoded->{$value->slug}->fields;
 				$current_entry = array();
 				foreach ( $fields as $field ) {
 					$field_name = Utils::get_field_name( $field );
-					if ( ( ! empty( $included_fields_list ) && in_array( $field_name, $included_fields_list ) )
-					&& ! empty( get_post_custom_values( $field_name, $post->ID )[0] ) ) {
+					if ( ( ! empty( $included_fields_list ) && true === in_array( $field_name, $included_fields_list ) )
+							&& ! empty( get_post_custom_values( $field_name, $post->ID )[0] ) ) {
 						$current_entry[ $field_name ] = get_post_custom_values( $field_name, $post->ID )[0];
 					}
 				}
@@ -365,7 +369,7 @@ if ( ! class_exists( '\WpLdp\ContainerTaxonomy' ) ) {
 				$rdf_type = isset( $term_meta['ldp_rdf_type'] ) ? $term_meta['ldp_rdf_type'] : null;
 				if ( ! empty( $rdf_type ) ) {
 					$current_entry['@type'] = $rdf_type;
-					$current_entry['@id'] = site_url('/') . \WpLdp\Api::LDP_API_URL . $value->slug . '/' . $post->post_name;
+					$current_entry['@id'] = site_url( '/' ) . \WpLdp\Api::LDP_API_URL . $value->slug . '/' . $post->post_name;
 				}
 				$result['@graph'][0]['http://www.w3.org/ns/ldp#contains'][] = $current_entry;
 			}

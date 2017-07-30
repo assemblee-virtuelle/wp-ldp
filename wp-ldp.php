@@ -61,7 +61,7 @@ if ( ! class_exists( '\WpLdp\WpLdp' ) ) {
 			register_activation_hook( __FILE__, array( $this, 'wpldp_rewrite_flush' ) );
 			register_deactivation_hook( __FILE__, array( $this, 'wpldp_flush_rewrite_rules_on_deactivation' ) );
 
-			register_activation_hook( __FILE__, array( $this, 'generate_menu_item') );
+			register_activation_hook( __FILE__, array( $this, 'generate_menu_item' ) );
 			register_deactivation_hook( __FILE__, array( $this, 'remove_menu_item' ) );
 
 			// Entry point of the plugin.
@@ -70,8 +70,8 @@ if ( ! class_exists( '\WpLdp\WpLdp' ) ) {
 			add_action( 'init', array( $this, 'create_ldp_type' ) );
 			add_action( 'init', array( $this, 'add_poc_rewrite_rule' ) );
 
-			add_action( 'edit_form_advanced', array( $this, 'wpldp_edit_form_advanced') );
-			add_action( 'save_post', array( $this, 'save_ldp_meta_for_post') );
+			add_action( 'edit_form_advanced', array( $this, 'wpldp_edit_form_advanced' ) );
+			add_action( 'save_post', array( $this, 'save_ldp_meta_for_post' ) );
 
 			add_action( 'add_meta_boxes', array( $this, 'display_container_meta_box' ) );
 			add_action( 'add_meta_boxes', array( $this, 'display_media_meta_box' ) );
@@ -97,7 +97,7 @@ if ( ! class_exists( '\WpLdp\WpLdp' ) ) {
 
 			if ( self::$version_number !== $plugin_version ) {
 				if ( self::$version_number >= '1.1.0' ) {
-					//Force reinitializing the ldp containers models:
+					// Force reinitializing the ldp containers models.
 					global $wpldp_settings;
 					if ( ! empty( $wpldp_settings ) ) {
 						$wpldp_settings->initialize_container( true );
@@ -202,7 +202,7 @@ if ( ! class_exists( '\WpLdp\WpLdp' ) ) {
 		 */
 		function load_translations_file() {
 			$path        = dirname( plugin_basename( __FILE__ ) ) . '/languages';
-			load_plugin_textdomain( 'wpldp', '', $path );
+			load_plugin_textdomain( 'wpldp', "", $path );
 			load_theme_textdomain( 'wpldp', $path );
 		}
 
@@ -222,23 +222,23 @@ if ( ! class_exists( '\WpLdp\WpLdp' ) ) {
 		/**
 		 * Adds custom LDP Resource post type.
 		 *
-		 * @return {void}
+		 * @return void
 		 */
 		public function create_ldp_type() {
 			register_post_type( 'ldp_resource',
 				array(
 					'labels'  => array(
-						'name'              => __( 'Resources', 'wpldp' ),
-						'singular_name'     => __( 'Resource', 'wpldp' ),
-						'all_items'         => __( 'All resources', 'wpldp' ),
-						'add_new_item'      => __( 'Add a resource', 'wpldp' ),
-						'edit_item'         => __( 'Edit a resource', 'wpldp' ),
-						'new_item'          => __( 'New resource', 'wpldp' ),
-						'view_item'         => __( 'See the resource', 'wpldp' ),
-						'search_items'      => __( 'Search for a resource', 'wpldp' ),
-						'not_found'         => __( 'No corresponding resource', 'wpldp' ),
-						'not_found_in_trash'=> __( 'No corresponding resource in the trash', 'wpldp' ),
-						'add_new'           => __( 'Add a resource', 'wpldp' ),
+						'name'               => __( 'Resources', 'wpldp' ),
+						'singular_name'      => __( 'Resource', 'wpldp' ),
+						'all_items'          => __( 'All resources', 'wpldp' ),
+						'add_new_item'       => __( 'Add a resource', 'wpldp' ),
+						'edit_item'          => __( 'Edit a resource', 'wpldp' ),
+						'new_item'           => __( 'New resource', 'wpldp' ),
+						'view_item'          => __( 'See the resource', 'wpldp' ),
+						'search_items'       => __( 'Search for a resource', 'wpldp' ),
+						'not_found'          => __( 'No corresponding resource', 'wpldp' ),
+						'not_found_in_trash' => __( 'No corresponding resource in the trash', 'wpldp' ),
+						'add_new'            => __( 'Add a resource', 'wpldp' ),
 					),
 					'description'           => __( 'LDP Resource', 'wpldp' ),
 					'public'                => true,
@@ -246,11 +246,11 @@ if ( ! class_exists( '\WpLdp\WpLdp' ) ) {
 					'show_in_menu'          => true,
 					'show_in_admin_bar'     => true,
 					'supports'              => array(
-						'title'
+						'title',
 					),
 					'has_archive'           => true,
 					'rewrite'               => array(
-						'slug' => \WpLdp\Api::LDP_API_URL . '%ldp_container%'
+						'slug' => \WpLdp\Api::LDP_API_URL . '%ldp_container%',
 					),
 					'menu_icon'             => 'dashicons-image-filter',
 				)
@@ -261,13 +261,13 @@ if ( ! class_exists( '\WpLdp\WpLdp' ) ) {
 		 * Adds custom filter for handling the custom permalink.
 		 *
 		 * @param {string} $post_link The current post link.
-		 * @param {int} $id The current post ID, if defined.
+		 * @param {int}    $id The current post ID, if defined.
 		 * @return {string} $post_link The actual post linl.
 		 */
 		function ldp_resource_post_link( $post_link, $id = 0 ) {
 			$post = get_post( $id );
 
-			if ( Wpldp::RESOURCE_POST_TYPE == get_post_type( $post ) ) {
+			if ( Wpldp::RESOURCE_POST_TYPE === get_post_type( $post ) ) {
 				if ( is_object( $post ) ) {
 					$terms = wp_get_object_terms( $post->ID, 'ldp_container' );
 					if ( ! empty( $terms ) ) {
@@ -302,11 +302,11 @@ if ( ! class_exists( '\WpLdp\WpLdp' ) ) {
 		}
 
 		/**
-		* Generates the HTML for the radio button based meta box.
-		*
-		* @param {WP_Post} $post The current post instance.
-		* @return void
-		*/
+		 * Generates the HTML for the radio button based meta box.
+		 *
+		 * @param {WP_Post} $post The current post instance.
+		 * @return void
+		 */
 		function container_meta_box_callback( $post ) {
 			wp_nonce_field(
 				'wpldp_save_container_box_data',
@@ -314,12 +314,17 @@ if ( ! class_exists( '\WpLdp\WpLdp' ) ) {
 			);
 
 			$value = get_the_terms( $post->ID, 'ldp_container' )[0];
-			$terms = get_terms( 'ldp_container', array( 'hide_empty' => 0 ) );
+			$terms = get_terms(
+				'ldp_container',
+				array(
+					'hide_empty' => 0,
+				)
+			);
 			echo '<ul>';
 			foreach ( $terms as $term ) {
 				echo '<li id="ldp_container-' . $term->term_id . '" class="category">';
 				echo '<label class="selectit">';
-				if ( ! empty( $value ) && $term->term_id == $value->term_id ) {
+				if ( ! empty( $value ) && $term->term_id === $value->term_id ) {
 					echo '<input id="in-ldp_container-' . $term->term_id . '" type="radio" name="tax_input[ldp_container][]" value="' . $term->term_id . '" checked>';
 				} else {
 					echo '<input id="in-ldp_container-' . $term->term_id . '" type="radio" name="tax_input[ldp_container][]" value="' . $term->term_id . '">';
@@ -366,17 +371,17 @@ if ( ! class_exists( '\WpLdp\WpLdp' ) ) {
 		/**
 		 * Renders the form for entering the data.
 		 *
-		 * @param  {WP_Post} $post Current post we are working on
+		 * @param  {WP_Post} $post Current post we are working on.
 		 * @return void
 		 */
 		public function wpldp_edit_form_advanced( $post ) {
-			if ( $post->post_type == Wpldp::RESOURCE_POST_TYPE ) {
+			if ( Wpldp::RESOURCE_POST_TYPE === $post->post_type ) {
 				$resource_uri = Utils::get_resource_uri( $post );
 
 				$term = get_the_terms( $post->post_id, 'ldp_container' );
 				if ( ! empty( $term ) && ! empty( $resource_uri ) ) {
 					$term_id = $term[0]->term_id;
-					$term_meta = get_option("ldp_container_$term_id");
+					$term_meta = get_option( "ldp_container_$term_id" );
 
 					if ( empty( $term_meta ) || ! isset( $term_meta['ldp_model'] ) ) {
 						$ldp_model = '{"people":
@@ -392,7 +397,7 @@ if ( ! class_exists( '\WpLdp\WpLdp' ) ) {
 							}
 						}';
 					} else {
-						$ldp_model = json_encode(json_decode($term_meta['ldp_model']));
+						$ldp_model = json_encode( json_decode( $term_meta['ldp_model'] ) );
 					}
 
 					echo '<br>';
@@ -400,7 +405,7 @@ if ( ! class_exists( '\WpLdp\WpLdp' ) ) {
 					echo '<script>';
 					echo "var store = new MyStore({
 						container: '$resource_uri',
-						context: '" . get_option('ldp_context', 'http://lov.okfn.org/dataset/lov/context') ."',
+						context: '" . get_option( 'ldp_context', 'http://lov.okfn.org/dataset/lov/context' ) ."',
 						template:\"{{{form '{$term[0]->slug}'}}}\",
 						models: $ldp_model
 					});";
@@ -449,7 +454,7 @@ if ( ! class_exists( '\WpLdp\WpLdp' ) ) {
 											);
 
 											if ( empty( $term ) || ! is_array( $term ) ) {
-												$site_url_parsed = parse_url( $site );
+												$site_url_parsed = wp_parse_url( $site );
 												$term = wp_insert_term(
 													$site_url_parsed['host'] . ' ' . $site_url_parsed['path'],
 													'ldp_site'
@@ -600,28 +605,28 @@ if ( ! class_exists( '\WpLdp\WpLdp' ) ) {
 				'wpldpcss',
 				plugins_url( 'resources/css/wpldp.css', __FILE__ )
 			);
-			wp_enqueue_style('wpldpcss');
+			wp_enqueue_style( 'wpldpcss' );
 
 			// Loading the JSONEditor stylesheet.
 			wp_register_style(
 				'jsoneditorcss',
 				plugins_url( 'library/js/node_modules/jsoneditor/dist/jsoneditor.min.css', __FILE__ )
 			);
-			wp_enqueue_style('jsoneditorcss');
+			wp_enqueue_style( 'jsoneditorcss' );
 
 			// Loading the JQueryUI stylesheet.
 			wp_register_style(
 				'jqueryuicss',
 				plugins_url( 'library/js/jquery-ui/jquery-ui.css', __FILE__ )
 			);
-			wp_enqueue_style('jqueryuicss');
+			wp_enqueue_style( 'jqueryuicss' );
 
 			// Loading the JQueryUIStructure stylesheet.
 			wp_register_style(
 				'jqueryuistructurecss',
 				plugins_url( 'library/js/jquery-ui/jquery-ui.structure.css', __FILE__ )
 			);
-			wp_enqueue_style('jqueryuistructurecss');
+			wp_enqueue_style( 'jqueryuistructurecss' );
 		}
 
 
@@ -638,14 +643,14 @@ if ( ! class_exists( '\WpLdp\WpLdp' ) ) {
 					'bootstrapcss',
 					plugins_url( 'public/library/bootstrap/css/bootstrap.min.css', __FILE__ )
 				);
-				wp_enqueue_style('bootstrapcss');
+				wp_enqueue_style( 'bootstrapcss' );
 
 				// Loading the WP-LDP stylesheet.
 				wp_register_style(
 					'font-asewomecss',
 					plugins_url( 'public/library/font-awesome/css/font-awesome.min.css', __FILE__ )
 				);
-				wp_enqueue_style('font-asewomecss');
+				wp_enqueue_style( 'font-asewomecss' );
 			}
 		}
 

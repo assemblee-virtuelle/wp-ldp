@@ -53,9 +53,9 @@ if ( ! class_exists( '\WpLdp\Api' ) ) {
 		/**
 		 * Gets the general schema this site LPD API.
 		 *
-		 * @param  {\WP_REST_Request} $request The current HTTP request object.
-		 * @param  {\WP_REST_Response} $response The current HTTP response object.
-		 * @return {\WP_REST_Response} $response The current HTTP response object.
+		 * @param  \WP_REST_Request  $request The current HTTP request object.
+		 * @param  \WP_REST_Response $response The current HTTP response object.
+		 * @return \WP_REST_Response $response The current HTTP response object.
 		 */
 		public function get_api_definition( \WP_REST_Request $request, \WP_REST_Response $response = null ) {
 			header( 'Content-Type: application/ld+json' );
@@ -96,8 +96,7 @@ if ( ! class_exists( '\WpLdp\Api' ) ) {
 					if ( null !== $rdf_type ) {
 						if ( array_key_exists( $rdf_type,$array ) ) {
 							$array[ $rdf_type ]['value']++;
-						}
-						else {
+						} else {
 							$array[ $rdf_type ]['value'] = 1;
 							$array[ $rdf_type ]['id'] = strtolower( explode( ':', $rdf_type )[1] );
 						}
@@ -120,9 +119,9 @@ if ( ! class_exists( '\WpLdp\Api' ) ) {
 		/**
 		 * Gets the details of the current ldp resource.
 		 *
-		 * @param  {\WP_REST_Request} $request The current HTTP request object.
-		 * @param  {\WP_REST_Response} $response The current HTTP response object.
-		 * @return {\WP_REST_Response} $response The current HTTP response object.
+		 * @param  \WP_REST_Request  $request The current HTTP request object.
+		 * @param  \WP_REST_Response $response The current HTTP response object.
+		 * @return \WP_REST_Response $response The current HTTP response object.
 		 */
 		public function get_resource( \WP_REST_Request $request, \WP_REST_Response $response = null ) {
 			$params = $request->get_params();
@@ -132,7 +131,7 @@ if ( ! class_exists( '\WpLdp\Api' ) ) {
 			$headers = $request->get_headers();
 			if ( isset( $headers['accept'] )
 			&& strstr( $headers['accept'][0], 'text/html' ) !== false ) {
-				header( 'Location: ' . site_url('/') . Wpldp::FRONT_PAGE_URL . '#' . get_rest_url() . 'ldp/v1/' . $ldp_container . '/' . $ldp_resource_slug . '/' );
+				header( 'Location: ' . site_url( '/' ) . Wpldp::FRONT_PAGE_URL . '#' . get_rest_url() . 'ldp/v1/' . $ldp_container . '/' . $ldp_resource_slug . '/' );
 				exit;
 			}
 
@@ -150,14 +149,13 @@ if ( ! class_exists( '\WpLdp\Api' ) ) {
 
 			if ( ! empty( $post ) && is_array( $post ) ) {
 				$post = $post[0];
-			}
-			else {
+			} else {
 				return null;
 			}
 
 			// Getting general information about the container associated with the current resource.
 			$fields = \WpLdp\Utils::get_resource_fields_list( $post->ID );
-			$terms =  wp_get_post_terms( $post->ID, 'ldp_container' );
+			$terms = wp_get_post_terms( $post->ID, 'ldp_container' );
 			if ( ! empty( $terms ) && is_array( $terms ) ) {
 				$term_id = $terms[0]->term_id;
 				$term_meta = get_option( "ldp_container_$term_id" );
@@ -182,7 +180,7 @@ if ( ! class_exists( '\WpLdp\Api' ) ) {
 						$result['@graph'][0][ $field_name ] = array();
 						$field_values = get_post_custom_values( $field_name, $post->ID )[0];
 
-						if ( ! empty ( $field_values ) ) {
+						if ( ! empty( $field_values ) ) {
 							$field_values = unserialize( $field_values );
 							foreach ( $field_values as $value ) {
 								$multiple_field_entry = array(
@@ -206,7 +204,7 @@ if ( ! class_exists( '\WpLdp\Api' ) ) {
 			}
 
 			if ( ! empty( $user_login ) ) {
-				$user = get_user_by ( 'login', $user_login );
+				$user = get_user_by( 'login', $user_login );
 				if ( $user ) {
 					$loop = new \WP_Query( array(
 						'post_type' => 'post',
