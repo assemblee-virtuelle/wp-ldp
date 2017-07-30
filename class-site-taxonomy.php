@@ -127,13 +127,13 @@ if ( ! class_exists( '\WpLdp\SiteTaxonomy' ) ) {
 		 * Adds a Site URL field to our custom LDP Site taxonomy
 		 * in edition mode.
 		 *
-		 * @param {int} $term the concrete term
+		 * @param {int} $term the concrete term.
 		 * @return void
 		 */
 		function add_custom_tax_fields_onedit_site( $term ) {
 			$term_id = $term->term_id;
 			$term_meta = get_term_meta( $term_id,'ldp_site_url', true );
-			$ldp_site_url = isset($term_meta) ? $term_meta : '';
+			$ldp_site_url = isset( $term_meta ) ? $term_meta : '';
 
 			// Adding rdf:type field.
 			echo "<tr class='form-field form-required term-model-wrap'>";
@@ -162,9 +162,9 @@ if ( ! class_exists( '\WpLdp\SiteTaxonomy' ) ) {
 		/**
 		 * Gets the list of sites the current site knows.
 		 *
-		 * @param  {\WP_REST_Request} $request The current HTTP request object.
-		 * @param  {\WP_REST_Response} $response The current HTTP response object.
-		 * @return {\WP_REST_Response} $response The current HTTP response object.
+		 * @param  \WP_REST_Request $request The current HTTP request object.
+		 * @param  \WP_REST_Response $response The current HTTP response object.
+		 * @return \WP_REST_Response $response The current HTTP response object.
 		 */
 		public function get_sites_list( \WP_REST_Request $request, \WP_REST_Response $response = null ) {
 			header( 'Content-Type: application/ld+json' );
@@ -174,7 +174,7 @@ if ( ! class_exists( '\WpLdp\SiteTaxonomy' ) ) {
 				array(
 					'taxonomy' => 'ldp_site',
 					'hide_empty' => false,
-				),
+				)
 			);
 
 			$ldp_site_urls = array();

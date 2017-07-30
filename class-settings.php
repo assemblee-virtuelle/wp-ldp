@@ -21,7 +21,6 @@ if ( ! class_exists( '\WpLdp\Settings' ) ) {
 	 * @package WPLDP
 	 * @author    Benoit Alessandroni
 	 * @license https://www.gnu.org/licenses/gpl-2.0.txt GNU/GPLv2
-	 *
 	 */
 	class Settings {
 		/**
@@ -37,13 +36,13 @@ if ( ! class_exists( '\WpLdp\Settings' ) ) {
 		 * Initializes the PAIR containers if the associated
 		 * option is checked.
 		 *
-		 * @param  {boolean} $force Should the refresh be forced ?
+		 * @param  {boolean} $force Should the refresh be forced.
 		 */
 		function initialize_container( $force = false ) {
 			if ( isset( $_GET['settings-updated'] ) || $force ) {
 				$ldp_container_init = get_option( 'ldp_container_init', false );
 
-				if ( $ldp_container_init  || $force ) {
+				if ( $ldp_container_init || $force ) {
 					$pair_terms = array(
 						'initiative' => array(
 							'label' => __( 'Initiative', 'wpldp' ),
@@ -177,14 +176,20 @@ if ( ! class_exists( '\WpLdp\Settings' ) ) {
 			global $submenu;
 			// Removing all resources menu.
 			remove_submenu_page( 'edit.php?post_type=ldp_resource', 'edit.php?post_type=ldp_resource' );
-			$terms = get_terms( 'ldp_container', array( 'hide_empty' => 0, 'order' => 'DESC' ) );
+			$terms = get_terms(
+				'ldp_container',
+				array(
+					'hide_empty' => 0,
+					'order' => 'DESC'
+				)
+			);
 
 			$i = 0;
 			foreach ( $terms as $term ) {
 				$this->term_slug = $term->slug;
 				add_submenu_page(
 					'edit.php?post_type=ldp_resource',
-					sprintf (
+					sprintf(
 						__( 'List of all resources of type %$1', 'wpldp' ),
 						$term->name
 					),
@@ -225,7 +230,7 @@ if ( ! class_exists( '\WpLdp\Settings' ) ) {
 				array( $this, 'wpldp_options_page' )
 			);
 
-			add_action( 'load-'.$hook, array( $this, 'initialize_container' )  );
+			add_action( 'load-' . $hook, array( $this, 'initialize_container' ) );
 			add_action( 'admin_notices', array( $this, 'wpldp_validation_notice' ) );
 		}
 
@@ -262,7 +267,7 @@ if ( ! class_exists( '\WpLdp\Settings' ) ) {
 		function ldp_container_init_field() {
 			$option_value = get_option( 'ldp_container_init', false );
 			$option_value = ! empty( $option_value ) ? 1 : 0;
-			echo "<input type='checkbox' name='ldp_container_init' value='1' " . checked( $option_value, 1, false ) . " />";
+			echo '<input type=\'checkbox\' name=\'ldp_container_init\' value=\'1\' ' . checked( $option_value, 1, false ) . ' />';
 		}
 
 		/**

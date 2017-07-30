@@ -262,7 +262,7 @@ if ( ! class_exists( '\WpLdp\ContainerTaxonomy' ) ) {
 					),
 					'post_type' => 'ldp_resource',
 					'posts_per_page' => -1,
-				),
+				)
 			);
 
 			$posts = $query->get_posts();
@@ -315,8 +315,8 @@ if ( ! class_exists( '\WpLdp\ContainerTaxonomy' ) ) {
 							'value' => $meta_value,
 							'compare' => 'LIKE',
 						),
-					),
-				),
+					)
+				)
 			);
 
 			$posts = $query->get_posts();
@@ -328,8 +328,8 @@ if ( ! class_exists( '\WpLdp\ContainerTaxonomy' ) ) {
 						'@id' => rtrim( get_rest_url(), '/' ) . $request->get_route() . '/',
 						'@type' => 'http://www.w3.org/ns/ldp#BasicContainer',
 						'http://www.w3.org/ns/ldp#contains' => array(),
-					),
-				),
+					)
+				)
 			);
 
 			$result = $this->format_posts_rendering( $result, $posts );
