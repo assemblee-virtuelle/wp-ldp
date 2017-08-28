@@ -441,10 +441,16 @@ if ( ! class_exists( '\WpLdp\WpLdp' ) ) {
 							( substr( $key, 0, strlen( $field_name ) ) === $field_name )
 							) {
 								if ( is_array( $value ) ) {
+									$array_to_save = array();
 									foreach ( $value as $site ) {
+										if ( ! empty( $site ) ) {
+											$array_to_save[] = $site;
+										}
+
 										if ( strpos( $site, 'ldp' ) !== false &&
-										( strpos( $site, 'http://' ) !== false ||
-										strpos( $site, 'https://' ) !== false ) ) {
+												( strpos( $site, 'http://' ) !== false ||
+												  strpos( $site, 'https://' ) !== false )
+											) {
 											$site_url = explode( \WpLdp\Api::LDP_API_URL, $site );
 											$site_url = $site_url[0] . \WpLdp\Api::LDP_API_URL;
 
@@ -472,8 +478,11 @@ if ( ! class_exists( '\WpLdp\WpLdp' ) ) {
 											}
 										}
 									}
+
+									update_post_meta( $resource_id, $key, $array_to_save );
+								} else {
+									update_post_meta( $resource_id, $key, $value );
 								}
-								update_post_meta( $resource_id, $key, $value );
 							}
 						}
 					}
