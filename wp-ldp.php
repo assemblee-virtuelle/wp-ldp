@@ -11,7 +11,7 @@
  * Plugin URI: https://github.com/assemblee-virtuelle/wpldp
  * Description: This is a plugin which aims to emulate the default caracteristics of a Linked Data Platform compatible server
  * Text Domain: wpldp
- * Version: 2.0.4
+ * Version: 2.0.5
  * Author: Sylvain LE BON, Benoit ALESSANDRONI
  * Author URI: http://www.happy-dev.fr/team/sylvain, http://benoit-alessandroni.fr/
  * License: GPL2
@@ -51,7 +51,7 @@ if ( ! class_exists( '\WpLdp\WpLdp' ) ) {
 		/**
 		 * @var $version_number The current plugin version number.
 		 */
-		protected static $version_number = '2.0.4';
+		protected static $version_number = '2.0.5';
 
 		/**
 		 * __construct - Default constructor.
@@ -503,7 +503,8 @@ if ( ! class_exists( '\WpLdp\WpLdp' ) ) {
 				// Loading the JqueryUI library.
 				wp_register_script(
 					'jqueryui',
-					plugins_url( 'library/js/jquery-ui/jquery-ui.min.js', __FILE__ )
+					plugins_url( 'library/js/jquery-ui/jquery-ui.min.js', __FILE__ ),
+					array( 'jquery' )
 				);
 				wp_enqueue_script( 'jqueryui' );
 
@@ -557,6 +558,14 @@ if ( ! class_exists( '\WpLdp\WpLdp' ) ) {
 		public function wpldpfront_enqueue_script() {
 			$current_url = $_SERVER['REQUEST_URI'];
 			if ( strstr( $current_url, Wpldp::FRONT_PAGE_URL ) ) {
+				// Loading the JqueryUI library.
+				wp_register_script(
+					'jqueryui',
+					plugins_url( 'library/js/jquery-ui/jquery-ui.min.js', __FILE__ ),
+					array( 'jquery' )
+				);
+				wp_enqueue_script( 'jqueryui' );
+
 				// Loading the LDP-framework library.
 				wp_register_script(
 					'ldpjs',
